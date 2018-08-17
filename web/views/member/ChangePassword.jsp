@@ -5,6 +5,32 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script>
+	
+	$(function() {
+
+	    var $sidebar   = $("#sidebar"), 
+	        $window    = $(window),
+	        offset     = $sidebar.offset(),
+	        topPadding = 15;
+
+	    $window.scroll(function() {
+	        if ($window.scrollTop() > offset.top) {
+	            $sidebar.stop().animate({
+	                marginTop: $window.scrollTop() - offset.top + topPadding
+	            });
+	        } else {
+	            $sidebar.stop().animate({
+	                marginTop: 0
+	            });
+	        }
+	    });
+	    
+	});
+</script>
+
+
 </head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
@@ -15,10 +41,10 @@
 	/* .te{
 		border:1px solid black;
 		align:center; */
-	.mainmenu{
-		height:250px;
-		background:#FF884D;
-	}
+.mainmenu{
+	height:400px;
+	background-image:url("/msmg/images/common/mypage.png");
+}
 	#main{
 		height:100%;
 	}
@@ -46,6 +72,19 @@
 	.clear{
 		height:20px;
 	}
+	#sidebar { 
+  width: 190px; 
+  position: fixed; 
+  margin-left: 0%;
+  /* margin-top: 10%;  */
+  background: #ffb1a3;
+  border-radius:10px;
+}
+
+#sidebar a{
+	text-decoration:none;
+}
+.ui-widget-header { padding: 0.3em; }
 	
 </style>
 <body>
@@ -53,10 +92,20 @@
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-<%@ include file="myPageSubmenu.jsp" %>
-
+	
 <div id="test">
-
+<div id="sidebar">
+        <ul>
+          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
+  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
+  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+      	</ul>
+	</div>
 	<div class="te">
 	<h3 align="center">비밀번호 변경</h3>
 	<table class="table-bordered" align="center">

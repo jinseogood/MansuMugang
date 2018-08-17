@@ -34,9 +34,10 @@ table tr{
 		border:none;
 		width:50px;
 	}
-	.mainmenu{
-		height:35%;
-	}
+.mainmenu{
+	height:400px;
+	background-image:url("/msmg/images/common/mypage.png");
+}
 	#main{
 		height:100%;
 	}
@@ -47,11 +48,6 @@ table tr{
 		height:100%;
 		
 	}
-	
-	/* .te td::before{
-		/* border:1px solid black; */
-		background:pink;
-	} */
 
 @font-face {
    font-family: 'GoyangDeogyang';
@@ -109,50 +105,54 @@ td {
   /* background: linear-gradient(to right, #25c481, #25b7c4); */
 }
 
+	#sidebar { 
+  width: 190px; 
+  position: fixed; 
+  margin-left: 0%;
+  /* margin-top: 10%;  */
+  background: #ffb1a3;
+  border-radius:10px;
+}
 
+#sidebar a{
+	text-decoration:none;
+}
+.ui-widget-header { padding: 0.3em; }
 
 section {
    margin: 50px;
 }
 
-/* /* follow me template */
-.made-with-love {
-   margin-top: 40px;
-   padding: 10px;
-   clear: left;
-   text-align: center;
-   font-size: 10px;
-   color: #fff;
-}
-
-.made-with-love i {
-   font-style: normal;
-   color: black;
-   font-size: 14px;
-   position: relative;
-   top: 2px;
-}
-
-.made-with-love a {
-   color: #fff;
-   /* text-decoration: none; */
-}
-
-.made-with-love a:hover {
-   text-decoration: underline;
-}
 
 .table1 {
    height: auto;
-} */
+} 
 </style>
 
 <body>
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-	<%-- <%@ include file="myPageSubmenu.jsp" %> --%>
+
 	<div align="center">
+	
+	
+	<div id="sidebar">
+        <ul>
+          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
+  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
+  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+      	</ul>
+	</div>
+	
+	
+	
+	
 		<form>
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">

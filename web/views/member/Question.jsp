@@ -93,8 +93,9 @@ div #offi {
    width : 300px;
 }
 .mainmenu{
-		height:35%;
-	}
+	height:400px;
+	background-image:url("/msmg/images/common/mypage.png");
+}
 	#main{
 		height:100%;
 	}
@@ -104,15 +105,39 @@ div #offi {
 	body {
 		height:100%;
 	}
+	
+	#sidebar { 
+  width: 190px; 
+  position: fixed; 
+  margin-left: 0%;
+  /* margin-top: 10%;  */
+  background: #ffb1a3;
+  border-radius:10px;
+}
+
+#sidebar a{
+	text-decoration:none;
+}
+.ui-widget-header { padding: 0.3em; }
 </style>
 </head>
 <body>
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-	<%@ include file="myPageSubmenu.jsp" %>
 
-
+<div id="sidebar">
+        <ul>
+          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
+  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
+  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+      	</ul>
+	</div>
 
    <div id = "botitle">
    <h3 >1:1 문의 내역</h3>
