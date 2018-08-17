@@ -5,6 +5,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script>
+	
+	$(function() {
+
+	    var $sidebar   = $("#sidebar"), 
+	        $window    = $(window),
+	        offset     = $sidebar.offset(),
+	        topPadding = 15;
+
+	    $window.scroll(function() {
+	        if ($window.scrollTop() > offset.top) {
+	            $sidebar.stop().animate({
+	                marginTop: $window.scrollTop() - offset.top + topPadding
+	            });
+	        } else {
+	            $sidebar.stop().animate({
+	                marginTop: 0
+	            });
+	        }
+	    });
+	    
+	});
+</script>
+
+
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -101,8 +128,9 @@ div #offi {
    width : 300px;
 }
 .mainmenu{
-		height:35%;
-	}
+	height:400px;
+	background-image:url("/msmg/images/common/mypage.png");
+}
 	#main{
 		height:100%;
 	}
@@ -112,20 +140,44 @@ div #offi {
 	body {
 		height:100%;
 	}
+	
+#sidebar { 
+  width: 190px; 
+  position: fixed; 
+  margin-left: 0%;
+  /* margin-top: 10%;  */
+  background: #ffb1a3;
+  border-radius:10px;
+}
+
+#sidebar a{
+	text-decoration:none;
+}
+.ui-widget-header { padding: 0.3em; }
+
 </style>
 </head>
 <body>
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-	<%@ include file="myPageSubmenu.jsp" %>
-
-
-
+   <div id="sidebar">
+        <ul>
+          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
+  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
+  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+      	</ul>
+	</div>
    <div id = "botitle">
    <h3 >내가 쓴 글</h3>
    <p>후기게시판 및 정보게시판에서 내가 쓴 글을 조회하실 수 있습니다.<br>
    타인의 저작물(신문기사, 사진, 동영상 등)을 관리자의 허락 없이 무단으로 복제하여 올리는 것은 저작권 침해에 해당합니다.</p>
+   
    </div>
    <div id = 'wrap'>
    <table align='center' cellpadding="0" cellspacing="0" border="0">

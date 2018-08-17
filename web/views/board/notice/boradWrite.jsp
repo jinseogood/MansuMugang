@@ -101,7 +101,7 @@ width : 700px;
 <body>
 <!-- 게시판 쓰기 -->
 	<div id = "jjff">
-	<%@ include file = "NewFile.jsp" %>
+
 	
 	</div>
 	<div id='wrap' align = 'left'>
