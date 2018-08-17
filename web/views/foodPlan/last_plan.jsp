@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*"%>
+<%
+	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
+	SelectFood sf = (SelectFood)request.getAttribute("sf");
+%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,12 +20,12 @@
 		align:center;
 	}
 	.top{
-		height:35%;
-		background:white;
+		width:100%;
+		height:400px;
+		background-image:url("/msmg/images/common/menu3.png");
 	}
 	#main{
 		min-height:80%;
-		height:1300px;
 		position:relative;
 	}
 	/*  .left{
@@ -138,23 +142,11 @@
 	</div>
 	<div id="main" >
 		<div class = "content block1" align="center">
-				<h1>???일</h1>
+				<h1><%= sf.getDay()%>일 <%= sf.getGgi() %>끼의 식단표</h1>
 				
 				<br><br>
 				<div class = "images">
-					<div class = "image" data-toggle="modal" data-target="#myModal" align="center">사진1</div>
-					<div class = "image">사진2</div>
-					<div class = "image">사진3</div>
-					<div class = "image">사진1</div>
-					<div class = "image">사진2</div>
-					<div class = "image">사진3</div>
-					<div class = "image">사진1</div>
-					<div class = "image">사진2</div>
-					<div class = "image">사진3</div>
-					<div class = "image">사진1</div>
-					<div class = "image">사진2</div>
-					<div class = "image">사진3</div>
-					<div class = "image">사진1</div>
+					<!-- <div class = "image" data-toggle="modal" data-target="#myModal" align="center">사진1</div> -->
 				</div>
 			
 		</div>
@@ -163,10 +155,10 @@
 			<div class = "btn2"><a href = "/msmg/index.jsp">
 				<img src = "/msmg/images/button/cancelbutton.png">
 			</a></div>
-			<div class = "btn2"><a href = "/msmg/views/member/ShoppingCart.jsp">
+			<div class = "btn2"><a href = "#">
 				<img src = "/msmg/images/button/basketbutton.png">
 			</a></div>
-			<div class = "btn2"><a href = "/msmg/views/payment/paymentPage.jsp">
+			<div class = "btn2"><a href = "#">
 				<img src = "/msmg/images/button/paybutton.png">
 			</a></div>
 	</div>

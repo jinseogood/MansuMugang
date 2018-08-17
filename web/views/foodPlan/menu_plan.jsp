@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -26,7 +27,6 @@ body {
 
 #main {
 	min-height: 80%;
-	height:1300px;
 	position: relative;
 }
 
@@ -320,10 +320,10 @@ body {
 		<div class="content block1" align = "center">
 			<div class="choice1" id="next1" align="center">
 				<div class="choice1_block" id="d">
-					<img src="/msmg/images/foodPlan/dang.PNG">
+					<img src="/msmg/images/foodPlan/go.PNG">
 				</div>
 				<div class="choice1_block" id="g">
-					<img src="/msmg/images/foodPlan/go.PNG">
+					<img src="/msmg/images/foodPlan/dang.PNG">
 				</div>
 				<div class="choice1_block" id="h">
 					<img src="/msmg/images/foodPlan/head.PNG">
@@ -380,10 +380,11 @@ body {
 				<div class="next next_block" id="re4" onclick="showDiv(this);">
 					<img src = "/msmg/images/button/prevbutton.png">
 				</div>
-				<div class="next next_block">
-					<a href="last_plan.jsp" id="n">
+				<div class="next next_block" id = "nc" onclick="showDiv(this);">
+					<!-- <a href="last_plan.jsp" id="n">
 						<img src = "/msmg/images/button/nextbutton.png">
-					</a>
+					</a> -->
+					<img src = "/msmg/images/button/nextbutton.png">
 				</div>
 			</div>
 		</div>
@@ -393,38 +394,36 @@ body {
 		<%@ include file="../common/footer.jsp" %>
 	</div>
 	<script>
-		
+		var i = 0;
+		var j = 0;
+		var k = 0;
+		var a = 0;
+		var b = 0;
+		var c = 0;
+		var d = 0;
+		var e = 0;
+		var f = 0;
+		var g = 0;
 	
 		$(function() {
-
-			var i = 0;
-			var j = 0;
-			var k = 0;
-			var a = 0;
-			var b = 0;
-			var c = 0;
-			var d = 0;
-			var e = 0;
-			var f = 0;
-			var g = 0;
 			$("#d").click(function() {
 				if(i==1){
-					$("#d > img").attr("src", "/msmg/images/foodPlan/dang.PNG");
+					$("#d > img").attr("src", "/msmg/images/foodPlan/go.PNG");
 					i=0;
 				}
 				else{
-					$("#d > img").attr("src", "/msmg/images/foodPlan/dang_check.PNG");
+					$("#d > img").attr("src", "/msmg/images/foodPlan/go_check.PNG");
 					i=1;
 					
 				}
 			});
 			$("#g").click(function() {
 				if(j==1){
-					$("#g > img").attr("src", "/msmg/images/foodPlan/go.PNG");
+					$("#g > img").attr("src", "/msmg/images/foodPlan/dang.PNG");
 					j=0;
 				}
 				else{
-					$("#g > img").attr("src", "/msmg/images/foodPlan/go_check.PNG");
+					$("#g > img").attr("src", "/msmg/images/foodPlan/dang_check.PNG");
 					j=1;
 					
 				}
@@ -441,27 +440,29 @@ body {
 				}
 			});
 			
+			
+			
 			$("#t_d").click(function() {
-				if(a==1){
+				if(a==3){
 					$("#t_d > img").attr("src", "/msmg/images/foodPlan/three_day.PNG");
 					a=0;
 				}
 				else{
 					$("#t_d > img").attr("src", "/msmg/images/foodPlan/three_day_check.PNG");
-					a=1;
+					a=3;
 					$("#s_d > img").attr("src", "/msmg/images/foodPlan/seven_day.PNG");
 					b=0;
 				}
 			});
 			
 			$("#s_d").click(function() {
-				if(b==1){
+				if(b==7){
 					$("#s_d > img").attr("src", "/msmg/images/foodPlan/seven_day.PNG");
 					b=0;
 				}
 				else{
 					$("#s_d > img").attr("src", "/msmg/images/foodPlan/seven_day_check.PNG");
-					b=1;
+					b=7;
 					$("#t_d > img").attr("src", "/msmg/images/foodPlan/three_day.PNG");
 					a=0;
 					
@@ -484,13 +485,13 @@ body {
 			});
 			
 			$("#t_g").click(function() {
-				if(d==1){
+				if(d==2){
 					$("#t_g > img").attr("src", "/msmg/images/foodPlan/two_ggi.PNG");
 					d=0;
 				}
 				else{
 					$("#t_g > img").attr("src", "/msmg/images/foodPlan/two_ggi_check.PNG");
-					d=1;
+					d=2;
 					$("#o_g > img").attr("src", "/msmg/images/foodPlan/one_ggi.PNG");
 					c=0;
 					$("#th_g > img").attr("src", "/msmg/images/foodPlan/three_ggi.PNG");
@@ -499,13 +500,13 @@ body {
 			});
 			
 			$("#th_g").click(function() {
-				if(e==1){
+				if(e==3){
 					$("#th_g > img").attr("src", "/msmg/images/foodPlan/three_ggi.PNG");
 					e=0;
 				}
 				else{
 					$("#th_g > img").attr("src", "/msmg/images/foodPlan/three_ggi_check.PNG");
-					e=1;
+					e=3;
 					$("#t_g > img").attr("src", "/msmg/images/foodPlan/two_ggi.PNG");
 					d=0;
 					$("#o_g > img").attr("src", "/msmg/images/foodPlan/one_ggi.PNG");
@@ -540,10 +541,19 @@ body {
 			});
 			
 			$("#n4").click(function(){
-				a, b, c, d, e, f, g, i, j, k = 0;
+				a = 0;
+				b = 0;
+				c = 0;
+				d = 0;
+				e = 0;
+				f = 0;
+				g = 0;
+				i = 0;
+				j = 0;
+				k = 0;
 				
-				$("#d > img").attr("src", "/msmg/images/foodPlan/dang.PNG");
-				$("#g > img").attr("src", "/msmg/images/foodPlan/go.PNG");
+				$("#d > img").attr("src", "/msmg/images/foodPlan/go.PNG");
+				$("#g > img").attr("src", "/msmg/images/foodPlan/dang.PNG");
 				$("#h > img").attr("src", "/msmg/images/foodPlan/head.PNG");
 				$("#t_d > img").attr("src", "/msmg/images/foodPlan/three_day.PNG");
 				$("#s_d > img").attr("src", "/msmg/images/foodPlan/seven_day.PNG");
@@ -552,11 +562,16 @@ body {
 				$("#th_g > img").attr("src", "/msmg/images/foodPlan/three_ggi.PNG");
 				$("#u > img").attr("src", "/msmg/images/foodPlan/under.PNG");
 				$("#u_l > img").attr("src", "/msmg/images/foodPlan/under_less.PNG");
-			});
+			}); 
 			
-			/* $("#n").click(function(){
-				//location.href = "/msmg/sql/food/controller/select.fo";
-			}); */
+				<%-- $("#nc").click(function(){
+					if(j == 0 && k == 0){
+						alert("반찬 유무를 선택하세요.");
+					}else{
+						location.href = "<%= request.getContextPath()%>/selectFoodList.fo?go=" + i + "&dang=" + j + "&head=" + k + "&three_day=" + a + "&seven_day=" + b + "&one_ggi=" + c + "&two_ggi=" + d + "&three_ggi=" + e + "&side=" + f;	
+					}
+				}); --%>
+			
 		});
 
 		function showDiv(element) {
@@ -564,7 +579,7 @@ body {
 			var e1 = document.getElementById("n1");
 			var e2 = document.getElementById("n2");
 			var e3 = document.getElementById("n3");
-			var e4 = document.getElementById("n4");
+			//var e4 = document.getElementById("n4");
 			var e5 = document.getElementById("next1");
 			var e6 = document.getElementById("next2");
 			var e7 = document.getElementById("next3");
@@ -572,22 +587,35 @@ body {
 			var e9 = document.getElementById("re2");
 			var e10 = document.getElementById("re3");
 			var e11 = document.getElementById("re4");
+			var e12 = document.getElementById("nc");
 
 			if (element == e1) {
-				e5.style.display = "none";
-				e6.style.display = "block";
-				e7.style.display = "none";
-				e8.style.display = "none";
+				if(i == 0 && j == 0 && k == 0){
+					alert("질병을 선택하세요.");
+				}else{
+					e5.style.display = "none";
+					e6.style.display = "block";
+					e7.style.display = "none";
+					e8.style.display = "none";
+				}
 			} else if (element == e2) {
-				e5.style.display = "none";
-				e6.style.display = "none";
-				e7.style.display = "block";
-				e8.style.display = "none";
+				if(a == 0 && b == 0){
+					alert("일수를 선택하세요.");
+				}else{
+					e5.style.display = "none";
+					e6.style.display = "none";
+					e7.style.display = "block";
+					e8.style.display = "none";
+				}	
 			} else if (element == e3) {
-				e5.style.display = "none";
-				e6.style.display = "none";
-				e7.style.display = "none";
-				e8.style.display = "block";
+				if(c == 0 && d == 0 && e == 0){
+					alert("끼니를 선택하세요.");
+				}else{
+					e5.style.display = "none";
+					e6.style.display = "none";
+					e7.style.display = "none";
+					e8.style.display = "block";
+				}
 			} else if (element == e9) {
 				e5.style.display = "block";
 				e6.style.display = "none";
@@ -603,7 +631,17 @@ body {
 				e6.style.display = "none";
 				e7.style.display = "block";
 				e8.style.display = "none";
-			} else {
+			} else if (element == e12) {
+				if(f == 0 && g == 0){
+					alert("반찬 유무를 선택하세요.");
+				}else{
+					location.href = "<%= request.getContextPath()%>/selectFoodList.fo?go=" + i + "&dang=" + j + "&head=" + k + "&three_day=" + a + "&seven_day=" + b + "&one_ggi=" + c + "&two_ggi=" + d + "&three_ggi=" + e + "&side=" + f;	
+				}
+			} 
+			
+			else{
+				a, b, c, d, e, f, g, i, j, k = 0;
+				
 				e5.style.display = "block";
 				e6.style.display = "none";
 				e7.style.display = "none";

@@ -4,34 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>비밀번호 수정</title>
-
-<script>
-	
-	$(function() {
-
-	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),
-	        offset     = $sidebar.offset(),
-	        topPadding = 15;
-
-	    $window.scroll(function() {
-	        if ($window.scrollTop() > offset.top) {
-	            $sidebar.stop().animate({
-	                marginTop: $window.scrollTop() - offset.top + topPadding
-	            });
-	        } else {
-	            $sidebar.stop().animate({
-	                marginTop: 0
-	            });
-	        }
-	    });
-	    
-	});
-</script>
-
-
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 	.guide {
@@ -63,7 +39,7 @@
 		position: relative;
 	}
 	.footer{
-		height:400px;
+		height:200px;
 	}
 	#test{
 		min-height: 70%;
@@ -84,17 +60,17 @@
 #sidebar a{
 	text-decoration:none;
 }
-.ui-widget-header { padding: 0.3em; }
-	
+
 </style>
 <body>
 
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-	
+
+
 <div id="test">
-<div id="sidebar">
+	<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
   		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
@@ -105,7 +81,8 @@
   		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
       	</ul>
-	</div>
+
+</div>
 	<div class="te">
 	<h3 align="center">비밀번호 변경</h3>
 	<table class="table-bordered" align="center">
