@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import = "com.msmg.member.model.vo.*" %>
+<% Member loginUser = (Member)session.getAttribute("loginUser"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<title>Insert title here</title>
+<title>메뉴바</title>
 <style>
 	@font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
 
@@ -18,11 +19,11 @@
 		margin-left:auto;
 		margin-right:auto;
 		text-align:right;
-		color:white;
+		color:black;
 	}
 	#info > a{
 		text-decoration:none;
-		color:white;
+		color:black;
 		font-size:11px;
 	}
 	#info > a > label:hover{
@@ -104,7 +105,11 @@
 </head>
 <body>
 	<div id="info">
+	<% if(loginUser != null){ %>
+		<label><%= loginUser.getU_name() %></label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
+	<%}else{ %>
 		<a href="/msmg/views/member/LoginForm.jsp"><label>로그인</label></a> | <a href="/msmg/views/member/MemberJoinForm.jsp"><label>회원가입</label></a>
+	<%} %>
 	</div>
 	<div id="menubar" class = "hidden-xs">
 		<div id="menubarLogo" align="center">
@@ -150,7 +155,16 @@
 		    $("#submenubar").mouseleave(function(){
 		    	$("#submenubar").slideUp("slow");
 		    });
+		    
 		});
+		
+		function logout(){
+			var check = window.confirm("로그아웃 하시겠습니까?");
+			
+			if(check == true){
+				location.href = "<%= request.getContextPath() %>/logout.me"
+			}
+		}
 	</script>
 </body>
 </html>

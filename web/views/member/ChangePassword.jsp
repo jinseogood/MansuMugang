@@ -4,10 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script>
 
-</script>
+<title>비밀번호 수정</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -19,10 +17,10 @@
 	/* .te{
 		border:1px solid black;
 		align:center; */
-	.mainmenu{
-		height:250px;
-		background:#FF884D;
-	}
+.mainmenu{
+	height:400px;
+	background-image:url("/msmg/images/common/mypage.png");
+}
 	#main{
 		height:100%;
 	}
@@ -62,12 +60,14 @@
 #sidebar a{
 	text-decoration:none;
 }
+
 </style>
 <body>
 
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
+
 
 <div id="test">
 	<div id="sidebar">
@@ -81,6 +81,7 @@
   		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
       	</ul>
+
 </div>
 	<div class="te">
 	<h3 align="center">비밀번호 변경</h3>

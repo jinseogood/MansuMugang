@@ -122,7 +122,6 @@
 		
 		//공지조회
 		$("#nSearch").click(function(){
-			console.log("test");
 			$.ajax({
 				url:"selectNoticeList",
 				type:"get",
@@ -152,7 +151,6 @@
 		
 		//공지작성
 		$("#nWrite").click(function(){
-			console.log("click");
 			window.open("/msmg/index.jsp");
 		});
 		

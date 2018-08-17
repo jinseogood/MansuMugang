@@ -4,16 +4,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디/비밀번호 찾기</title>
+
+<script>
+	
+	$(function() {
+
+	    var $sidebar   = $("#sidebar"), 
+	        $window    = $(window),
+	        offset     = $sidebar.offset(),
+	        topPadding = 15;
+
+	    $window.scroll(function() {
+	        if ($window.scrollTop() > offset.top) {
+	            $sidebar.stop().animate({
+	                marginTop: $window.scrollTop() - offset.top + topPadding
+	            });
+	        } else {
+	            $sidebar.stop().animate({
+	                marginTop: 0
+	            });
+	        }
+	    });
+	    
+	});
+</script>
+
 <style>
 	.clear{
 		weight:300px;
 	}
-	.mainmenu{
-		height:35%;
-	}
+.mainmenu{
+	height:400px;
+	background-image:url("/msmg/images/common/findidpw.png");
+}
 	#main{
-		height:100%;
+		height:1300px;
 	}
 	html {
 		height:100%;
@@ -21,14 +47,27 @@
 	body {
 		height:100%;
 	}
-	
+
+	#div{
+		min-height: 100%;
+		position: relative;
+	}
+	.footer{
+		height:400px;
+	}
+	#main{
+		height: 500px;
+	}
+
 </style>
 </head>
 <body>
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
 </div>
-	<div align="center">
+
+
+	<div align="center" id="main">
 		<table>
 		<tr>
 			<td>
@@ -86,6 +125,9 @@
 	</td>
 	</tr>
 	</table>
+	</div>
+		<div id="bottom">
+		<%@ include file="../common/footer.jsp" %>
 	</div>
 </body>
 </html>

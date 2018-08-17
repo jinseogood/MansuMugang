@@ -4,15 +4,6 @@
 <html>
 <head>
 <script>
-	/* $(window).on(
-			"load resize ",
-			function() {
-				var scrollWidth = $('.tbl-content').width()
-						- $('.tbl-content table').width();
-				$('.tbl-header').css({
-					'padding-right' : scrollWidth
-				});
-	}).resize(); */
 	
 	$(function() {
 
@@ -36,7 +27,7 @@
 	});
 </script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>

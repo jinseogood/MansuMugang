@@ -15,7 +15,7 @@
 			}).resize();
 </script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
@@ -271,8 +271,8 @@ div a {
 										<label for="clam">조개류</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="올리브" id="olive">
-										<label for="olive">올리브</label>
+										<input type="checkbox" name="allergy" value="아황산류" id="acid">
+										<label for="acid">아황산류</label>
 									</td>	
 								</tr>
 							</table>
