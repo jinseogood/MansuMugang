@@ -162,7 +162,6 @@ body {
 #sidebar a{
 	text-decoration:none;
 }
-.ui-widget-header { padding: 0.3em; }
 </style>
 </head>
 <body>
