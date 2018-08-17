@@ -49,7 +49,7 @@ a{
 	}
 	#wrap {
 		width:100%;
-		height:1300px;
+		height:800px;
 		margin:0 auto;
 	}
 	.clear {

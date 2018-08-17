@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디/비밀번호 찾기</title>
 
 <script>
 	
@@ -36,7 +36,7 @@
 	}
 .mainmenu{
 	height:400px;
-	background-image:url("/msmg/images/common/mypage.png");
+	background-image:url("/msmg/images/common/findidpw.png");
 }
 	#main{
 		height:1300px;
@@ -47,25 +47,16 @@
 	body {
 		height:100%;
 	}
-	#sidebar { 
-  width: 190px; 
-  position: fixed; 
-  margin-left: 0%;
-  /* margin-top: 10%;  */
-  background: #ffb1a3;
-  border-radius:10px;
-}
 
-#sidebar a{
-	text-decoration:none;
-}
-.ui-widget-header { padding: 0.3em; }
 	#div{
 		min-height: 100%;
 		position: relative;
 	}
 	.footer{
 		height:400px;
+	}
+	#main{
+		height: 500px;
 	}
 
 </style>
@@ -75,21 +66,8 @@
    <%@ include file="../common/menubar.jsp"%>
 </div>
 
-	<div id="sidebar">
-        <ul>
-          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
-  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
-  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
-  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
-      	</ul>
-	</div>
 
-
-	<div align="center">
+	<div align="center" id="main">
 		<table>
 		<tr>
 			<td>

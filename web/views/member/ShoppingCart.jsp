@@ -69,6 +69,7 @@ h1 {
 
 table {
    table-layout: fixed;
+   width:70%;
 }
 
 .tbl-header {
@@ -123,6 +124,9 @@ section {
    margin: 50px;
 }
 
+.center {
+	margin-top:100px;
+}
 
 .table1 {
    height: auto;
@@ -134,7 +138,7 @@ section {
    <%@ include file="../common/menubar.jsp"%>
 </div>
 
-	<div align="center">
+	<div align="center" class="center">
 	
 	
 	<div id="sidebar">

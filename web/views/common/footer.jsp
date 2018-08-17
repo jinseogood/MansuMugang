@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>풋터</title>
 <style>
 	.foot-top{
 		background:#FF884D;
