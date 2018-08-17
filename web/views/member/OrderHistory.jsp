@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문내역</title>
 <script>
 	$(window).on(
 			"load resize ",
@@ -42,27 +42,27 @@
 </script>
 
 <style>
-@font-face {
+/* @font-face {
 	font-family: 'GoyangDeogyang';
 	src:
 		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangDeogyang.woff')
 		format('woff');
 	font-weight: normal;
 	font-style: normal;
-}
+} */
 
 h1 {
 	font-size: 30px;
 	color: black;
 	text-align: center;
 	margin-bottom: 15px;
-	font-family: GoyangDeogyang;
+	/* font-family: GoyangDeogyang; */
 }
 
 table {
 	width: 100%;
 	table-layout: fixed;
-	font-family: GoyangDeogyang;
+	/* font-family: GoyangDeogyang; */
 }
 
 .tbl-header {
@@ -87,7 +87,7 @@ th {
 	border-bottom: solid 1px black;
 	text-transform: uppercase;
 	background: tomato;
-	font-family: GoyangDeogyang;
+	/* font-family: GoyangDeogyang; */
 	/* 	background: -webkit-linear-gradient(left, #25c481, #25b7c4);
 	background: linear-gradient(to right, #25c481, #25b7c4); */
 }
@@ -105,7 +105,7 @@ td {
 	font-size: 12px;
 	color: black;
 	border-bottom: solid 1px black;
-	font-family: GoyangDeogyang;
+	/* font-family: GoyangDeogyang; */
 	/* background: -webkit-linear-gradient(left, #25c481, #25b7c4); */
 	/* background: linear-gradient(to right, #25c481, #25b7c4); */
 }
@@ -113,7 +113,8 @@ td {
 body {
 	/*   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
   background: linear-gradient(to right, #25c481, #25b7c4); */
-	font-family: GoyangDeogyang;
+	/* font-family: GoyangDeogyang; */
+	margin: 0;
 }
 
 section {

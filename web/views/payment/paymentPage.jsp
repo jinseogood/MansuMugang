@@ -142,7 +142,7 @@ section {
 
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제</title>
 </head>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -383,9 +383,9 @@ section {
 				IMP.request_pay({ // param
 					pg : "inicis",
 					pay_method : "card",
-					merchant_uid : "ORD20180131-0000012",
+					merchant_uid : "ORD20180131-0000013",
 					name : "노르웨이 회전 의자",
-					amount : 10000000,
+					amount : 100,
 					buyer_email : "gildong@gmail.com",
 					buyer_name : "홍길동",
 					buyer_tel : "010-4242-4242",
@@ -394,7 +394,7 @@ section {
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						jQuery.ajax({
-				            url: "https://www.myservice.com/payments/complete", // 가맹점 서버
+				            url: "http://localhost:8001/msmg/views/payment/paymentConfirm.jsp", // 가맹점 서버
 				            method: "POST",
 				            headers: { "Content-Type": "application/json" },
 				            data: {

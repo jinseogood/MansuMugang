@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원탈퇴</title>
 <script>
 	
 	$(function() {
@@ -52,6 +52,7 @@ html {
 
 body {
 	height: 100%;
+	margin: 0;
 }
 
 #sidebar {
@@ -65,6 +66,7 @@ body {
 
 #sidebar a {
 	text-decoration: none;
+	color: black;
 }
 
 .ui-widget-header {
