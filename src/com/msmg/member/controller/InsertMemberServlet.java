@@ -49,8 +49,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "회원 가입 성공!");
+			page = "/index.jsp";
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 가입 실패!!");
