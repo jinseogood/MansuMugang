@@ -33,7 +33,6 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		
 		String query = prop.getProperty("insertMember");
-		System.out.println("dao");
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -42,13 +41,12 @@ public class MemberDao {
 			pstmt.setString(3, m.getU_name());
 			
 			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			close(pstmt);
 		}
-		
 		
 		return result;
 	}
@@ -59,7 +57,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("loginSelect");
-		System.out.println("loginDao");
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -76,10 +74,10 @@ public class MemberDao {
 				loginUser.setU_name(rset.getString("u_name"));
 				loginUser.setDrop_yn(rset.getString("drop_yn"));
 				loginUser.setToken(rset.getString("token"));
-				
+				loginUser.setU_type(rset.getString("type"));
 			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			close(pstmt);

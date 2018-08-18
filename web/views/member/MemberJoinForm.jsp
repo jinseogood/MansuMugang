@@ -3,43 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
-	$(window).on(
-			"load resize ",
-			function() {
-				var scrollWidth = $('.tbl-content').width()
-						- $('.tbl-content table').width();
-				$('.tbl-header').css({
-					'padding-right' : scrollWidth
-				});
-			}).resize();
-</script>
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-@font-face {
-	font-family: 'GoyangDeogyang';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GoyangDeogyang.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
 
 h1 {
 	font-size: 30px;
 	color: black;
 	text-align: center;
 	margin-bottom: 15px;
-	font-family: GoyangDeogyang;
 }
 
 table {
 	width: 100%;
 	table-layout: fixed;
-	font-family: GoyangDeogyang;
 }
 
 .tbl-header {
@@ -61,13 +40,10 @@ th {
 	text-align: center;
 	font-weight: 500;
 	font-size: 16px;
-   color: black;
-   border-bottom: solid 1px black;
+    color: black;
+    border-bottom: solid 1px black;
 	text-transform: uppercase;
 	background: tomato;
-	font-family: GoyangDeogyang;
-/* 	background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-	background: linear-gradient(to right, #25c481, #25b7c4); */
 }
 
 td {
@@ -78,21 +54,11 @@ td {
    font-size: 16px;
    color: black;
    border-bottom: solid 1px black;
-   font-family: GoyangDeogyang;
-   /* background: -webkit-linear-gradient(left, #25c481, #25b7c4); */
-  /* background: linear-gradient(to right, #25c481, #25b7c4); */
-}
-
-body {
-	/*   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-  background: linear-gradient(to right, #25c481, #25b7c4); */
-	font-family: GoyangDeogyang;
 }
 
 section {
 	margin: 50px;
 }
-
 
 .table1 {
 	height: auto;
@@ -121,14 +87,14 @@ section {
 	width: 10%;
 }
 
-	#top{
-		height:250px;
-		background:#FF884D;
-	}
-	#mainBottom{
-		width:100%;
-		height:200px;
-	}
+#top{
+	height:250px;
+	background:#FF884D;
+}
+#mainBottom{
+	width:100%;
+	height:200px;
+}
 	
 #contents{
 	min-height: 100%;
@@ -147,27 +113,19 @@ div a {
 </style>
 </head>
 <body>
-
-<div id="outer">	
-	<%@ include file="../common/menubar.jsp"%>
-</div>
-
-<div id="main" align="center">
-<section>
-
+	<div id="outer">	
+		<%@ include file="../common/menubar.jsp"%>
+	</div>
+	
+	<div id="main" align="center">
+		<section>
+			<form action="<%= request.getContextPath() %>/insertMember.me" method="post">
 			<div class="tbl-content table1" align="center">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
-						<!-- <tr>
-							<th bgcolor=tomato>아이디(이메일)</th> -->
-							<!-- <td colspan="4">
-								<button class="w3-button w3-ripple w3-yellow">목록</button>
-								<span>※ 기존에 보낸 주소 목록에서 선택하거나 직접 새로운 주소를 입력하세요.</span>
-							</td> -->
-						<!-- </tr> -->
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text"> <button class="w3-button w3-ripple w3-yellow">중복확인</button></td>
+							<td><input type="text" name="userId"> <button class="w3-button w3-ripple w3-yellow">중복확인</button></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
@@ -175,15 +133,15 @@ div a {
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
-							<td><input type="text"></td>
+							<td><input type="password" name="userPwd"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호 확인<span class="red">*</span></th>
-							<td><input type="text"></td>
+							<td><input type="password"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>이름</th>
-							<td><input type="text"></td>
+							<td><input type="text" name="userName"></td>
 						</tr>
 						<br>
 						<tr>
@@ -337,15 +295,15 @@ div a {
 							</table>
 						<td colspan="2">
 						<div class="clear"></div>
-							<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/index.jsp">취소하기</a></div>
-							<div class="w3-button w3-ripple w3-yellow" onclick="insertMember();"><a href="/msmg/index.jsp">가입하기</a></div>
+							<div class="w3-button w3-ripple w3-yellow">취소하기</div>
+							<div class="w3-button w3-ripple w3-yellow">가입하기</div>
+							<input type="submit" value="가입하기테스트">
 						</td>
 					</tr>
-						
-								
 					</tbody>
 				</table>
 			</div>
+			</form>
 		</section>
 	</div>
 	<div id="mainBottom">
