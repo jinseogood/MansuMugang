@@ -13,33 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
-/**
- * Servlet implementation class InsertMemberServlet
- */
 @WebServlet("/insertMember.me")
 public class InsertMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public InsertMemberServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    public InsertMemberServlet() {}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uid = request.getParameter("userId");
-		String userPwd = request.getParameter("password");
+		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		
-		System.out.println("jjj");
-		
-		
-	
 		Member m = new Member();
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
@@ -61,11 +45,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

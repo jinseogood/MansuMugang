@@ -9,10 +9,11 @@ public class Member implements java.io.Serializable{
 	private String u_name;
 	private String drop_yn;
 	private String token;
+	private String u_type;
 	
 	public Member(){}
 
-	public Member(int u_code, String u_id, String u_pwd, String u_name, String drop_yn, String token) {
+	public Member(int u_code, String u_id, String u_pwd, String u_name, String drop_yn, String token, String u_type) {
 		super();
 		this.u_code = u_code;
 		this.u_id = u_id;
@@ -20,6 +21,7 @@ public class Member implements java.io.Serializable{
 		this.u_name = u_name;
 		this.drop_yn = drop_yn;
 		this.token = token;
+		this.u_type = u_type;
 	}
 
 	public int getU_code() {
@@ -69,15 +71,20 @@ public class Member implements java.io.Serializable{
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public String getU_type(){
+		return u_type;
+	}
+	
+	public void setU_type(String u_type){
+		this.u_type = u_type;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [u_code=" + u_code + ", u_id=" + u_id + ", u_pwd=" + u_pwd + ", u_name=" + u_name + ", drop_yn="
-				+ drop_yn + ", token=" + token + ", getU_code()=" + getU_code() + ", getU_id()=" + getU_id()
-				+ ", getU_pwd()=" + getU_pwd() + ", getU_name()=" + getU_name() + ", getDrop_yn()=" + getDrop_yn()
-				+ ", getToken()=" + getToken() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
-	};
+				+ drop_yn + ", token=" + token + ", u_type=" + u_type + "]";
+	}
 	
 	
 

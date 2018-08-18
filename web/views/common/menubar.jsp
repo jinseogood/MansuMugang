@@ -105,11 +105,25 @@
 </head>
 <body>
 	<div id="info">
-	<% if(loginUser != null){ %>
-		<label><%= loginUser.getU_name() %></label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
-	<%}else{ %>
+	<% 
+		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
+	%>
+			<label><%= loginUser.getU_name() %></label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
+	<% 
+		}else if(loginUser != null && loginUser.getU_id().equals("admin")){
+	%>
+			<script>
+				$(function(){
+					location.href="/msmg/views/admin/adminPage.jsp";
+				});
+			</script>
+	<%
+		}else{
+	%>
 		<a href="/msmg/views/member/LoginForm.jsp"><label>로그인</label></a> | <a href="/msmg/views/member/MemberJoinForm.jsp"><label>회원가입</label></a>
-	<%} %>
+	<%
+		}
+	%>
 	</div>
 	<div id="menubar" class = "hidden-xs">
 		<div id="menubarLogo" align="center">

@@ -91,6 +91,11 @@
 <script>
 	$(function(){
 	
+		//메뉴추가
+		$("#fAdd").click(function(){
+			window.open("/msmg/index.jsp");
+		});
+		
 		//메뉴조회
 		$("#fSearch").click(function(){
 			$.ajax({
@@ -332,7 +337,7 @@
 			<h4 style="margin-left:5%;">메뉴</h4>
 			<table id="menuTable" border="1">
 				<tr height="5%">
-					<td colspan="4" style="text-align:right;"><button id="fSearch">조회</button></td>
+					<td colspan="4" style="text-align:right;"><button id="fSearch">조회</button>&nbsp;<button id="fAdd">추가</button></td>
 				</tr>
 				<tr height="15%" style="background:#D1D1D1;">
 					<td width="15%"><b>메뉴코드</b></td>

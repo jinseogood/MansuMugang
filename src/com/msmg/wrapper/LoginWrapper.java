@@ -12,15 +12,14 @@ public class LoginWrapper extends HttpServletRequestWrapper{
 
 	public LoginWrapper(HttpServletRequest request) {
 		super(request);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public String getParameter(String key){
 		String value = "";
 		
-		if(key != null && key.equals("password")){
-			value = getSha512(super.getParameter("password"));
+		if(key != null && key.equals("userPwd")){
+			value = getSha512(super.getParameter("userPwd"));
 		}else{
 			value = super.getParameter(key);
 		}
@@ -40,7 +39,6 @@ public class LoginWrapper extends HttpServletRequestWrapper{
 			encPwd = Base64.getEncoder().encodeToString(md.digest());
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
