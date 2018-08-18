@@ -142,7 +142,6 @@ a{
 						<script type="text/javascript">
 						function login(){
 							$("#loginForm").submit();
-							console.log("dd");
 						}
 						</script>
 	<div class="kakao">

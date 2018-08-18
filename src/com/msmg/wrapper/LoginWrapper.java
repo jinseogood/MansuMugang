@@ -12,7 +12,6 @@ public class LoginWrapper extends HttpServletRequestWrapper{
 
 	public LoginWrapper(HttpServletRequest request) {
 		super(request);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -40,7 +39,6 @@ public class LoginWrapper extends HttpServletRequestWrapper{
 			encPwd = Base64.getEncoder().encodeToString(md.digest());
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

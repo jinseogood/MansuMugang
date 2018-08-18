@@ -116,7 +116,6 @@ div a {
 	<div id="outer">	
 		<%@ include file="../common/menubar.jsp"%>
 	</div>
-	
 	<div id="main" align="center">
 		<section>
 			<form action="<%= request.getContextPath() %>/insertMember.me" method="post">

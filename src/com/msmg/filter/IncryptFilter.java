@@ -12,45 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.msmg.wrapper.LoginWrapper;
 
-/**
- * Servlet Filter implementation class IncryptFilter
- */
 @WebFilter("*.me")
 public class IncryptFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public IncryptFilter() {
-        // TODO Auto-generated constructor stub
-    }
+    public IncryptFilter() {}
 
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+	public void destroy() {}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
 		
 		HttpServletRequest h_request = (HttpServletRequest)request;
 		
 		LoginWrapper lw = new LoginWrapper(h_request);
-		// pass the request along the filter chain
+		
 		chain.doFilter(lw, response);
 	}
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
 	}
 
 }

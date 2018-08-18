@@ -13,30 +13,15 @@ import javax.servlet.http.HttpSession;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
-/**
- * Servlet implementation class LoginServlet
- */
 @WebServlet("/login.me")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    public LoginServlet() {}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
-		
-		System.out.println("userId : " + userId);
-		System.out.println("userPwd : " + userPwd);
 		
 		Member loginUser = new MemberService().loginCheck(userId, userPwd);
 		
@@ -54,11 +39,7 @@ public class LoginServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

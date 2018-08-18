@@ -24,10 +24,6 @@ public class InsertMemberServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		
-		System.out.println(uid);
-		System.out.println(userPwd);
-		System.out.println(userName);
-	
 		Member m = new Member();
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
