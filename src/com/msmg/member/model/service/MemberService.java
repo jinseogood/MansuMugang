@@ -6,6 +6,7 @@ import com.msmg.member.model.vo.Member;
 import static com.msmg.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public class MemberService {
 
@@ -31,6 +32,16 @@ public class MemberService {
 		close(con);
 	
 		return loginUser;
+	}
+
+	public ArrayList<Member> selectMemberList() {
+		Connection con=getConnection();
+		
+		ArrayList<Member> mList=new MemberDao().selectMemberList(con);
+		
+		close(con);
+		
+		return mList;
 	}
 
 }

@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>메뉴 추가</title>
+<style>
+	#content{
+		width:300px;
+		height:200px;
+	}
+	#content > label{
+		font-weight:bold;
+		font-size:24px;
+	}
+</style>
+</head>
+<body>
+	<form action="<%= request.getContextPath() %>/addMenu" method="get">
+	<div id="content" align="center">
+		<label>메뉴 추가</label>
+		<table id="menuTable">
+			<tr>
+				<td style="background:lightgray;">메뉴명</td>
+				<td colspan="2"><input type="text" name="menuName"></td>
+			</tr>
+			<tr>
+				<td style="background:lightgray;">주재료</td>
+				<td colspan="2"><input type="text" name="mainMat"></td>
+			</tr>
+			<tr>
+				<td style="background:lightgray;">보조재료</td>
+				<td colspan="2"><input type="text" name="subMat"></td>
+			</tr>
+			<tr>
+				<td style="background:lightgray;">가격</td>
+				<td colspan="2"><input type="text" name="price"></td>
+			</tr>
+			<tr align="center">
+				<td colspan="3"><input type="submit" value="추가">&nbsp;<input type="reset" value="취소"></td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</body>
+</html>
