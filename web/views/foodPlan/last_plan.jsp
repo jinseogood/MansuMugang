@@ -3,6 +3,7 @@
 <%
 	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
 	SelectFood sf = (SelectFood)request.getAttribute("sf");
+	int e;
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -40,10 +41,10 @@
 	}  */
 	.content{
 		 width:100%;
-	 	 height:80%;
+	 	 height:600px;
 	 	 background:#FAFAFA;
-		 overflow:auto;
-		 overflow-x:hidden;
+		 /* overflow:auto; */
+		 /* overflow-x:hidden; */
 		 align:center;
 	}
 	.btn2{
@@ -66,11 +67,9 @@
 		color:white;
 		text-decoration:none;
 	}
-	.image{
+	/* .image{
 		 width:26%;
 		 height:300px;
-		 /* height:100%; */
-	     /* text-align:center; */
 	     align:center;
 	     display:inline-block;
 	     background:lightgray;
@@ -78,28 +77,25 @@
 	     margin-right:20px;
 	     margin-top:10px;
 		 align:left;
-	     /* clear:both; */
 
 	}
 
 	.images{
-		/* padding-left:50px; */
 		width:80%;
 		height:1000px;
 		margin-top:20px;
 		align:center;
-		/* float:left; */
+	} */
+	#Img{
+		width:100%;
+		height:50%;
 	}
 	.btns{
-		/* padding-left:80px; */
 		background:#FAFAFA;
 		align:center;
 		width:100%;
 		height:10%;
 		margin-top:10px;
-	}
-	.images > h1{
-		/* padding-right:50px; */
 	}
 	.mainBottom{
 		width:100%;
@@ -108,7 +104,7 @@
 	.content > #next1{
 		text-align:center;
 	}
-	@media ( max-width: 1023px ) {
+	@media ( max-width: 1600px ) {
 		.images{
  	 		float: none;
        		width: 80%;
@@ -129,6 +125,38 @@
        		width:80%;
         }
 	} 
+	table {
+		/* border: 1px solid rgba(255, 255, 255, 0.3); */
+		text-align: center;
+		border-radius:3px;
+	}
+	.tableArea{
+		margin-top: 50px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.menu_info { 
+		position: relative;
+	}
+	.menu_text { 
+		visibility: hidden;
+		width: 200px;
+		background-color: lightgray;
+		color: black; 
+		text-align: center; 
+		border-radius: 10px; 
+		padding: 5px 5px; 
+		position: absolute; 
+		z-index: 999;
+		left: 100%;
+		top:-100%;
+	}
+	.menu_info:hover .menu_text { 
+		visibility: visible; 
+	}
+
+
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -142,15 +170,65 @@
 	</div>
 	<div id="main" >
 		<div class = "content block1" align="center">
+				<br>
 				<h1><%= sf.getDay()%>일 <%= sf.getGgi() %>끼의 식단표</h1>
+				<br>
+		<div class = "tableArea">
+			<table align = "center">
+				<%
+				int rand=0;
+				for(int j = 0 ; j < sf.getDay() ; j++){ %>
+				<tr class = "tr1">
+					<td bgcolor=tomato width = "390px" height = "30px" colspan = "<%= sf.getGgi() %>">
+						<%= j+1 %>일
+					</td>
+				</tr>
+				<tr>
+					<% for(int i = 0 ; i < sf.getGgi() ; i++){
+						Random r = new Random();
+						rand = r.nextInt(list.size());
+					%>
+					
+						<td id = "menu_chan" class = "menu_info" height = "25px" data-toggle="modal" data-target="#myModal">
+							<%= list.get(rand).getName() %>
+							<div class="menu_text">
+								<table align = "center">
+									<tr>
+										<td colspan = "3" width = "200px">
+											<img id="Img" 
+											src="<%=request.getContextPath() %>/images/food/<%=list.get(rand).getImg_name()%>">
+										</td>
+									</tr>
+									<tr>
+										<td>메인재료</td>
+										<td>부재료</td>
+										<td>가격</td>
+									</tr>
+									<tr>
+										<td><%= list.get(rand).getMain_grad()%></td>
+										<td><%= list.get(rand).getSub_grad()%></td>
+										<td><%= list.get(rand).getPrice()%></td>
+									</tr>
+									<tr>
+										<td colspan = "3"><%= list.get(rand).getInfo()%></td>
+										<% e = rand; %>
+									</tr>
+									
+								</table>
+							</div>
+						</td>
+					<% } %>
+				</tr>
+				<% } %>
+			</table>
+		</div>
 				
-				<br><br>
 				<div class = "images">
 					<!-- <div class = "image" data-toggle="modal" data-target="#myModal" align="center">사진1</div> -->
 				</div>
 			
 		</div>
-	</div>
+		</div>
 	<div class = "btns" align="center">
 			<div class = "btn2"><a href = "/msmg/index.jsp">
 				<img src = "/msmg/images/button/cancelbutton.png">
@@ -162,7 +240,7 @@
 				<img src = "/msmg/images/button/paybutton.png">
 			</a></div>
 	</div>
-<form>	
+	<form>	
 <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -174,17 +252,53 @@
           <h4 class="modal-title">메뉴 리스트</h4>
         </div>
         <div class="modal-body">
-          <p>셀렉트로 선택하고 사진까지 보여줄까?</p>
+          <% for(int b = 0 ; b < list.size() ; b++){ 
+          %>
+				<input type="radio" name="menu_change" value="<%= list.get(b).getName() %>" id="l<%= b %>">
+				<label for="l<%= b %>"><%= list.get(b).getName() %></label>	
+		  <% } %>
         </div>
+        
         <div class="modal-footer">
-       	  <input type="submit" class="btn btn-default" value="OK" >&nbsp;
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       	  <input type="button" class = "btn" id ="OK_btn" value="OK" >&nbsp;
+          <button type="button" class = "btn" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 </form>
+	<script>
+	$(document).ready(function () {
+	$("#OK_btn").click(function(){
+	        var name= $('input[name="menu_change"]:checked').val();
+		/* $.ajax({
+			url:"changeFood.fo",
+			data:{userIndex:userIndex},
+			type:"get",
+			success:function(data){
+				console.log(data);
+				
+				var resultText = "";
+				
+				for(var key in data){
+					var user = data[key];
+					
+					resultText += user.userNo + ", ";
+					resultText += decodeURIComponent(user.userName) + ", ";
+					resultText += decodeURIComponent(user.userNation) + ", ";
+				}
+				
+				$("#p4").text(resultText);
+			},
+			error:function(data){
+				console.log("실패!");
+			}
+		});  */
+	});
+	});
+</script>
+
 	<div class="mainBottom hidden-xs hidden-sm hidden-md">
 		<%@ include file="../common/footer.jsp" %>
 	</div>
