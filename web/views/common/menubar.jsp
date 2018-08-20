@@ -155,7 +155,7 @@
 				<a href="/msmg/views/board/review/reviewThumbnailList.jsp">후기게시판</a>
 			</div>
 			<div id="submenuTitle">
-				<a href="/msmg/views/board/notice/notice.jsp">공지사항</a>
+				<a href = "<%= request.getContextPath() %>/noticeList.bo">공지사항</a>
 				<br><br><br>
 				<a href="/msmg/views/board/notice/notice.jsp">Q&A</a>
 			</div>
