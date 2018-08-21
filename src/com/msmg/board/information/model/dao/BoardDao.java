@@ -136,7 +136,6 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				System.out.println(num);
 				b = new Board();
 				
 				b.setBoardId(rset.getInt("board_id"));
@@ -147,6 +146,7 @@ public class BoardDao {
 				b.setuCode(rset.getString("u_name"));
 				b.setbCount(rset.getInt("b_count"));
 				
+				System.out.println("dao:" + b);
 				
 			}
 		} catch (SQLException e) {
@@ -217,6 +217,8 @@ public class BoardDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, boardId);
 			
+			System.out.println("boardId Dao:"+boardId);
+			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -231,7 +233,7 @@ public class BoardDao {
 				
 				list.add(r);
 			}
-			
+			/*System.out.println(list);*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

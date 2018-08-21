@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*" %>
 <% 
 	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist");
+	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
 	
 	Board b = (Board)request.getAttribute("b");
    
@@ -10,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 만들기</title>
+<title>정보게시판 상세보기</title>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
@@ -134,12 +135,18 @@ div[id=date-writer-hit2] {
 	cursor:pointer;
 }
 
-#replyAddArea table{
+/* #replyAddArea table {
+	
+} */
+
+#replyAddTable tr td {
 	border-top:1px solid #e83f26;
 	border-bottom:1px solid #e83f26;
 }
 
-#replyComment {
+#replyAddTable td {
+	padding-left:7px;
+	padding-right:7px;
 	border-left:1px solid #e83f26;
 	border-right:1px solid #e83f26;
 }
@@ -190,18 +197,18 @@ div[id=date-writer-hit2] {
 	
 	<br>
 	<div id="replyAddArea">
-	<table height="35px" id="replyAddTable">
+		<table height="35px" id="replyAddTable">
+			<%for(int i=0; i < list2.size(); i++) {%>
 				<tr>
-				<td width="100">
-				</td>
-				<td id="replyComment" width="600">
-				</td>
-				<td width="100">
-						<a href="#">답변</a>
-							<a href="#">수정</a>
-							<a href="#">삭제</a>
-				</td>
+				<td width="100px"><%= list2.get(i).getU_code() %></td>
+				<td width="600px"><%= list2.get(i).getRe_content() %></td>
+				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
+				<td width='100'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
+				<%} else {%>
+					<td width="100px"></td>
+				<%} %>
 				</tr>
+			<%} %>
 		</table>
 		</div>
 	</div>
@@ -226,7 +233,11 @@ div[id=date-writer-hit2] {
 				type:"post",
 				success:function(data){
 					console.log(data);
-					$("#replyAddTable").append("<tr><td>"+data[0].u_code+"</td>")
+					$("#replyAddTable").html("");
+					for(var i = 0; i < data.length; i++){
+						$("#replyAddTable").append("<tr><td width='100'>" + data[i].u_code+"</td><td width='600'>" + data[i].re_content + "</td>"
+								+ "<td width='100'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
+					}
 					
 				},
 				error:function(data){

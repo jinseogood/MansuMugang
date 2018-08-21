@@ -59,8 +59,12 @@ public class BoardService {
 		
 		result = new BoardDao().updateCount(con, num);
 		
+		System.out.println(result);
+		
 		if(result > 0) {
 			b = new BoardDao().selectOne(con, num);
+			
+			System.out.println("service:" + b);
 			
 			if(b != null) commit(con);
 			else rollback(con);
@@ -86,6 +90,20 @@ public class BoardService {
 		
 		return replyList;
 	}
+
+	public ArrayList<Reply> selectReply(String num) {
+		Connection con = getConnection();
+		ArrayList<Reply> replyList = null;
+		
+		replyList = new BoardDao().selectReplyList(con, Integer.parseInt(num));
+		System.out.println("serviceReply:"+replyList);
+		
+		close(con);
+		
+		return replyList;
+	}
+
+	
 	
 
 }
