@@ -374,6 +374,7 @@ body {
 					<img src="/msmg/images/foodPlan/under_less.PNG">
 				</div>
 				<br>
+				 
 				<div class="next next_block" id="n4" onclick="showDiv(this);">
 					<img src = "/msmg/images/button/cheoumbutton.png">
 				</div>
@@ -564,13 +565,7 @@ body {
 				$("#u_l > img").attr("src", "/msmg/images/foodPlan/under_less.PNG");
 			}); 
 			
-				<%-- $("#nc").click(function(){
-					if(j == 0 && k == 0){
-						alert("반찬 유무를 선택하세요.");
-					}else{
-						location.href = "<%= request.getContextPath()%>/selectFoodList.fo?go=" + i + "&dang=" + j + "&head=" + k + "&three_day=" + a + "&seven_day=" + b + "&one_ggi=" + c + "&two_ggi=" + d + "&three_ggi=" + e + "&side=" + f;	
-					}
-				}); --%>
+				
 			
 		});
 
