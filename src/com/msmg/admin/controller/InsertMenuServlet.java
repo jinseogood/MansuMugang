@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.msmg.admin.model.service.MenuService;
+import com.msmg.admin.model.vo.Menu;
+
 @WebServlet("/addMenu")
 public class InsertMenuServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -18,6 +21,14 @@ public class InsertMenuServlet extends HttpServlet {
 		String mainMat=request.getParameter("mainMat");
 		String subMat=request.getParameter("subMat");
 		String price=request.getParameter("price");
+		
+		Menu menu=new Menu();
+		menu.setMenuName(menuName);
+		menu.setMainMat(mainMat);
+		menu.setSubMat(subMat);
+		menu.setPrice(Integer.parseInt(price));
+		
+		int result=new MenuService().insertMenu(menu);
 		
 		
 	}
