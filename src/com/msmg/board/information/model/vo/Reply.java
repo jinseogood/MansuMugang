@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Reply implements java.io.Serializable{
 	private String board_sort;
-	private String u_code;
+	private String u_code; 
 	private String re_content;
 	private Date re_date;
 	private int board_id;

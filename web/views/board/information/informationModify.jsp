@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 
 <!DOCTYPE>
-<html>
+<html> 
 <head>
 <meta charset="UTF-8">
 <title>정보게시판 수정</title>

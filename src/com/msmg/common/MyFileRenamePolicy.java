@@ -9,7 +9,7 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 public class MyFileRenamePolicy implements FileRenamePolicy{
 
 	@Override
-	public File rename(File oldFile) {
+	public File rename(File oldFile) { 
 		long currentTime = System.currentTimeMillis();
 		
 		SimpleDateFormat ft = new SimpleDateFormat("yyyyMMddHHmmss");

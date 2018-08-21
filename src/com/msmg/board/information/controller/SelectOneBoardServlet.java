@@ -30,7 +30,7 @@ public class SelectOneBoardServlet extends HttpServlet {
 		
 		Board b = new BoardService().selectOne(num);
 		
-		String page = "";
+		String page = ""; 
 		System.out.println(b);
 		
 		if(b != null) {
