@@ -6,9 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.member.model.vo.Member;
+import com.msmg.member.model.vo.UserAllergy;
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -26,12 +29,15 @@ public class MemberDao {
 		
 	}
 	
-	public int insertMember(Connection con, Member m) {
+	public Member insertMember(Connection con, Member m) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rset = null;
 		int result = 0;
 		
-		PreparedStatement pstmt = null;
-		
 		String query = prop.getProperty("insertMember");
+		String query2 = prop.getProperty("selectMember"); 
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -41,13 +47,35 @@ public class MemberDao {
 			
 			result = pstmt.executeUpdate();
 			
+			pstmt2 = con.prepareStatement(query2);
+			pstmt2.setString(1, m.getU_id());
+			
+			rset = pstmt2.executeQuery();
+			
+			
+			
+			while(rset.next()){
+				member = new Member();
+				
+				member.setU_code(rset.getInt("u_code"));
+				member.setU_id(rset.getString("u_id"));
+				member.setU_pwd(rset.getString("u_pwd"));
+				member.setU_name(rset.getString("u_name"));
+				member.setDrop_yn(rset.getString("drop_yn"));
+				member.setU_type(rset.getString("token"));
+				member.setU_type(rset.getString("type"));
+				
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 			close(pstmt);
+			close(pstmt2);
+			close(rset);
 		}
 		
-		return result;
+		return member;
 	}
 
 	public Member loginCheck(Connection con, String userId, String userPwd) {
@@ -84,6 +112,65 @@ public class MemberDao {
 		}
 		
 		return loginUser;
+	}
+
+	public int idCheck(Connection con, String uid) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("idCheck");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, uid);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(result);
+		
+		return result;
+	}
+
+	public int insertAllergy(Connection con, ArrayList<UserAllergy> list, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("insertAllergy");
+		
+		for(int i = 0; i < list.size(); i++){
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, list.get(i).getAl_code());
+				System.out.println(list.get(i).getAl_code());
+				pstmt.setString(2, list.get(i).getU_code());
+				System.out.println(list.get(i).getU_code());
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+			}
+			
+		}
+		
+		System.out.println(result);
+		
+		return result;
 	}
 
 }

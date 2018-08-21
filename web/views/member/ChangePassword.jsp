@@ -61,6 +61,10 @@
 	text-decoration:none;
 }
 
+#tt{
+	height:50px;
+}
+
 </style>
 <body>
 
@@ -85,7 +89,16 @@
 </div>
 	<div class="te">
 	<h3 align="center">비밀번호 변경</h3>
+	<div id="tt"></div>
 	<table class="table-bordered" align="center">
+	<tr>
+	<td>
+				<label>비밀번호 작성규칙 영문과 숫자를 혼용하여 8자 이상 20자 이하로 만드세요.<br>
+				특수문자(!,@,%,^,&,*)를 포함할 수 있습니다.<br>
+				같은 문자를 4번 이상 사용하실 수 없습니다.<br>
+				아이디가 포함되어 있는 비밀번호는 사용하실 수 없습니다.<br></label>
+				</td>
+				</tr>
 	<tr>
 	<td>
 			<form action="" method="post">
@@ -108,12 +121,6 @@
 					</tr>
 				</table>
 				</form>
-				</td>
-				<td>
-				<label>비밀번호 작성규칙 영문과 숫자를 혼용하여 8자 이상 20자 이하로 만드세요.<br>
-				특수문자(!,@,%,^,&,*)를 포함할 수 있습니다.<br>
-				같은 문자를 4번 이상 사용하실 수 없습니다.<br>
-				아이디가 포함되어 있는 비밀번호는 사용하실 수 없습니다.<br></label>
 				</td>
 				</tr>
 					<tr align="center" class="wrap">

@@ -162,13 +162,13 @@ body {
 	<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
-  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+  		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
   		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
+  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
   		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
 	</div>
 	<div id="main" class="main" align="center">
@@ -181,7 +181,7 @@ body {
 						
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" readonly> <button class="w3-button w3-ripple w3-yellow">중복확인</button></td>
+							<td><input type="text" readonly></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
@@ -193,7 +193,7 @@ body {
 						</tr>
 						<tr>
 							<th bgcolor=tomato>이름</th>
-							<td><input type="text"></td>
+							<td><input type="text" readonly></td>
 						</tr>
 						<br>
 						<tr>
@@ -281,8 +281,8 @@ body {
 										<label for="clam">조개류</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="올리브" id="olive">
-										<label for="olive">올리브</label>
+										<input type="checkbox" name="allergy" value="아황산류" id="acid">
+										<label for="acid">아황산류</label>
 									</td>
 								</tr>
 							</table>
