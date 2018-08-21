@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*"%>
+<%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	
+ 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+%>
 <!DOCTYPE>
 <html>
 <head>
@@ -38,11 +49,17 @@
 
 table tr {
 	text-align: center;
-	font-size: 13;
+	font-size: 15;
 }
 
+
 table tr:first-child {
-	font-size: 12;
+	font-size: 15;
+}
+
+table td {
+	margin:10px;
+	font-size:15;
 }
 
 a {
@@ -109,13 +126,6 @@ div #offi {
 	border: 1px solid black;
 }
 
-#botitle #botitle_sub div {
-	display: inline-block;
-	border: 1px solid black;
-	height: 40px;
-	width: 300px;
-}
-
 #search {
 	width: 150px;
 	margin-top: 10px;
@@ -129,6 +139,27 @@ div #offi {
 	width: 100%;
 	height: 200px;
 }
+
+#listArea td {
+	padding-top:7px;
+	padding-bottom:7px;
+}
+
+#writeBtn {
+	background:tomato;
+	border:none;
+}
+
+#tableTop {
+	font-weight:bold;
+}
+
+#container button {
+	background:tomato;
+	border:none;
+	color:white;
+	 border-radius:12px;
+}
 </style>
 </head>
 <body>
@@ -141,7 +172,6 @@ div #offi {
 		</div>
 
 
-
 		<div id="search2" align="right" style="margin-right: 50px">
 			<select name="searchArea" id="result"
 				style="width: 50px; height: 27px;">
@@ -152,82 +182,89 @@ div #offi {
 		</div>
 
 
-
-
-
 		<div id='wrap'>
 			<table align='center' cellpadding="0" cellspacing="0" border="0">
 
 				<!-- s : 게시판 타이틀 -->
-				<tr
-					style="background: url('/msmg/images/board/table_mid.png') /* #E8E8E8 */ repeat-x;">
+				<tr id="tableTop" style="background: url('/msmg/images/board/table_mid.png')">
 					<td width="5"><img src="/msmg/images/board/table_left.png"
-						width="5" height="30" /></td>
+						width="7" height="30" /></td>
 					<td width="73"><span>번호</span></td>
-					<td width="630"><span>제목</span></td>
+					<td width="640"><span>제목</span></td>
 					<td width="73"><span>작성자</span></td>
 					<td width="164"><span>작성일</span></td>
 					<td width="58"><span>조회수</span></td>
 					<td width="7"><img src="/msmg/images/board/table_right.png"
 						width="5" height="30" /></td>
 				</tr>
-				<!-- e : 게시판 타이틀 -->
-				<!-- s: 게시글 테스트 영역 -->
 
-				<tr id='content'>
+				<% 
+				
+				for(Board b : list) {%>
+				<tr id="listArea">
+					<input type="hidden" value="<%=b.getBoardNo()%>">
 					<td></td>
-					<td>1</td>
-					<td><a href="../information/informationView.jsp">테스트입니다.</a></td>
-					<td>테스트</td>
-					<td>2018.08.03</td>
-					<td>0</td>
+					<td><%= b.getBoardNo() %></td>
+					<td><%= b.getTitle() %></td>
+					<td><%= b.getuCode() %></td>
+					<td><%= b.getBoardDate() %></td>
+					<td><%= b.getbCount() %></td>
 					<td></td>
 				</tr>
 				<tr height='1' bgcolor="#D2D2D2">
 					<td colspan="6" width="752"></td>
 				</tr>
-				<tr id='content'>
-					<td colspan='7'>등록된 글이 없습니다.</td>
-				</tr>
-				<!-- e: 게시글 테스트 영역 끝 -->
-
-				<!-- 게시판 끝 -->
-				<tr bgcolor="#82B5DF" style="height: 1px;">
-					<td colspan="6"></td>
-				</tr>
-				<!-- 게시판 끝 -->
+				<%} %>
 			</table>
 
 
-
-
-			<div id='btnlist' align="right">
-				<button type="button" class="btn btn-success"
-					onclick='location.href = "../information/informationWrite.jsp"'>글
-					작성</button>
+			<% if(loginUser != null) {%>
+			<div id='btnlist' align="right" style="margin-top:10px;">
+				<button id="writeBtn"type="button" class="btn btn-success"
+					onclick='location.href = "/msmg/views/board/information/informationWrite.jsp"'>글작성</button>
 			</div>
+			<%} %>
+			
+			
+			<br><br>
 			<div id="container">
-				<ul class="pagination">
-					<li><a href="#">이전</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">다음</a></li>
-				</ul>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=1'"><<</button>
+				<% if(currentPage <= 1) {%>
+				<button disabled><</button>
+				<%} else {%>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage - 1%>'"><</button>
+				<%} %>
+				<% for(int p = startPage; p <= endPage; p++) {
+					if(p == currentPage) {
+				%>
+						<button disabled><%= p %></button>
+				<% } else { %>
+					<button onclick ="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%= p %>'"><%= p %></button>
+				<%		   } %>
+				<%} %>
+				
+				<% if(currentPage >= maxPage) {%>
+					<button disabled>></button>
+				<%}else{ %>
+					<button onclick="location.href='<%= request.getContextPath() %>/selectList.bo?/currentPage=<%= currentPage + 1 %>'">></button>
+				<%} %>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%= maxPage %>'">>></button>
 			</div>
 		</div>
 	</div>
 	<script>
-      $(function(){
-         $("#container ul li").click(function(event){
-            $("#container ul li").removeClass("active");
-            $(this).addClass("active");
-         });
-      })
+      
+     $(function(){
+    	 $("#listArea td").mouseenter(function(){
+    		$(this).parent().css({"color":"tomato", "cursor":"pointer"});
+    	 }).mouseout(function(){
+    		$(this).parent().css({"color":"black"});
+    	 }).click(function(){
+    		 var num = $(this).parent().children("input").val();
+    		 location.href="<%=request.getContextPath()%>/selectOne.bo?num=" + num;
+    	 });
+      });
    </script>
-	<!-- <div style="margin-bottom:400px;"></div> -->
 	<div id="mainBottom">
 		<%@include file="../../common/footer.jsp"%>
 	</div>
