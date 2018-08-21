@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Random;
 
 import com.msmg.board.notice.model.vo.Notice;
 
@@ -109,6 +110,62 @@ public class NoticeDao {
 		String query = prop.getProperty("selectOne");
 		
 		return null;
+	}
+	
+	public int insertBoard(Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		int rand = new Random().nextInt(1000) + 1;
+		
+		
+		String query = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rand);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		if(result > 0){
+			return rand;
+			
+		}else{
+			return result;
+		}
+	}
+	public String selectDate(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectDate");
+		
+		String datenow = "";
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(query);
+			
+			
+			if(rset.next()){
+				datenow = rset.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return datenow;
 	}
 
 }
