@@ -113,7 +113,7 @@
 	<% 
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
-			<label><%= loginUser.getU_name() %></label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
+			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
 	<% 
 		}else if(loginUser != null && loginUser.getU_id().equals("admin")){
 	%>
@@ -161,7 +161,7 @@
 				<a href="/msmg/views/board/review/reviewThumbnailList.jsp">후기게시판</a>
 			</div>
 			<div id="submenuTitle">
-				<a href="/msmg/views/board/notice/notice.jsp">공지사항</a>
+				<a href = "<%= request.getContextPath() %>/noticeList.bo">공지사항</a>
 				<br><br><br>
 				<a href="/msmg/views/board/notice/notice.jsp">Q&A</a>
 			</div>

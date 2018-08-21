@@ -1,6 +1,7 @@
 package com.msmg.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
+import com.msmg.member.model.vo.UserAllergy;
 
 @WebServlet("/insertMember.me")
 public class InsertMemberServlet extends HttpServlet {
@@ -23,16 +25,33 @@ public class InsertMemberServlet extends HttpServlet {
 		String uid = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
+		String[] alCode = request.getParameterValues("allergy");
 		
 		Member m = new Member();
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
 		m.setU_name(userName);
 		
-		int result = new MemberService().insertMember(m);
+		Member member = new MemberService().insertMember(m);
+		
+		ArrayList<UserAllergy> list = new ArrayList<UserAllergy>();
+		if(alCode != null){
+			for(int i = 0; i < alCode.length; i++){
+				UserAllergy ua = new UserAllergy();
+				ua.setAl_code(alCode[i]);
+				ua.setU_code(Integer.toString(member.getU_code()));
+				
+				list.add(ua);
+				System.out.println(list);
+			}
+		}
+		
+		
+		
+		int result = new MemberService().insertAllergy(list, m);
 		
 		String page = "";
-		if(result > 0){
+		if(member != null && result != 0){
 			page = "/index.jsp";
 		}else{
 			page = "/views/common/errorPage.jsp";

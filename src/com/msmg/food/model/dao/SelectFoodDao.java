@@ -67,6 +67,7 @@ public class SelectFoodDao {
 				m.setImg_name(rset.getString("menu_img_name"));
 				m.setImg_src(rset.getString("menu_img_src"));
 				m.setInfo(rset.getString("menu_info"));
+				m.setName(rset.getString("menu_name"));
 				m.setMain_grad(rset.getString("menu_main"));
 				m.setSub_grad(rset.getString("menu_sub"));
 				m.setPrice(rset.getInt("price"));
