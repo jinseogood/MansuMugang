@@ -189,6 +189,7 @@
 						rand = r.nextInt(list.size());
 					%>
 					
+					
 						<td id = "menu_chan" class = "menu_info" height = "25px" data-toggle="modal" data-target="#myModal">
 							<%= list.get(rand).getName() %>
 							<div class="menu_text">
