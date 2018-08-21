@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import = "java.util.*"%>
 <%
 	int bno = (int)request.getAttribute("bno");
-	String bdate = (String)request.getAttribute("b_date");
 	
 %>
 <!DOCTYPE html>
@@ -83,7 +82,8 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.bo",
+               url : "<%= request.getContextPath() %>/imgUpload.bo?bno=<%=bno%>",
+               enctype: 'multipart/form-data',
                cache : false,
                contentType : false,
                processData : false,
@@ -106,7 +106,7 @@ margin-right : auto;
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete.bo", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -135,6 +135,20 @@ margin-right : auto;
     		   $("#attachfile2").val("");
     		   $("#attachfile2").hide();
     	   }
+       }
+       
+       function loadImg(value){
+				if(value.files && value.files[0]){
+					var reader = new FileReader();
+					reader.readAsDataURL(value.files[0]);
+				}
+			}
+       
+       function submitBoard(){
+    	   var values = $("#summernote").summernote('code');
+    	   $("#smnoteval").val(values);
+    	   
+    	   
        }
    </script>
 
@@ -166,24 +180,25 @@ margin-right : auto;
 		</table> -->
 		<!-- 게시판 헤더 끝 -->
 		<br>
+		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
 		<div id="container">
-			<form id = 'frm' method = 'post' encType = "multipart/form-data">
+			<form id = 'frm' method = 'post' encType = "multipart/form-data" action = "<%= request.getContextPath() %>/updateBoard.bo?bno=<%= bno %>">
 				<table align='center' cellpadding="0" cellspacing="0" border="0"
 					id='memo'>
 					<tr class='title'>
 						<td width="30" align = 'center' id = 'tdbg'>제목</td>
 						<td width="300"><input type='text' class='form-control'
-							name="btitle" width="300"></td>
+							name="title" width="300"></td>
 						<td  width = '50' align = 'center' id = 'tdbg'>작성일</td>
-						<td width = "100" align = 'center'><%= bdate %></td>
+						<td width = "100" align = 'center'><%= df.format(new Date()) %></td>
 					</tr>
 					<tr height="10">
 						<td colspan='2' width="700"></td>
 					</tr>
 					<tr class='title'>
 						<td width = '700' colspan = '4'>
-							<div id = 'summernote'></div>
+							<div id = 'summernote' name = "content"></div>
 						</td>
 						
 					</tr>
@@ -195,9 +210,10 @@ margin-right : auto;
 				<fieldset >
 					<legend>첨부파일 </legend>
 						<div style = "padding : 5px;">
-							<input type = 'file' id = 'attachfile1' name = 'attachfile1'>
-							<input type = 'file' id = 'attachfile2' name = 'attachfile2' style = "padding-top : 5px; padding-bottom : 5px;">
-							<input type = 'file' id = 'attachfile3' name = 'attachfile3'>
+							<input type = 'file' id = 'attachfile1' name = 'attachfile1' multiple onchange = "loadImg(this)">
+							<input type = 'file' id = 'attachfile2' name = 'attachfile2' style = "padding-top : 5px; padding-bottom : 5px;" multiple onchange = "loadImg(this)">
+							<input type = 'file' id = 'attachfile3' name = 'attachfile3' multiple onchange = "loadImg(this)">
+							<input type = 'hidden' id = 'smnoteval' class = 'smnoteval'>
 						</div>
 						<br>
 						<input type = 'button' value = "추가" onclick = 'addbtn()'>&nbsp;<input type = 'button' value = "삭제" onclick = "delbtn()">
@@ -206,7 +222,7 @@ margin-right : auto;
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'insertBoard()'>작성하기</button>
+				<button class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">작성하기</button>
 				</div>
 			</form>
 			<div class="output"></div>
