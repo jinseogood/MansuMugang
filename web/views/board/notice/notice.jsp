@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.board.notice.model.vo.*"%>
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+%>
 <!DOCTYPE>
 <html>
 <head>
@@ -49,14 +59,6 @@ div #offi {
 	font-size: 32;
 }
 
-.pagination>.active>a, 
-.pagination>.active>a:focus, 
-.pagination>.active>a:hover,
-.pagination>.active>span, 
-.pagination>.active>span:focus, 
-.pagination>.active>span:hover
- {background-color: #D8D8D8; color:red;}
- 
  #wrap {
  	margin-left : auto;
  	margin-right : auto;
@@ -71,6 +73,7 @@ div #offi {
  
  #insert {
  	margin-top : 10px;
+ 	   background:tomato;
  }
  
  #botitle {
@@ -97,6 +100,14 @@ div #offi {
 	width:100%;
 	height:200px;
 }
+
+#container button {
+   background:tomato;
+   border:none;
+   color:white;
+    border-radius:12px;
+    border : 1px solid tomato;
+}
 </style>
 </head>
 <body>
@@ -104,13 +115,13 @@ div #offi {
 <div id = "jjff">
 	<%@ include file = "../../common/menubar.jsp" %>
 </div>
-	<div id = "botitle">
-		<!-- <label id = "offi">공지사항</label><br> -->
+	<!-- <div id = "botitle">
+		<label id = "offi">공지사항</label><br>
 		<label style = "margin-left : 18%; font-size:17px;"><p>게시된 의견은 회신되지 않으며, 게시판의 효과적인 운영을 위하여 비방 · 욕설, 음란한 표현, 상업적인 광고, 동일한 내용 반복게시, 특정인의
 		개인정보 유출 등 <br>홈페이지의 정상적인 운영을 저해하는 내용은 게시자에게 통보하지 않고 삭제될 수 있음을 알려드립니다.<br><br>
 
 		타인의 저작물(신문기사, 사진, 동영상 등)을 관리자의 허락 없이 무단으로 복제하여 올리는 것은 저작권 침해에 해당합니다.</p></label>
-	</div>
+	</div> -->
 	<div id = 'wrap'>
 	<table align='center' cellpadding="0" cellspacing="0" border="0">
 
@@ -130,21 +141,29 @@ div #offi {
 		<!-- e : 게시판 타이틀 -->
 		<!-- s: 게시글 테스트 영역 -->
 		
+		<% 
+			if(list.size() > 0){ 
+				for(Notice n : list){
+		%>
 		<tr id='content'>
 			<td></td>
-			<td>1</td>
-			<td><a href="/msmg/views/board/notice/readBoard.jsp">테스트입니다.</a></td>
-			<td>테스트</td>
-			<td>2018.08.03</td>
-			<td>0</td>
+			<td><%= n.getBoard_no() %></td>
+			<td><a href = "<%= request.getContextPath() %>/noticeDetail.bo?board_id=<%=n.getBoard_id() %>"><%= n.getTitle()  %></a></td>
+			<td><%= n.getU_name() %></td>
+			<td><%= n.getBoard_date() %></td>
+			<td><%= n.getB_count() %></td>
 			<td></td>
 		</tr>
 		<tr height='1' bgcolor="#D2D2D2">
 			<td colspan="6" width="752"></td>
 		</tr>
+		
+		<%}
+				}else{%>
 		<tr id='content'>
 			<td colspan='7'>등록된 글이 없습니다.</td>
 		</tr>
+		<%} %>
 		<!-- e: 게시글 테스트 영역 끝 -->
 
 		<!-- 게시판 끝 -->
@@ -154,51 +173,30 @@ div #offi {
 		<!-- 게시판 끝 -->
 	</table>
 	<div id = 'btnlist' align = "right">
-	<button id = 'insert' class="btn btn-primary btn-sm" onclick = 'location.href = "/msmg/views/board/notice/boradWrite.jsp"'>작성</button>
+	<button id = 'insert' class="btn btn-primary btn-sm" onclick = 'location.href = "<%= request.getContextPath() %>/insertBoard.bo"'>작성</button>
 	</div>
 	<div id="container">
-		<ul class="pagination">
-			<li><a href="#">이전</a></li>
-			<li ><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li ><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">다음</a></li>
-		</ul>
-	</div>
-	
-	<%-- <div class = 'pageArea' align = 'center'>
-			
-			<button onclick = 'location.href = "<%=request.getContextPath()%>/selectList.no?currentPage=1"'>처음으로</button>
+		<button onclick = 'location.href = "<%=request.getContextPath()%>/noticeList.no?currentPage=1"'><<</button>
 			<% if(currentPage <= 1){ %>
 				<button disabled><</button>
 			<%}else{%>
-				<button onclick = "location.href = '<%=request.getContextPath()%>/selectList.no?currentPage=<%=currentPage - 1%>'">이전</button>
+				<button onclick = "location.href = '<%=request.getContextPath()%>/noticeList.bo?currentPage=<%=currentPage - 1%>'"><</button>
 			<%} %>
 			<%for(int p = startPage; p <= endPage; p++){
 				if(p == currentPage){%>
 					<button disabled><%= p %></button>				
 			<%}else{%>
-					<button onclick = "location.href ='<%=request.getContextPath() %>/selectList.no?currentPage=<%=p %>'"><%=p %></button>
+					<button onclick = "location.href ='<%=request.getContextPath() %>/noticeList.bo?currentPage=<%=p %>'"><%=p %></button>
 			<%}} %>
 			
 			<% if(currentPage >= maxPage){ %>
 				<button disabled>></button>
 			<%}else{ %>
-				<button onclick = "location.href = '<%=request.getContextPath() %>/selectList.no?currentPage=<%=currentPage + 1 %>'">다음</button>
+				<button onclick = "location.href = '<%=request.getContextPath() %>/noticeList.bo?currentPage=<%=currentPage + 1 %>'">></button>
 			<%} %>
-				<button onclick = "location.href = '<%=request.getContextPath() %>/selectList.no?currentPage=<%=maxPage %>'">끝으로</button>
-		</div>
-	</div> --%>
-	<script>
-		$(function(){
-			$("#container ul li").click(function(event){
-				$("#container ul li").removeClass("active");
-				$(this).addClass("active");
-			});
-		})
-	</script>
+				<button onclick = "location.href = '<%=request.getContextPath() %>/noticeList.bo?currentPage=<%=maxPage %>'">>></button>
+	</div>
+	
 </div>
 <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>

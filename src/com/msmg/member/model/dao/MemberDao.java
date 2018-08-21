@@ -114,6 +114,7 @@ public class MemberDao {
 		return loginUser;
 	}
 
+
 	public int idCheck(Connection con, String uid) {
 		int result = 0;
 		
@@ -171,6 +172,37 @@ public class MemberDao {
 		System.out.println(result);
 		
 		return result;
+  }
+	public ArrayList<Member> selectMemberList(Connection con) {
+		ArrayList<Member> mList=new ArrayList<Member>();
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectMemberList");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			while(rset.next()){
+				Member m=new Member();
+				m.setU_code(Integer.parseInt(rset.getString("u_code")));
+				m.setU_name(rset.getString("u_name"));
+				m.setU_id(rset.getString("u_id"));
+				m.setU_type(rset.getString("type"));
+				m.setDrop_yn(rset.getString("drop_yn"));
+				
+				mList.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return mList;
+
 	}
 
 }

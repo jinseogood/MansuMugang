@@ -35,6 +35,7 @@ public class MemberService {
 		return loginUser;
 	}
 
+
 	public int idCheck(String uid) {
 		Connection con = getConnection();
 		
@@ -53,6 +54,16 @@ public class MemberService {
 		close(con);
 		
 		return result;
+  }
+	public ArrayList<Member> selectMemberList() {
+		Connection con=getConnection();
+		
+		ArrayList<Member> mList=new MemberDao().selectMemberList(con);
+		
+		close(con);
+		
+		return mList;
+
 	}
 
 }
