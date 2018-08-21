@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	int bno = (int)request.getAttribute("bno");
+	String bdate = (String)request.getAttribute("b_date");
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +83,7 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/test1",
+               url : "<%= request.getContextPath() %>/imgUpload.bo",
                cache : false,
                contentType : false,
                processData : false,
@@ -101,7 +106,7 @@ margin-right : auto;
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "/tt1/img", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -138,12 +143,15 @@ margin-right : auto;
 
 </head>
 <body>
+
 <!-- 게시판 쓰기 -->
 	<div id = "jjff">
 <%@ include file = "../../common/menubar.jsp" %>
 	
 	</div>
+<%if(loginUser != null && loginUser.getU_name().equals("관리자")){ %>
 	<div id='wrap' align = 'left'>
+	
 		<!-- 구분 -->
 		<!-- 게시판 헤더 시작 -->
 		<!-- <table align='center' cellpadding="0" cellspacing="0" border="0">
@@ -168,7 +176,7 @@ margin-right : auto;
 						<td width="300"><input type='text' class='form-control'
 							name="btitle" width="300"></td>
 						<td  width = '50' align = 'center' id = 'tdbg'>작성일</td>
-						<td width = "100" align = 'center'>dscxx</td>
+						<td width = "100" align = 'center'><%= bdate %></td>
 					</tr>
 					<tr height="10">
 						<td colspan='2' width="700"></td>
@@ -267,5 +275,10 @@ margin-right : auto;
 	<div id="mainBottom">
 	<%@include file = "../../common/footer.jsp" %>
 	</div>
+	
+	<%}else{ 
+		request.setAttribute("msg", "잘못된 경로");
+		request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	}%>
 </body>
 </html>

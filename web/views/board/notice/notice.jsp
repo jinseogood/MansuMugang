@@ -173,7 +173,7 @@ div #offi {
 		<!-- 게시판 끝 -->
 	</table>
 	<div id = 'btnlist' align = "right">
-	<button id = 'insert' class="btn btn-primary btn-sm" onclick = 'location.href = "/msmg/views/board/notice/boradWrite.jsp"'>작성</button>
+	<button id = 'insert' class="btn btn-primary btn-sm" onclick = 'location.href = "<%= request.getContextPath() %>/insertBoard.bo"'>작성</button>
 	</div>
 	<div id="container">
 		<button onclick = 'location.href = "<%=request.getContextPath()%>/noticeList.no?currentPage=1"'><<</button>
