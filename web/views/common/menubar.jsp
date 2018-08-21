@@ -101,6 +101,11 @@
 		text-decoration:underline;
 		color:darkgray;
 	}
+	
+	#informationB:hover {
+		cursor:pointer;
+		color:gray;
+	}
 </style>
 </head>
 <body>
@@ -150,8 +155,9 @@
 				<a href="/msmg/views/foodPlan/menu_plan.jsp">식단짜기</a>
 			</div>
 			<div id="submenuTitle">
-				<a href="/msmg/views/board/information/informationBoard.jsp">정보게시판</a>
-				<br><br><br>
+				<div id="informationB" onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">정보게시판</div>
+				<!-- <a href="/msmg/views/board/information/informationBoard.jsp">정보게시판</a> -->
+				<br><br>
 				<a href="/msmg/views/board/review/reviewThumbnailList.jsp">후기게시판</a>
 			</div>
 			<div id="submenuTitle">

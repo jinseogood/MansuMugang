@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*" %>
+<% 
+	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist");
+	
+	Board b = (Board)request.getAttribute("b");
+   
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판 만들기</title>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
@@ -124,6 +130,20 @@ div[id=date-writer-hit2] {
 		height:200px;
 }
 
+#replyAddBtn{
+	cursor:pointer;
+}
+
+#replyAddArea table{
+	border-top:1px solid #e83f26;
+	border-bottom:1px solid #e83f26;
+}
+
+#replyComment {
+	border-left:1px solid #e83f26;
+	border-right:1px solid #e83f26;
+}
+
 </style>
 </head>
 <body>
@@ -133,67 +153,91 @@ div[id=date-writer-hit2] {
 	<div id="outer">
 		<table class="bbs-table">
 			<tr>
-				<th style="text-align: left; color: #555; text-align: center;">테스트</th>
+				<th style="text-align: left; color: #555; text-align: center;"><%=b.getTitle() %></th>
 			</tr>
 		</table>
 		<div id="detail">
 			<div id="date-writer-hit2">
-				<span> 2018 08-07 17:50:30 &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp;
-					hit 1330
-				</span> <span id="date-writer-hit">작성자 l 관리자</span>
+				<span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
+				&nbsp;&nbsp;
+				<span>날짜 : <%=b.getBoardDate() %> &nbsp;&nbsp;&nbsp;</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>조회수 : <%= b.getbCount() %></span>
 			</div>
-			<div id="article-content"></div>
+				
+			<div id="article-content"><%= b.getContent() %></div>
 		
-	<div id="comment" style="margin-top:10px; text-align:center">
+		
+	
+	<div id="replyArea" style="margin-top:10px; text-align:center">
+	<div id="replayWriteArea">
 		<table border="1" bordercolor="#e83f26" height="50px">
-			<tr>
-				<!-- 아이디, 작성날짜 -->
-				<td width="150">
-					<!-- <div></div> -->
-				</td>
-				<!-- 댓글 내용 -->
-				<td width="550">
-					<!-- <div></div> -->
-				</td>
-				<td width="150">
-					<!-- <div id="btn" style="text-align:center;"> -->
-						<a href="#">답변</a>
-						<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->
-							<a href="#">수정</a>
-							<a href="#">삭제</a>
-					<!-- </div> -->
-				</td>
-			</tr>
 			<tr bgcolor="#ff9788">
 			<form id="writeCommentForm">
-				<!-- <input name="comment_board"/>
-				<input name="comment_id"/> -->
-				<!-- 아이디 -->
-				<td width="150">
-					<!-- <div></div> -->
+				<td width="100">
 				</td>
-				<!-- 본문 작성 -->
-				<td width="550">
-					<!-- <div></div> -->
-						<textarea name = "comment_content" rows="4" cols="70"></textarea>
+				<td width="600">
+						<input type="text" id="replyContent" name = "replyContent">
 				</td>
 				<td width="100">
-					<!-- <div id="btn" style="text-align:center;"> -->
-						<p><a href="#" onclick="writeCmt()">댓글등록</a></p>
-					<!-- </div> -->
+						<div id="replyAddBtn">댓글등록</div>
+						
 				</td>
 			</form>
-			
 			</tr>
 		</table>
+	</div>
 	
+	<br>
+	<div id="replyAddArea">
+	<table height="35px" id="replyAddTable">
+				<tr>
+				<td width="100">
+				</td>
+				<td id="replyComment" width="600">
+				</td>
+				<td width="100">
+						<a href="#">답변</a>
+							<a href="#">수정</a>
+							<a href="#">삭제</a>
+				</td>
+				</tr>
+		</table>
+		</div>
 	</div>
-
-
-
-
-
 	</div>
+	
+	<script>
+	$(function(){
+		$("#replyAddBtn").click(function(){
+			var writter = <%= loginUser.getU_code() %>
+			var bid = <%= b.getBoardId()%>
+			var content = $("#replyContent").val();
+			
+			console.log(writter)
+			console.log(bid)
+			console.log(content)
+			
+			$.ajax({
+				url:"/msmg/insertReply.bo",
+				data:{writter:writter,
+					  content:content,
+					  bid:bid},
+				type:"post",
+				success:function(data){
+					console.log(data);
+					$("#replyAddTable").append("<tr><td>"+data[0].u_code+"</td>")
+					
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
+	</script>
+
+
 	<div id='whiptable'>
 		<table id='whip'>
 			<tr style="border-top: 1px solid #e83f26;">
@@ -208,7 +252,6 @@ div[id=date-writer-hit2] {
 				<td align="center"><a href="#">다음글 입니다</a></td>
 				<td>2018-08-07</td>
 			</tr>
-
 		</table>
 	</div>
 	<br>
@@ -216,9 +259,12 @@ div[id=date-writer-hit2] {
 
 	<div class="btnlist">
 		<button class="btn btn-default befo btn-sm"
-			onclick="location.href='../board/informationBoard.jsp'">이전으로</button>
+			onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">이전으로</button>
+		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
 		<button class="btn btn-default ddl btn-sm">삭제</button>
 		<button class="btn btn-default ddl btn-sm" onclick="location.href='../information/informationModify.jsp'">수정</button>
+		<%} %>
+		
 	</div>
 </div>
 
