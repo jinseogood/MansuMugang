@@ -232,7 +232,7 @@ public class BoardDao {
 				list.add(r);
 			}
 			
-		} catch (SQLException e) { 
+		} catch (SQLException e) {  
 			e.printStackTrace();
 		} finally {
 			close(pstmt);

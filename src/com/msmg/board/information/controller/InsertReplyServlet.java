@@ -45,7 +45,7 @@ public class InsertReplyServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		new Gson().toJson(replyList, response.getWriter()); 
 		
-		
+		 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

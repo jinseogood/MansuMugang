@@ -73,7 +73,7 @@ public class BoardService {
 
 	public ArrayList<Reply> insertReply(Reply r) {
 		Connection con = getConnection();
-		ArrayList<Reply> replyList = null; 
+		ArrayList<Reply> replyList = null;  
 		
 		int result = new BoardDao().insertReply(con,r);
 		
