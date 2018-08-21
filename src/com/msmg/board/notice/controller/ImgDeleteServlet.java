@@ -1,9 +1,7 @@
 package com.msmg.board.notice.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Random;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.board.notice.model.service.NoticeService;
 
 /**
- * Servlet implementation class InsertBoardServlet
+ * Servlet implementation class ImgDeleteServlet
  */
-@WebServlet("/insertBoard.bo")
-public class InsertBoardServlet extends HttpServlet {
+@WebServlet("/imgDelete.bo")
+public class ImgDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertBoardServlet() {
+    public ImgDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,21 +29,25 @@ public class InsertBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int result = new NoticeService().insertBoard();
+		String src = request.getParameter("src");
+		String data = request.getParameter("data");
+		String root = request.getSession().getServletContext().getRealPath("/");
+		String[] srcArr = src.split("/");
 		
-		String page = "";
+		System.out.println(src);
 		
-		if(result > 0){
-		page = "/views/board/notice/boradWrite.jsp";
-		request.setAttribute("bno", result);
-		}else{
-			page = "../../common/errorPage.jsp";
-			request.setAttribute("msg", "글쓰기 에러");
+		String fileName = "";
+		
+		for(int i = 0; i < srcArr.length; i++){
+			fileName = srcArr[i];
 		}
 		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-	
+		int result = new NoticeService().deleteImg(fileName);
+		
+		String savePath = root + "attach_file/pic_file/";
+		
+		File deleteFile = new File(savePath + fileName);
+		deleteFile.delete();
 	}
 
 	/**

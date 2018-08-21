@@ -1,6 +1,6 @@
 package com.msmg.board.notice.model.dao;
 
-import static com.msmg.common.JDBCTemplate.close;
+import static com.msmg.common.JDBCTemplate.*;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
+import com.msmg.board.notice.model.vo.Attachment;
 import com.msmg.board.notice.model.vo.Notice;
 
 public class NoticeDao {
@@ -140,32 +141,160 @@ public class NoticeDao {
 			return result;
 		}
 	}
-	public String selectDate(Connection conn) {
+	
+	public int insertAttachment(Connection conn, Attachment at) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getBoard_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			
+		}
+		
+		return result;
+	}
+	public int deleteImg(Connection conn, String fileName) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, fileName);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public int updateBoard(Connection conn, Notice no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, no.getTitle());
+			pstmt.setString(2, no.getContent());
+			pstmt.setInt(3, no.getBoard_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public int selectCurrval(Connection conn) {
 		Statement stmt = null;
 		ResultSet rset = null;
+		int bid = 0;
 		
-		String query = prop.getProperty("selectDate");
-		
-		String datenow = "";
+		String query = prop.getProperty("selectCurrval");
 		
 		try {
 			stmt = conn.createStatement();
-			
 			rset = stmt.executeQuery(query);
 			
-			
 			if(rset.next()){
-				datenow = rset.getString(1);
+				bid = rset.getInt("currval");
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+			
+		}
+		
+		
+		return bid;
+	}
+	public int updateAttachment(Connection conn, ArrayList<Attachment> fileList) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	public int updatePhotho(Connection conn, int bno, int randbno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePhoto");
+		System.out.println(bno);
+		System.out.println(randbno);
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, randbno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public int insertDocument(Connection conn, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertDocument");
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++){
+				System.out.println(fileList.get(i).getOriginName());
+				System.out.println(fileList.get(i).getChangeName());
+				System.out.println(fileList.get(i).getFilePath());
+				System.out.println(fileList.get(i).getBoard_no());
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, fileList.get(i).getOriginName());
+			pstmt.setString(2, fileList.get(i).getChangeName());
+			pstmt.setString(3, fileList.get(i).getFilePath());
+			pstmt.setInt(4, fileList.get(i).getBoard_no());
+			
+			result = pstmt.executeUpdate();
+			
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
-		return datenow;
+		return result;
 	}
 
 }
