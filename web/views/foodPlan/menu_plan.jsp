@@ -374,7 +374,7 @@ body {
 					<img src="/msmg/images/foodPlan/under_less.PNG">
 				</div>
 				<br>
-				
+				 
 				<div class="next next_block" id="n4" onclick="showDiv(this);">
 					<img src = "/msmg/images/button/cheoumbutton.png">
 				</div>
