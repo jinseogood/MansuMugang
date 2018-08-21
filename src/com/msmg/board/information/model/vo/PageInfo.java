@@ -6,7 +6,7 @@ public class PageInfo implements java.io.Serializable{
 	private int limit;
 	private int maxPage;
 	private int startPage;
-	private int endPage;  
+	private int endPage;
 	
 	public PageInfo() {}
 	

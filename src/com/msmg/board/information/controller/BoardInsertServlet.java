@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.board.information.model.service.BoardService;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.member.model.vo.Member;
-  
+
 @WebServlet("/insert.bo")
 public class BoardInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

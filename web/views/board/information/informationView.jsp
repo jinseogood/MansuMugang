@@ -228,7 +228,7 @@ div[id=date-writer-hit2] {
 					console.log(data);
 					$("#replyAddTable").append("<tr><td>"+data[0].u_code+"</td>")
 					
-				},  
+				},
 				error:function(data){
 					console.log("실패");
 				}

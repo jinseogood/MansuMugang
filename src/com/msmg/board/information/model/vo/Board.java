@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Board implements java.io.Serializable{
 	private int boardId;
-	private int boardNo;  
+	private int boardNo;
 	private String boardSort;
 	private String title;
 	private String content;
