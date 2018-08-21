@@ -124,7 +124,7 @@ div a {
 					<tbody>
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" name="userId"> <button class="w3-button w3-ripple w3-yellow">중복확인</button></td>
+							<td><input type="text" id="userId" name="userId"><div class="w3-button w3-ripple w3-yellow" id="idCheck">중복확인</div></button></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
@@ -150,85 +150,85 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="난류(계란)" id="eggs">
+										<input type="checkbox" name="allergy" value="A1" id="eggs">
 										<label for="eggs">난류(계란)</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="우유" id="milk">
+										<input type="checkbox" name="allergy" value="A2" id="milk">
 										<label for="milk">우유</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="메밀" id="memil">
+										<input type="checkbox" name="allergy" value="A3" id="memil">
 										<label for="memil">메밀</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="땅콩" id="peanut">
+										<input type="checkbox" name="allergy" value="A4" id="peanut">
 										<label for="peanut">땅콩</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="대두" id="bean">
+										<input type="checkbox" name="allergy" value="A5" id="bean">
 										<label for="bean">대두</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="밀" id="wheat">
+										<input type="checkbox" name="allergy" value="A6" id="wheat">
 										<label for="wheat">밀</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="고등어" id="mackerel">
+										<input type="checkbox" name="allergy" value="A7" id="mackerel">
 										<label for="mackerel">고등어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="게" id="crab">
+										<input type="checkbox" name="allergy" value="A8" id="crab">
 										<label for="crab">게</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="돼지고기" id="pork">
+										<input type="checkbox" name="allergy" value="A9" id="pork">
 										<label for="pork">돼지고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="복숭아" id="peach">
+										<input type="checkbox" name="allergy" value="A10" id="peach">
 										<label for="peach">복숭아</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="토마토" id="tomato">
+										<input type="checkbox" name="allergy" value="A11" id="tomato">
 										<label for="tomato">토마토</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="새우" id="shrimp">
+										<input type="checkbox" name="allergy" value="A12" id="shrimp">
 										<label for="shrimp">새우</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="호두" id="walnut">
+										<input type="checkbox" name="allergy" value="A13" id="walnut">
 										<label for="walnut">호두</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="닭고기" id="chicken">
+										<input type="checkbox" name="allergy" value="A14" id="chicken">
 										<label for="chicken">닭고기</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="쇠고기" id="beef">
+										<input type="checkbox" name="allergy" value="A15" id="beef">
 										<label for="beef">쇠고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="오징어" id="squid">
+										<input type="checkbox" name="allergy" value="A16" id="squid">
 										<label for="squid">오징어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="조개류" id="clam">
+										<input type="checkbox" name="allergy" value="A17" id="clam">
 										<label for="clam">조개류</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="아황산류" id="acid">
+										<input type="checkbox" name="allergy" value="A18" id="acid">
 										<label for="acid">아황산류</label>
 									</td>	
 								</tr>
@@ -308,5 +308,29 @@ div a {
 	<div id="mainBottom">
 		<%@ include file="../common/footer.jsp" %>
 	</div>
+	<script>
+	$(function(){
+		$("#idCheck").click(function(){
+			var userId = $("#userId").val();
+			console.log(userId);
+			$.ajax({
+				url:"/msmg/idCheck.me",
+				type:"post",
+				data:{userId:userId},
+				success:function(data){
+					console.log(data);
+					if(data == "fail"){
+						alert("아이디가 중복됩니다.");
+					}else{
+						alert("사용 가능합니다.")
+					}
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
+	</script>
 </body>
 </html>

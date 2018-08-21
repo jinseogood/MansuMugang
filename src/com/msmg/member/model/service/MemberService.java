@@ -2,6 +2,7 @@ package com.msmg.member.model.service;
 
 import com.msmg.member.model.dao.MemberDao;
 import com.msmg.member.model.vo.Member;
+import com.msmg.member.model.vo.UserAllergy;
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -10,17 +11,17 @@ import java.util.ArrayList;
 
 public class MemberService {
 
-	public int insertMember(Member m) {
+	public Member insertMember(Member m) {
 		Connection con = getConnection();
 		
-		int result = new MemberDao().insertMember(con, m);
+		Member member = new MemberDao().insertMember(con, m);
 		
-		if(result > 0) commit(con);
+		if(member != null) commit(con);
 		else rollback(con);
 		
 		close(con);
 		
-		return result;
+		return member;
 		
 	}
 
@@ -34,6 +35,26 @@ public class MemberService {
 		return loginUser;
 	}
 
+
+	public int idCheck(String uid) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().idCheck(con, uid);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int insertAllergy(ArrayList<UserAllergy> list, Member m) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().insertAllergy(con, list, m);
+		
+		close(con);
+		
+		return result;
+  }
 	public ArrayList<Member> selectMemberList() {
 		Connection con=getConnection();
 		
@@ -42,6 +63,7 @@ public class MemberService {
 		close(con);
 		
 		return mList;
+
 	}
 
 }
