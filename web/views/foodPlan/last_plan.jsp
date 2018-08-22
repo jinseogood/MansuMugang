@@ -3,7 +3,7 @@
 <%
 	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
 	SelectFood sf = (SelectFood)request.getAttribute("sf");
-	int e;
+	String s = "";
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -174,7 +174,7 @@
 				<h1><%= sf.getDay()%>일 <%= sf.getGgi() %>끼의 식단표</h1>
 				<br>
 		<div class = "tableArea">
-			<table align = "center">
+			<table id="test" align = "center">
 				<%
 				int rand=0;
 				for(int j = 0 ; j < sf.getDay() ; j++){ %>
@@ -190,9 +190,11 @@
 					%>
 					
 					
-						<td id = "menu_chan" class = "menu_info" height = "25px" data-toggle="modal" data-target="#myModal">
-							<%= list.get(rand).getName() %>
+						<%-- <td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" onclick="show('<%= list.get(rand).getName() %>')"> --%>
+						<td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" width = "130px">
+							<div id = "mc" value = ""><%= list.get(rand).getName() %></div>		
 							<div class="menu_text">
+							
 								<table align = "center">
 									<tr>
 										<td colspan = "3" width = "200px">
@@ -212,10 +214,10 @@
 									</tr>
 									<tr>
 										<td colspan = "3"><%= list.get(rand).getInfo()%></td>
-										<% e = rand; %>
 									</tr>
 									
 								</table>
+
 							</div>
 						</td>
 					<% } %>
@@ -255,8 +257,15 @@
         <div class="modal-body">
           <% for(int b = 0 ; b < list.size() ; b++){ 
           %>
+          		<div>
 				<input type="radio" name="menu_change" value="<%= list.get(b).getName() %>" id="l<%= b %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getImg_name() %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getMain_grad() %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getSub_grad() %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getPrice() %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getInfo() %>">
 				<label for="l<%= b %>"><%= list.get(b).getName() %></label>	
+				</div>
 		  <% } %>
         </div>
         
@@ -270,34 +279,59 @@
 </div>
 </form>
 	<script>
-	$(document).ready(function () {
-	$("#OK_btn").click(function(){
-	        var name= $('input[name="menu_change"]:checked').val();
-		/* $.ajax({
-			url:"changeFood.fo",
-			data:{userIndex:userIndex},
-			type:"get",
-			success:function(data){
-				console.log(data);
-				
-				var resultText = "";
-				 
-				for(var key in data){
-					var user = data[key];
-					
-					resultText += user.userNo + ", ";
-					resultText += decodeURIComponent(user.userName) + ", ";
-					resultText += decodeURIComponent(user.userNation) + ", ";
-				}
-				
-				$("#p4").text(resultText);
-			},
-			error:function(data){
-				console.log("실패!");
-			}
-		});  */
+	/* $(document).ready(function () {
+	
+	}); */
+	var t;
+	$("#test tr td").click(function(){     
+
+        $("#myModal").modal('show');
+ 
+        t = $(this);
+        
+        $("#OK_btn").click(function(){
+    		var name = $('input[name="menu_change"]:checked').val();
+    	        t.children().eq(0).text(name);
+    	        
+    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(1).val();
+    	    	t.children().eq(1).children().eq(0).children().eq(0).children().eq(0).children().eq(0).children().eq(0).attr("src", "<%=request.getContextPath() %>/images/food/" + img_name);
+    	    var main_grad = $('input[name="menu_change"]:checked').parents().children().eq(2).val();
+    	   		t.children().eq(1).find("table").children().eq(2).children().eq(0).val(main_grad);
+    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(3).val();
+    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(4).val();
+    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(5).val();
+  
+    	    	$("#myModal").modal('hide');
+        });
+        
+        
 	});
+	
+	/* function show(str){ 
+		console.log(str);
+		//console.log(this);
+		var test=$("#menu_chan").text();
+		console.log(test);
+	    $("#myModal").modal('show');
+	    var name1 = $("#l0").val();
+	    var name2 = $("#l1").val();
+	    var name3 = $("#l2").val();
+	    if(str==$("#l0").val())
+	  		$("#l0").attr("checked", true);
+	  	if(str==$("#l1").val())
+	  		$("#l1").attr("checked", true);
+	  	if(str==$("#l2").val())
+	  		$("#l2").attr("checked", true);
+	    
+	    $("#OK_btn").click(function(){
+		var name = $('input[name="menu_change"]:checked').val();
+	        $("#myModal").modal('hide');
+	        console.log(name);
+	        $(this).text(name);
 	});
+  	
+	} */
+
 </script>
 
 	<div class="mainBottom hidden-xs hidden-sm hidden-md">
