@@ -5,7 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.admin.model.vo.Menu;
@@ -52,6 +55,39 @@ public class MenuDao {
 		}
 		
 		return result;
+	}
+
+
+	public ArrayList<Menu> selectMenuList(Connection con) {
+		ArrayList<Menu> menuList=new ArrayList<Menu>();
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectMenuList");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			while(rset.next()){
+				Menu m=new Menu();
+				
+				m.setMenuCode(rset.getString("menu_code"));
+				m.setMenuName(rset.getString("menu_name"));
+				m.setMainMat(rset.getString("menu_main"));
+				m.setSubMat(rset.getString("menu_sub"));
+				m.setPrice(rset.getInt("price"));
+				
+				menuList.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return menuList;
 	}
 
 }
