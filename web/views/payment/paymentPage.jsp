@@ -224,15 +224,15 @@ section {
 				</div>
 			</section>
 
-<%-- 			<section>
+ 			<section>
 				<h1>주문자 정보</h1>
 				<div class="tbl-header table1">
 					<table cellpadding="0" cellspacing="0" border="0">
 						<thead>
 							<tr>
 								<th>이름</th>
-								<th>연락처</th>
-								<th>이메일</th>
+								<!-- <th>연락처</th> -->
+								<th>ID/이메일</th>
 							</tr>
 						</thead>
 					</table>
@@ -241,14 +241,14 @@ section {
 					<table cellpadding="0" cellspacing="0" border="0">
 						<tbody>
 							<tr>
-								<td id="buyer_name"><%= loginUser.getU_name() %></td>
-								<td id="buyer_tel">연락처</td>
-								<td id="buyer_email">이메일</td>
+								<td><%= loginUser.getU_name() %></td>
+								<%-- <td id="buyer_tel"><%= loginUser. %></td> --%>
+								<td><%= loginUser.getU_id() %></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			</section> --%>
+			</section>
 
 			<section>
 				<h1>배송지 정보</h1>
@@ -257,6 +257,7 @@ section {
 					<table cellpadding="0" cellspacing="0" border="0">
 						<tbody>
 							<tr>
+							
 								<th bgcolor=tomato>배송지선택</th>
 								<td colspan="4">
 									<button class="w3-button w3-ripple w3-yellow">목록</button> <span>※
@@ -283,20 +284,17 @@ section {
 									
 									<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 									<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-
+								<form id="addrrs" action="<%=request.getContextPath()%>/insertDestination.pm" method="post">
 									<div>
 										<input type="text" name="addr1" readonly class="postcodify_address" size="60" maxlength="50" id="buyer_addr1"> 
 										<input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2">
 										<input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3">
-									
+										<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
 									    <!-- <input type="text" name="id"><input type="checkbox" id="idSaveCheck"> -->
-									    
-									    
-									    
-									
 									</div>
+								</form>
 									<div style="padding: 5px 0;" class="checks">
-										<input type="checkbox" name="changeDefAdd" id="AddrSaveCheck">
+										<input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">
 										<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장</label>
 									</div>
 								</td>
@@ -380,7 +378,9 @@ section {
 			</section>
 			
 			<!-- 사용이나 전부 사용 누르면 그만큼 금액 깎여서 총 금액에 뜨게 하기 -->
+			
 
+			
 
 			<section>
 				<h1>결제금액</h1>
@@ -434,15 +434,22 @@ section {
 </div>
 			</div>
 			
-			
 
 			<br> <br>
 
 			<div class="final_button" align="center">
 				<button class="w3-button w3-ripple w3-yellow">이전 단계로 이동</button>
-				<button onclick="requestPay()" class="w3-button w3-ripple w3-yellow">
-					결제하기</button>
+				<button onclick="requestPay()" class="w3-button w3-ripple w3-yellow"> 결제하기</button>
 			</div>
+			
+			
+			<script>
+				
+				
+			
+			</script>
+			
+			
 
 			<script>
 		
@@ -504,9 +511,10 @@ section {
 																				name : "노르웨이 회전 의자",
 																				amount : 100,
 																				buyer_email : $('#buyer_email').val(),
-																				buyer_name : $('#buyer_name').val(),
+																				buyer_name : $('#receiver').val(),
 																				buyer_tel : $('#buyer_tel').val(),
-																				buyer_addr : $('#buyer_addr').val(),
+																				buyer_addr : $("#addrrs").val(),
+																				
 																				buyer_postcode : $('#postcode').val(),
 
 																			},
@@ -527,9 +535,17 @@ section {
 																										}
 																									})
 																							.done(
-																									function(
-																											data) {
+																									/* function(data) {
 																										location.href = "paymentConfirm.jsp"
+																									}) */
+																									function(data) {
+																										
+																										if($("#AddrSaveCheck").is(":checked")){
+																											$("#addrrs").submit();
+																										} else {
+																											location.href = "paymentConfirm.jsp";
+																										}
+	
 																									})
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: "
@@ -559,71 +575,27 @@ section {
 			});
 		</script>
 
-
 <script>
-$(document).ready(function(){
-    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-    var userInputAddr = getCookie("userInputAddr");
-    $("input[name='addr1']").val(userInputAddr); 
-     
-    if($("input[name='addr1']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-        $("#AddrSaveCheck").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-    }
-     
-    $("#AddrSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
-        if($("#AddrSaveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
-            var userInputId = $("input[name='addr1']").val();
-            setCookie("userInputAddr", userInputAddr, 7); // 7일 동안 쿠키 보관
-        }else{ // ID 저장하기 체크 해제 시,
-            deleteCookie("userInputAddr");
-        }
-    });
-     
-    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-    $("input[name='addr1']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-        if($("#AddrSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-            var userInputId = $("input[name='name1']").val();
-            setCookie("userInputAddr", userInputAddr, 7); // 7일 동안 쿠키 보관
-        }
-    });
-});
- 
-function setCookie(cookieName, value, exdays){
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
-}
- 
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-}
- 
-function getCookie(cookieName) {
-    cookieName = cookieName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cookieName);
-    var cookieValue = '';
-    if(start != -1){
-        start += cookieName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cookieValue = cookieData.substring(start, end);
-    }
-    return unescape(cookieValue);
-}
+<%-- <input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">
+<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장</label>
+
+<input type="text" name="addr1" readonly class="postcodify_address" size="60" maxlength="50" id="buyer_addr1"> 
+<input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2">
+<input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3">
+<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>> --%>
+
+	
+
 </script>
 
-<script>
+
+
+<!-- <script>
 $(document).ready(function(){
     // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
     var userInputId = getCookie("userInputId");
-    $("input[name='id']").val(userInputId); 
-     
-    if($("input[name='id']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-        $("#idSaveCheck").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    $("input[name='id']").val(userInputId);        
+        
     }
      
     $("#idSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
@@ -633,7 +605,7 @@ $(document).ready(function(){
         }else{ // ID 저장하기 체크 해제 시,
             deleteCookie("userInputId");
         }
-    });
+    });  
      
     // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
     $("input[name='id']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
@@ -670,7 +642,7 @@ function getCookie(cookieName) {
     }
     return unescape(cookieValue);
 }
-</script>
+</script> -->
 
 			<br> <br> <br> <br> <br> <br> <br>
 			<br> <br> <br>
