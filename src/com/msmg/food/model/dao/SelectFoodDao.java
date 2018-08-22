@@ -71,6 +71,7 @@ public class SelectFoodDao {
 				m.setMain_grad(rset.getString("menu_main"));
 				m.setSub_grad(rset.getString("menu_sub"));
 				m.setPrice(rset.getInt("price"));
+				m.setMenu_code(rset.getString("menu_code"));
 				
 				list.add(m);
 			}

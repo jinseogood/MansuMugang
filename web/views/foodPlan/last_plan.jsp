@@ -3,7 +3,7 @@
 <%
 	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
 	SelectFood sf = (SelectFood)request.getAttribute("sf");
-	String s = "";
+	int total_price = 0;
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -189,13 +189,13 @@
 						rand = r.nextInt(list.size());
 					%>
 					
-					
+					    
 						<%-- <td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" onclick="show('<%= list.get(rand).getName() %>')"> --%>
 						<td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" width = "130px">
 							<div id = "mc" value = ""><%= list.get(rand).getName() %></div>		
 							<div class="menu_text">
 							
-								<table align = "center">
+								<table align = "center" id = "menu_table<%= j %><%= i %>">
 									<tr>
 										<td colspan = "3" width = "200px">
 											<img id="Img" 
@@ -211,6 +211,8 @@
 										<td><%= list.get(rand).getMain_grad()%></td>
 										<td><%= list.get(rand).getSub_grad()%></td>
 										<td><%= list.get(rand).getPrice()%></td>
+										<input type = "hidden" name="" value = "<%= rand %>">
+										<% total_price += list.get(rand).getPrice();%>
 									</tr>
 									<tr>
 										<td colspan = "3"><%= list.get(rand).getInfo()%></td>
@@ -239,7 +241,7 @@
 			<div class = "btn2"><a href = "#">
 				<img src = "/msmg/images/button/basketbutton.png">
 			</a></div>
-			<div class = "btn2"><a href = "#">
+			<div class = "btn2 throw"><a href = "#">
 				<img src = "/msmg/images/button/paybutton.png">
 			</a></div>
 	</div>
@@ -264,6 +266,7 @@
 				<input type = "hidden" name="" value = "<%= list.get(b).getSub_grad() %>">
 				<input type = "hidden" name="" value = "<%= list.get(b).getPrice() %>">
 				<input type = "hidden" name="" value = "<%= list.get(b).getInfo() %>">
+				<input type = "hidden" name="" value = "<%= b %>">
 				<label for="l<%= b %>"><%= list.get(b).getName() %></label>	
 				</div>
 		  <% } %>
@@ -283,54 +286,68 @@
 	
 	}); */
 	var t;
-	$("#test tr td").click(function(){     
+    var first_price = Number(<%= total_price %>);
+	
+	$("#test tr:odd td").click(function(){     
 
         $("#myModal").modal('show');
  
         t = $(this);
         
-        $("#OK_btn").click(function(){
+		var last_price;
+		var p;
+		var seq;
+        $("#OK_btn").off().click(function(){
     		var name = $('input[name="menu_change"]:checked').val();
     	        t.children().eq(0).text(name);
     	        
     	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(1).val();
     	    	t.children().eq(1).children().eq(0).children().eq(0).children().eq(0).children().eq(0).children().eq(0).attr("src", "<%=request.getContextPath() %>/images/food/" + img_name);
     	    var main_grad = $('input[name="menu_change"]:checked').parents().children().eq(2).val();
-    	   		t.children().eq(1).find("table").children().eq(2).children().eq(0).val(main_grad);
-    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(3).val();
-    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(4).val();
-    	    var img_name = $('input[name="menu_change"]:checked').parents().children().eq(5).val();
-  
-    	    	$("#myModal").modal('hide');
+    	   		t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(0).text(main_grad);
+    	    var sub_grad = $('input[name="menu_change"]:checked').parents().children().eq(3).val();
+    	 		t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(1).text(sub_grad);
+    	    var	price = $('input[name="menu_change"]:checked').parents().children().eq(4).val();
+    	  		p = t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(2).text();
+    	  	    t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(2).text(price);
+    	    var info = $('input[name="menu_change"]:checked').parents().children().eq(5).val();
+    	  	    t.children().eq(1).children().eq(0).children().eq(0).children().eq(3).children().eq(0).text(info);
+    	  	    seq = $('input[name="menu_change"]:checked').parents().children().eq(6).val();    
+    	  		t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val(seq);
+    	  		
+    	    $("#myModal").modal('hide');
+			last_price = first_price + Number(price) - Number(p);
+			first_price = last_price;
+
+			console.log(first_price);
+			console.log(seq);
         });
         
-        
 	});
-	
-	/* function show(str){ 
-		console.log(str);
-		//console.log(this);
-		var test=$("#menu_chan").text();
-		console.log(test);
-	    $("#myModal").modal('show');
-	    var name1 = $("#l0").val();
-	    var name2 = $("#l1").val();
-	    var name3 = $("#l2").val();
-	    if(str==$("#l0").val())
-	  		$("#l0").attr("checked", true);
-	  	if(str==$("#l1").val())
-	  		$("#l1").attr("checked", true);
-	  	if(str==$("#l2").val())
-	  		$("#l2").attr("checked", true);
-	    
-	    $("#OK_btn").click(function(){
-		var name = $('input[name="menu_change"]:checked').val();
-	        $("#myModal").modal('hide');
-	        console.log(name);
-	        $(this).text(name);
+	$(function(){
+		$(".throw").click(function(){
+			var day = <%= sf.getDay() %>;
+			var ggi = <%= sf.getGgi() %>;
+			var side = <%= sf.getSide() %>;
+			var go = <%= sf.getGo() %>;
+			var dang = <%= sf.getDang() %>;
+			var head = <%= sf.getHead() %>;
+			var total_price = first_price;
+			console.log(total_price);
+		
+			var num = $("#test").children().eq(0).children().eq(3).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();
+			                                                    /*1, 3, 5       0, 1, 2*/
+			/* for(var i = 1 ; i < 2; i++){
+				for(var j = 0 ; j < 1; j++){
+					var num = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();		
+																		//1, 3, 5       0, 1, 2
+				}
+			}   */
+			
+			console.log(num);
+			<%-- location.href="<%= request.getContextPath()%>/selectOne.tn?result=" + result;  --%>
+		});
 	});
-  	
-	} */
 
 </script>
 
