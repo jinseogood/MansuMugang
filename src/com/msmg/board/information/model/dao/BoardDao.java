@@ -5,6 +5,7 @@ import static com.msmg.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,7 +123,7 @@ public class BoardDao {
 		return listCount;
 	}
 
-	public Board selectOne(Connection con, String num) {
+	public Board selectOne(Connection con, String bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Board b = null;
@@ -131,13 +132,14 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(num));
+			pstmt.setInt(1, Integer.parseInt(bid));
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				b = new Board();
 				
+				b.setBoardSort(rset.getString("board_sort"));
 				b.setBoardId(rset.getInt("board_id"));
 				b.setBoardNo(rset.getInt("board_no"));
 				b.setTitle(rset.getString("title"));
@@ -159,7 +161,7 @@ public class BoardDao {
 		return b;
 	}
 
-	public int updateCount(Connection con, String num) {
+	public int updateCount(Connection con, String bid) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -167,8 +169,8 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(num));
-			pstmt.setInt(2, Integer.parseInt(num));
+			pstmt.setInt(1, Integer.parseInt(bid));
+			pstmt.setInt(2, Integer.parseInt(bid));
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -241,6 +243,52 @@ public class BoardDao {
 		}
  		
 		return list;
+	}
+
+	public int updateBoard(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getTitle());
+			pstmt.setString(2, b.getContent());
+			pstmt.setDate(3, b.getBoardDate());
+			pstmt.setInt(4, b.getBoardId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int deleteBoard(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
