@@ -153,6 +153,9 @@ body {
 #sidebar a{
 	text-decoration:none;
 }
+a{
+text-decoration:none;
+}
 </style>
 </head>
 <body>
@@ -176,6 +179,7 @@ body {
 			<h1>회원정보수정</h1>
 
 			<div class="tbl-content table1" align="center">
+			<form name="form" action="<%= request.getContextPath() %>/insertMember.me" method="post">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
 						
@@ -288,8 +292,8 @@ body {
 							</table>
 						</tr>
 								</table>
+								</form>
 								</tr>
-							</table>
 						<td colspan="2">
 						<div class="clear"></div>
 							<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/index.jsp">취소하기</a></div>
@@ -297,7 +301,7 @@ body {
 						</td>
 					</tr>
 					</tbody>
-				</table>
+			
 			</div>
 		</section>
 	</div>

@@ -142,7 +142,7 @@ div a {
 	</div>
 	<div id="main" align="center">
 		<section>
-			<form action="<%= request.getContextPath() %>/insertMember.me" method="post">
+			<form name="f" action="<%= request.getContextPath() %>/insertMember.me" method="post">
 			<div class="tbl-content table1" align="center">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
@@ -156,15 +156,15 @@ div a {
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
-							<td><input type="password" name="userPwd"></td>
+							<td><input type="password" name="userPwd" id="userPwd"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호 확인<span class="red">*</span></th>
-							<td><input type="password"></td>
+							<td><input type="password" name="userPwd1" id="userPwd1"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>이름</th>
-							<td><input type="text" name="userName"></td>
+							<td><input type="text" name="userName" id="userName"></td>
 						</tr>
 						<br>
 						<tr>
@@ -270,9 +270,9 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="chk" value="1">
+										<input type="checkbox" name="chk" value="1" id="1">
 										<label for="1">만수무강 이용약관(필수)</label>
-										<div class="tooltip">상세보기
+										<div class="tooltip">
  										 <span class="tooltiptext">
     									이용약관<br>
 
@@ -296,9 +296,9 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="chk" value="2">
+										<input type="checkbox" name="chk" value="2" id="2">
 										<label for="2">개인정보 수집 및 이용에 대한 안내(필수)</label>
-										<div class="tooltip">상세보기
+										<div class="tooltip">
  										 <span class="tooltiptext">
     									1. 개인정보 수집에 대한 동의 <br>
 동물사랑APS은 이용자의 개인정보보호방침 또는 이용약관의 내용에 대해 「동의합니다」버튼 또는 「동의하지 않습니다」버튼을 클릭할 수 있는 절차를 마련하여, 「동의합니다」버튼을 클릭하면 개인정보 수집에 대해 동의한 것으로 봅니다.<br>
@@ -322,9 +322,9 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="chk" value="3">
+										<input type="checkbox" name="chk" value="3" id="3">
 										<label for="3">개인정보 처리 업무의 위탁에 대한 안내(필수)</label>
-										<div class="tooltip">상세보기
+										<div class="tooltip">
  										 <span class="tooltiptext">
     									개인정보 처리 업무의 위탁<br>
 <br>
@@ -343,9 +343,9 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="chk" value="4">
+										<input type="checkbox" name="chk" value="4" id="4">
 										<label for="4">개인정보 제 3자 제공 동의에 대한 안내(선택)</label>
-										<div class="tooltip">상세보기
+										<div class="tooltip">
  										 <span class="tooltiptext">
     									개인정보 제3자 제공<br>
 <br>
@@ -357,7 +357,7 @@ div a {
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="chk" value="5">
+										<input type="checkbox" name="chk" value="5" id="5">
 										<label for="5">정보전달을 위한 개인정보 이용 안내(선택)</label>
 									</td>
 								</tr>
@@ -365,15 +365,15 @@ div a {
 								<table>
 									<tr>
 										<td>
-											<input type="checkbox" name="chk" value="6">
+											<input type="checkbox" name="chk" value="6" id="6">
 											<label for="email">이메일</label>
 										</td>
 										<td>
-											<input type="checkbox" name="chk" value="7">
+											<input type="checkbox" name="chk" value="7" id="7">
 											<label for="sns">SNS(알림메시지)</label>
 										</td>
 										<td>
-											<input type="checkbox" name="chk" value="8">
+											<input type="checkbox" name="chk" value="8" id="8">
 											<label for="tel">전화</label>
 										</td>
 									</tr>
@@ -383,8 +383,10 @@ div a {
 							</form>
 						<td colspan="2">
 						<div class="clear"></div>
-							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성">
-							<input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기">
+							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성하기">
+							<!-- <input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기" onclick="validation();"> -->
+							<button onclick="validation();" class="w3-button w3-ripple w3-yellow">가입하기</button>
+
 						</td>
 					</tr>
 					</tbody>
@@ -430,66 +432,89 @@ div a {
 		});
 	});
 		
+	function validation(){
+		var userId = $('#userId').val();
+		var userPwd = $('#userPwd').val();
+		var userPwd1 = $('#userPwd1').val();
+		var userName = $('#usreName').val();
+		var terms1 = $('#1:checked').val();
+		var terms2 = $('#2:checked').val();
+		var terms3 = $('#3:checked').val();
+		
+		if(userId == ""){
+			alert("아이디(이메일)를 입력해주세요.");
+		}else{
+			if(userPwd == ""){
+				alert("비밀번호를 입력해주세요.");
+			}else{
+				if(userPwd != userPwd1){
+					alert("비밀번호가 일치하지 않습니다.");
+				}else{
+					if(userName == ""){
+						alert("이름을 입력해주세요");
+					}else{
+						if(terms1 != 'on' && terms2 != 'on' && term3 != 'on'){
+							alert("필수약관에 동의해주세요.");
+						}
+					}
+				}
+			}
+		}}
 				
-	//유효성검사
-	function sendIt() {
-        var email = document.f.my_add.value;
+	/* 
+	  function sendIt() {
+        var email = document.f.userId.value;
         var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-         var jumin1 = document.f.my_num.value.substr(0,6);
-          var jumin2 =document.f.my_num.value.substr(6,7);
-          var yy     = jumin1.substr(0,2);        // 년도
-          var mm     = jumin1.substr(2,2);        // 월
-          var dd     = jumin1.substr(4,2);        // 일
-          var genda  = jumin2.substr(0,1);        // 성별
-          var msg, ss, cc;
+        var msg, ss, cc;
           
-          if (document.f.my_add.value == "") {
+          if (document.f.userId.value == "") {
               alert("이메일을 입력하지 않았습니다.")
-              document.f.my_add.focus()
+              document.f.userId.focus()
               return false;
           }
           
    
           if (regex.test(email) === false) {
               alert("잘못된 이메일 형식입니다.");
-              document.f.my_add.value=""
-              document.f.my_add.focus()
+              document.f.userId.value=""
+              document.f.userId.focus()
               return false;
-          }
-        //비밀번호 입력여부 체크
-        if (document.f.my_pwd.value == "") {
+          } 
+          
+       
+        if (document.f.userPwd.value == "") {
             alert("비밀번호를 입력하지 않았습니다.")
-            document.f.my_pwd.focus()
+            document.f.userPwd.focus()
             return false;
         }
-        if (f.my_pwd.value == f.my_id.value) {
+        if (f.userPwd.value == f.userId.value) {
             alert("아이디와 비밀번호가 같습니다.")
-            document.f.my_pwd.focus()
+            document.f.userPwd.focus()
             return false;
-        }
-        //비밀번호 길이 체크(4~8자 까지 허용)
-        if (document.f.my_pwd.value.length<4 || document.f.my_pwd.value.length>12) {
+        } 
+       
+        if (document.f.userPwd.value.length<4 || document.f.userPwd.value.length>12) {
             alert("비밀번호를 4~12자까지 입력해주세요.")
-            document.f.my_pwd.focus()
-            document.f.my_pwd.select()
+            document.f.userPwd.focus()
+            document.f.userPwd.select()
             return false;
-        }
+        } 
  
-        //비밀번호와 비밀번호 확인 일치여부 체크
-        if (document.f.my_pwd.value != document.f.my_pwd1.value) {
+        
+        if (document.f.userPwd.value != document.f.userPwd1.value) {
             alert("비밀번호가 일치하지 않습니다")
-            document.f.my_pwd1.value = ""
-            document.f.my_pwd1.focus()
+            document.f.userPwd1.value = ""
+            document.f.userPwd1.focus()
             return false;
         }
-        if (document.f.my_name.value == "") {
+        if (document.f.userName.value == "") {
             alert("이름을 입력하지 않았습니다.")
-            document.f.my_name.focus()
+            document.f.userName.focus()
             return false;
         }
-        if(document.f.my_name.value.length<2){
+        if(document.f.userName.value.length<2){
             alert("이름을 2자 이상 입력해주십시오.")
-            document.f.my_name.focus()
+            document.f.userName.focus()
             return false;
         }
 		
@@ -502,14 +527,16 @@ div a {
           }
            
           function isSSN(s1, s2) {
-            n = 2;
-            sum = 0;
-            for (i=0; i<s1.length; i++)
+             n = 2;
+             sum = 0;
+            for (i=0; i<s1.length; i++){
               sum += parseInt(s1.substr(i, 1)) * n++;
+            }
             for (i=0; i<s2.length-1; i++) {
               sum += parseInt(s2.substr(i, 1)) * n++;
               if (n == 10) n = 2;
             }
+          
             
             c = 11 - sum % 11;
             if (c == 11) c = 1;
@@ -518,9 +545,9 @@ div a {
             else return true;
    
           document.f.submit()
-      }
-
-
+   	  }}
+  */
+ 
 	</script>
 </body>
 </html>
