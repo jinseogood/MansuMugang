@@ -134,6 +134,23 @@ public class BoardService {
 		return result;
 	}
 
+	public int selectWrite(String ucode) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new BoardDao().selectWrite(con, ucode);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 	
 	
 
