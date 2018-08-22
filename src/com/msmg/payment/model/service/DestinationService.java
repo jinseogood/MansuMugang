@@ -1,9 +1,12 @@
 package com.msmg.payment.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+
 
 import com.msmg.payment.model.dao.DestinationDao;
 import com.msmg.payment.model.vo.Destination;
+
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -22,5 +25,17 @@ public class DestinationService {
 		return result;
 		
 	}
+
+	public ArrayList<Destination> selectList(String u_code) {
+		Connection con = getConnection();
+		
+		ArrayList<Destination> list = new DestinationDao().selectList(con, u_code);
+		
+		close(con); 
+		
+		return list;
+	}
+	
+
 
 }

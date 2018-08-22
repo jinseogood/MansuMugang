@@ -1,6 +1,9 @@
 package com.msmg.payment.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +14,16 @@ import com.msmg.payment.model.service.DestinationService;
 import com.msmg.payment.model.vo.Destination;
 
 /**
- * Servlet implementation class InsertDelivery
+ * Servlet implementation class SelectDestinationListServlet
  */
-@WebServlet("/insertDestination.pm")
-public class InsertDestinationServlet extends HttpServlet {
+@WebServlet("/selectList.pm")
+public class SelectDestinationListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertDestinationServlet() {
+    public SelectDestinationListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,29 +32,20 @@ public class InsertDestinationServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String postcode = request.getParameter("postcode");
-		String destination1 = request.getParameter("addr1");
-		String destination2 = request.getParameter("addr2");
-		String destination3 = request.getParameter("addr3");
-		String finDest = "";
-		String ucode = request.getParameter("u_code");
+		
+		String u_code = request.getParameter("u_code");
+		
+		ArrayList<Destination> list = new DestinationService().selectList(u_code);
+		System.out.println(list);
+		String page = "";
 		
 		
-		if(destination1 != null && destination2 != null && destination3 != null){
-			finDest = postcode + "{*}" + destination1 + "{*}" + destination2 + "{*}" + destination3;
-		};
-
-		Destination d = new Destination();
-		d.setDestionation(finDest);
-		d.setU_code(ucode);
+		page = "views/payment/paymentPage.jsp";
+		request.setAttribute("list", list);
 		
-		int result = new DestinationService().insertDestination(d);
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
-		if (result > 0){
-			response.sendRedirect("views/payment/paymentConfirm.jsp");
-		} 
-
 	}
 
 	/**
