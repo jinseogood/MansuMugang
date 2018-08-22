@@ -146,9 +146,22 @@ margin-right : auto;
        
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
+    	   alert(values);
     	   $("#smnoteval").val(values);
+    	   alert($("#smnoteval").val());
+    	   if($("#attachfile1").val() == ""){
+    		   $("#attachfile1").remove();
+    	   }
+    	   if($("#attachfile2").val() == ""){
+    		   $("#attachfile2").remove();
+    	   }
+    	   if($("#attachfile3").val() == ""){
+    		   $("#attachfile3").remove();
+    	   }
     	   
     	   
+    	   
+    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateBoard.bo?bno=<%= bno %>');
        }
    </script>
 
@@ -183,7 +196,7 @@ margin-right : auto;
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
 		<div id="container">
-			<form id = 'frm' method = 'post' encType = "multipart/form-data" action = "<%= request.getContextPath() %>/updateBoard.bo?bno=<%= bno %>">
+			<form id = 'frm' method = 'post' encType = "multipart/form-data">
 				<table align='center' cellpadding="0" cellspacing="0" border="0"
 					id='memo'>
 					<tr class='title'>
@@ -198,7 +211,8 @@ margin-right : auto;
 					</tr>
 					<tr class='title'>
 						<td width = '700' colspan = '4'>
-							<div id = 'summernote' name = "content"></div>
+							<div id = 'summernote'></div>
+							<input type = 'hidden' id = 'smnoteval' class = 'smnoteval' name = 'smnoteval'>
 						</td>
 						
 					</tr>
@@ -213,7 +227,6 @@ margin-right : auto;
 							<input type = 'file' id = 'attachfile1' name = 'attachfile1' multiple onchange = "loadImg(this)">
 							<input type = 'file' id = 'attachfile2' name = 'attachfile2' style = "padding-top : 5px; padding-bottom : 5px;" multiple onchange = "loadImg(this)">
 							<input type = 'file' id = 'attachfile3' name = 'attachfile3' multiple onchange = "loadImg(this)">
-							<input type = 'hidden' id = 'smnoteval' class = 'smnoteval'>
 						</div>
 						<br>
 						<input type = 'button' value = "추가" onclick = 'addbtn()'>&nbsp;<input type = 'button' value = "삭제" onclick = "delbtn()">
