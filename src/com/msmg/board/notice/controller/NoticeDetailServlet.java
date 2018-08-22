@@ -1,6 +1,8 @@
 package com.msmg.board.notice.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +34,26 @@ public class NoticeDetailServlet extends HttpServlet {
 		String bid = request.getParameter("board_id");
 		
 		Notice no = new NoticeService().selectOne(bid);
+		Notice preNo = new NoticeService().selectPreNo(bid);
+		Notice nextNo = new NoticeService().selectNextNo(bid);
+		
+		
+		System.out.println("nno : " +  nextNo);
+		String page = "";
+		
+		if(no != null){
+			page = "/views/board/notice/readBoard.jsp";
+			request.setAttribute("no", no);
+			request.setAttribute("preNo", preNo);
+			request.setAttribute("nextNo", nextNo);
+			
+		}else{
+			page = "../../common/errorPage.jsp";
+			request.setAttribute("msg", "글쓰기 에러");
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**

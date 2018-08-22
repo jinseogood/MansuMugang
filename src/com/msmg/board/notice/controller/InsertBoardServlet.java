@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.board.notice.model.service.NoticeService;
+import com.msmg.member.model.vo.Member;
 
 /**
  * Servlet implementation class InsertBoardServlet
@@ -31,7 +32,9 @@ public class InsertBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int result = new NoticeService().insertBoard();
+		int ucode = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
+		
+		int result = new NoticeService().insertBoard(ucode);
 		
 		String page = "";
 		

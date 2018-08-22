@@ -107,13 +107,40 @@ public class NoticeDao {
 	public Notice selectOne(Connection conn, String bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		Notice no = null;
 		
 		String query = prop.getProperty("selectOne");
 		
-		return null;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(bid));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				no = new Notice();
+				
+				no.setBoard_id(rset.getInt("board_id"));
+				no.setTitle(rset.getString("title"));
+				no.setContent(rset.getString("content"));
+				no.setB_count(rset.getInt("b_count"));
+				no.setBoard_date(rset.getDate("board_date"));
+				no.setU_name(rset.getString("u_name"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return no;
 	}
 	
-	public int insertBoard(Connection conn) {
+	public int insertBoard(Connection conn, int ucode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		int rand = new Random().nextInt(1000) + 1;
@@ -123,7 +150,8 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, rand);
+			pstmt.setInt(1, ucode);
+			pstmt.setInt(2, rand);
 			
 			result = pstmt.executeUpdate();
 			
@@ -237,10 +265,6 @@ public class NoticeDao {
 		
 		return bid;
 	}
-	public int updateAttachment(Connection conn, ArrayList<Attachment> fileList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	public int updatePhotho(Connection conn, int bno, int randbno) {
 		PreparedStatement pstmt = null;
@@ -295,6 +319,122 @@ public class NoticeDao {
 		}
 		
 		return result;
+	}
+	public int selectPhoto(Connection conn, int randbno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectPhoto");
+		
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, randbno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+	public int updateCount(Connection conn, String bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCount");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(bid));
+			pstmt.setInt(2, Integer.parseInt(bid));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public Notice selectPreNo(Connection conn, String bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice no = null;
+		
+		String query = prop.getProperty("selectPreNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(bid));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				no = new Notice();
+				
+				no.setBoard_id(rset.getInt("board_id"));
+				no.setTitle(rset.getString("title"));
+				no.setBoard_date(rset.getDate("board_date"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return no;
+	}
+	
+	public Notice selectNextNo(Connection conn, String bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice no = null;
+		
+		String query = prop.getProperty("selectNextNo");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bid);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				System.out.println("들어옴");
+				no = new Notice();
+				
+				no.setBoard_id(rset.getInt("board_id"));
+				no.setTitle(rset.getString("title"));
+				no.setBoard_date(rset.getDate("board_date"));
+			}
+			
+			System.out.println("dao nno : " + no);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return no;
 	}
 
 }

@@ -45,26 +45,26 @@ public class NoticeListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = new NoticeService().getListCount();
+		int listCount = new NoticeService().getListCount(); //15
 		
 		listLimit = 10;
 		pageLimit = 5;
 		
 		maxPage = (int)((double)listCount / listLimit + 0.9);
+		System.out.println("maxpage = " + maxPage);
 		
 		startPage = ((int)((double)currentPage / pageLimit + 0.8) - 1) * pageLimit + 1;
-		
-		endPage = startPage + 10 - 1;
-		
+		System.out.println("startPage : " + startPage);
+		endPage = startPage + pageLimit - 1;
+		System.out.println("endPage : " + endPage);
 		if(maxPage < endPage){
 			endPage = maxPage;
 		}
-		
+		System.out.println("maxPage : " + maxPage);
 		PageInfo pi = new PageInfo(currentPage, listCount, listLimit, pageLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Notice> list = new NoticeService().selectList(currentPage, pageLimit);
+		ArrayList<Notice> list = new NoticeService().selectList(currentPage, listLimit);
 		
-		System.out.println(list.size());
 		
 		String page = "";
 		

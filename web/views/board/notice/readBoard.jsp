@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import = "com.msmg.board.notice.model.vo.*"%>
+<%
+	Notice no = (Notice)request.getAttribute("no");
+	Notice preNo = (Notice)request.getAttribute("preNo");
+	Notice nextNo = (Notice)request.getAttribute("nextNo");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,28 +139,32 @@ div[id=date-writer-hit2] {
 			</table>
 			<div id="detail">
 				<div id="date-writer-hit2">
-					<span> 2018-08-07 17:50:30 &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp;
-						hit 1330
-					</span> <span id="date-writer-hit">작성자 l 관리자</span>
+					<span> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp;
+						hit <%= no.getB_count() %></span>
+					 <span id="date-writer-hit">작성자 l <%= no.getU_name() %></span>
 				</div>
-				<div id="article-content"></div>
+				<div id="article-content"><%= no.getContent() %></div>
 			</div>
 		</div>
 		<div id='whiptable'>
 			<table id='whip'>
+			<% if(preNo != null){ %>
 				<tr style="border-top: 1px solid #92B91C;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 						이전글</td>
-					<td align="center" width='700'><a href="#">이전글 입니다</a></td>
-					<td width="100">2018-08-07</td>
+					<td align="center" width='700'><a href="#"><%= preNo.getTitle() %></a></td>
+					<td width="100"><%= preNo.getBoard_date() %></td>
 				</tr>
+			<%} %>
+			<%if(nextNo != null){ %>
 				<tr>
 					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 						다음글</td>
-					<td align="center"><a href="#">다음글 입니다</a></td>
-					<td>2018-08-07</td>
+					<td align="center"><a href="#"><%= nextNo.getTitle() %></a></td>
+					<td><%= nextNo.getBoard_date() %></td>
 				</tr>
-
+			<%} %>
+			
 			</table>
 		</div>
 		<br>
