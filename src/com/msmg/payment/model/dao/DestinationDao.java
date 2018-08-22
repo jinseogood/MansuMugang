@@ -4,7 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.payment.model.vo.Destination;
@@ -49,4 +51,82 @@ public class DestinationDao {
 		return result;
 		
 	}
+
+	public Destination selectOne(Connection con, String u_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Destination d = null;
+		
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, u_code);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				d = new Destination();
+				
+				d.setDestionation(rset.getString("destination"));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return d;
+		
+		
+	}
+
+	public ArrayList<Destination> selectList(Connection con, String u_code) {
+
+		ArrayList<Destination> list = new ArrayList<Destination>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1,  u_code);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				Destination d = new Destination();
+				
+				d.setDestionation(rset.getString("destination"));
+				
+				list.add(d);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+		
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
 }
