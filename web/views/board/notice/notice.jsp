@@ -127,15 +127,15 @@ div #offi {
 
 		<!-- s : 게시판 타이틀 -->
 		<tr
-			style="background: url('/msmg/images/board/table_mid.png') /* #E8E8E8 */ repeat-x;">
-			<td width="5"><img src="/msmg/images/board/table_left.png" width="5"
+			style="background: url('/msmg/images/board/table_mid2.png') /* #E8E8E8 */ repeat-x; height : 30px;">
+			<td width="5"><img src="/msmg/images/board/table_left1.png" width="5" style = "background : no-repeat;"
 				height="30" /></td>
 			<td width="73"><span>번호</span></td>
 			<td width="630"><span>제목</span></td>
 			<td width="73"><span>작성자</span></td>
 			<td width="164"><span>작성일</span></td>
 			<td width="58"><span>조회수</span></td>
-			<td width="7"><img src="/msmg/images/board/table_right.png" width="5"
+			<td width="7"><img src="/msmg/images/board/table_right1.png" width="5"  style = "background : no-repeat;"
 				height="30" /></td>
 		</tr>
 		<!-- e : 게시판 타이틀 -->
@@ -148,7 +148,7 @@ div #offi {
 		<tr id='content'>
 			<td></td>
 			<td><%= n.getBoard_no() %></td>
-			<td><a href = "<%= request.getContextPath() %>/noticeDetail.bo?board_id=<%=n.getBoard_id() %>"><%= n.getTitle()  %></a></td>
+			<td><a href = "<%= request.getContextPath() %>/noticeDetail.bo?board_no=<%=n.getBoard_no() %>"><%= n.getTitle()  %></a></td>
 			<td><%= n.getU_name() %></td>
 			<td><%= n.getBoard_date() %></td>
 			<td><%= n.getB_count() %></td>
@@ -167,7 +167,7 @@ div #offi {
 		<!-- e: 게시글 테스트 영역 끝 -->
 
 		<!-- 게시판 끝 -->
-		<tr bgcolor="#82B5DF" style="height: 1px;">
+		<tr bgcolor="#ff6347" style="height: 1px;">
 			<td colspan="6"></td>
 		</tr>
 		<!-- 게시판 끝 -->

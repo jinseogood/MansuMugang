@@ -31,14 +31,14 @@ public class NoticeService {
 		return list;
 	}
 
-	public Notice selectOne(String bid) {
+	public Notice selectOne(String bno) {
 		Connection conn = getConnection();
 		Notice no = null;
 		
-		int result = new NoticeDao().updateCount(conn, bid);
+		int result = new NoticeDao().updateCount(conn, bno);
 		
 		if(result > 0){
-			no = new NoticeDao().selectOne(conn, bid);
+			no = new NoticeDao().selectOne(conn, bno);
 			
 			if(no != null){
 				commit(conn);
@@ -146,24 +146,87 @@ public class NoticeService {
 		return result;
 	}
 
-	public Notice selectPreNo(String bid) {
+	public Notice selectPreNo(String bno) {
 		Connection conn = getConnection();
 		
-		Notice preNo = new NoticeDao().selectPreNo(conn, bid);
+		Notice preNo = new NoticeDao().selectPreNo(conn, bno);
 		
 		close(conn);
 		
 		return preNo;
 	}
 
-	public Notice selectNextNo(String bid) {
+	public Notice selectNextNo(String bno) {
 		Connection conn = getConnection();
 		
-		Notice nextNo = new NoticeDao().selectNextNo(conn, bid);
+		Notice nextNo = new NoticeDao().selectNextNo(conn, bno);
 		
 		close(conn);
 		
 		return nextNo;
+	}
+
+	public ArrayList<Attachment> selectAttachment(String bno) {
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = new NoticeDao().selectAttachment(conn, bno);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public Attachment downloadFile(String editName) {
+		Connection conn = getConnection();
+		
+		Attachment file = new NoticeDao().selectOneAttachment(conn, editName);
+		
+		close(conn);
+		
+		return file;
+	}
+
+	public Notice selectOneEdit(String num) {
+		Connection conn = getConnection();
+		
+		Notice no = new NoticeDao().selectOneEdit(conn, num);
+		
+		close(conn);
+		
+		return no;
+	}
+
+	public int editNotice(Notice no, ArrayList<Attachment> fileList) {
+		Connection conn = getConnection();
+		System.out.println("글수정");
+		int result = new NoticeDao().editBoard(conn, no);
+		System.out.println("db파일 삭제");
+		int result2 = new NoticeDao().deleteDocument(conn, no.getBoard_no());
+		System.out.println("db파일 입력");
+		if(fileList.size() > 0){
+			int result3 = new NoticeDao().insertDocument(conn, fileList);
+		}
+		
+		if(result > 0){
+			commit(conn);
+		}else{
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result;
+	}
+
+	public ArrayList<String> selectChangeName(int bno) {
+		Connection conn = getConnection();
+		
+		ArrayList<String> list = new NoticeDao().selectChangeName(conn, bno);
+		
+		close(conn);
+		
+		return list;
 	}
 
 }
