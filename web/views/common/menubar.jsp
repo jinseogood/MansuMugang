@@ -113,7 +113,7 @@
 	<% 
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
-			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a href = "views/member/EditMyInformation.jsp"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
+			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
 	<% 
 		}else if(loginUser != null && loginUser.getU_id().equals("admin")){
 	%>

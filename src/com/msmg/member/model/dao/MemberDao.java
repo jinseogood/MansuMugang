@@ -205,4 +205,42 @@ public class MemberDao {
 
 	}
 
+	public ArrayList<UserAllergy> selectAlList(Connection con, UserAllergy al) {
+		ArrayList<UserAllergy> alList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("userAllergy Dao");
+		
+		String query = prop.getProperty("selectUserAllergy");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, al.getU_code());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				alList = new ArrayList<UserAllergy>();
+				UserAllergy a = new UserAllergy();
+				
+				a.setAl_code(rset.getString("al_code"));
+				a.setU_code(rset.getString("u_code"));
+				a.setUser_al_no(rset.getString("user_al_no"));
+				
+				alList.add(a);
+				
+				System.out.println("dao에서 " + alList);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return alList;
+	}
+
 }
