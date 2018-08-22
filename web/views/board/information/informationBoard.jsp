@@ -222,7 +222,10 @@ div #offi {
 			<% if(loginUser != null) {%>
 			<div id='btnlist' align="right" style="margin-top:10px;">
 				<button id="writeBtn"type="button" class="btn btn-success"
-					onclick='location.href = "/msmg/views/board/information/informationWrite.jsp"'>글작성</button>
+					onclick='location.href = "<%=request.getContextPath()%>/selectWrite.bo"'>글작성</button>
+					
+				<!--백업 <button id="writeBtn"type="button" class="btn btn-success"
+					onclick='location.href = "/msmg/views/board/information/informationWrite.jsp"'>글작성</button> -->
 			</div>
 			<%} %>
 			

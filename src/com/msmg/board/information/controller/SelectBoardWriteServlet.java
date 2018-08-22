@@ -10,53 +10,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.board.information.model.service.BoardService;
-import com.msmg.board.information.model.vo.Board;
 import com.msmg.member.model.vo.Member;
 
-@WebServlet("/insert.bo")
-public class BoardInsertServlet extends HttpServlet {
+@WebServlet("/selectWrite.bo")
+public class SelectBoardWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public BoardInsertServlet() {
+    public SelectBoardWriteServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String uCode = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
-		String num = request.getParameter("num");
+		String ucode = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
 		
-		System.out.println(title);
-		System.out.println(content);
-		System.out.println(uCode);
-		System.out.println(num);
+		System.out.println(ucode);
 		
-		Board b = new Board();
-		b.setTitle(title);
-		b.setContent(content);
-		b.setuCode(uCode);
-		b.setBoardNo(Integer.parseInt(num));
-		
-		
-		int result = new BoardService().insertBoard(b);
-		System.out.println("result :" + result);
-		
+		int result = new BoardService().selectWrite(ucode);
+		System.out.println("Servlet result : " + result);
 		
 		String page = "";
 		
 		if(result > 0) {
-			response.sendRedirect(request.getContextPath() + "/selectList.bo");
-			
+			page = "/views/board/information/informationWrite.jsp";
+			request.setAttribute("random", result);
 		}else {
+			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 작성 실패!");
-			request.getRequestDispatcher("views/common/errorPage.js").forward(request, response);
 		}
 		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
+		
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

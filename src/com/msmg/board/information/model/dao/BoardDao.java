@@ -5,13 +5,13 @@ import static com.msmg.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Random;
 
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.information.model.vo.Reply;
@@ -34,13 +34,13 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		
 		String query = prop.getProperty("insertBoard");
+		System.out.println("Bao : " + b);
 		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, b.getTitle());
 			pstmt.setString(2, b.getContent());
-			pstmt.setString(3, b.getuCode());
-			
+			pstmt.setInt(3, b.getBoardNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -49,6 +49,7 @@ public class BoardDao {
 			close(pstmt);
 		}
 		
+		System.out.println("DaoboardNo : " + b.getBoardNo());
 		return result;
 	}
 
@@ -291,4 +292,30 @@ public class BoardDao {
 		return result;
 	}
 
+	public int selectWrite(Connection con, String ucode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		int random = new Random().nextInt(1000) + 1;
+		
+		String query = prop.getProperty("selectWrite");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, random);
+			pstmt.setString(2, ucode);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		if(result > 0) {
+			return random;
+		}else {
+			return 0;
+		}
+	}
 }

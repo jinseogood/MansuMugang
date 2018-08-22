@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*"%>
+<% int num = (int)request.getAttribute("random"); %>
+
 
 <!DOCTYPE>
 <html>
@@ -163,6 +165,7 @@ hr {
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
 		<br>
 		<form action="<%=request.getContextPath() %>/insert.bo" method="post">
+		
 		<div id="view">
 			<table id="tableView">
 				<tr id="tableView2">
@@ -171,7 +174,8 @@ hr {
 						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px;"></td>
 					<td class="titleN" id="date" name="date">작성일</td>
 					<td id="date2"><%= df.format(new Date()) %></td>
-					<td input="hidden" value="<%=loginUser.getU_name()%>">
+					<td><input type="hidden" value="<%=loginUser.getU_name()%>"></td>
+					<td><input type="hidden" name="num" value="<%=num %>"></td>
 				</tr>
 			</table>
 			
