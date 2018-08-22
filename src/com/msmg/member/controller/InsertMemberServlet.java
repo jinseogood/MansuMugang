@@ -45,9 +45,7 @@ public class InsertMemberServlet extends HttpServlet {
 				System.out.println(list);
 			}
 		}
-		
-		
-		
+
 		int result = new MemberService().insertAllergy(list, m);
 		
 		String page = "";

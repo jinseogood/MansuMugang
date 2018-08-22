@@ -1,0 +1,52 @@
+package com.msmg.payment.model.dao;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import com.msmg.payment.model.vo.Destination;
+import static com.msmg.common.JDBCTemplate.*;
+
+public class DestinationDao {
+	private Properties prop = new Properties();
+	
+	public DestinationDao(){
+		String fileName = DestinationDao.class.getResource("/sql/destination/destination-query.properties").getPath();
+		
+		try {
+			prop.load(new FileReader(fileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public int insertDestination(Connection con, Destination d) {
+		Destination destination = null;
+		PreparedStatement pstmt = null;
+
+		int result = 0;
+		
+		String query = prop.getProperty("insertDestination");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, d.getDestionation());
+			pstmt.setString(2, d.getU_code());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+		
+	}
+}

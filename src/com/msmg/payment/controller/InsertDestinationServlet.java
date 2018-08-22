@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.msmg.payment.model.service.DestinationService;
+import com.msmg.payment.model.vo.Destination;
+
 /**
  * Servlet implementation class InsertDelivery
  */
-@WebServlet("/insertDelivery.pm")
-public class InsertDelivery extends HttpServlet {
+@WebServlet("/insertDestination.pm")
+public class InsertDestinationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertDelivery() {
+    public InsertDestinationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,14 +30,27 @@ public class InsertDelivery extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String destination = request.getParameter("")
-		private String destionation;
-		private String u_code;
+		String destination1 = request.getParameter("addr1");
+		String destination2 = request.getParameter("addr2");
+		String destination3 = request.getParameter("addr3");
+		String finDest = "";
+		String ucode = request.getParameter("u_code");
 		
-		int dest_no = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
-		String userName = request.getParameter("userName");
-		String[] alCode = request.getParameterValues("allergy");
+		
+		if(destination1 != null && destination2 != null && destination3 != null){
+			finDest = destination1 + "\\" + destination2 + "\\" + destination3;
+		};
+
+		Destination d = new Destination();
+		d.setDestionation(finDest);
+		d.setU_code(ucode);
+		
+		int result = new DestinationService().insertDestination(d);
+		
+		if (result > 0){
+			response.sendRedirect("views/payment/paymentConfirm.jsp");
+		} 
+
 	}
 
 	/**
