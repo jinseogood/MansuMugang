@@ -88,6 +88,7 @@ public class NoticeDao {
 				no.setContent(rset.getString("content"));
 				no.setU_name(rset.getString("u_name"));
 				no.setBoard_date(rset.getDate("board_date"));
+				no.setB_count(rset.getInt("b_count"));
 				
 				list.add(no);
 			}
@@ -126,6 +127,7 @@ public class NoticeDao {
 				no.setB_count(rset.getInt("b_count"));
 				no.setBoard_date(rset.getDate("board_date"));
 				no.setU_name(rset.getString("u_name"));
+				no.setBoard_no(rset.getInt("board_no"));
 				
 			}
 		} catch (SQLException e) {
@@ -150,8 +152,8 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, ucode);
-			pstmt.setInt(2, rand);
+			pstmt.setInt(1, rand);
+			pstmt.setInt(2, ucode);
 			
 			result = pstmt.executeUpdate();
 			
@@ -298,11 +300,9 @@ public class NoticeDao {
 		
 		try {
 			for(int i = 0; i < fileList.size(); i++){
-				System.out.println(fileList.get(i).getOriginName());
-				System.out.println(fileList.get(i).getChangeName());
-				System.out.println(fileList.get(i).getFilePath());
-				System.out.println(fileList.get(i).getBoard_no());
+				
 			pstmt = conn.prepareStatement(query);
+			
 			pstmt.setString(1, fileList.get(i).getOriginName());
 			pstmt.setString(2, fileList.get(i).getChangeName());
 			pstmt.setString(3, fileList.get(i).getFilePath());
@@ -348,16 +348,16 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public int updateCount(Connection conn, String bid) {
+	public int updateCount(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
 		String query = prop.getProperty("updateCount");
-		
+		System.out.println("updatecount bno : " + bno);
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(bid));
-			pstmt.setInt(2, Integer.parseInt(bid));
+			pstmt.setString(1, bno);
+			pstmt.setString(2, bno);
 			
 			result = pstmt.executeUpdate();
 			
@@ -370,7 +370,7 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public Notice selectPreNo(Connection conn, String bid) {
+	public Notice selectPreNo(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Notice no = null;
@@ -379,14 +379,14 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(bid));
+			pstmt.setInt(1, Integer.parseInt(bno));
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
 				no = new Notice();
 				
-				no.setBoard_id(rset.getInt("board_id"));
+				no.setBoard_no(rset.getInt("board_no"));
 				no.setTitle(rset.getString("title"));
 				no.setBoard_date(rset.getDate("board_date"));
 			}
@@ -402,7 +402,7 @@ public class NoticeDao {
 		return no;
 	}
 	
-	public Notice selectNextNo(Connection conn, String bid) {
+	public Notice selectNextNo(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Notice no = null;
@@ -411,20 +411,18 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bid);
+			pstmt.setString(1, bno);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				System.out.println("들어옴");
 				no = new Notice();
 				
-				no.setBoard_id(rset.getInt("board_id"));
+				no.setBoard_no(rset.getInt("board_no"));
 				no.setTitle(rset.getString("title"));
 				no.setBoard_date(rset.getDate("board_date"));
 			}
 			
-			System.out.println("dao nno : " + no);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -435,6 +433,190 @@ public class NoticeDao {
 		
 		
 		return no;
+	}
+	public ArrayList<Attachment> selectAttachment(Connection conn, String bno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectAttach");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				list = new ArrayList<Attachment>();
+				Attachment at = new Attachment();
+				
+				at.setBoard_no(rset.getInt("board_no"));
+				at.setBoard_sort(rset.getString("board_sort"));
+				at.setChangeName(rset.getString("edit_name"));
+				at.setFid(rset.getInt("file_no"));
+				at.setFilePath(rset.getString("file_src"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setUploadDate(rset.getDate("file_date"));
+				
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	public Attachment selectOneAttachment(Connection conn, String editName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Attachment at = null;
+		
+		String query = prop.getProperty("selectOneAttach");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, editName);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				at = new Attachment();
+				
+				at.setBoard_no(rset.getInt("board_no"));
+				at.setBoard_sort(rset.getString("board_sort"));
+				at.setChangeName(rset.getString("edit_name"));
+				at.setFid(rset.getInt("file_no"));
+				at.setFilePath(rset.getString("file_src"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setUploadDate(rset.getDate("file_date"));
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+	}
+	public Notice selectOneEdit(Connection conn, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Notice no = null;
+		
+		String query = prop.getProperty("selectOneEdit");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				no = new Notice();
+				
+				no.setBoard_id(rset.getInt("board_id"));
+				no.setBoard_no(rset.getInt("board_no"));
+				no.setContent(rset.getString("content"));
+				no.setTitle(rset.getString("title"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		
+		return no;
+	}
+	public int deleteDocument(Connection conn, int board_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteDocument");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, String.valueOf(board_no));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+	public int editBoard(Connection conn, Notice no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("editBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, no.getTitle());
+			pstmt.setString(2, no.getContent());
+			pstmt.setInt(3, no.getBoard_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	public ArrayList<String> selectChangeName(Connection conn, int bno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<String> list = new ArrayList<String>();
+		
+		String query = prop.getProperty("selectChangeName");
+		System.out.println("변화값 받아옴");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			
+			System.out.println("쿼리 수행");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				String name = rset.getString(1);
+				
+				list.add(name);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(list.size() > 0){
+			return list;
+		}else{
+			return null;
+		}
 	}
 
 }

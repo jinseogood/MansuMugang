@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "com.msmg.board.notice.model.vo.*"%>
+	pageEncoding="UTF-8" import = "com.msmg.board.notice.model.vo.*, java.util.*"%>
 <%
 	Notice no = (Notice)request.getAttribute("no");
 	Notice preNo = (Notice)request.getAttribute("preNo");
 	Notice nextNo = (Notice)request.getAttribute("nextNo");
+	 ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,7 @@ a {
 	font-size: 12px;
 	color: #555;
 	text-align: right;
-	float: left;
+	float: right;
 	margin-bottom: 4px;
 }
 
@@ -54,20 +55,21 @@ a {
 	padding: 0;
 	font-size: 12px;
 	color: #555;
-	text-align: right;
 	margin-top: 2px;
 	margin-bottom: 10px;
+	width: 1000px;
+	border-bottom: 1px solid #ff6347;
 }
 
 div[id=date-writer-hit2] {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #ff6347;
 }
 
 #article-content {
 	font-size: 0.9em;
 	color: #333;
 	min-height: 400px;
-	border-bottom: 1px solid #92B91C;
+	border-bottom: 1px solid #ff6347;
 }
 
 .bbs-table {
@@ -78,8 +80,8 @@ div[id=date-writer-hit2] {
 
 .bbs-table th {
 	color: #92B91C;
-	border-top: 1px solid #92B91C;
-	border-bottom: 1px solid #92B91C;
+	border-top: 1px solid #ff6347;
+	border-bottom: 1px solid #ff6347;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	font-size: 1.3em;
@@ -91,7 +93,7 @@ div[id=date-writer-hit2] {
 }
 
 #whip tr {
-	border-bottom: 1px solid #92B91C;
+	border-bottom: 1px solid #ff6347;
 	height: 35px;
 	font-size: 14px;
 }
@@ -124,6 +126,15 @@ div[id=date-writer-hit2] {
 	width:100%;
 }
 </style>
+<script>
+	function alertdelete(){
+		var check = window.alert("글을 삭제하시겠습니까?");
+		
+		if(chech == true)){
+			window.location = '<%=request.getContextPath() %>/deleteNotice.bo?bno=<%= no.getBoard_no()%>';
+		}
+	}
+</script>
 </head>
 <body>
 	<div id="jjff">
@@ -134,34 +145,43 @@ div[id=date-writer-hit2] {
 		<div>
 			<table class="bbs-table">
 				<tr>
-					<th style="text-align: left; color: #555; text-align: center;">테스트</th>
+					<th style=" color: #555; text-align: center;"><%= no.getTitle() %></th>
 				</tr>
 			</table>
 			<div id="detail">
 				<div id="date-writer-hit2">
-					<span> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp;
-						hit <%= no.getB_count() %></span>
-					 <span id="date-writer-hit">작성자 l <%= no.getU_name() %></span>
+					<span>작성자 &nbsp; l &nbsp; <%= no.getU_name() %></span>
+					<span id="date-writer-hit"> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= no.getB_count() %></span>
 				</div>
 				<div id="article-content"><%= no.getContent() %></div>
+				<div id ='attachArea'>
+				<%if(list != null){ %>
+				<dl>
+					<dt>첨부파일</dt>
+					<%for(Attachment at : list){ %>
+						<dd><a href = "downloadFile.bo?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
+					<%} %>
+				</dl>
+				<%} %>
+				</div>
 			</div>
 		</div>
 		<div id='whiptable'>
 			<table id='whip'>
-			<% if(preNo != null){ %>
-				<tr style="border-top: 1px solid #92B91C;">
+			<% if(nextNo != null){ %>
+				<tr style="border-top: 1px solid #ff6347;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
-						이전글</td>
-					<td align="center" width='700'><a href="#"><%= preNo.getTitle() %></a></td>
-					<td width="100"><%= preNo.getBoard_date() %></td>
+						다음글</td>
+					<td align="center" width='700'><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=nextNo.getBoard_no()%>"><%= nextNo.getTitle() %></a></td>
+					<td width="100"><%= nextNo.getBoard_date() %></td>
 				</tr>
 			<%} %>
-			<%if(nextNo != null){ %>
+			<%if(preNo != null){ %>
 				<tr>
 					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
-						다음글</td>
-					<td align="center"><a href="#"><%= nextNo.getTitle() %></a></td>
-					<td><%= nextNo.getBoard_date() %></td>
+						이전글</td>
+					<td align="center"><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=preNo.getBoard_no()%>"><%= preNo.getTitle() %></a></td>
+					<td><%= preNo.getBoard_date() %></td>
 				</tr>
 			<%} %>
 			
@@ -172,7 +192,11 @@ div[id=date-writer-hit2] {
 
 		<div class="btnlist">
 			<button class="btn btn-primary befo btn-sm"
-				onclick="location.href = '../index.jsp'">이전으로</button>
+				onclick = 'history.go(-1)'>이전으로</button>
+			<button class="btn btn-primary befo btn-sm"
+				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.bo?num=<%= no.getBoard_no() %>'">수정하기</button>
+			<button class="btn btn-primary befo btn-sm"
+				onclick = "alertDelete();">삭제하기</button>
 		</div>
 
 	</div>
