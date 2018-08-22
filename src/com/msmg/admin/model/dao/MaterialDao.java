@@ -57,16 +57,27 @@ public class MaterialDao {
 	}
 
 
-	public ArrayList<Material> selectMatList(Connection con) {
+	public ArrayList<Material> selectMatList(int currentPage, int limit, Connection con) {
 		ArrayList<Material> matList=new ArrayList<Material>();
-		Statement st=null;
+		//Statement st=null;
+		PreparedStatement pst=null;
 		ResultSet rset=null;
 		
-		String query=prop.getProperty("selectMatList");
+		//String query=prop.getProperty("selectMatList");
+		String query=prop.getProperty("selectMatListPaging");
 		
 		try {
-			st=con.createStatement();
-			rset=st.executeQuery(query);
+			//st=con.createStatement();
+			//rset=st.executeQuery(query);
+			
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			pst=con.prepareStatement(query);
+			pst.setInt(1, startRow);
+			pst.setInt(2, endRow);
+			
+			rset=pst.executeQuery();
 			
 			while(rset.next()){
 				Material m=new Material();
@@ -85,10 +96,38 @@ public class MaterialDao {
 			e.printStackTrace();
 		} finally{
 			close(rset);
-			close(st);
+			//close(st);
+			close(pst);
 		}
 		
 		return matList;
+	}
+
+
+	//페이징 처리 시 게시판 글 수 확인용 메소드
+	public int getListCount(Connection con) {
+		int listCount=0;
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("listCount");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return listCount;
 	}
 
 }

@@ -27,14 +27,24 @@ public class MaterialService {
 		return result;
 	}
 
-	public ArrayList<Material> selectMatList() {
+	public ArrayList<Material> selectMatList(int currentPage, int limit) {
 		Connection con=getConnection();
 		
-		ArrayList<Material> matList=new MaterialDao().selectMatList(con);
+		ArrayList<Material> matList=new MaterialDao().selectMatList(currentPage, limit, con);
 		
 		close(con);
 		
 		return matList;
+	}
+
+	public int getListCount() {
+		Connection con=getConnection();
+		
+		int listCount=new MaterialDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
 	}
 
 }
