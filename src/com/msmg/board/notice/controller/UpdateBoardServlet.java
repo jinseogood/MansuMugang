@@ -86,7 +86,8 @@ public class UpdateBoardServlet extends HttpServlet {
 			
 			//multipartRequest 객체에서 파일 외의 값을 가져올 수도 있다.
 			String title = multiRequest.getParameter("title");
-			String content = multiRequest.getParameter("content");
+			String content = multiRequest.getParameter("smnoteval");
+			System.out.println(content);
 			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
 			
 			//Board객체 생성
