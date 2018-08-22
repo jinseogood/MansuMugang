@@ -52,17 +52,17 @@ public class BoardService {
 		return listCount;
 	}
 
-	public Board selectOne(String num) {
+	public Board selectOne(String bid) {
 		Connection con = getConnection();
 		Board b = null;
 		int result = 0;
 		
-		result = new BoardDao().updateCount(con, num);
+		result = new BoardDao().updateCount(con, bid);
 		
 		System.out.println(result);
 		
 		if(result > 0) {
-			b = new BoardDao().selectOne(con, num);
+			b = new BoardDao().selectOne(con, bid);
 			
 			System.out.println("service:" + b);
 			
@@ -101,6 +101,37 @@ public class BoardService {
 		close(con);
 		
 		return replyList;
+	}
+
+	public int updateBoard(Board b) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().updateBoard(con,b);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		return result;
+	}
+
+	public int deleteBoard(int bid) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new BoardDao().deleteBoard(con, bid);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 
 	

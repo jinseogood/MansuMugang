@@ -160,7 +160,7 @@ hr {
 </div>
 	<div class="outer">
 		<!-- <h2 align="left"><b>정보게시판</b></h2> -->
-		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
+		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
 		<br>
 		<form action="<%=request.getContextPath() %>/insert.bo" method="post">
 		<div id="view">

@@ -28,9 +28,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
-/* body {
-	background:pink;
-} */
+
 #back {
 	width:100%;
 	height:400px;
@@ -81,10 +79,11 @@ a {
 }
 
 div[id=date-writer-hit2] {
+	width:100%;
 	border-bottom: 1px solid black;
 }
 
-#article-content {
+#content {
 	font-size: 0.9em;
 	color: #333;
 	min-height: 400px;
@@ -135,9 +134,7 @@ div[id=date-writer-hit2] {
 	cursor:pointer;
 }
 
-/* #replyAddArea table {
-	
-} */
+
 
 #replyAddTable tr td {
 	border-top:1px solid #e83f26;
@@ -145,12 +142,48 @@ div[id=date-writer-hit2] {
 }
 
 #replyAddTable td {
-	padding-left:7px;
-	padding-right:7px;
+	height:30px;
 	border-left:1px solid #e83f26;
 	border-right:1px solid #e83f26;
 }
 
+#replyContent {
+	width:600px;
+	height:50px;
+}
+
+#date {
+	font-size:12px;
+}
+
+#deleteBtn {
+	background:tomato;
+	border:none;
+}
+
+#updateBtn {
+	background:tomato;
+	border:none;
+}
+
+#viewBtn {
+	width:150px;
+	float:right;	
+}
+
+#boardList {
+	background:tomato;
+	border:none;
+}
+
+input {
+	display:block-line;
+	border:none;
+}
+
+input[type=text]{
+	width:100px;
+}
 </style>
 </head>
 <body>
@@ -160,19 +193,21 @@ div[id=date-writer-hit2] {
 	<div id="outer">
 		<table class="bbs-table">
 			<tr>
-				<th style="text-align: left; color: #555; text-align: center;"><%=b.getTitle() %></th>
+				<th style="color: #555; text-align: center;">
+				<input style="border:none; text-align:center" id="title" value="<%=b.getTitle()%>" readonly></th>
 			</tr>
 		</table>
 		<div id="detail">
 			<div id="date-writer-hit2">
-				<span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
-				&nbsp;&nbsp;
-				<span>날짜 : <%=b.getBoardDate() %> &nbsp;&nbsp;&nbsp;</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span>조회수 : <%= b.getbCount() %></span>
+				<span id="date-writer-hit">작성자 : <input type = "text" name="title" value="<%=b.getuCode()%>" readonly></span>
+				<span>날짜 : <input type = "text" value="<%=b.getBoardDate()%>" readonly></span>
+				<span>조회수 : <input type = "text" value="<%=b.getbCount()%>" readonly></span>
+				<input type="hidden" id = "date" value="<%=b.getBoardDate()%>">
 			</div>
-				
-			<div id="article-content"><%= b.getContent() %></div>
+			<div id="content" readonly><%= b.getContent() %>
+				<input type="hidden" id="content2" value="<%=b.getContent()%>" >
+				<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardId()%>">
+			</div>
 		
 		
 	
@@ -197,13 +232,14 @@ div[id=date-writer-hit2] {
 	
 	<br>
 	<div id="replyAddArea">
-		<table height="35px" id="replyAddTable">
+		<table id="replyAddTable">
 			<%for(int i=0; i < list2.size(); i++) {%>
 				<tr>
-				<td width="100px"><%= list2.get(i).getU_code() %></td>
+				<td width="100px"><%= list2.get(i).getU_code() %>
+				                  <br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px"><%= list2.get(i).getRe_content() %></td>
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-				<td width='100'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
+					<td width='100'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
 				<%} else {%>
 					<td width="100px"></td>
 				<%} %>
@@ -235,10 +271,9 @@ div[id=date-writer-hit2] {
 					console.log(data);
 					$("#replyAddTable").html("");
 					for(var i = 0; i < data.length; i++){
-						$("#replyAddTable").append("<tr><td width='100'>" + data[i].u_code+"</td><td width='600'>" + data[i].re_content + "</td>"
+						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code , data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
 								+ "<td width='100'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
 					}
-					
 				},
 				error:function(data){
 					console.log("실패");
@@ -269,20 +304,41 @@ div[id=date-writer-hit2] {
 
 
 	<div class="btnlist">
-		<button class="btn btn-default befo btn-sm"
+		<button id="boardList" class="btn btn-success"
 			onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">이전으로</button>
 		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
-		<button class="btn btn-default ddl btn-sm">삭제</button>
-		<button class="btn btn-default ddl btn-sm" onclick="location.href='../information/informationModify.jsp'">수정</button>
+			<div id="viewBtn" align="right">
+			<button id="updateBtn" type="button" class="btn btn-success" name="bid"
+				onclick="location.href='<%=request.getContextPath()%>/selectInfor.bo?num=<%=b.getBoardId()%>'">수정</button>
+			<button id="deleteBtn" type="button" class="btn btn-success">삭제</button>
+			</div>
 		<%} %>
-		
 	</div>
+	<script>
+	$(function(){
+		$("#deleteBtn").click(function(){
+			var bid = $("#bid2").val();
+			
+			$.ajax({
+				url:"/msmg/deleteInfor.bo",
+				data:{bid:bid},
+				type:"post",
+				success:function(data){
+					location.href = "/msmg/selectList.bo";
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
+	</script>
+	
 </div>
 
 <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>
 </div>
-
 
 </body>
 </html>

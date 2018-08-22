@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*"%>
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+
 	
  	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
