@@ -8,11 +8,12 @@ public class Menu implements java.io.Serializable{
 	private String main_grad;
 	private String sub_grad;
 	private int price;
+	private String menu_code;
 	
 	public Menu(){}
 
 	public Menu(String img_name, String img_src, String info, String name, String main_grad, String sub_grad,
-			int price) {
+			int price, String menu_code) {
 		super();
 		this.img_name = img_name;
 		this.img_src = img_src;
@@ -21,6 +22,7 @@ public class Menu implements java.io.Serializable{
 		this.main_grad = main_grad;
 		this.sub_grad = sub_grad;
 		this.price = price;
+		this.menu_code = menu_code;
 	}
 
 	public String getImg_name() {
@@ -82,8 +84,19 @@ public class Menu implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "Menu [img_name=" + img_name + ", img_src=" + img_src + ", info=" + info + ", name=" + name
-				+ ", main_grad=" + main_grad + ", sub_grad=" + sub_grad + ", price=" + price + "]";
+				+ ", main_grad=" + main_grad + ", sub_grad=" + sub_grad + ", price=" + price + ", menu_code="
+				+ menu_code + "]";
 	}
+
+	public String getMenu_code() {
+		return menu_code;
+	}
+
+	public void setMenu_code(String menu_code) {
+		this.menu_code = menu_code;
+	}
+
+	
 	
 	
 }
