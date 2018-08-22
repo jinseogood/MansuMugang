@@ -66,4 +66,15 @@ public class MemberService {
 
 	}
 
+	public ArrayList<UserAllergy> selectAlList(UserAllergy al) {
+		Connection con = getConnection();
+		
+		ArrayList<UserAllergy> alList = new MemberDao().selectAlList(con, al);
+		
+		close(con);
+		
+		System.out.println("알레르기 서비스");
+		return alList;
+	}
+
 }

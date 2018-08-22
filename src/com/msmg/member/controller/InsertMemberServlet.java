@@ -27,6 +27,11 @@ public class InsertMemberServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String[] alCode = request.getParameterValues("allergy");
 		
+		System.out.println(uid);
+		System.out.println(userPwd);
+		System.out.println(userName);
+		System.out.println(alCode);
+		System.out.println("비밀번호 틀렷는데 서블릿에 왓다");
 		Member m = new Member();
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
@@ -42,7 +47,7 @@ public class InsertMemberServlet extends HttpServlet {
 				ua.setU_code(Integer.toString(member.getU_code()));
 				
 				list.add(ua);
-				System.out.println(list);
+				System.out.println("알러지 리스트를 에드햇다" + list);
 			}
 		}
 

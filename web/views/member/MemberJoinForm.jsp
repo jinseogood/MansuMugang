@@ -385,7 +385,7 @@ div a {
 						<div class="clear"></div>
 							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성하기">
 							<!-- <input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기" onclick="validation();"> -->
-							<button onclick="validation();" class="w3-button w3-ripple w3-yellow">가입하기</button>
+							<button onclick="return validation();" class="w3-button w3-ripple w3-yellow">가입하기</button>
 
 						</td>
 					</tr>
@@ -432,122 +432,128 @@ div a {
 		});
 	});
 		
-	function validation(){
-		var userId = $('#userId').val();
-		var userPwd = $('#userPwd').val();
-		var userPwd1 = $('#userPwd1').val();
-		var userName = $('#usreName').val();
-		var terms1 = $('#1:checked').val();
-		var terms2 = $('#2:checked').val();
-		var terms3 = $('#3:checked').val();
-		
-		if(userId == ""){
-			alert("아이디(이메일)를 입력해주세요.");
-		}else{
-			if(userPwd == ""){
-				alert("비밀번호를 입력해주세요.");
-			}else{
-				if(userPwd != userPwd1){
-					alert("비밀번호가 일치하지 않습니다.");
-				}else{
-					if(userName == ""){
-						alert("이름을 입력해주세요");
-					}else{
-						if(terms1 != 'on' && terms2 != 'on' && term3 != 'on'){
-							alert("필수약관에 동의해주세요.");
+	
+		function validation() {
+			var userId = $('#userId').val();
+			var userPwd = $('#userPwd').val();
+			var userPwd1 = $('#userPwd1').val();
+			var userName = $('#userName').val();
+			var terms1 = $('#1:checked').val();
+			console.log(terms1);
+			var terms2 = $('#2:checked').val();
+			console.log(terms2);
+			var terms3 = $('#3:checked').val();
+			console.log(terms3);
+
+			if (userId == "") {
+				alert("아이디(이메일)를 입력해주세요."); return false;
+			} else {
+				if (userPwd == "") {
+					alert("비밀번호를 입력해주세요."); return false;
+				} else {
+					if (userPwd != userPwd1) {
+						alert("비밀번호가 일치하지 않습니다."); return false;
+					} else {
+						if (userName == "") {
+							alert("이름을 입력해주세요"); return false;
+						} else {
+							if (terms1 != '1' || terms2 != '2' || terms3 != '3') {
+								alert("필수약관에 동의해주세요."); return false;
+							} else {
+								return true;
+							}
 						}
 					}
 				}
 			}
-		}}
-				
-	/* 
-	  function sendIt() {
-        var email = document.f.userId.value;
-        var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-        var msg, ss, cc;
-          
-          if (document.f.userId.value == "") {
-              alert("이메일을 입력하지 않았습니다.")
-              document.f.userId.focus()
-              return false;
-          }
-          
-   
-          if (regex.test(email) === false) {
-              alert("잘못된 이메일 형식입니다.");
-              document.f.userId.value=""
-              document.f.userId.focus()
-              return false;
-          } 
-          
-       
-        if (document.f.userPwd.value == "") {
-            alert("비밀번호를 입력하지 않았습니다.")
-            document.f.userPwd.focus()
-            return false;
-        }
-        if (f.userPwd.value == f.userId.value) {
-            alert("아이디와 비밀번호가 같습니다.")
-            document.f.userPwd.focus()
-            return false;
-        } 
-       
-        if (document.f.userPwd.value.length<4 || document.f.userPwd.value.length>12) {
-            alert("비밀번호를 4~12자까지 입력해주세요.")
-            document.f.userPwd.focus()
-            document.f.userPwd.select()
-            return false;
-        } 
- 
-        
-        if (document.f.userPwd.value != document.f.userPwd1.value) {
-            alert("비밀번호가 일치하지 않습니다")
-            document.f.userPwd1.value = ""
-            document.f.userPwd1.focus()
-            return false;
-        }
-        if (document.f.userName.value == "") {
-            alert("이름을 입력하지 않았습니다.")
-            document.f.userName.focus()
-            return false;
-        }
-        if(document.f.userName.value.length<2){
-            alert("이름을 2자 이상 입력해주십시오.")
-            document.f.userName.focus()
-            return false;
-        }
+		}
+
+		/* 
+		  function sendIt() {
+		    var email = document.f.userId.value;
+		    var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		    var msg, ss, cc;
+		      
+		      if (document.f.userId.value == "") {
+		          alert("이메일을 입력하지 않았습니다.")
+		          document.f.userId.focus()
+		          return false;
+		      }
+		      
 		
-        function isNumeric(s) { 
-            for (i=0; i<s.length; i++) { 
-              c = s.substr(i, 1); 
-              if (c < "0" || c > "9") return false; 
-            } 
-            return true; 
-          }
-           
-          function isSSN(s1, s2) {
-             n = 2;
-             sum = 0;
-            for (i=0; i<s1.length; i++){
-              sum += parseInt(s1.substr(i, 1)) * n++;
-            }
-            for (i=0; i<s2.length-1; i++) {
-              sum += parseInt(s2.substr(i, 1)) * n++;
-              if (n == 10) n = 2;
-            }
-          
-            
-            c = 11 - sum % 11;
-            if (c == 11) c = 1;
-            if (c == 10) c = 0;
-            if (c != parseInt(s2.substr(6, 1))) return false;
-            else return true;
-   
-          document.f.submit()
-   	  }}
-  */
- 
+		      if (regex.test(email) === false) {
+		          alert("잘못된 이메일 형식입니다.");
+		          document.f.userId.value=""
+		          document.f.userId.focus()
+		          return false;
+		      } 
+		      
+		   
+		    if (document.f.userPwd.value == "") {
+		        alert("비밀번호를 입력하지 않았습니다.")
+		        document.f.userPwd.focus()
+		        return false;
+		    }
+		    if (f.userPwd.value == f.userId.value) {
+		        alert("아이디와 비밀번호가 같습니다.")
+		        document.f.userPwd.focus()
+		        return false;
+		    } 
+		   
+		    if (document.f.userPwd.value.length<4 || document.f.userPwd.value.length>12) {
+		        alert("비밀번호를 4~12자까지 입력해주세요.")
+		        document.f.userPwd.focus()
+		        document.f.userPwd.select()
+		        return false;
+		    } 
+		
+		    
+		    if (document.f.userPwd.value != document.f.userPwd1.value) {
+		        alert("비밀번호가 일치하지 않습니다")
+		        document.f.userPwd1.value = ""
+		        document.f.userPwd1.focus()
+		        return false;
+		    }
+		    if (document.f.userName.value == "") {
+		        alert("이름을 입력하지 않았습니다.")
+		        document.f.userName.focus()
+		        return false;
+		    }
+		    if(document.f.userName.value.length<2){
+		        alert("이름을 2자 이상 입력해주십시오.")
+		        document.f.userName.focus()
+		        return false;
+		    }
+			
+		    function isNumeric(s) { 
+		        for (i=0; i<s.length; i++) { 
+		          c = s.substr(i, 1); 
+		          if (c < "0" || c > "9") return false; 
+		        } 
+		        return true; 
+		      }
+		       
+		      function isSSN(s1, s2) {
+		         n = 2;
+		         sum = 0;
+		        for (i=0; i<s1.length; i++){
+		          sum += parseInt(s1.substr(i, 1)) * n++;
+		        }
+		        for (i=0; i<s2.length-1; i++) {
+		          sum += parseInt(s2.substr(i, 1)) * n++;
+		          if (n == 10) n = 2;
+		        }
+		      
+		        
+		        c = 11 - sum % 11;
+		        if (c == 11) c = 1;
+		        if (c == 10) c = 0;
+		        if (c != parseInt(s2.substr(6, 1))) return false;
+		        else return true;
+		
+		      document.f.submit()
+		  }}
+		 */
 	</script>
 </body>
 </html>

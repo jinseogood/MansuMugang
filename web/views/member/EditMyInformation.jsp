@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.member.*" %>
+<% ArrayList<UserAllergy> alList = (ArrayList<UserAllergy>)request.getAttribute("alList");
+	System.out.println("수정페이지 윗쪽");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -179,113 +181,114 @@ text-decoration:none;
 			<h1>회원정보수정</h1>
 
 			<div class="tbl-content table1" align="center">
-			<form name="form" action="<%= request.getContextPath() %>/insertMember.me" method="post">
+			<form name="form" action="<%= request.getContextPath() %>/updateMember.me" method="post">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
 						
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" readonly></td>
+							<td><input type="text" name="userId" value="<%= loginUser.getU_id()%>" readonly></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
-							<td><input type="text"></td>
+							<td><input type="password" name="userPwd"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호 확인<span class="red">*</span></th>
-							<td><input type="text"></td>
+							<td><input type="password" name="userId1"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>이름</th>
-							<td><input type="text" readonly></td>
+							<td><input type="text" name="userName" value="<%= loginUser.getU_name()%>" readonly></td>
 						</tr>
 						<br>
 						<tr>
 							<table align="center">
 								<tr>
 									<th colspan="3"><label>@가지고계신 알레르기를 선택해주세요@</label></th>
+									<th><input type="hidden" name="userCode" value="<%= loginUser.getU_code() %>" id="userCode"></th>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="난류(계란)" id="eggs">
+										<input type="checkbox" name="allergy" value="A1" id="eggs">
 										<label for="eggs">난류(계란)</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="우유" id="milk">
+										<input type="checkbox" name="allergy" value="A2" id="milk">
 										<label for="milk">우유</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="메밀" id="memil">
+										<input type="checkbox" name="allergy" value="A3" id="memil">
 										<label for="memil">메밀</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="땅콩" id="peanut">
+										<input type="checkbox" name="allergy" value="A4" id="peanut">
 										<label for="peanut">땅콩</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="대두" id="bean">
+										<input type="checkbox" name="allergy" value="A5" id="bean">
 										<label for="bean">대두</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="밀" id="wheat">
+										<input type="checkbox" name="allergy" value="A6" id="wheat">
 										<label for="wheat">밀</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="고등어" id="mackerel">
+										<input type="checkbox" name="allergy" value="A7" id="mackerel">
 										<label for="mackerel">고등어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="게" id="crab">
+										<input type="checkbox" name="allergy" value="A8" id="crab">
 										<label for="crab">게</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="돼지고기" id="pork">
+										<input type="checkbox" name="allergy" value="A9" id="pork">
 										<label for="pork">돼지고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="복숭아" id="peach">
+										<input type="checkbox" name="allergy" value="A10" id="peach">
 										<label for="peach">복숭아</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="토마토" id="tomato">
+										<input type="checkbox" name="allergy" value="A11" id="tomato">
 										<label for="tomato">토마토</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="새우" id="shrimp">
+										<input type="checkbox" name="allergy" value="A12" id="shrimp">
 										<label for="shrimp">새우</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="호두" id="walnut">
+										<input type="checkbox" name="allergy" value="A13" id="walnut">
 										<label for="walnut">호두</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="닭고기" id="chicken">
+										<input type="checkbox" name="allergy" value="A14" id="chicken">
 										<label for="chicken">닭고기</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="쇠고기" id="beef">
+										<input type="checkbox" name="allergy" value="A15" id="beef">
 										<label for="beef">쇠고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="오징어" id="squid">
+										<input type="checkbox" name="allergy" value="A16" id="squid">
 										<label for="squid">오징어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="조개류" id="clam">
+										<input type="checkbox" name="allergy" value="A17" id="clam">
 										<label for="clam">조개류</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="아황산류" id="acid">
+										<input type="checkbox" name="allergy" value="A18" id="acid">
 										<label for="acid">아황산류</label>
 									</td>
 								</tr>
@@ -301,12 +304,17 @@ text-decoration:none;
 						</td>
 					</tr>
 					</tbody>
-			
 			</div>
 		</section>
 	</div>
 	<div id="bottom">
 		<%@ include file="../common/footer.jsp" %>
 	</div>
+	<script>
+		$(function(){
+			
+			console.log(<%= alList%>);
+		});
+	</script>
 </body>
 </html>
