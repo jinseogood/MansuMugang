@@ -10,11 +10,13 @@ import java.util.Properties;
 
 import com.msmg.admin.model.vo.Menu;
 
+import static com.msmg.common.JDBCTemplate.*;
+
 public class MenuDao {
 	private Properties prop=new Properties();
 	
 	public MenuDao(){
-		String fileName=MenuDao.class.getResource("sql/admin/admin-query.properties").getPath();
+		String fileName=MenuDao.class.getResource("/sql/admin/admin-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -34,11 +36,20 @@ public class MenuDao {
 		
 		try {
 			pst=con.prepareStatement(query);
+			pst.setString(1, menu.getMenuName());
+			pst.setString(2, menu.getMainMat());
+			pst.setString(3, menu.getSubMat());
+			pst.setInt(4, menu.getPrice());
+			
+			result=pst.executeUpdate();
+			
+			System.out.println(result);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally{
+			close(pst);
 		}
-		
 		
 		return result;
 	}
