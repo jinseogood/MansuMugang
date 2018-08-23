@@ -190,7 +190,7 @@
 							$tableBody.append($tr);
 						}
 						else{
-														
+							
 						}
 					});
 					
@@ -201,9 +201,10 @@
 			});
 		});
 	
+		0
 		//메뉴추가
 		$("#fAdd").click(function(){
-			window.open("/msmg/views/admin/addMenu.jsp", "메뉴추가", "width=350, height=250, top=20, left=20, scrollbars=no");
+			window.open("/msmg/views/admin/addMenu.jsp", "메뉴추가", "width=330, height=280, top=20, left=20, scrollbars=no");
 		});
 		
 		//메뉴조회
@@ -267,6 +268,8 @@
 						var $titleTd=$("<td>").text(data[key].title);
 						var $writerTd=$("<td>").text(data[key].u_name);
 						var $contentTd=$("<td>").text(data[key].content);
+						//$contentTd.find("p").remove();
+						console.log($contentTd.find("p"));
 						var $dateTd=$("<td>").text(data[key].board_date);
 						var $countTd=$("<td>").text(data[key].b_count);
 						
@@ -377,8 +380,8 @@
 						var $noTd=$("<td>").text(value.mCode);
 						var $nameTd=$("<td>").text(decodeURIComponent(value.mName));
 						var $idTd=$("<td>").text(decodeURIComponent(value.mId));
-						var $telTd=$("<td>").text("-");
-						var $addrTd=$("<td>").text("-");
+						var $telTd=$("<td>").text(decodeURIComponent(value.mTel));
+						var $addrTd=$("<td>").text(decodeURIComponent(value.mAddr));
 						var $typeTd=$("<td>").text(decodeURIComponent(value.mType));
 						var $dropTd=$("<td>").text(decodeURIComponent(value.mDrop));
 						

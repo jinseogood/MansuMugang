@@ -189,6 +189,8 @@ public class MemberDao {
 				m.setU_code(Integer.parseInt(rset.getString("u_code")));
 				m.setU_name(rset.getString("u_name"));
 				m.setU_id(rset.getString("u_id"));
+				m.setU_tel(rset.getString("tel"));
+				m.setU_addr(rset.getString("des"));
 				m.setU_type(rset.getString("type"));
 				m.setDrop_yn(rset.getString("drop_yn"));
 				

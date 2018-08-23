@@ -114,7 +114,7 @@ public class UpdateBoardServlet extends HttpServlet {
 			System.out.println("서비스로 전송후");
 			if(result > 0){
 				System.out.println("작성완료");
-				response.sendRedirect(request.getContextPath() + "/noticeList.bo");
+				response.sendRedirect(request.getContextPath() + "/insertBoard.bo");
 			}else{
 				//실패시 저장된 사진 삭제
 				for(int i = 0; i < saveFiles.size(); i++){

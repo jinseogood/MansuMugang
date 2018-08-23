@@ -32,6 +32,7 @@
 			<tr>
 				<td style="background:lightgray;">알레르기</td>
 				<td colspan="2"><select name="alleCode">
+					<option value="NO">해당없음</option>
 					<option value="A1">난류(계란)</option>
 					<option value="A2">우유</option>
 					<option value="A3">메밀</option>

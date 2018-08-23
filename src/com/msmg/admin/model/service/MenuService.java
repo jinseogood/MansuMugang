@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.msmg.admin.model.dao.MenuDao;
+import com.msmg.admin.model.vo.Attachment;
 import com.msmg.admin.model.vo.Menu;
 
 import static com.msmg.common.JDBCTemplate.*;
 
 public class MenuService {
 
-	public int insertMenu(Menu menu) {
+	public int insertMenu(Menu menu, ArrayList<Attachment> fileList) {
 		Connection con=getConnection();
 		
 		int result=new MenuDao().insertMenu(menu, con);
