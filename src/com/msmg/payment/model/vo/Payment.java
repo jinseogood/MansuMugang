@@ -8,22 +8,30 @@ public class Payment implements java.io.Serializable {
 	private String u_code;
 	private String menu_code;
 	private Date buy_date;
+	private String status;
 	
 	public Payment(){}
 
-	public Payment(int buy_no, String u_code, String menu_code, Date buy_date) {
+	 
+
+	@Override
+	public String toString() {
+		return "Payment [buy_no=" + buy_no + ", u_code=" + u_code + ", menu_code=" + menu_code + ", buy_date="
+				+ buy_date + ", status=" + status + "]";
+	}
+
+
+
+	public Payment(int buy_no, String u_code, String menu_code, Date buy_date, String status) {
 		super();
 		this.buy_no = buy_no;
 		this.u_code = u_code;
 		this.menu_code = menu_code;
 		this.buy_date = buy_date;
+		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Payment [buy_no=" + buy_no + ", u_code=" + u_code + ", menu_code=" + menu_code + ", buy_date="
-				+ buy_date + "]";
-	}
+
 
 	public int getBuy_no() {
 		return buy_no;
@@ -55,6 +63,14 @@ public class Payment implements java.io.Serializable {
 
 	public void setBuy_date(Date buy_date) {
 		this.buy_date = buy_date;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

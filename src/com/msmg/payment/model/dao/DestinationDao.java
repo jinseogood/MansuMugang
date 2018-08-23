@@ -14,7 +14,7 @@ import static com.msmg.common.JDBCTemplate.*;
 
 public class DestinationDao {
 	private Properties prop = new Properties();
-	
+	 
 	public DestinationDao(){
 		String fileName = DestinationDao.class.getResource("/sql/destination/destination-query.properties").getPath();
 		
@@ -52,7 +52,7 @@ public class DestinationDao {
 		
 	}
 
-	public Destination selectOne(Connection con, String u_code) {
+/*	public Destination selectOne(Connection con, String u_code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Destination d = null;
@@ -83,7 +83,7 @@ public class DestinationDao {
 		return d;
 		
 		
-	}
+	}*/
 
 	public ArrayList<Destination> selectList(Connection con, String u_code) {
 
@@ -91,9 +91,10 @@ public class DestinationDao {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		Destination d = null;
 		
 		String query = prop.getProperty("selectList");
-		
+		 
 		try {
 			pstmt = con.prepareStatement(query);
 			
@@ -102,9 +103,9 @@ public class DestinationDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
-				Destination d = new Destination();
+				d = new Destination();
 				
-				d.setDestionation(rset.getString("destination"));
+				d.setDestionation(rset.getString("des"));
 				
 				list.add(d);
 			}
