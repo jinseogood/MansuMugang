@@ -26,7 +26,7 @@
 <style>
 #wrap {
 	width : 1000px;
-	height: 1300px;
+	height: 800px;
 	margin-left : auto;
 	margin-right : auto;
 }
@@ -146,9 +146,9 @@ margin-right : auto;
        
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
-    	   alert(values);
+    	   alert("작성완료");
     	   $("#smnoteval").val(values);
-    	   alert($("#smnoteval").val());
+    	   //alert($("#smnoteval").val());
     	   if($("#attachfile1").val() == ""){
     		   $("#attachfile1").remove();
     	   }
@@ -159,9 +159,8 @@ margin-right : auto;
     		   $("#attachfile3").remove();
     	   }
     	   
-    	   
-    	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateBoard.bo?bno=<%= bno %>');
+   	   	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateBoard.bo?bno=<%= bno %>');
+   	   	   
        }
    </script>
 

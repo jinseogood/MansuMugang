@@ -34,6 +34,8 @@ public class SelectMemberServlet extends HttpServlet {
 			mInfo.put("mCode", m.getU_code());
 			mInfo.put("mName", URLEncoder.encode(m.getU_name(), "UTF-8"));
 			mInfo.put("mId", URLEncoder.encode(m.getU_id(), "UTF-8"));
+			mInfo.put("mTel", URLEncoder.encode(m.getU_tel(), "UTF-8"));
+			mInfo.put("mAddr", URLEncoder.encode(m.getU_addr(), "UTF-8"));
 			mInfo.put("mType", URLEncoder.encode(m.getU_type(), "UTF-8"));
 			mInfo.put("mDrop", URLEncoder.encode(m.getDrop_yn(), "UTF-8"));
 			

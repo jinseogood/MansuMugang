@@ -7,8 +7,8 @@
 <title>메뉴 추가</title>
 <style>
 	#content{
-		width:300px;
-		height:200px;
+		width:330px;
+		height:280px;
 	}
 	#content > label{
 		font-weight:bold;
@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-	<form action="<%= request.getContextPath() %>/addMenu" method="get">
+	<form action="<%= request.getContextPath() %>/addMenu" method="post" encType="multipart/form-data">
 	<div id="content" align="center">
 		<label>메뉴 추가</label>
 		<table id="menuTable">
@@ -36,6 +36,14 @@
 			<tr>
 				<td style="background:lightgray;">가격</td>
 				<td colspan="2"><input type="text" name="price"></td>
+			</tr>
+			<tr>
+				<td style="background:lightgray;">메뉴정보</td>
+				<td colspan="2"><input type="text" name="info"></td>
+			</tr>
+			<tr>
+				<td style="background:lightgray;">이미지</td>
+				<td colspan="2"><input type="file" id="thumbnailImg" name="thumbnailImg" multiple></td>
 			</tr>
 			<tr align="center">
 				<td colspan="3"><input type="submit" value="추가">&nbsp;<input type="reset" value="취소"></td>
