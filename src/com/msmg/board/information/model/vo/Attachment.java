@@ -1,5 +1,8 @@
 package com.msmg.board.information.model.vo;
 
-public class Attachment {
+import java.sql.Date;
+
+public class Attachment implements java.io.Serializable{
+	
 
 }

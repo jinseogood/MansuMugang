@@ -250,6 +250,17 @@ hr {
 					  boardSort:boardSort},
 				type:"post",
 				success:function(data){
+					if(!title2.value){
+						alert("제목을 입력하세요.");
+						title2.focus();
+						return;
+					}
+					if(!summernote.value){
+						alert("내용을 입력하세요.")
+						summernote.focus();
+						return;
+					}
+					
 					location.href = "/msmg/selectList.bo";
 				},
 				error:function(data){

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*"%>
+<% ArrayList<HashMap<String, Object>> list
+	= (ArrayList<HashMap<String, Object>>)request.getAttribute("list");%>
 <!DOCTYPE>
 <html>
 <head>
@@ -73,23 +75,24 @@
 		
 		
 		<div class="thumbnailArea">
-			<%-- <% for(int i = 0; i < list.size(); i++) {
-			HashMap<String, Object> hmap = list.get(i);
-	%> --%>
+			<% for(int i = 0; i < list.size(); i++) {
+				HashMap<String, Object> hmap = list.get(i);
+			%>
 			<div class="thumb-list" align="center">
 				<div>
-					<input type="hidden" <%-- value="<%=hmap.get("bid")%>" --%>>
+					<input type="hidden" value="<%=hmap.get("boardNo")%>" >
 					<img
-						src="/msmg/thumbnail_uploadFiles/b.png<%-- <%=hmap.get("changeName")%> --%>"
+						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
 						width="200px" height="150px">
 				</div>
 				<p>
 					No.
-					<%-- <%=hmap.get("bno") %> <%= hmap.get("btitle") %> --%>
+					<%=hmap.get("bno") %> <%= hmap.get("title") %>
 					<br> 조회수 :
-					<%-- <%= hmap.get("bcount") %> --%>
+					<%= hmap.get("bCount") %>
 				</p>
 			</div>
+			<%} %>
 			<script>
 				$(function(){
 					$(".thmb-list").click(function(){
@@ -99,7 +102,7 @@
 				});
 				
 			</script>
-			
+			<button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button>
 		</div>
 	</div>
 	<div id="mainBottom">

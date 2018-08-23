@@ -239,7 +239,7 @@ input[type=text]{
 				                  <br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px"><%= list2.get(i).getRe_content() %></td>
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-					<td width='100'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
+					<td width='100px'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
 				<%} else {%>
 					<td width="100px"></td>
 				<%} %>
