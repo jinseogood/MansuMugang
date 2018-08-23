@@ -60,7 +60,6 @@ public class SelectFoodList extends HttpServlet {
 		list = new FoodService().selectFood(sf);
 		
 		System.out.println(list);
-				//처리 결과에 따른 뷰 페이지 결정
 				String page = "";
 				
 				if(list != null){
