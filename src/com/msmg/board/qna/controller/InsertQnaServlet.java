@@ -39,7 +39,8 @@ public class InsertQnaServlet extends HttpServlet {
 		
 		if(result > 0){
 		page = "/views/board/qna/writeQna.jsp";
-		request.setAttribute("bno", result);
+		request.setAttribute("bid", result);
+		request.setAttribute("ucode", ucode);
 		}else{
 			page = "../../common/errorPage.jsp";
 			request.setAttribute("msg", "글쓰기 에러");

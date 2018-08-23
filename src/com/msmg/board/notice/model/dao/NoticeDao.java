@@ -197,7 +197,7 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public int deleteImg(Connection conn, String fileName) {
+	public int deleteAttachment(Connection conn, String fileName) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		

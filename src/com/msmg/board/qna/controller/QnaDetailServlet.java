@@ -33,19 +33,14 @@ public class QnaDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bid = Integer.parseInt(request.getParameter("board_id"));
-		int code = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
 		
 		Qna qna = new QnaService().selectOne(bid);
-		Qna preQna = new QnaService().selectPreQna(bid, code);
-		Qna nextQna = new QnaService().selectNextQna(bid, code);
 		
 		String page = "";
 		
 		if(qna != null){
 			page = "/views/board/qna/readQna.jsp";
 			request.setAttribute("qna", qna);
-			request.setAttribute("preQna", preQna);
-			request.setAttribute("nextQna", nextQna);
 			
 		}else{
 			page = "../../common/errorPage.jsp";

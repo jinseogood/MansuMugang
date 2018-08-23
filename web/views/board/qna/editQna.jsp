@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "java.util.*, com.msmg.board.notice.model.vo.*"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.board.qna.model.vo.*"%>
 <%
-	Notice no = (Notice)request.getAttribute("no");
+	Qna qna = (Qna)request.getAttribute("qna");
+	int ucode = (int)((Member)request.getSession().getAttribute("loginUser")).getU_code();
 	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
-<title>글수정</title>
+<title>QnA 수정하기</title>
 	
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
 	rel="stylesheet">
@@ -45,7 +46,7 @@ width : 1000px;
 
 #jjff {
 	height:400px;
-	background-image:url("/msmg/images/common/notice.png");
+	background-image:url("/msmg/images/common/Q.png");
 	margin-bottom:15px;
 }
 
@@ -64,11 +65,6 @@ background : tomato;
 border : 1px solid tomato;
 }
 
-.output {
-width : 800px;
-margin-left : auto;
-margin-right : auto;
-}
 
 
 </style>
@@ -82,7 +78,7 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.bo?bno=<%=no.getBoard_no()%>",
+               url : "<%= request.getContextPath() %>/imgUpload.qna?bid=<%=qna.getBoard_id()%>&ucode=<%=ucode%>",
                enctype: 'multipart/form-data',
                cache : false,
                contentType : false,
@@ -106,7 +102,7 @@ margin-right : auto;
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete.bo", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete.qna", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -115,51 +111,11 @@ margin-right : auto;
     	    
     	}
        
-       function addbtn(){
-    	   
-    	   if(cnt == 0){
-    	   $("#attachfile2").show();
-    	   cnt++;
-    	   }else if(cnt == 1){
-    		   $("#attachfile3").show();
-    	   }
-       };
-       
-       function delbtn(){
-    	   console.log(cnt);
-    	   if(cnt == 1){
-    		   $("#attachfile3").val("");
-    		   $("#attachfile3").hide();
-    		   cnt--;
-    	   }else if(cnt == 0){
-    		   $("#attachfile2").val("");
-    		   $("#attachfile2").hide();
-    	   }
-       }
-       
-       function loadImg(value){
-				if(value.files && value.files[0]){
-					var reader = new FileReader();
-					reader.readAsDataURL(value.files[0]);
-				}
-			}
-       
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
     	   $("#smnoteval").val(values);
-    	   if($("#attachfile1").val() == ""){
-    		   $("#attachfile1").remove();
-    	   }
-    	   if($("#attachfile2").val() == ""){
-    		   $("#attachfile2").remove();
-    	   }
-    	   if($("#attachfile3").val() == ""){
-    		   $("#attachfile3").remove();
-    	   }
-    	   
-    	   
-    	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/editNotice.bo?bno=<%= no.getBoard_no() %>');
+    	       	   
+    	   $("#frm").attr("action", '<%=request.getContextPath()%>/editQna.qna?bid=<%= qna.getBoard_id() %>&ucode=<%=ucode%>');
        }
    </script>
 
@@ -174,24 +130,33 @@ margin-right : auto;
 <%@ include file = "../../common/menubar.jsp" %>
 	
 	</div>
-<%if(loginUser != null && loginUser.getU_name().equals("관리자")){ %>
+<%if(loginUser != null){ %>
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
 		<!-- 게시판 헤더 시작 -->
-		
+		<!-- <table align='center' cellpadding="0" cellspacing="0" border="0">
+			<tr
+				style="background: url('../image/table_mid.gif'); /* #E8E8E8 */ background-repeat: repeat-x;">
+				<td width="5"><img src="../image/table_left.gif" width="7"
+					height="30" /></td>
+				<td width="1030" align='center'><span>글쓰기</span></td>
+				<td width="5"><img src="../image/table_right.gif" width="7"
+					height="30" /></td>
+			</tr>
+		</table> -->
 		<!-- 게시판 헤더 끝 -->
 		<br>
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
 		<div id="container">
-			<form id = 'frm' method = 'post' encType = "multipart/form-data">
+			<form id = 'frm' method = 'post'>
 				<table align='center' cellpadding="0" cellspacing="0" border="0"
 					id='memo'>
 					<tr class='title'>
 						<td width="30" align = 'center' id = 'tdbg'>제목</td>
 						<td width="300"><input type='text' class='form-control'
-							name="title" width="300" value = <%= no.getTitle() %>></td>
+							name="title" width="300" value = '<%= qna.getTitle() %>'></td>
 						<td  width = '50' align = 'center' id = 'tdbg'>작성일</td>
 						<td width = "100" align = 'center'><%= df.format(new Date()) %></td>
 					</tr>
@@ -200,7 +165,7 @@ margin-right : auto;
 					</tr>
 					<tr class='title'>
 						<td width = '700' colspan = '4'>
-							<div id = 'summernote'><%= no.getContent() %></div>
+							<div id = 'summernote'><%= qna.getContent() %></div>
 							<input type = 'hidden' id = 'smnoteval' class = 'smnoteval' name = 'smnoteval'>
 						</td>
 						
@@ -209,18 +174,6 @@ margin-right : auto;
 						<td colspan='2' width="700"></td>
 					</tr>
 				</table>
-				<div class="output">
-				<fieldset >
-					<legend>첨부파일 </legend>
-						<div style = "padding : 5px;">
-							<input type = 'file' id = 'attachfile1' name = 'attachfile1' multiple onchange = "loadImg(this)">
-							<input type = 'file' id = 'attachfile2' name = 'attachfile2' style = "padding-top : 5px; padding-bottom : 5px;" multiple onchange = "loadImg(this)">
-							<input type = 'file' id = 'attachfile3' name = 'attachfile3' multiple onchange = "loadImg(this)">
-						</div>
-						<br>
-						<input type = 'button' value = "추가" onclick = 'addbtn()'>&nbsp;<input type = 'button' value = "삭제" onclick = "delbtn()">
-				</fieldset>
-			</div>
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>

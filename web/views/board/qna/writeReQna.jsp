@@ -3,13 +3,13 @@
 <%
 	int bid = (int)request.getAttribute("bid");
 	int ucode = (int)request.getAttribute("ucode");
-	
+	int num = (int)request.getAttribute("num");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset=UTF-8>
-<title>글쓰기</title>
+<title>답글쓰기</title>
 	
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
 	rel="stylesheet">
@@ -115,7 +115,7 @@ border : 1px solid tomato;
     	   var values = $("#summernote").summernote('code');
     	   $("#smnoteval").val(values);
     	       	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateQna.qna?bid=<%= bid %>&ucode=<%=ucode%>');
+    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateReQna.qna?bid=<%= bid %>&ucode=<%=ucode%>&num=<%=num%>');
        }
    </script>
 
