@@ -19,7 +19,7 @@ import com.msmg.member.model.vo.Member;
 @WebServlet("/deleteMember.me")
 public class DeleteMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+        
     /**
      * @see HttpServlet#HttpServlet()
      */

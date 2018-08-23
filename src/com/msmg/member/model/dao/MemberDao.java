@@ -206,7 +206,7 @@ public class MemberDao {
 	}
 
 	public ArrayList<UserAllergy> selectAlList(Connection con, UserAllergy al) {
-		ArrayList<UserAllergy> alList = null;
+		ArrayList<UserAllergy> alList = new ArrayList<UserAllergy>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		System.out.println("userAllergy Dao");
@@ -219,8 +219,8 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			
-			if(rset.next()){
-				alList = new ArrayList<UserAllergy>();
+			while(rset.next()){
+				/*alList = new ArrayList<UserAllergy>();*/
 				UserAllergy a = new UserAllergy();
 				
 				a.setAl_code(rset.getString("al_code"));
@@ -239,9 +239,9 @@ public class MemberDao {
 			close(pstmt);
 			close(rset);
 		}
-		
+		System.out.println("다오 리턴 전 alList" +alList);
 		return alList;
-	}
+	} 
 
 	public int deleteMember(Connection con, Member m) {
 		PreparedStatement pstmt = null;

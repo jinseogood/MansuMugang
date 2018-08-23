@@ -76,7 +76,7 @@ public class MemberService {
 		
 		close(con);
 		
-		System.out.println("알레르기 서비스");
+		System.out.println("알레르기 서비스" + alList);
 		return alList;
 	}
 
@@ -84,7 +84,7 @@ public class MemberService {
 		Connection con = getConnection();
 		
 		int result = new MemberDao().deleteMember(con, m);
-		
+		 
 		
 		if(result > 0) {
 			commit(con);
@@ -96,5 +96,12 @@ public class MemberService {
 		
 		return result;
 	}
+
+	public Member EmailCheck(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

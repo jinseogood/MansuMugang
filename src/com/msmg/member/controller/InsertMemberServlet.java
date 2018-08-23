@@ -18,7 +18,7 @@ import com.msmg.member.model.vo.UserAllergy;
 @WebServlet("/insertMember.me")
 public class InsertMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+        
     public InsertMemberServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

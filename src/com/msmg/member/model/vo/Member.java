@@ -6,8 +6,8 @@ public class Member implements java.io.Serializable{
 	private int u_code;
 	private String u_id;
 	private String u_pwd;
-	private String u_name;
-	private String drop_yn;
+	private String u_name; 
+	private String drop_yn; 
 	private String token;
 	private String u_type;
 	

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내가 쓴 글</title>
-
+ 
 <script>
 	
 	$(function() {
