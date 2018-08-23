@@ -325,7 +325,7 @@
         
 	});
 	$(function(){
-		$(".throw").click(function(){
+		$(".throw").click(function(){ 
 			var day = <%= sf.getDay() %>;
 			var ggi = <%= sf.getGgi() %>;
 			var side = <%= sf.getSide() %>;
