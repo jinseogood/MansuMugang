@@ -1,7 +1,8 @@
-package com.msmg.board.notice.controller;
+package com.msmg.board.qna.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.json.simple.JSONObject;
 
 import com.msmg.board.notice.model.service.NoticeService;
 import com.msmg.board.notice.model.vo.Attachment;
@@ -20,16 +22,16 @@ import com.msmg.common.RenameFilePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class UpdateBoardServlet
+ * Servlet implementation class ImgUploadServlet
  */
-@WebServlet("/updateBoard.bo")
-public class UpdateBoardServlet extends HttpServlet {
+@WebServlet("/imgUpload.Qna")
+public class ImgUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateBoardServlet() {
+    public ImgUploadServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +40,6 @@ public class UpdateBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(ServletFileUpload.isMultipartContent(request)){
 			//전송 파일에 대한 용량 제한 : 10MB
 			int maxSize = 1024 * 1024 * 10;
 			
@@ -46,7 +47,7 @@ public class UpdateBoardServlet extends HttpServlet {
 			String root = request.getSession().getServletContext().getRealPath("/");
 			System.out.println(root);
 			
-			String savePath = root + "attach_file/doc_file/";
+			String savePath = root + "attach_file/pic_file/";
 			
 			//사용자가 올린 파일명을 그대로 저장하지 않는 것이 일반적이다.
 			//1. 같은 파일명이 있는 경우 이전파일 덮어 쓸 수 있다.
@@ -62,73 +63,58 @@ public class UpdateBoardServlet extends HttpServlet {
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
 			//저장한 파일의 이름을 저장할 arrayList를 생성한다.
 			ArrayList<String> saveFiles = new ArrayList<String>();
+			String saveFile = "";
 			
 			//원본 파일의 이름을 저장할 arrayList를 생성한다.
 			ArrayList<String> originFiles = new ArrayList<String>();
+			String originFile = "";
 			
 			//파일이 전송된 이름을 반환한다.
 			Enumeration<String> files = multiRequest.getFileNames();
 			
 			//각 파일의 정보를 구해온 후 DBㅇ 저장할 목적의 데이터를 꺼내온다
 			while(files.hasMoreElements()){
-				
 				String name = files.nextElement();
-				System.out.println("update : " +  name);
-				if(!name.equals("files")){
-					saveFiles.add(multiRequest.getFilesystemName(name));
-					originFiles.add(multiRequest.getOriginalFileName(name));
-					
-				}
 				
+				saveFiles.add(multiRequest.getFilesystemName(name));
+				originFiles.add(multiRequest.getOriginalFileName(name));
 				
+				saveFile = multiRequest.getFilesystemName(name);
+				originFile = multiRequest.getOriginalFileName(name);
 				
 			}
-			
-			//multipartRequest 객체에서 파일 외의 값을 가져올 수도 있다.
-			String title = multiRequest.getParameter("title");
-			String content = multiRequest.getParameter("smnoteval");
-			System.out.println(content);
 			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
-			
-			//Board객체 생성
-			Notice no = new Notice();
-			no.setTitle(title);
-			no.setContent(content);
-			no.setBoard_no(bno);
 			
 			//attachment 객체 생성해서 arrayList객체 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
 			
 			//전송순서 역순으로 파일이 list에 저장되기 때문에 반복문을 역으로 수행
-			for(int i = originFiles.size() - 1; i >= 0; i--){
 				Attachment at = new Attachment();
 				at.setFilePath(savePath);
-				at.setOriginName(originFiles.get(i));
-				at.setChangeName(saveFiles.get(i));
-				System.out.println(at);
-				fileList.add(at);
-			}
-			System.out.println("서비스로 전송전");
+				at.setOriginName(originFile);
+				at.setChangeName(saveFile);
+				at.setBoard_no(bno);
+				
+			
 			//Service로 전송
-			int result = new NoticeService().updateBoard(no, fileList);
-			System.out.println("서비스로 전송후");
+			int result = new NoticeService().insertThumbnail(at);
+			
 			if(result > 0){
-				System.out.println("작성완료");
-				response.sendRedirect(request.getContextPath() + "/noticeList.bo");
-			}else{
-				//실패시 저장된 사진 삭제
-				for(int i = 0; i < saveFiles.size(); i++){
-					//파일 시스템에 저장된 이름으로 파일 객체 생성함
-					File failedFile = new File(savePath + saveFiles.get(i));
-					failedFile.delete();
-				}
+			String path2 = request.getContextPath()+"/attach_file/pic_file/" + saveFile;
+			 
+			 JSONObject jobj = new JSONObject();
+				jobj.put("url", path2); 
 				
-				//에러페이지로 forward
-				request.setAttribute("msg", "사진 게시판 작성 에러");
-				request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+				String data = jobj.toString();
 				
+				response.setContentType("application/json"); // 데이터 타입을 json으로 설정하기 위한 세팅
+				response.setCharacterEncoding("UTF-8");
+				
+				PrintWriter out = response.getWriter();
+				out.print(jobj.toJSONString());
+				out.flush();
+				out.close();
 			}
-		}
 	}
 
 	/**

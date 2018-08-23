@@ -1,4 +1,4 @@
-package com.msmg.board.notice.controller;
+package com.msmg.board.qna.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import com.oreilly.servlet.MultipartRequest;
 /**
  * Servlet implementation class UpdateBoardServlet
  */
-@WebServlet("/updateBoard.bo")
+@WebServlet("/updateQna.qna")
 public class UpdateBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

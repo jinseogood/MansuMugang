@@ -1,4 +1,4 @@
-package com.msmg.board.notice.controller;
+package com.msmg.board.qna.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import com.msmg.board.notice.model.service.NoticeService;
 /**
  * Servlet implementation class DeleteNoticeServlet
  */
-@WebServlet("/deleteNotice.bo")
+@WebServlet("/deleteQna.qna")
 public class DeleteNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

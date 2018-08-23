@@ -1,4 +1,4 @@
-package com.msmg.board.notice.model.dao;
+package com.msmg.board.qna.model.dao;
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -13,14 +13,15 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 
-import com.msmg.board.notice.model.vo.Attachment;
+import com.msmg.board.qna.model.vo.Attachment;
+import com.msmg.board.qna.model.vo.Qna;
 import com.msmg.board.notice.model.vo.Notice;
 
-public class NoticeDao {
+public class QnaDao {
 	private Properties prop = new Properties();
 	
-	public NoticeDao(){
-		String fileName = NoticeDao.class.getResource("/sql/board/notice/notice-query.properties").getPath();
+	public QnaDao(){
+		String fileName = QnaDao.class.getResource("/sql/board/qna/qna-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -29,18 +30,47 @@ public class NoticeDao {
 			e.printStackTrace();
 		}
 	}
-	public int getListCount(Connection conn) {
-		// TODO Auto-generated method stub
+	
+	public int getAdminCode(Connection conn) {
 		Statement stmt = null;
+		ResultSet rset = null;
+		int code = 0;
+		
+		String query = prop.getProperty("getAdminCode");
+		
+		try {
+			stmt = conn.createStatement();
+		
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				code = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return code;
+	}
+	
+	public int getListCount(Connection conn, int adminCode, int code) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int listCount = 0;
 		
 		String query = prop.getProperty("getListCount");
 		
 		try {
-			stmt = conn.createStatement();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, adminCode);
+			pstmt.setInt(2, code);
 			
-			rset = stmt.executeQuery(query);
+			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
 				listCount = rset.getInt(1);
@@ -51,16 +81,17 @@ public class NoticeDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		
 		return listCount;
 	}
-	public ArrayList<Notice> selectList(Connection conn, int currentPage, int pageLimit) {
+	
+	public ArrayList<Qna> selectList(Connection conn, int currentPage, int pageLimit, int adminCode, int code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		ArrayList<Notice> list = null;
+		ArrayList<Qna> list = null;
 		
 		String query = prop.getProperty("selectList");
 		
@@ -72,25 +103,27 @@ public class NoticeDao {
 			
 			System.out.println(startRow + " + " + endRow);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, adminCode);
+			pstmt.setInt(2, code);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			
 			rset = pstmt.executeQuery();
 			
-			list = new ArrayList<Notice>();
+			list = new ArrayList<Qna>();
 			
 			while(rset.next()){
-				Notice no = new Notice();
+				Qna qna = new Qna();
 				
-				no.setBoard_id(rset.getInt("board_id"));
-				no.setBoard_no(rset.getInt("board_no"));
-				no.setTitle(rset.getString("title"));
-				no.setContent(rset.getString("content"));
-				no.setU_name(rset.getString("u_name"));
-				no.setBoard_date(rset.getDate("board_date"));
-				no.setB_count(rset.getInt("b_count"));
+				qna.setBoard_id(rset.getInt("board_id"));
+				qna.setBoard_no(rset.getInt("board_no"));
+				qna.setTitle(rset.getString("title"));
+				qna.setContent(rset.getString("content"));
+				qna.setU_name(rset.getString("u_name"));
+				qna.setBoard_date(rset.getDate("board_date"));
+				qna.setB_count(rset.getInt("b_count"));
 				
-				list.add(no);
+				list.add(qna);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -105,29 +138,30 @@ public class NoticeDao {
 		
 		return list;
 	}
-	public Notice selectOne(Connection conn, String bid) {
+	public Qna selectOne(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Notice no = null;
+		Qna qna = null;
 		
 		String query = prop.getProperty("selectOne");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(bid));
+			pstmt.setInt(1, bid);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				no = new Notice();
+				qna = new Qna();
 				
-				no.setBoard_id(rset.getInt("board_id"));
-				no.setTitle(rset.getString("title"));
-				no.setContent(rset.getString("content"));
-				no.setB_count(rset.getInt("b_count"));
-				no.setBoard_date(rset.getDate("board_date"));
-				no.setU_name(rset.getString("u_name"));
-				no.setBoard_no(rset.getInt("board_no"));
+				qna.setBoard_id(rset.getInt("board_id"));
+				qna.setTitle(rset.getString("title"));
+				qna.setContent(rset.getString("content"));
+				qna.setB_count(rset.getInt("b_count"));
+				qna.setBoard_date(rset.getDate("board_date"));
+				qna.setU_name(rset.getString("u_name"));
+				qna.setBoard_no(rset.getInt("board_no"));
+				qna.setRef_ucode(rset.getInt("ref_ucode"));
 				
 			}
 		} catch (SQLException e) {
@@ -139,21 +173,22 @@ public class NoticeDao {
 		}
 		
 		
-		return no;
+		return qna;
 	}
 	
-	public int insertBoard(Connection conn, int ucode) {
+	public int insertQna(Connection conn, int ucode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		int rand = new Random().nextInt(1000) + 1;
 		
 		
-		String query = prop.getProperty("insertBoard");
+		String query = prop.getProperty("insertQna");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, rand);
 			pstmt.setInt(2, ucode);
+			pstmt.setInt(3, rand);
 			
 			result = pstmt.executeUpdate();
 			
@@ -349,16 +384,16 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public int updateCount(Connection conn, String bno) {
+	public int updateCount(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
 		String query = prop.getProperty("updateCount");
-		System.out.println("updatecount bno : " + bno);
+		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bno);
-			pstmt.setString(2, bno);
+			pstmt.setInt(1, bid);
+			pstmt.setInt(2, bid);
 			
 			result = pstmt.executeUpdate();
 			
@@ -371,25 +406,27 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public Notice selectPreNo(Connection conn, String bno) {
+	public Qna selectPreQna(Connection conn, int bid, int code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Notice no = null;
+		Qna preQna = null;
 		
 		String query = prop.getProperty("selectPreNotice");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(bno));
+			pstmt.setInt(1, bid);
+			pstmt.setInt(2, code);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				no = new Notice();
+				preQna = new Qna();
 				
-				no.setBoard_no(rset.getInt("board_no"));
-				no.setTitle(rset.getString("title"));
-				no.setBoard_date(rset.getDate("board_date"));
+				
+				preQna.setBoard_id(rset.getInt("board_id"));
+				preQna.setTitle(rset.getString("title"));
+				preQna.setBoard_date(rset.getDate("board_date"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -400,28 +437,29 @@ public class NoticeDao {
 		}
 		
 		
-		return no;
+		return preQna;
 	}
 	
-	public Notice selectNextNo(Connection conn, String bno) {
+	public Qna selectNextQna(Connection conn, int bid, int code) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Notice no = null;
+		Qna nextQna = null;
 		
 		String query = prop.getProperty("selectNextNo");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bno);
+			pstmt.setInt(1, bid);
+			pstmt.setInt(2, code);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				no = new Notice();
+				nextQna = new Qna();
 				
-				no.setBoard_no(rset.getInt("board_no"));
-				no.setTitle(rset.getString("title"));
-				no.setBoard_date(rset.getDate("board_date"));
+				nextQna.setBoard_id(rset.getInt("board_id"));
+				nextQna.setTitle(rset.getString("title"));
+				nextQna.setBoard_date(rset.getDate("board_date"));
 			}
 			
 		} catch (SQLException e) {
@@ -433,7 +471,7 @@ public class NoticeDao {
 		}
 		
 		
-		return no;
+		return nextQna;
 	}
 	public ArrayList<Attachment> selectAttachment(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
@@ -728,5 +766,6 @@ public class NoticeDao {
 		
 		return result;
 	}
+	
 
 }
