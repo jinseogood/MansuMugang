@@ -285,38 +285,37 @@ section {
 								<td colspan="4"><input type="text" id="receiver"></td>
 							</tr>
 							<tr>
+							
+							
+							
 								<th bgcolor=tomato>배송주소</th>
 								<td colspan="4">
+								
+
+								
 									<div style="padding: 7px 0 10px;">
+										<div>
+											<input type="text" readonly name="postcode" class="postcodify_postcode5" id="postcode">
+											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow">검색</button>
+										</div>
+									</div> 
 									
-									<form id="pstcd" action="<%=request.getContextPath()%>/insertDestination.pm" method="post">
-											<div>
-												<input type="text" readonly name="postcode" class="postcodify_postcode5" value="" id="postcode" />
-											</div>
-									</form>
-									
-										<button id="postcodify_search_button"
-											class="w3-button w3-ripple w3-yellow">검색</button>
-									</div> <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+									<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 									<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 									
-									<form id="addrrs" action="<%=request.getContextPath()%>/insertDestination.pm" method="post">
-										<div>
-											<input type="text" name="addr1" readonly
-												class="postcodify_address" size="60" maxlength="50"
-												id="buyer_addr1"> <input type="text" name="addr2"
-												class="postcodify_details" placeholder="상세주소" size="42"
-												maxlength="50" id="buyer_addr2"> <input type="text"
-												name="addr3" readonly class="postcodify_extra_info"
-												id="buyer_addr3"> <input type="hidden" name="u_code"
-												value=<%= loginUser.getU_code() %>>
-											<!-- <input type="text" name="id"><input type="checkbox" id="idSaveCheck"> -->
-										</div>
-									</form>
+								<form id="addrrs" action="<%=request.getContextPath()%>/insertDestination.pm" method="post">
+									<div>
+										<input type="hidden" name="postcode" readonly class="postcodify_postcode5" id="postcode">
+										<input type="text" name="addr1" readonly class="postcodify_address" size="60" maxlength="50" id="buyer_addr1"> 
+										<input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2"> 
+										<input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3"> 
+										<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
+										<!-- <input type="text" name="id"><input type="checkbox" id="idSaveCheck"> -->
+									</div>
+								</form>
 									<div style="padding: 5px 0;" class="checks">
 										<input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">
-										<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장 (체크하지 않을 시
-											최근 배송지로 저장되지 않습니다.) </label>
+										<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장 (체크하지 않을 시 최근 배송지로 저장되지 않습니다.) </label>
 									</div>
 								</td>
 							</tr>
@@ -542,7 +541,7 @@ section {
 					var hpno2 = $('#hpno2').val();
 					var hpno3 = $('#hpno3').val();
 					
-					console.log(buyer_addr);
+					/* console.log(postcode); */
 
 					if (sender == "") {
 						alert("보내는 분의 성함을 입력해주세요.");
@@ -616,7 +615,10 @@ section {
 																									function(data) {
 																										
 																										if($("#AddrSaveCheck").is(":checked")){
+																											
+																											
 																											$("#addrrs").submit();
+																											
 																										} else {
 																											location.href = "paymentConfirm.jsp";
 																										}
