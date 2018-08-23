@@ -4,6 +4,9 @@ import com.msmg.member.model.dao.MemberDao;
 import com.msmg.member.model.vo.Member;
 import com.msmg.member.model.vo.UserAllergy;
 
+import static com.msmg.common.JDBCTemplate.close;
+import static com.msmg.common.JDBCTemplate.commit;
+import static com.msmg.common.JDBCTemplate.rollback;
 import static com.msmg.common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -75,6 +78,23 @@ public class MemberService {
 		
 		System.out.println("알레르기 서비스");
 		return alList;
+	}
+
+	public int deleteMember(Member m) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().deleteMember(con, m);
+		
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 
 }

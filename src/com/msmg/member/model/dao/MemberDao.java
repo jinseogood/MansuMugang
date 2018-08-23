@@ -243,4 +243,27 @@ public class MemberDao {
 		return alList;
 	}
 
+	public int deleteMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getU_id());
+			pstmt .setString(2, m.getU_pwd());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
 }
