@@ -76,7 +76,7 @@ public class MemberService {
 		
 		close(con);
 		
-		System.out.println("알레르기 서비스");
+		System.out.println("알레르기 서비스" + alList);
 		return alList;
 	}
 
@@ -96,5 +96,12 @@ public class MemberService {
 		
 		return result;
 	}
+
+	public Member EmailCheck(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

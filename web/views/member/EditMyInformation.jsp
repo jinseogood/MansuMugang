@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.member.*" %>
 <% ArrayList<UserAllergy> alList = (ArrayList<UserAllergy>)request.getAttribute("alList");
-	System.out.println("수정페이지 윗쪽");%>
+	System.out.println("alList" + alList);
+	int size = alList.size();
+	System.out.println(size);
+	int a = 0;%>
 <!DOCTYPE html>
 <html>
 <head>
-<script>
+<!-- <script>
 	
 	$(function() {
 
@@ -27,7 +30,7 @@
 	    });
 	    
 	});
-</script>
+</script> -->
 <meta charset="UTF-8">
 <title>내 정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -300,7 +303,7 @@ text-decoration:none;
 						<td colspan="2">
 						<div class="clear"></div>
 							<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/index.jsp">취소하기</a></div>
-							<div class="w3-button w3-ripple w3-yellow" onclick="#"><a href="#">수정하기</a></div>
+							<div class="w3-button w3-ripple w3-yellow" onclick=""><a href="#">수정하기</a></div>
 						</td>
 					</tr>
 					</tbody>
@@ -312,7 +315,21 @@ text-decoration:none;
 	</div>
 	<script>
 		$(function(){
-			console.log(<%= alList%>);
+		var alList = [];
+		
+		for(var i = 0; i < <%=alList.size()%>; i++){
+			<% int index = 0;%>
+		
+			var alCode = '<%= alList.get(index).getAl_code()%>';
+			
+			<%index++;%>
+			
+			alList.push(alCode);
+			
+			for(var j = 0; j < alList.length; j++){ 
+				console.log(alList[j]);
+			}
+		}
 			
 		});
 	</script>
