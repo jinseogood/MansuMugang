@@ -50,7 +50,6 @@ public class ReviewDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			close(con);
 		}
 		
 		return result;
@@ -75,11 +74,7 @@ public class ReviewDao {
 				System.out.println("If rset : " + rset);
 				bid = rset.getInt("currval");
 				System.out.println("ReviewDao : " + bid);
-			}else {
-				System.out.println("else rset : " + rset);
 			}
-			System.out.println("selectCurrval : " + bid);
-			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,28 +86,33 @@ public class ReviewDao {
 		return bid;
 	}
 
-	public int insertAttachment(Connection con, ArrayList<BoardFile> fileList) {
+	public int insertBoardFile(Connection con, ArrayList<BoardFile> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("insertAttachment");
+		
+		String query = prop.getProperty("insertBoardFile");
 		
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
+				System.out.println("dao board_no : " + fileList.get(i).getBoard_no());
+				
+				
 				pstmt = con.prepareStatement(query);
 				pstmt.setString(1, fileList.get(i).getOrigin_name());
 				pstmt.setString(2, fileList.get(i).getEdit_name());
 				pstmt.setString(3, fileList.get(i).getFile_src());
 				pstmt.setInt(4, fileList.get(i).getBoard_no());
+				pstmt.setInt(5, fileList.get(i).getU_code());
 				
 				result += pstmt.executeUpdate();
-				
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}
+		
 		
 		return result;
 	}
@@ -135,21 +135,21 @@ public class ReviewDao {
 			while(rset.next()) {
 				hmap = new HashMap<String, Object>();
 				
-				hmap.put("uName", rset.getString("u_name"));
-				hmap.put("boardNo", rset.getInt("board_no"));
-				hmap.put("boardId", rset.getShort("board_id"));
-				hmap.put("title", rset.getString("title"));
-				hmap.put("content", rset.getString("content"));
-				hmap.put("boardSort", rset.getInt("board_sort"));
-				hmap.put("bCount", rset.getInt("b_count"));
-				hmap.put("boardDate", rset.getDate("board_date"));
 				hmap.put("fileNo", rset.getInt("file_no"));
-				hmap.put("editName", rset.getShort("edit_name"));
+				hmap.put("originName", rset.getString("origin_name"));
+				hmap.put("editName",rset.getString("edit_name"));
 				hmap.put("fileSrc", rset.getString("file_src"));
 				hmap.put("fileDate", rset.getDate("file_date"));
+				hmap.put("boardSort", rset.getInt("board_sort"));
+				hmap.put("boardNo", rset.getInt("board_no"));
+				hmap.put("uCode", rset.getInt("u_code"));
+				hmap.put("title", rset.getString("title"));
+				hmap.put("content", rset.getString("content"));
 				
 				list.add(hmap);
 			}
+			
+			System.out.println("dao : " + list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

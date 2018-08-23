@@ -13,12 +13,13 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>썸네일 리스트</title>
 <style>
+
 .outer {
 	width: 1000px;
 	height: 1300px;
 	margin-left: auto;
 	margin-right: auto;
-	padding-left: 20px;
+	margin-top:50px;
 }
 
 #back {
@@ -38,8 +39,19 @@
 	 background-color: rgba( 255, 255, 255, 0 );
 }
 
+.thumbnailArea {
+	width:760px;
+	height:550px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
 .thumb-list {
+	width:220px;
+	border:1px solid white;
 	display:inline-block;
+	margin:10px;
+	align:center;
 }
 
 .thumb-list:hover {
@@ -61,7 +73,7 @@
 	<div class="outer">
 		<br>
 		<!-- <h2 aling="left">후기 게시판</h2> -->
-
+		 
 		<div id="search2" align="right" style="margin-right: 50px; margin-bottom:40px;">
 			<select name="searchArea" id="result"
 				style="width: 50px; height: 27px;">
@@ -73,26 +85,25 @@
 		</div>
 		
 		
-		
 		<div class="thumbnailArea">
-			<% for(int i = 0; i < list.size(); i++) {
+			<% 
+			for(int i = 0; i < list.size(); i++) {
 				HashMap<String, Object> hmap = list.get(i);
 			%>
-			<div class="thumb-list" align="center">
+			<div class="thumb-list">
 				<div>
-					<input type="hidden" value="<%=hmap.get("boardNo")%>" >
+				<input type="hidden" value="<%= hmap.get("boardNo")%>">
 					<img
 						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
 						width="200px" height="150px">
 				</div>
-				<p>
-					No.
-					<%=hmap.get("bno") %> <%= hmap.get("title") %>
-					<br> 조회수 :
-					<%= hmap.get("bCount") %>
+				<p>No. <%=hmap.get("boardNo") %> <%= hmap.get("title") %><br>
+				     조회수 : <%= hmap.get("bCount") %>
 				</p>
 			</div>
 			<%} %>
+		</div>
+			
 			<script>
 				$(function(){
 					$(".thmb-list").click(function(){
@@ -102,8 +113,7 @@
 				});
 				
 			</script>
-			<button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button>
-		</div>
+		<button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button>
 	</div>
 	<div id="mainBottom">
 	<%@include file="../../common/footer.jsp"%>

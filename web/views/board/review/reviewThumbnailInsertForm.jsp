@@ -127,7 +127,7 @@ hr {
 					<td><input type="text" name="title"
 						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px;"></td>
 					<td class="titleN" id="date">작성일</td>
-					<td><input type="text"
+					<td><input type="text" name="date"
 						style="background-color: transparent; border: 0 solid black; text-align: center; width: 250px;" 
 						value="<%=df.format(new Date())%>" readonly></td>
 				</tr>

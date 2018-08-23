@@ -11,11 +11,12 @@ public class BoardFile implements java.io.Serializable{
 	private String board_sort;
 	private int Board_no;
 	private String file_type;
+	private int u_code;
 	
 	public BoardFile() {}
 
 	public BoardFile(int file_no, String origin_name, String edit_name, String file_src, Date file_date,
-			String board_sort, int board_no, String file_type) {
+			String board_sort, int board_no, String file_type, int u_code) {
 		super();
 		this.file_no = file_no;
 		this.origin_name = origin_name;
@@ -23,8 +24,10 @@ public class BoardFile implements java.io.Serializable{
 		this.file_src = file_src;
 		this.file_date = file_date;
 		this.board_sort = board_sort;
-		Board_no = board_no;
+		this.Board_no = board_no;
 		this.file_type = file_type;
+		this.u_code = u_code;
+		
 	}
 
 	public int getFile_no() {
@@ -59,6 +62,10 @@ public class BoardFile implements java.io.Serializable{
 		return file_type;
 	}
 
+	public int getU_code() {
+		return u_code;
+	}
+
 	public void setFile_no(int file_no) {
 		this.file_no = file_no;
 	}
@@ -91,11 +98,15 @@ public class BoardFile implements java.io.Serializable{
 		this.file_type = file_type;
 	}
 
+	public void setU_code(int u_code) {
+		this.u_code = u_code;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardFile [file_no=" + file_no + ", origin_name=" + origin_name + ", edit_name=" + edit_name
 				+ ", file_src=" + file_src + ", file_date=" + file_date + ", board_sort=" + board_sort + ", Board_no="
-				+ Board_no + ", file_type=" + file_type + "]";
+				+ Board_no + ", file_type=" + file_type + ", u_code=" + u_code + "]";
 	}
-
+	
 }
