@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "java.util.*"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.member.model.vo.*"%>
 <%
 	int bno = (int)request.getAttribute("bno");
-	
+	Member loginUser=(Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -172,10 +172,10 @@ margin-right : auto;
 <body>
 
 <!-- 게시판 쓰기 -->
-	<div id = "jjff">
+	<%-- <div id = "jjff">
 <%@ include file = "../../common/menubar.jsp" %>
 	
-	</div>
+	</div> --%>
 <%if(loginUser != null && loginUser.getU_name().equals("관리자")){ %>
 	<div id='wrap' align = 'left'>
 	
@@ -301,9 +301,9 @@ margin-right : auto;
 
 
 	</div>
-	<div id="mainBottom">
+	<%-- <div id="mainBottom">
 	<%@include file = "../../common/footer.jsp" %>
-	</div>
+	</div> --%>
 	
 	<%}else{ 
 		request.setAttribute("msg", "잘못된 경로");

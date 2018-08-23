@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.msmg.admin.model.vo.Material;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
