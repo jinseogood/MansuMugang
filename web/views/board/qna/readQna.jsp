@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "com.msmg.board.notice.model.vo.*, java.util.*"%>
+	pageEncoding="UTF-8" import = "com.msmg.board.qna.model.vo.*, java.util.*"%>
 <%
-	Notice no = (Notice)request.getAttribute("no");
-	Notice preNo = (Notice)request.getAttribute("preNo");
-	Notice nextNo = (Notice)request.getAttribute("nextNo");
-	 ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
+	Member user = (Member)request.getSession().getAttribute("loginUser");
+	
+	Qna qna = (Qna)request.getAttribute("qna");
+	Qna preQna = (Qna)request.getAttribute("preQna");
+	Qna nextQna = (Qna)request.getAttribute("nextQna");
 %>
 <!DOCTYPE html>
 <html>
@@ -110,7 +111,7 @@ div[id=date-writer-hit2] {
 #jjff {
 	width: 100%;
 	height: 400px;
-	background-image: url("/msmg/images/common/notice.png");
+	background-image: url("/msmg/images/common/Q.png");
 	margin-bottom: 10px;
 }
 
@@ -129,59 +130,51 @@ div[id=date-writer-hit2] {
 <script>
 	function alertDelete(){
 		var check = window.confirm("글을 삭제하시겠습니까?");
-		console.log("아아아");
 		if(check == true){
-			window.location = '<%=request.getContextPath() %>/deleteNotice.bo?bno=<%= no.getBoard_no()%>';
+			window.location = '<%=request.getContextPath() %>/deleteNotice.bo?bno=<%= qna.getBoard_id()%>';
 		}
 	}
 </script>
 </head>
 <body>
+	<% if(user != null && user.getU_code() == 0) %>
 	<div id="jjff">
 		<%@ include file="../../common/menubar.jsp"%>
 	</div>
+	
 	<div id="main">
 		<!-- 게시판 읽기 -->
 		<div>
 			<table class="bbs-table">
 				<tr>
-					<th style=" color: #555; text-align: center;"><%= no.getTitle() %></th>
+					<th style=" color: #555; text-align: center;"><%= qna.getTitle() %></th>
 				</tr>
 			</table>
 			<div id="detail">
 				<div id="date-writer-hit2">
-					<span>작성자 &nbsp; l &nbsp; <%= no.getU_name() %></span>
-					<span id="date-writer-hit"> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= no.getB_count() %></span>
+					<span>작성자 &nbsp; l &nbsp; <%= qna.getU_name() %></span>
+					<span id="date-writer-hit"> <%= qna.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= qna.getB_count() %></span>
 				</div>
-				<div id="article-content"><%= no.getContent() %></div>
-				<div id ='attachArea'>
-				<%if(list != null){ %>
-				<dl>
-					<dt>첨부파일</dt>
-					<%for(Attachment at : list){ %>
-						<dd><a href = "downloadFile.bo?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
-					<%} %>
-				</dl>
-				<%} %>
-				</div>
+				<div id="article-content"><%= qna.getContent() %></div>
+				
 			</div>
 		</div>
 		<div id='whiptable'>
 			<table id='whip'>
-			<% if(nextNo != null){ %>
+			<% if(nextQna != null){ %>
 				<tr style="border-top: 1px solid #ff6347;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 						다음글</td>
-					<td align="center" width='700'><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=nextNo.getBoard_no()%>"><%= nextNo.getTitle() %></a></td>
-					<td width="100"><%= nextNo.getBoard_date() %></td>
+					<td align="center" width='700'><a href="<%= request.getContextPath()%>/qnaDetail.qna?board_id=<%=nextQna.getBoard_id()%>"><%= nextQna.getTitle() %></a></td>
+					<td width="100"><%= nextQna.getBoard_date() %></td>
 				</tr>
 			<%} %>
-			<%if(preNo != null){ %>
+			<%if(preQna != null){ %>
 				<tr style="border-top: 1px solid #ff6347;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 						이전글</td>
-					<td align="center"><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=preNo.getBoard_no()%>"><%= preNo.getTitle() %></a></td>
-					<td><%= preNo.getBoard_date() %></td>
+					<td align="center"><a href="<%= request.getContextPath()%>/qnaDetail.qna?board_id=<%=preQna.getBoard_id()%>"><%= preQna.getTitle() %></a></td>
+					<td><%= preQna.getBoard_date() %></td>
 				</tr>
 			<%} %>
 			
@@ -194,7 +187,7 @@ div[id=date-writer-hit2] {
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
 			<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.bo?num=<%= no.getBoard_no() %>'">수정하기</button>
+				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.bo?num=<%= qna.getBoard_no() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
 		</div>

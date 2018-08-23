@@ -1,4 +1,4 @@
-package com.msmg.board.notice.model.service;
+package com.msmg.board.qna.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -8,41 +8,52 @@ import com.msmg.board.notice.model.dao.NoticeDao;
 import com.msmg.board.notice.model.vo.Attachment;
 import com.msmg.board.notice.model.vo.Notice;
 import com.msmg.board.qna.model.dao.QnaDao;
+import com.msmg.board.qna.model.vo.Qna;
 
 import static com.msmg.common.JDBCTemplate.*;
 
-public class NoticeService {
-
-	public int getListCount() {
+public class QnaService {
+	
+	public int getAdminCode() {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().getListCount(conn);
+		int adminCode = new QnaDao().getAdminCode(conn);
+		
+		close(conn);
+		
+		return adminCode;
+	}
+
+	public int getListCount(int adminCode, int code) {
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().getListCount(conn, adminCode, code);
 		
 		close(conn);
 		
 		return result;
 	}
 
-	public ArrayList<Notice> selectList(int currentPage, int pageLimit) {
+	public ArrayList<Qna> selectList(int currentPage, int pageLimit, int adminCode, int code) {
 		Connection conn = getConnection();
 		
-		ArrayList<Notice> list = new NoticeDao().selectList(conn, currentPage, pageLimit);
+		ArrayList<Qna> list = new QnaDao().selectList(conn, currentPage, pageLimit, adminCode, code);
 		
 		close(conn);
 		
 		return list;
 	}
 
-	public Notice selectOne(String bno) {
+	public Qna selectOne(int bid) {
 		Connection conn = getConnection();
-		Notice no = null;
+		Qna qna = null;
 		
-		int result = new NoticeDao().updateCount(conn, bno);
+		int result = new QnaDao().updateCount(conn, bid);
 		
 		if(result > 0){
-			no = new NoticeDao().selectOne(conn, bno);
+			qna = new QnaDao().selectOne(conn, bid);
 			
-			if(no != null){
+			if(qna != null){
 				commit(conn);
 			}else{
 				rollback(conn);
@@ -51,13 +62,13 @@ public class NoticeService {
 		
 		close(conn);
 		
-		return no;
+		return qna;
 	}
 
-	public int insertBoard(int ucode) {
+	public int insertQna(int ucode) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().insertBoard(conn, ucode);
+		int result = new QnaDao().insertQna(conn, ucode);
 		
 		if(result > 0){
 			commit(conn);
@@ -148,24 +159,24 @@ public class NoticeService {
 		return result;
 	}
 
-	public Notice selectPreNo(String bno) {
+	public Qna selectPreQna(int bid, int code) {
 		Connection conn = getConnection();
 		
-		Notice preNo = new NoticeDao().selectPreNo(conn, bno);
+		Qna preQna = new QnaDao().selectPreQna(conn, bid, code);
 		
 		close(conn);
 		
-		return preNo;
+		return preQna;
 	}
 
-	public Notice selectNextNo(String bno) {
+	public Qna selectNextQna(int bid, int code) {
 		Connection conn = getConnection();
 		
-		Notice nextNo = new NoticeDao().selectNextNo(conn, bno);
+		Qna nextQna = new QnaDao().selectNextQna(conn, bid, code);
 		
 		close(conn);
 		
-		return nextNo;
+		return nextQna;
 	}
 
 	public ArrayList<Attachment> selectAttachment(String bno) {
@@ -264,5 +275,7 @@ public class NoticeService {
 		
 		return deleteList;
 	}
+
+	
 
 }

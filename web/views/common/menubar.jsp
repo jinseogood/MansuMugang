@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import = "com.msmg.member.model.vo.*" %>
-<% Member loginUser = (Member)session.getAttribute("loginUser"); %>
+<% 
+	Member loginUser = (Member)session.getAttribute("loginUser"); 
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,7 +166,7 @@
 			<div id="submenuTitle">
 				<a href = "<%= request.getContextPath() %>/noticeList.bo">공지사항</a>
 				<br><br><br>
-				<a href="/msmg/views/board/notice/notice.jsp">Q&A</a>
+				<a href="<%= request.getContextPath() %>/qnaList.qna">Q&A</a>
 			</div>
 		</div>
 	</div>
