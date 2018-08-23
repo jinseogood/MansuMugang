@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,6 +72,27 @@ public class InsertReviewSertvlet extends HttpServlet {
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
 			String uCode = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
+			String date = multiRequest.getParameter("date");
+			String boardNo = multiRequest.getParameter("boardNo");
+			
+			java.sql.Date day = null;
+			
+			if(date != "" || date != null) {
+				String[] dateArr = date.split("-");
+				int[] arr = new int[dateArr.length];
+				
+				for(int i = 0; i < dateArr.length; i++) {
+					arr[i] = Integer.parseInt(dateArr[i]);
+				}
+				
+				day = new java.sql.Date(new GregorianCalendar(arr[0], arr[1]-1, arr[2]).getTimeInMillis());
+				System.out.println(day);
+			}else {
+				day = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+			}
+			
+			
+			
 			
 			System.out.println(title);
 			System.out.println(content);
@@ -82,6 +104,7 @@ public class InsertReviewSertvlet extends HttpServlet {
 			b.setContent(content);
 			b.setuCode(uCode);
 			
+			
 			//Attachment객체 생성해서 arrayList객체 생성
 			ArrayList<BoardFile> fileList = new ArrayList<BoardFile>();
 			
@@ -90,6 +113,8 @@ public class InsertReviewSertvlet extends HttpServlet {
 				bf.setFile_src(savePath);
 				bf.setOrigin_name(originFiles.get(i));
 				bf.setEdit_name(saveFiles.get(i));
+				bf.setFile_date(day);
+				bf.setU_code(Integer.parseInt(uCode));
 				
 				fileList.add(bf);
 			}

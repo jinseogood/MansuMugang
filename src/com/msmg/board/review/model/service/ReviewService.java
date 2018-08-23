@@ -25,13 +25,14 @@ public class ReviewService {
 		
 		if(result1 > 0) {
 			int bno = new ReviewDao().selectCurrval(con);
+			System.out.println("ReviewService : " + bno);
 			
 			for(int i = 0; i < fileList.size(); i++) {
 				fileList.get(i).setBoard_no(bno);
 			}
 		}
 		
-		int result2 = new ReviewDao().insertAttachment(con, fileList);
+		int result2 = new ReviewDao().insertBoardFile(con, fileList);
 		System.out.println("result2 : " + result2);
 		
 		if(result1 > 0 && result2 > 0) {
