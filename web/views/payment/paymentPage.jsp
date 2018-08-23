@@ -291,14 +291,17 @@ section {
 								<th bgcolor=tomato>배송주소</th>
 								<td colspan="4">
 								
-
-								
 									<div style="padding: 7px 0 10px;">
 										<div>
-											<input type="text" readonly name="postcode" class="postcodify_postcode5" id="postcode">
+											<form id="pstcd" action="<%=request.getContextPath() %>/insertDestination.pm" method="post">
+												<input type="text" readonly name="postcode1" class="postcodify_postcode5" id="postcode">
+											</form>
+											
 											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow">검색</button>
+											
 										</div>
-									</div> 
+									</div>
+								
 									
 									<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 									<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
@@ -541,6 +544,13 @@ section {
 					var hpno2 = $('#hpno2').val();
 					var hpno3 = $('#hpno3').val();
 					
+					
+					var pst = $("[name=postcode1]").val();
+					$("[name=postcode]").val(pst);
+					
+					
+					
+					
 					/* console.log(postcode); */
 
 					if (sender == "") {
@@ -616,7 +626,7 @@ section {
 																										
 																										if($("#AddrSaveCheck").is(":checked")){
 																											
-																											
+																											$("#pstcd").submit();
 																											$("#addrrs").submit();
 																											
 																										} else {
