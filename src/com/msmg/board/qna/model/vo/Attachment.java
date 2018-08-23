@@ -10,11 +10,12 @@ public class Attachment {
 	private Date uploadDate;
 	private int board_no;
 	private String board_sort;
+	private int u_code;
 
 	public Attachment(){}
 
 	public Attachment(int fid, String originName, String changeName, String filePath, Date uploadDate, int board_no,
-			String board_sort) {
+			String board_sort, int u_code) {
 		super();
 		this.fid = fid;
 		this.originName = originName;
@@ -23,6 +24,7 @@ public class Attachment {
 		this.uploadDate = uploadDate;
 		this.board_no = board_no;
 		this.board_sort = board_sort;
+		this.u_code = u_code;
 	}
 
 	public int getFid() {
@@ -81,13 +83,22 @@ public class Attachment {
 		this.board_sort = board_sort;
 	}
 
+	public int getU_code() {
+		return u_code;
+	}
+
+	public void setU_code(int u_code) {
+		this.u_code = u_code;
+	}
+
 	@Override
 	public String toString() {
 		return "Attachment [fid=" + fid + ", originName=" + originName + ", changeName=" + changeName + ", filePath="
 				+ filePath + ", uploadDate=" + uploadDate + ", board_no=" + board_no + ", board_sort=" + board_sort
-				+ "]";
+				+ ", u_code=" + u_code + "]";
 	}
 
+	
 	
 	
 }

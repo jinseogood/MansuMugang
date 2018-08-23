@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.msmg.board.notice.model.dao.NoticeDao;
-import com.msmg.board.notice.model.vo.Attachment;
 import com.msmg.board.notice.model.vo.Notice;
 import com.msmg.board.qna.model.dao.QnaDao;
 import com.msmg.board.qna.model.vo.Qna;
+import com.msmg.board.qna.model.vo.Attachment;
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -69,8 +69,10 @@ public class QnaService {
 		Connection conn = getConnection();
 		
 		int result = new QnaDao().insertQna(conn, ucode);
+		int bid = 0;
 		
 		if(result > 0){
+			bid = new QnaDao().selectBid(conn, ucode);
 			commit(conn);
 		}else{
 			rollback(conn);
@@ -78,14 +80,14 @@ public class QnaService {
 		
 		close(conn);
 		
-		return result;
+		return bid;
 	}
 
 
-	public int insertThumbnail(Attachment at) {
+	public int insertImg(Attachment at) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().insertAttachment(conn, at);
+		int result = new QnaDao().insertImg(conn, at);
 		
 		if(result > 0){
 			commit(conn);
@@ -101,7 +103,7 @@ public class QnaService {
 	public int deleteImg(String fileName) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().deleteImg(conn, fileName);
+		int result = new QnaDao().deleteImg(conn, fileName);
 		
 		if(result > 0){
 			commit(conn);
@@ -114,39 +116,20 @@ public class QnaService {
 		return result;
 	}
 
-	public int updateBoard(Notice no, ArrayList<Attachment> fileList) {
+	public int updateQna(String title, String content, int bid, int ucode) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().updateBoard(conn, no);
-		int result2 = 0;
-		int result3 = 0;
+		int nowBno = new QnaDao().selectNowBno(conn, ucode);
 		
-		int bno = 0;
-		int randbno = 0;
-		
-		if(result > 0){
-			bno = new NoticeDao().selectCurrval(conn);
+		int result = new QnaDao().updateQna(conn, title, content, bid, nowBno);
 			
-			randbno = no.getBoard_no();
-			System.out.println("bno = " + bno + " / randbno = " + randbno);
-			for(int i = 0; i < fileList.size(); i++){
-				fileList.get(i).setBoard_no(bno);
-			}
-		}
-		
-		int photoCount = new NoticeDao().selectPhoto(conn, randbno);
+		int photoCount = new QnaDao().selectPhoto(conn, bid, ucode);
 		
 		if(photoCount > 0){
-			result2 = new NoticeDao().updatePhotho(conn, bno, randbno);
+			int result2 = new QnaDao().updatePhotho(conn, bid, ucode, nowBno);
 		}
-		
-		if(fileList.size() > 0){
-			result3 = new NoticeDao().insertDocument(conn, fileList);
-		}
-		
-		System.out.println("result2 - " + result2);
-		
-		System.out.println("result3 - " + result3);
+		System.out.println("result : " + result + " / nowBno : " + nowBno);
+		System.out.println("photoCount : " + photoCount);
 		if(result > 0){
 			commit(conn);
 		}else{
@@ -159,66 +142,22 @@ public class QnaService {
 		return result;
 	}
 
-	public Qna selectPreQna(int bid, int code) {
+	
+
+	public Qna selectOneEdit(String num) {
 		Connection conn = getConnection();
 		
-		Qna preQna = new QnaDao().selectPreQna(conn, bid, code);
+		Qna qna = new QnaDao().selectOneEdit(conn, num);
 		
 		close(conn);
 		
-		return preQna;
+		return qna;
 	}
 
-	public Qna selectNextQna(int bid, int code) {
+	public int editQna(int bid, String title, String content) {
 		Connection conn = getConnection();
-		
-		Qna nextQna = new QnaDao().selectNextQna(conn, bid, code);
-		
-		close(conn);
-		
-		return nextQna;
-	}
 
-	public ArrayList<Attachment> selectAttachment(String bno) {
-		Connection conn = getConnection();
-		
-		ArrayList<Attachment> list = new NoticeDao().selectAttachment(conn, bno);
-		
-		close(conn);
-		
-		return list;
-	}
-
-	public Attachment downloadFile(String editName) {
-		Connection conn = getConnection();
-		
-		Attachment file = new NoticeDao().selectOneAttachment(conn, editName);
-		
-		close(conn);
-		
-		return file;
-	}
-
-	public Notice selectOneEdit(String num) {
-		Connection conn = getConnection();
-		
-		Notice no = new NoticeDao().selectOneEdit(conn, num);
-		
-		close(conn);
-		
-		return no;
-	}
-
-	public int editNotice(Notice no, ArrayList<Attachment> fileList) {
-		Connection conn = getConnection();
-		System.out.println("글수정");
-		int result = new NoticeDao().editBoard(conn, no);
-		System.out.println("db파일 삭제");
-		int result2 = new NoticeDao().deleteDocument(conn, no.getBoard_no());
-		System.out.println("db파일 입력");
-		if(fileList.size() > 0){
-			int result3 = new NoticeDao().insertDocument(conn, fileList);
-		}
+		int result = new QnaDao().editQna(conn, bid, title, content);
 		
 		if(result > 0){
 			commit(conn);
@@ -242,30 +181,19 @@ public class QnaService {
 		return list;
 	}
 
-	public HashMap<String, ArrayList<String>> deleteNotice(int bno) {
+	public int deleteQna(int bid) {
 		Connection conn = getConnection();
-		HashMap<String, ArrayList<String>> deleteList = null;
 		
-		ArrayList<String> docList = new NoticeDao().selectDoc(conn, bno);
 		
-		if(docList.size() > 0){
-			int result = new NoticeDao().deleteDocument(conn, bno);
+		int result1 = new QnaDao().selectPho(conn, bid);
+		
+		if(result1 > 0){
+			int result = new QnaDao().deletePhoto(conn, bid);
 		}
 		
-		ArrayList<String> photoList = new NoticeDao().selectPho(conn, bno);
-		
-		if(photoList.size() > 0){
-			int result = new NoticeDao().deletePhoto(conn, bno);
-		}
-		
-		int result = new NoticeDao().DeleteNotice(conn, bno);
+		int result = new QnaDao().DeleteQna(conn, bid);
 		
 		if(result > 0){
-			deleteList = new HashMap<String, ArrayList<String>>();
-			
-			deleteList.put("doc", docList);
-			deleteList.put("photo", photoList);
-			
 			commit(conn);
 		}else{
 			rollback(conn);
@@ -273,7 +201,43 @@ public class QnaService {
 		
 		close(conn);
 		
-		return deleteList;
+		return result;
+	}
+
+	public int insertReQna(int ucode, int bid) {
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().insertReQna(conn, ucode, bid);
+		
+		int refBno = 0;
+		
+		if(result > 0){
+			refBno = new QnaDao().selectBid(conn, ucode);
+			commit(conn);
+		}else{
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return refBno;
+	}
+
+	public int updateReQna(String title, String content, int bid, int ucode, int num) {
+		Connection conn = getConnection();
+		
+		int result = new QnaDao().updateReQna(conn, title, content, bid, num);
+		
+		if(result > 0){
+			commit(conn);
+		}else{
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		
+		return result;
 	}
 
 	

@@ -1,6 +1,5 @@
 package com.msmg.board.qna.controller;
 
-import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.board.qna.model.service.QnaService;
 
 /**
- * Servlet implementation class ImgDeleteServlet
+ * Servlet implementation class UpdateReQnaServlet
  */
-@WebServlet("/imgDelete.qna")
-public class ImgDeleteServlet extends HttpServlet {
+@WebServlet("/updateReQna.qna")
+public class UpdateReQnaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ImgDeleteServlet() {
+    public UpdateReQnaServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +28,25 @@ public class ImgDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String src = request.getParameter("src");
-		String data = request.getParameter("data");
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String[] srcArr = src.split("/");
+		String title = request.getParameter("title");
+		String content = request.getParameter("smnoteval");
+		int bid = Integer.parseInt(request.getParameter("bid"));
+		int ucode = Integer.parseInt(request.getParameter("ucode"));
+		int num = Integer.parseInt(request.getParameter("num"));
+	
+	
+		int result = new QnaService().updateReQna(title, content, bid, ucode, num);
+
 		
-		System.out.println(src);
-		
-		String fileName = "";
-		
-		for(int i = 0; i < srcArr.length; i++){
-			fileName = srcArr[i];
+		if(result > 0){
+			response.sendRedirect(request.getContextPath() + "/qnaList.qna");
+		}else{
+			
+			//에러페이지로 forward
+			request.setAttribute("msg", "qna 게시판 작성 에러");
+			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
+			
 		}
-		
-		int result = new QnaService().deleteImg(fileName);
-		
-		String savePath = root + "attach_file/pic_file/";
-		
-		File deleteFile = new File(savePath + fileName);
-		deleteFile.delete();
 	}
 
 	/**

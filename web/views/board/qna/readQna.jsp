@@ -4,8 +4,6 @@
 	Member user = (Member)request.getSession().getAttribute("loginUser");
 	
 	Qna qna = (Qna)request.getAttribute("qna");
-	Qna preQna = (Qna)request.getAttribute("preQna");
-	Qna nextQna = (Qna)request.getAttribute("nextQna");
 %>
 <!DOCTYPE html>
 <html>
@@ -131,13 +129,13 @@ div[id=date-writer-hit2] {
 	function alertDelete(){
 		var check = window.confirm("글을 삭제하시겠습니까?");
 		if(check == true){
-			window.location = '<%=request.getContextPath() %>/deleteNotice.bo?bno=<%= qna.getBoard_id()%>';
+			window.location = '<%=request.getContextPath() %>/deleteQna.qna?bid=<%= qna.getBoard_id()%>';
 		}
 	}
 </script>
 </head>
 <body>
-	<% if(user != null && user.getU_code() == 0) %>
+	<% if(user != null && (user.getU_name() == qna.getU_name() || user.getU_code() == qna.getRef_ucode())){ %>
 	<div id="jjff">
 		<%@ include file="../../common/menubar.jsp"%>
 	</div>
@@ -159,27 +157,6 @@ div[id=date-writer-hit2] {
 				
 			</div>
 		</div>
-		<div id='whiptable'>
-			<table id='whip'>
-			<% if(nextQna != null){ %>
-				<tr style="border-top: 1px solid #ff6347;">
-					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
-						다음글</td>
-					<td align="center" width='700'><a href="<%= request.getContextPath()%>/qnaDetail.qna?board_id=<%=nextQna.getBoard_id()%>"><%= nextQna.getTitle() %></a></td>
-					<td width="100"><%= nextQna.getBoard_date() %></td>
-				</tr>
-			<%} %>
-			<%if(preQna != null){ %>
-				<tr style="border-top: 1px solid #ff6347;">
-					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
-						이전글</td>
-					<td align="center"><a href="<%= request.getContextPath()%>/qnaDetail.qna?board_id=<%=preQna.getBoard_id()%>"><%= preQna.getTitle() %></a></td>
-					<td><%= preQna.getBoard_date() %></td>
-				</tr>
-			<%} %>
-			
-			</table>
-		</div>
 		<br>
 
 
@@ -187,15 +164,23 @@ div[id=date-writer-hit2] {
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
 			<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.bo?num=<%= qna.getBoard_no() %>'">수정하기</button>
+				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
+			<button class="btn btn-primary befo btn-sm"
+				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>'">답글하기</button>
+			
 		</div>
 
 	</div>
 	<div id="mainBottom">
 	<%@include file="../../common/footer.jsp"%>
 	</div>
+	<%}else{
+		request.setAttribute("msg", "잘못된 경로");
+		request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	}%>
+	
 </body>
 </html>
 

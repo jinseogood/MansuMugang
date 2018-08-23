@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.notice.model.service.NoticeService;
-import com.msmg.board.notice.model.vo.Notice;
+import com.msmg.board.qna.model.service.QnaService;
+import com.msmg.board.qna.model.vo.Qna;
 
 /**
  * Servlet implementation class FixUpdateNoticeServlet
@@ -33,13 +33,13 @@ public class SelectOneEditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-		Notice no = new NoticeService().selectOneEdit(num);
+		Qna qna = new QnaService().selectOneEdit(num);
 		
 		String page = "";
 		
-		if(no != null){
-			page = "/views/board/notice/editBoard.jsp";
-			request.setAttribute("no", no);
+		if(qna != null){
+			page = "/views/board/qna/editQna.jsp";
+			request.setAttribute("qna", qna);
 		}else{
 			page = "../../common/errorPage.jsp";
 			request.setAttribute("msg", "글쓰기 에러");
