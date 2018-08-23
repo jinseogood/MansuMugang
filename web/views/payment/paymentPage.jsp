@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*"%>
 <% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("list"); 
 	String[][] add = new String[4][3];
-%>
-
+%> 
+ 
 <% if(list != null){
 for(int i = 0; i < list.size(); i++){
 	

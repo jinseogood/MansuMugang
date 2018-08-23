@@ -1,5 +1,5 @@
 package com.msmg.payment.controller;
-
+ 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.payment.model.service.DestinationService;
 import com.msmg.payment.model.vo.Destination;
 
-/**
+/** 
  * Servlet implementation class InsertDelivery
  */
 @WebServlet("/insertDestination.pm")

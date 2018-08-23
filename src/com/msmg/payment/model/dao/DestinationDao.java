@@ -14,7 +14,7 @@ import static com.msmg.common.JDBCTemplate.*;
 
 public class DestinationDao {
 	private Properties prop = new Properties();
-	
+	 
 	public DestinationDao(){
 		String fileName = DestinationDao.class.getResource("/sql/destination/destination-query.properties").getPath();
 		
@@ -94,7 +94,7 @@ public class DestinationDao {
 		Destination d = null;
 		
 		String query = prop.getProperty("selectList");
-		
+		 
 		try {
 			pstmt = con.prepareStatement(query);
 			

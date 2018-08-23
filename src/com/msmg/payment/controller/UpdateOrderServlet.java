@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.payment.model.service.PaymentService;
 import com.msmg.payment.model.vo.Payment;
-
+ 
 /**
  * Servlet implementation class UpdateOrderServlet
  */
@@ -23,8 +23,7 @@ public class UpdateOrderServlet extends HttpServlet {
     public UpdateOrderServlet() {
         super();
         // TODO Auto-generated constructor stub
-    }
-
+    } 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
