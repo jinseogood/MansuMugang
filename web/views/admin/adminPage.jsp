@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.msmg.admin.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.admin.model.vo.*, com.msmg.member.model.vo.*"%>
+<%
+	Member loginUser=(Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -186,59 +189,11 @@
 							$tr.append($headTd);
 							$tableBody.append($tr);
 						}
-						<%-- else{
-							var $leftFPBtn="<button onclick='location.href='+'<%= request.getContextPath() %>/selectMatList?currentPage=1'+'><<</button>";
-							
-							if(page.currentPage <= 1){
-								var $leftprevBtn="<button disabled><</button>";
-							}
-							else{
-								var $leftprevBtn="<button onclick='location.href='+'<%= request.getContextPath() %>/selectMatList?currentPage=<%= currentPage - 1 %>'+'><</button>'";
-							}
-							
-							for(var p=page.startPage;p<=page.endPage;p++){
-								if(p==page.currentPage){
-									var $numBtn="<button disabled>"+p+"</button>";
-								}
-								else{
-								}
-							}
-							
-						} --%>
+						else{
+														
+						}
 					});
 					
-					<%-- var page=data.pi;
-					
-					console.log(page);
-					
-					var $leftFPBtn="<button onclick='location.href='+'<%= request.getContextPath() %>/selectMatList?currentPage=1'+'><<</button>";
-					
-					console.log($leftFPBtn);
-					
-					if(page.currentPage <= 1){
-						var $leftprevBtn="<button disabled><</button>";
-					}
-					else{
-						var $leftprevBtn="<button onclick='location.href='+'<%= request.getContextPath() %>/selectMatList?currentPage=<%= currentPage - 1 %>'+'><</button>'";
-					}
-					
-					for(var p=page.startPage;p<=page.endPage;p++){
-						if(p==page.currentPage){
-							<button disabled><%= p %></button>
-						}
-						else{
-							<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= p %>'"><%= p %></button>
-						}
-					}
-					
-					if(page.currentPage >= page.maxPage){
-						/* <button disabled>></button> */
-					}
-					else{
-						<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= currentPage + 1 %>'">></button>
-					} --%>
-					
-					<%-- <button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= maxPage %>'">>></button> --%>
 				},
 				error:function(){
 					console.log("error");
@@ -287,38 +242,65 @@
 			});
 		});
 		
+		//공지작성
+		$("#nWrite").click(function(){
+			window.open("/msmg/insertBoard.bo", "공지작성", "width=1100, height=800, top=20, left=20, scrollbars=no");
+		});
+		
 		//공지조회
 		$("#nSearch").click(function(){
 			$.ajax({
-				url:"selectNoticeList",
+				url:"/msmg/selectNoticeList",
 				type:"get",
 				success:function(data){
-					/* console.log(data);
+					console.log(data);
 					
-					$tableBody = $("#userInfoTable tbody");
+					$tableBody = $("#noticeTable tbody");
 					$tableBody.html('');
 					
-					$.each(data, function(index, value){
+					
+					for(var key in data){
+						console.log(key);
+			
 						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(value.userNo);
-						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
-						var $nationTd=$("<td>").text(decodeURIComponent(value.userNation));
+						var $noTd=$("<td>").text(data[key].board_no);
+						var $titleTd=$("<td>").text(data[key].title);
+						var $writerTd=$("<td>").text(data[key].u_name);
+						var $contentTd=$("<td>").text(data[key].content);
+						var $dateTd=$("<td>").text(data[key].board_date);
+						var $countTd=$("<td>").text(data[key].b_count);
 						
 						$tr.append($noTd);
-						$tr.append($nameTd);
-						$tr.append($nationTd);
+						$tr.append($titleTd);
+						$tr.append($writerTd);
+						$tr.append($contentTd);
+						$tr.append($dateTd);
+						$tr.append($countTd);
+						$tableBody.append($tr);
+					}
+					
+					/* $.each(data, function(index, value){
+						var $tr=$("<tr>");
+						var $noTd=$("<td>").text(value.n_no);
+						var $titleTd=$("<td>").text(decodeURIComponent(value.n_title));
+						var $writerTd=$("<td>").text(decodeURIComponent(value.n_writer));
+						var $contentTd=$("<td>").text(decodeURIComponent(value.n_content));
+						var $dateTd=$("<td>").text(value.n_date);
+						var $countTd=$("<td>").text(value.n_count);
+						
+						$tr.append($noTd);
+						$tr.append($titleTd);
+						$tr.append($writerTd);
+						$tr.append($contentTd);
+						$tr.append($dateTd);
+						$tr.append($countTd);
 						$tableBody.append($tr);
 					}); */
 				},
-				error:function(){
-					console.log("error");
+				error:function(data){
+					console.log(data);
 				}
 			});
-		});
-		
-		//공지작성
-		$("#nWrite").click(function(){
-			window.open("/msmg/index.jsp");
 		});
 		
 		//정보게시판조회
@@ -487,7 +469,7 @@
   			<div id="infoIcon">
 	  			<img src="/msmg/images/admin/adminUserIcon.png" id="adminIcon">
 	  			<br>
-	  			<label style="margin-left:10px;">관리자 님</label>
+	  			<label style="margin-left:10px;"><%= loginUser.getU_name() %> 님</label>
   			</div>
   			<div id="infoLogout" align="right">
   				<a onclick="logout();">로그아웃</a>
@@ -604,13 +586,15 @@
 				<table id="noticeTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="4" style="text-align:right;"><button id="nSearch">조회</button>&nbsp;<button id="nWrite">작성</button></td>
+							<td colspan="6" style="text-align:right;"><button id="nSearch">조회</button>&nbsp;<button id="nWrite">작성</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="15%"><b>글번호</b></td>
-							<td width="30%"><b>제목</b></td>
+							<td width="10%"><b>글번호</b></td>
+							<td width="25%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="45%"><b>내용</b></td>
+							<td width="30%"><b>내용</b></td>
+							<td width="15%"><b>작성일</b></td>
+							<td width="10%"><b>조회수</b></td>
 						</tr>
 					</thead>
 					<tbody>
