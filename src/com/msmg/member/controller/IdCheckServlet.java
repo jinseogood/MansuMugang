@@ -36,7 +36,7 @@ public class IdCheckServlet extends HttpServlet {
 		int result = new MemberService().idCheck(uid);
 		
 		PrintWriter out = response.getWriter();
-		
+		 
 		if(result > 0){
 			out.append("fail");
 		}else{

@@ -148,11 +148,11 @@ div a {
 					<tbody>
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" id="userId" name="userId"><div class="w3-button w3-ripple w3-yellow" id="idCheck">중복확인</div></button></td>
+							<td><input type="text" id="userId" name="userId"><div class="w3-button w3-ripple w3-yellow" id="idCheck" onclick="return idCheck();">중복확인</div></button></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
-							<td><input type="text"> <button class="w3-button w3-ripple w3-yellow">확인</button></td>
+							<td><input type="text"> <div class="w3-button w3-ripple w3-yellow" onclick="location.href='<%=request.getContextPath()%>/emailCheck.me'">확인</div></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
@@ -265,7 +265,7 @@ div a {
 								<tr>
 									<td>
 										<input type="checkbox" name="all" id="allCheck">
-										<label style="font-weight:bold">모든 약관과 안내에 동의합니다.</label>
+										<label style="font-weight:bold" for="allCheck">모든 약관과 안내에 동의합니다.</label>
 									</td>
 								</tr>
 								<tr>
@@ -399,7 +399,7 @@ div a {
 		<%@ include file="../common/footer.jsp" %>
 	</div>
 	<script>
-	$(function(){
+	$(function idCheck(){
 		$("#idCheck").click(function(){
 			var userId = $("#userId").val();
 			console.log(userId);
@@ -410,9 +410,10 @@ div a {
 				success:function(data){
 					console.log(data);
 					if(data == "fail"){
-						alert("아이디가 중복됩니다.");
+						alert("아이디가 중복됩니다. 다른 아이디로 변경해주세요."); return false;
 					}else{
-						alert("사용 가능합니다.")
+						alert("사용 가능합니다.");
+						return true;
 					}
 				},
 				error:function(data){
@@ -431,7 +432,7 @@ div a {
 			}
 		});
 	});
-		
+		 
 	
 		function validation() {
 			var userId = $('#userId').val();

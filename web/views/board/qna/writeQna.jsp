@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import = "java.util.*"%>
 <%
-	int bno = (int)request.getAttribute("bno");
+	int bid = (int)request.getAttribute("bid");
+	int ucode = (int)request.getAttribute("ucode");
 	
 %>
 <!DOCTYPE html>
@@ -64,11 +65,6 @@ background : tomato;
 border : 1px solid tomato;
 }
 
-.output {
-width : 800px;
-margin-left : auto;
-margin-right : auto;
-}
 
 
 </style>
@@ -82,7 +78,7 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.bo?bno=<%=bno%>",
+               url : "<%= request.getContextPath() %>/imgUpload.qna?bid=<%=bid%>&ucode=<%=ucode%>",
                enctype: 'multipart/form-data',
                cache : false,
                contentType : false,
@@ -106,7 +102,7 @@ margin-right : auto;
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete.bo", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete.qna", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -115,53 +111,11 @@ margin-right : auto;
     	    
     	}
        
-       function addbtn(){
-    	   
-    	   if(cnt == 0){
-    	   $("#attachfile2").show();
-    	   cnt++;
-    	   }else if(cnt == 1){
-    		   $("#attachfile3").show();
-    	   }
-       };
-       
-       function delbtn(){
-    	   console.log(cnt);
-    	   if(cnt == 1){
-    		   $("#attachfile3").val("");
-    		   $("#attachfile3").hide();
-    		   cnt--;
-    	   }else if(cnt == 0){
-    		   $("#attachfile2").val("");
-    		   $("#attachfile2").hide();
-    	   }
-       }
-       
-       function loadImg(value){
-				if(value.files && value.files[0]){
-					var reader = new FileReader();
-					reader.readAsDataURL(value.files[0]);
-				}
-			}
-       
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
-    	   alert(values);
     	   $("#smnoteval").val(values);
-    	   alert($("#smnoteval").val());
-    	   if($("#attachfile1").val() == ""){
-    		   $("#attachfile1").remove();
-    	   }
-    	   if($("#attachfile2").val() == ""){
-    		   $("#attachfile2").remove();
-    	   }
-    	   if($("#attachfile3").val() == ""){
-    		   $("#attachfile3").remove();
-    	   }
-    	   
-    	   
-    	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateBoard.bo?bno=<%= bno %>');
+    	       	   
+    	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateQna.qna?bid=<%= bid %>&ucode=<%=ucode%>');
        }
    </script>
 
@@ -196,7 +150,7 @@ margin-right : auto;
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
 		<div id="container">
-			<form id = 'frm' method = 'post' encType = "multipart/form-data">
+			<form id = 'frm' method = 'post'>
 				<table align='center' cellpadding="0" cellspacing="0" border="0"
 					id='memo'>
 					<tr class='title'>
@@ -220,18 +174,6 @@ margin-right : auto;
 						<td colspan='2' width="700"></td>
 					</tr>
 				</table>
-				<div class="output">
-				<fieldset >
-					<legend>첨부파일 </legend>
-						<div style = "padding : 5px;">
-							<input type = 'file' id = 'attachfile1' name = 'attachfile1' multiple onchange = "loadImg(this)">
-							<input type = 'file' id = 'attachfile2' name = 'attachfile2' style = "padding-top : 5px; padding-bottom : 5px;" multiple onchange = "loadImg(this)">
-							<input type = 'file' id = 'attachfile3' name = 'attachfile3' multiple onchange = "loadImg(this)">
-						</div>
-						<br>
-						<input type = 'button' value = "추가" onclick = 'addbtn()'>&nbsp;<input type = 'button' value = "삭제" onclick = "delbtn()">
-				</fieldset>
-			</div>
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>
@@ -284,7 +226,6 @@ margin-right : auto;
       },
       
       onMediaDelete : function(target) {
-          alert(target[0].src);
           deleteFile(target[0].src);
           console.log(target[0].src)
    }

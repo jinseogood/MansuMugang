@@ -29,6 +29,8 @@ public class SelectReviewServlet extends HttpServlet {
 		
 		String page = "";
 		
+		System.out.println("servlet : " + list);
+		
 		if(list != null) {
 			page = "views/board/review/reviewThumbnailList.jsp";
 			request.setAttribute("list", list);

@@ -20,12 +20,13 @@ public class MyFileRenameReview implements FileRenamePolicy{
 		String body = null;
 		String ext = null;
 		int dot = name.lastIndexOf(".");
-		if(dot != -1) {
+		if(dot != -1){
 			//dot 전까지
 			body = name.substring(0, dot);
-			
+			//dot 포함
 			ext = name.substring(dot);
-		} else {
+		}else{
+		    //확장자가 없는 경우
 			body = name;
 			ext = "";
 		}

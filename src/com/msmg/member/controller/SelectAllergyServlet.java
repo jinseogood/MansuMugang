@@ -37,7 +37,7 @@ public class SelectAllergyServlet extends HttpServlet {
 		String ucode = String.valueOf((int)((Member)request.getSession().getAttribute("loginUser")).getU_code());
 		
 		System.out.println("써블릿에 들어옴 " + ucode);
-		
+		  
 		UserAllergy al = new UserAllergy();
 		al.setU_code(ucode);
 		

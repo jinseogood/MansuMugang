@@ -15,16 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.json.simple.JSONObject;
 
-import com.msmg.board.notice.model.service.NoticeService;
-import com.msmg.board.notice.model.vo.Attachment;
-import com.msmg.board.notice.model.vo.Notice;
+import com.msmg.board.qna.model.service.QnaService;
+import com.msmg.board.qna.model.vo.Attachment;
 import com.msmg.common.RenameFilePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
  * Servlet implementation class ImgUploadServlet
  */
-@WebServlet("/imgUpload.Qna")
+@WebServlet("/imgUpload.qna")
 public class ImgUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -83,7 +82,8 @@ public class ImgUploadServlet extends HttpServlet {
 				originFile = multiRequest.getOriginalFileName(name);
 				
 			}
-			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
+			int bid = Integer.parseInt(multiRequest.getParameter("bid"));
+			int ucode = Integer.parseInt(multiRequest.getParameter("ucode"));
 			
 			//attachment 객체 생성해서 arrayList객체 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
@@ -93,11 +93,12 @@ public class ImgUploadServlet extends HttpServlet {
 				at.setFilePath(savePath);
 				at.setOriginName(originFile);
 				at.setChangeName(saveFile);
-				at.setBoard_no(bno);
+				at.setBoard_no(bid);
+				at.setU_code(ucode);
 				
 			
 			//Service로 전송
-			int result = new NoticeService().insertThumbnail(at);
+			int result = new QnaService().insertImg(at);
 			
 			if(result > 0){
 			String path2 = request.getContextPath()+"/attach_file/pic_file/" + saveFile;

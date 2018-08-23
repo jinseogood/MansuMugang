@@ -42,7 +42,7 @@ public class ImgDeleteServlet extends HttpServlet {
 			fileName = srcArr[i];
 		}
 		
-		int result = new NoticeService().deleteImg(fileName);
+		int result = new NoticeService().deleteAttachment(fileName);
 		
 		String savePath = root + "attach_file/pic_file/";
 		

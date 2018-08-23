@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.notice.model.service.NoticeService;
+import com.msmg.board.qna.model.service.QnaService;
 
 /**
  * Servlet implementation class ImgDeleteServlet
  */
-@WebServlet("/imgDelete.Qna")
+@WebServlet("/imgDelete.qna")
 public class ImgDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,7 +42,7 @@ public class ImgDeleteServlet extends HttpServlet {
 			fileName = srcArr[i];
 		}
 		
-		int result = new NoticeService().deleteImg(fileName);
+		int result = new QnaService().deleteImg(fileName);
 		
 		String savePath = root + "attach_file/pic_file/";
 		

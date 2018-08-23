@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주문내역</title>
-<script>
+<script> 
 	$(window).on(
 			"load resize ",
 			function() {

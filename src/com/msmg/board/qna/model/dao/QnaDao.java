@@ -186,9 +186,8 @@ public class QnaDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, rand);
-			pstmt.setInt(2, ucode);
-			pstmt.setInt(3, rand);
+			pstmt.setInt(1, ucode);
+			pstmt.setInt(2, rand);
 			
 			result = pstmt.executeUpdate();
 			
@@ -199,15 +198,10 @@ public class QnaDao {
 			close(pstmt);
 		}
 		
-		if(result > 0){
-			return rand;
-			
-		}else{
 			return result;
-		}
 	}
 	
-	public int insertAttachment(Connection conn, Attachment at) {
+	public int insertImg(Connection conn, Attachment at) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -219,6 +213,7 @@ public class QnaDao {
 			pstmt.setString(2, at.getChangeName());
 			pstmt.setString(3, at.getFilePath());
 			pstmt.setInt(4, at.getBoard_no());
+			pstmt.setInt(5, at.getU_code());
 			
 			result = pstmt.executeUpdate();
 			
@@ -236,7 +231,7 @@ public class QnaDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("deleteAttachment");
+		String query = prop.getProperty("deleteQna");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -252,17 +247,18 @@ public class QnaDao {
 		
 		return result;
 	}
-	public int updateBoard(Connection conn, Notice no) {
+	public int updateQna(Connection conn, String title, String content, int bid, int nowBno) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("updateBoard");
+		String query = prop.getProperty("updateQna");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, no.getTitle());
-			pstmt.setString(2, no.getContent());
-			pstmt.setInt(3, no.getBoard_no());
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3,nowBno);
+			pstmt.setInt(4, bid);
 			
 			result = pstmt.executeUpdate();
 			
@@ -275,26 +271,28 @@ public class QnaDao {
 		
 		return result;
 	}
-	public int selectCurrval(Connection conn) {
-		Statement stmt = null;
+	public int selectNowBno(Connection conn, int ucode) {
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int bid = 0;
 		
-		String query = prop.getProperty("selectCurrval");
+		String query = prop.getProperty("selectNowBno");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, ucode);
+			
+			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				bid = rset.getInt("currval");
+				bid = rset.getInt(1);
 			}
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			close(stmt);
+			close(pstmt);
 			close(rset);
 			
 		}
@@ -303,18 +301,17 @@ public class QnaDao {
 		return bid;
 	}
 	
-	public int updatePhotho(Connection conn, int bno, int randbno) {
+	public int updatePhotho(Connection conn, int bid, int ucode, int nowBno) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
 		String query = prop.getProperty("updatePhoto");
-		System.out.println(bno);
-		System.out.println(randbno);
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bno);
-			pstmt.setInt(2, randbno);
+			pstmt.setInt(1, nowBno);
+			pstmt.setInt(2, bid);
+			pstmt.setInt(3, ucode);
 			
 			result = pstmt.executeUpdate();
 			
@@ -327,6 +324,7 @@ public class QnaDao {
 		
 		return result;
 	}
+	
 	public int insertDocument(Connection conn, ArrayList<Attachment> fileList) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -355,7 +353,7 @@ public class QnaDao {
 		
 		return result;
 	}
-	public int selectPhoto(Connection conn, int randbno) {
+	public int selectPhoto(Connection conn, int bid, int ucode) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -365,7 +363,8 @@ public class QnaDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, String.valueOf(randbno));
+			pstmt.setInt(1, bid);
+			pstmt.setInt(2, ucode);
 			
 			rset = pstmt.executeQuery();
 			
@@ -406,73 +405,7 @@ public class QnaDao {
 		
 		return result;
 	}
-	public Qna selectPreQna(Connection conn, int bid, int code) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Qna preQna = null;
-		
-		String query = prop.getProperty("selectPreNotice");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bid);
-			pstmt.setInt(2, code);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				preQna = new Qna();
-				
-				
-				preQna.setBoard_id(rset.getInt("board_id"));
-				preQna.setTitle(rset.getString("title"));
-				preQna.setBoard_date(rset.getDate("board_date"));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		
-		return preQna;
-	}
 	
-	public Qna selectNextQna(Connection conn, int bid, int code) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Qna nextQna = null;
-		
-		String query = prop.getProperty("selectNextNo");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bid);
-			pstmt.setInt(2, code);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				nextQna = new Qna();
-				
-				nextQna.setBoard_id(rset.getInt("board_id"));
-				nextQna.setTitle(rset.getString("title"));
-				nextQna.setBoard_date(rset.getDate("board_date"));
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		
-		return nextQna;
-	}
 	public ArrayList<Attachment> selectAttachment(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -547,10 +480,10 @@ public class QnaDao {
 		
 		return at;
 	}
-	public Notice selectOneEdit(Connection conn, String num) {
+	public Qna selectOneEdit(Connection conn, String num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		Notice no = null;
+		Qna qna = null;
 		
 		String query = prop.getProperty("selectOneEdit");
 		
@@ -561,14 +494,16 @@ public class QnaDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
-				no = new Notice();
+				qna = new Qna();
 				
-				no.setBoard_id(rset.getInt("board_id"));
-				no.setBoard_no(rset.getInt("board_no"));
-				no.setContent(rset.getString("content"));
-				no.setTitle(rset.getString("title"));
+				qna.setBoard_id(rset.getInt("board_id"));
+				qna.setBoard_no(rset.getInt("board_no"));
+				qna.setContent(rset.getString("content"));
+				qna.setTitle(rset.getString("title"));
 				
 			}
+			
+			System.out.println(qna);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -579,7 +514,7 @@ public class QnaDao {
 		
 		
 		
-		return no;
+		return qna;
 	}
 	public int deleteDocument(Connection conn, int board_no) {
 		PreparedStatement pstmt = null;
@@ -603,17 +538,17 @@ public class QnaDao {
 		
 		return result;
 	}
-	public int editBoard(Connection conn, Notice no) {
+	public int editQna(Connection conn, int bid, String title, String content) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("editBoard");
+		String query = prop.getProperty("editQna");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, no.getTitle());
-			pstmt.setString(2, no.getContent());
-			pstmt.setInt(3, no.getBoard_no());
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, bid);
 			
 			result = pstmt.executeUpdate();
 			
@@ -694,24 +629,21 @@ public class QnaDao {
 		
 		return list;
 	}
-	public ArrayList<String> selectPho(Connection conn, int bno) {
+	public int selectPho(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
-		ArrayList<String> list = new ArrayList<String>();
+		int result = 0;
 		
 		String query = prop.getProperty("selectPhoto");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bno);
+			pstmt.setInt(1, bid);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
-				String name = rset.getString(1);
-				
-				list.add(name);
+				result = rset.getInt(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -721,9 +653,9 @@ public class QnaDao {
 			close(pstmt);
 		}
 		
-		return list;
+		return result;
 	}
-	public int deletePhoto(Connection conn, int bno) {
+	public int deletePhoto(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -731,7 +663,7 @@ public class QnaDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, String.valueOf(bno));
+			pstmt.setString(1, String.valueOf(bid));
 			
 			result = pstmt.executeUpdate();
 			
@@ -745,15 +677,91 @@ public class QnaDao {
 		
 		return result;
 	}
-	public int DeleteNotice(Connection conn, int bno) {
+	public int DeleteQna(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("deleteNotice");
+		String query = prop.getProperty("deleteQna");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bno);
+			pstmt.setInt(1, bid);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectBid(Connection conn, int ucode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int result = 0;
+		
+		String query = prop.getProperty("selectBid");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, ucode);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return result;
+	}
+
+	public int insertReQna(Connection conn, int ucode, int bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReQna");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, ucode);
+			pstmt.setInt(2, bid);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+			return result;
+	}
+
+	public int updateReQna(Connection conn, String title, String content, int bid, int num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateReQna");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3,	num);
+			pstmt.setInt(4, bid);
 			
 			result = pstmt.executeUpdate();
 			

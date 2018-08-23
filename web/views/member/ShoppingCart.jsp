@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>장바구니</title>
 </head>
-
+ 
 <script>
    $(window).on(
          "load resize ",

@@ -87,10 +87,10 @@ public class NoticeService {
 		return result;
 	}
 
-	public int deleteImg(String fileName) {
+	public int deleteAttachment(String fileName) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().deleteImg(conn, fileName);
+		int result = new NoticeDao().deleteAttachment(conn, fileName);
 		
 		if(result > 0){
 			commit(conn);

@@ -3,14 +3,14 @@ package com.msmg.payment.model.vo;
 public class Destination implements java.io.Serializable {
 	
 	private int destination_no;
-	private String destination_sort;
+	private String destination_sort; 
 	private String destionation;
 	private String u_code;
 	
 	public Destination(){}
 
 	public Destination(int destination_no, String destination_sort, String destionation, String u_code) {
-		super();
+		super(); 
 		this.destination_no = destination_no;
 		this.destination_sort = destination_sort;
 		this.destionation = destionation;
