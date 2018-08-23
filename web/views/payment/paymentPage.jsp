@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*"%>
-<%-- <% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute(list); %> --%>
+<% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("list"); 
+	String[][] add = new String[4][3];
+%>
+
+<% if(list != null){
+for(int i = 0; i < list.size(); i++){
+	
+	String[] add2 = list.get(i).getDestionation().split("{*}");
+	
+	for(int j = 0; j < add2.length; j++){
+		add[i][j] = add2[j];
+	}
+	
+}}
+%>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -200,6 +216,8 @@ section {
 				</div>
 			</div>
 
+			
+		<form id="buy" action="<%=request.getContextPath()%>/updateOrder.pm" method="post">
 			<section>
 				<h1>주문상품 확인</h1>
 				<div class="tbl-header table1">
@@ -207,8 +225,8 @@ section {
 						<thead>
 							<tr>
 								<th>상품 정보</th>
-								<th>수량</th>
-								<th>도착일</th>
+								<!-- <th>수량</th> -->
+								<!-- <th>도착일</th> -->
 								<th>금액</th>
 							</tr>
 						</thead>
@@ -219,15 +237,21 @@ section {
 						<tbody>
 							<tr>
 								<td>(상품정보)</td>
-								<td>(수량)</td>
-								<td>(예정일)</td>
+								<!-- <td>(수량)</td> -->
+								<!-- <td>(예정일)</td> -->
 								<td>(____원)</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 			</section>
-
+		
+<%-- 		<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
+		<input type="hidden" name="menu_code" value=<%= %>>
+		<input type="hidden" name="buy_date" value="">
+		<input type="hidden" name="status" value=<%= %>> --%>
+		
+		
 			<section>
 				<h1>주문자 정보</h1>
 				<div class="tbl-header table1">
@@ -253,12 +277,12 @@ section {
 					</table>
 				</div>
 			</section>
+		</form>
 
 
 
 
-
-
+		
 			<section>
 				<h1>배송지 정보</h1>
 
@@ -271,8 +295,8 @@ section {
 								<td colspan="4">
 									<button class="w3-button w3-ripple w3-yellow"
 										data-toggle="modal" data-book-id="my_id_value"
-										class="identifyingClass" data-target="#myModal">목록</button> <span>※기존에
-										보낸 주소 목록에서 선택하거나 직접 새로운 주소를 입력하세요.</span>
+										class="identifyingClass" data-target="#myModal">목록</button> 
+										<span>※기존에 보낸 주소 목록에서 선택하거나 직접 새로운 주소를 입력하세요.</span>
 								</td>
 							</tr>
 
@@ -293,15 +317,16 @@ section {
 								
 									<div style="padding: 7px 0 10px;">
 										<div>
-											<form id="pstcd" action="<%=request.getContextPath() %>/insertDestination.pm" method="post">
+											<%-- <form id="pstcd" action="<%=request.getContextPath() %>/insertDestination.pm" method="post"> --%>
 												<input type="text" readonly name="postcode1" class="postcodify_postcode5" id="postcode">
-											</form>
+											<!-- </form> -->
 											
+											<!-- <br> -->
 											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow">검색</button>
 											
 										</div>
 									</div>
-								
+					
 									
 									<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 									<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
@@ -324,15 +349,18 @@ section {
 							</tr>
 
 
-
+						
 							<tr>
 								<th bgcolor=tomato>휴대전화</th>
-								<td colspan="4"><input type="text" name="hpno1" id="hpno1"
-									size="4" maxlength="4"> <span>－</span> <input
-									type="text" name="hpno2" id="hpno2" size="4" maxlength="4">
-									<span>－</span> <input type="text" name="hpno3" id="hpno3"
-									size="4" maxlength="4"></td>
+									<td colspan="4">
+										<input type="text" name="hpno1" id="hpno1" size="4" maxlength="4">
+										<span>－</span> 
+										<input type="text" name="hpno2" id="hpno2" size="4" maxlength="4">
+										<span>－</span>
+										<input type="text" name="hpno3" id="hpno3" size="4" maxlength="4">
+									</td>
 							</tr>
+						
 							<tr>
 								<th class="big" bgcolor=tomato>배송메시지</th>
 								<td colspan="4">
@@ -341,14 +369,10 @@ section {
 										<em>※ 이 메시지는 배송시 택배기사에게 전달하는 메시지입니다.</em>
 										<div class="deliveryMessageSelect">
 											<ul>
-												<li><input type="radio" name="radio">부재 시 경비실에
-													맡겨주세요.</li>
-												<li><input type="radio" name="radio">부재 시 휴대폰으로
-													연락바랍니다.</li>
-												<li><input type="radio" name="radio">부재 시 문앞에
-													놔주세요.</li>
-												<li><input type="radio" name="radio">파손 위험 상품이니
-													조심히 다뤄주세요.</li>
+												<li><input type="radio" name="radio">부재 시 경비실에 맡겨주세요.</li>
+												<li><input type="radio" name="radio">부재 시 휴대폰으로 연락바랍니다.</li>
+												<li><input type="radio" name="radio">부재 시 문앞에 놔주세요.</li>
+												<li><input type="radio" name="radio">파손 위험 상품이니 조심히 다뤄주세요.</li>
 											</ul>
 										</div>
 									</div>
@@ -371,7 +395,7 @@ section {
 						<div class="modal-body">
 							
 							<div class="row">
-								<table id="example-table-1" width="100%"
+								<table id="listArea" width="100%"
 									class="table table-bordered table-hover text-center">
 									<thead>
 										<tr>
@@ -381,29 +405,24 @@ section {
 											<th>보조주소</th>
 										</tr>
 									</thead>
+									
+									<% if(list != null){
+									for(int i=0; i < add.length; i++) { %>
 									<tbody>
 										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
+										
+											<td><%= add[i][0] %></td>
+											<td><%= add[i][1] %></td>
+											<td><%= add[i][2] %></td>
+											<td><%= add[i][3] %></td>
 										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-										</tr>
+										
 									</tbody>
+									<% }} %>
+									
 								</table>
-								<div class="col-lg-12" id="ex1_Result1"></div>
-								<div class="col-lg-12" id="ex1_Result2"></div>
+<!-- 								<div class="col-lg-12" id="ex1_Result1"></div>
+								<div class="col-lg-12" id="ex1_Result2"></div> -->
 							</div>
 							
 						</div>
@@ -415,9 +434,6 @@ section {
 				</div>
 			</div>
 		
-
-
-
 
 		<section>
 				<h1>결제방법 선택</h1>
@@ -500,9 +516,6 @@ section {
 						</tbody>
 					</table>
 				</div>
-
-
-				
 			</section>
 
 			<div align="center">
@@ -538,7 +551,7 @@ section {
 					var checkVal = $('#confirmSettlement:checked').val();
 					var sender = $("#sender").val();
 					var receiver = $('#receiver').val();
-					var postcode = $('#postcode').val();
+					
 					var buyer_addr = $('#buyer_addr2').val();
 					var hpno1 = $('#hpno1').val();
 					var hpno2 = $('#hpno2').val();
@@ -548,8 +561,7 @@ section {
 					var pst = $("[name=postcode1]").val();
 					$("[name=postcode]").val(pst);
 					
-					
-					
+					var postcode = pst;
 					
 					/* console.log(postcode); */
 
@@ -583,11 +595,8 @@ section {
 													} else {
 														if (radioVal1 == 'on') {
 															// IMP.request_pay(param, callback) 호출
-															IMP
-																	.init("imp86047661");
-
-															IMP
-																	.request_pay(
+															IMP.init("imp86047661");
+															IMP.request_pay(
 																			{ // param
 																				pg : "inicis",
 																				pay_method : "card",
@@ -597,16 +606,13 @@ section {
 																				buyer_email : $('#buyer_email').val(),
 																				buyer_name : $('#receiver').val(),
 																				buyer_tel : $('#buyer_tel').val(),
-																				buyer_addr : $("#addrrs").val(),
-																				
+																				buyer_addr,
 																				buyer_postcode : $('#postcode').val(),
-
 																			},
 																			function(
 																					rsp) { // callback
 																				if (rsp.success) {
-																					jQuery
-																							.ajax(
+																					jQuery .ajax(
 																									{
 																										url : "http://localhost:8001/msmg/views/payment/paymentConfirm.jsp", // 가맹점 서버
 																										method : "POST",
@@ -626,7 +632,7 @@ section {
 																										
 																										if($("#AddrSaveCheck").is(":checked")){
 																											
-																											$("#pstcd").submit();
+																											/* $("#pstcd").submit(); */
 																											$("#addrrs").submit();
 																											
 																										} else {
@@ -635,8 +641,7 @@ section {
 	
 																									})
 																				} else {
-																					alert("결제에 실패하였습니다. 에러 내용: "
-																							+ rsp.error_msg);
+																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 																				}
 																			});
 
@@ -656,11 +661,13 @@ section {
 				}
 			</script>
 
-			<script>
+		<script>
 			$(function() {
 				$("#postcodify_search_button").postcodifyPopUp();
 			});
 		</script>
+		
+		
 
 <script>
 <%-- <input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">

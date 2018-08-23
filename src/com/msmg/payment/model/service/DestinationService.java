@@ -17,8 +17,11 @@ public class DestinationService {
 		
 		int result = new DestinationDao().insertDestination(con, d);
 		
-		if(result > 0) commit(con);
-		else rollback(con);
+		if(result > 0) {
+			commit(con);
+		} else { 
+			rollback(con);
+		}
 		
 		close(con);
 		
