@@ -204,9 +204,9 @@ text-decoration:none;
 						<br>
 						<tr>
 							<table align="center">
+									<input type="hidden" name="userCode" value="<%= loginUser.getU_code() %>" id="userCode">
 								<tr>
 									<th colspan="3"><label>@가지고계신 알레르기를 선택해주세요@</label></th>
-									<th><input type="hidden" name="userCode" value="<%= loginUser.getU_code() %>" id="userCode"></th>
 								</tr>
 								<tr>
 									<td>
@@ -312,8 +312,8 @@ text-decoration:none;
 	</div>
 	<script>
 		$(function(){
-			
 			console.log(<%= alList%>);
+			
 		});
 	</script>
 </body>
