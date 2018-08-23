@@ -158,7 +158,7 @@
 				<div id="informationB" onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">정보게시판</div>
 				<!-- <a href="/msmg/views/board/information/informationBoard.jsp">정보게시판</a> -->
 				<br><br>
-				<a href="/msmg/views/board/review/reviewThumbnailList.jsp">후기게시판</a>
+				<a href = "<%=request.getContextPath()%>/selectList.rev">후기게시판</a>
 			</div>
 			<div id="submenuTitle">
 				<a href = "<%= request.getContextPath() %>/noticeList.bo">공지사항</a>

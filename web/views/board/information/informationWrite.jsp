@@ -164,7 +164,7 @@ hr {
 		<!-- <h2 align="left"><b>정보게시판</b></h2> -->
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
 		<br>
-		<form action="<%=request.getContextPath() %>/insert.bo" method="post">
+		<form name="writeform"action="<%=request.getContextPath() %>/insert.bo" method="post">
 		
 		<div id="view">
 			<table id="tableView">
@@ -239,9 +239,27 @@ hr {
 		<div id="writeBtn">
 			<button  type="reset" class="btn btn-primary" value="취소" onclick = 'history.go(-1)'>취소</button>
 			&nbsp;
-			<button type="submit" class="btn btn-primary" value="등록 완료">등록 완료</button>
+			<input type="button" class="btn btn-primary" value="등록 완료" OnClick="javascript:writeCheck();">
 		</div>
 	</form>
+	<script language = "javascript">
+		function writeCheck(){
+			var form = document.writeform;
+			
+			if(!form.title.value){
+				alert("제목을 입력하세요.");
+				form.title.focus();
+				return;
+			}
+			if(!form.content.value){
+				alert("내용을 입력하세요.")
+				form.content.focus();
+				return;
+			}
+			
+			form.submit();
+		}
+		</script>
 	</div>
 </div>
 

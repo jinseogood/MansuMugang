@@ -17,9 +17,6 @@
 
 
 <style>
-/* body {
-	background: pink;
- }*/
  
  #back {
 	width:100%;
@@ -37,7 +34,7 @@
 }
 
 .titleN {
-	background: #25e849;
+	background: tomato;
 	color: white;
 	width: 100px;
 	height: 40px;
@@ -51,8 +48,14 @@
 }
 
 .btn {
+	background:tomato;
+	border:none;
 	float: right;
 	margin-left: 10px;
+}
+
+.btn:hover {
+	background:tomato;
 }
 
 hr {
@@ -104,6 +107,7 @@ hr {
 	height:200px;
 }
 
+
 </style>
 </head>
 <body>
@@ -115,14 +119,17 @@ hr {
 		<%-- <%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %> --%>
 		<br>
 		<div id="view">
+		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
+		<form action="<%=request.getContextPath() %>/insert.rev" method="post" encType="multipart/form-data">
 			<table id="tableView">
 				<tr id="tableView2" style="border-bottom: 1px solid lightgray">
 					<td class="titleN" id="title">제목</td>
-					<td><input type="text"
+					<td><input type="text" name="title"
 						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px;"></td>
 					<td class="titleN" id="date">작성일</td>
 					<td><input type="text"
-						style="background-color: transparent; border: 0 solid black; text-align: left; width: 250px;"></td>
+						style="background-color: transparent; border: 0 solid black; text-align: center; width: 250px;" 
+						value="<%=df.format(new Date())%>" readonly></td>
 				</tr>
 				<table id="ImgTable" align="center">
 				<tr>
@@ -155,23 +162,26 @@ hr {
 				</table>
 			</table>
 			<div id="fileArea">
-				<input type="file" id="thumbnailImg1" name="thumbnailImg1" multiple onchange="loading(this, 1)">
-				<input type="file" id="thumbnailImg2" name="thumbnailImg2" multiple onchange="loading(this, 2)">
-				<input type="file" id="thumbnailImg3" name="thumbnailImg3" multiple onchange="loading(this, 3)">
-				<input type="file" id="thumbnailImg4" name="thumbnailImg4" multiple onchange="loading(this, 4)">
+				<input type="file" id="thumbnailImg1" name="thumbnailImg1" multiple onchange="loadImg(this, 1)">
+				<input type="file" id="thumbnailImg2" name="thumbnailImg2" multiple onchange="loadImg(this, 2)">
+				<input type="file" id="thumbnailImg3" name="thumbnailImg3" multiple onchange="loadImg(this, 3)">
+				<input type="file" id="thumbnailImg4" name="thumbnailImg4" multiple onchange="loadImg(this, 4)">
 			</div>
 		<hr>
 		<br>
 		<div id="writeBtn">
 			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
 			&nbsp;
-			<button type="button" class="btn btn-primary" value="등록 완료" OnClick="window.location='review_SignUp.jsp'">등록 완료</button>
+			<button type="submit" class="btn btn-primary" value="등록 완료">등록 완료</button>
 		</div>
+		</form>
 	</div>
 </div>
 
 <script>
 	$(function(){
+		$("#fileArea").hide();
+		
 		$("#titleImgArea").click(function(){
 			$("#thumbnailImg1").click();
 		});
