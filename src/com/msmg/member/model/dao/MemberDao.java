@@ -241,7 +241,7 @@ public class MemberDao {
 		}
 		System.out.println("다오 리턴 전 alList" +alList);
 		return alList;
-	}
+	} 
 
 	public int deleteMember(Connection con, Member m) {
 		PreparedStatement pstmt = null;

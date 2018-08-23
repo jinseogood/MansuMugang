@@ -272,7 +272,7 @@ text-decoration:none;
 										<input type="checkbox" name="allergy" value="A13" id="walnut">
 										<label for="walnut">호두</label>
 									</td>
-									<td>
+									<td> 
 										<input type="checkbox" name="allergy" value="A14" id="chicken">
 										<label for="chicken">닭고기</label>
 									</td>

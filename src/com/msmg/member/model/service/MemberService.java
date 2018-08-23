@@ -84,7 +84,7 @@ public class MemberService {
 		Connection con = getConnection();
 		
 		int result = new MemberDao().deleteMember(con, m);
-		
+		 
 		
 		if(result > 0) {
 			commit(con);
