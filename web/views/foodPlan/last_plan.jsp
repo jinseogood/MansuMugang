@@ -344,7 +344,7 @@
 				}
 			}   */
 			
-			console.log(num);
+			console.log(num); 
 			<%-- location.href="<%= request.getContextPath()%>/selectOne.tn?result=" + result;  --%>
 		});
 	});
