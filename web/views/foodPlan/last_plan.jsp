@@ -334,18 +334,26 @@
 			var head = <%= sf.getHead() %>;
 			var total_price = first_price;
 			console.log(total_price);
-		
-			var num = $("#test").children().eq(0).children().eq(3).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();
+			var result = "";
+			//var num = $("#test").children().eq(0).children().eq(3).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();
 			                                                    /*1, 3, 5       0, 1, 2*/
-			/* for(var i = 1 ; i < 2; i++){
-				for(var j = 0 ; j < 1; j++){
-					var num = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();		
-																		//1, 3, 5       0, 1, 2
+			for(var i = 1 ; i < (day*2); i+=2){
+				for(var j = 0 ; j < ggi; j++){
+					var name = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(0).text();		
+																		//1,3,5,7,9,11,13    0,1,2
+																		
+					if(i==day*2-1 && j == ggi-1){
+						
+						result += name;
+					}else{
+						result += name + ", ";
+					}													
+					//console.log(result);
 				}
-			}   */
+			}
 			
-			console.log(num); 
-			<%-- location.href="<%= request.getContextPath()%>/selectOne.tn?result=" + result;  --%>
+			console.log(result); 
+			location.href="<%= request.getContextPath()%>/insertBuy.fo?result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price;
 		});
 	});
 
