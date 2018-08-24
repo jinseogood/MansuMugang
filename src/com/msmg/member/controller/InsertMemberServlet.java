@@ -54,7 +54,7 @@ public class InsertMemberServlet extends HttpServlet {
 		int result = new MemberService().insertAllergy(list, m);
 		
 		String page = "";
-		if(member != null && result != 0){
+		if(member != null || result != 0){
 			page = "/index.jsp";
 		}else{
 			page = "/views/common/errorPage.jsp";
