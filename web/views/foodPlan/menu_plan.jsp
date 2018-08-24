@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.member.model.vo.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -630,7 +630,8 @@ body {
 				if(f == 0 && g == 0){
 					alert("반찬 유무를 선택하세요.");
 				}else{
-					location.href = "<%= request.getContextPath()%>/selectFoodList.fo?go=" + i + "&dang=" + j + "&head=" + k + "&three_day=" + a + "&seven_day=" + b + "&one_ggi=" + c + "&two_ggi=" + d + "&three_ggi=" + e + "&side=" + f;	
+					var user = "<%= loginUser.getU_code() %>";
+					location.href = "<%= request.getContextPath()%>/selectFoodList.fo?go=" + i + "&dang=" + j + "&head=" + k + "&three_day=" + a + "&seven_day=" + b + "&one_ggi=" + c + "&two_ggi=" + d + "&three_ggi=" + e + "&side=" + f + "&user=" + user;	
 				}
 			} 
 			
