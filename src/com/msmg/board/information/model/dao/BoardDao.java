@@ -10,11 +10,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
 
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.information.model.vo.Reply;
+import com.msmg.board.review.model.vo.BoardFile;
 
 public class BoardDao {
 	private Properties prop = new Properties();
@@ -66,6 +68,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			
+			System.out.println("startRow : " + startRow);
+			System.out.println("endRow : " + endRow);
+			System.out.println("currentPage : " + currentPage);
+			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
@@ -83,11 +89,14 @@ public class BoardDao {
 				b.setContent(rset.getString("content"));
 				b.setBoardDate(rset.getDate("board_date"));
 				b.setuCode(rset.getString("u_name"));
+				b.setBuyInfoNo(rset.getInt("buy_info_no"));
+				b.setRefBno(rset.getInt("ref_bno"));
 				b.setbCount(rset.getInt("b_count"));
+				b.setWriteYn(rset.getString("write_yn"));
 				
 				list.add(b);
 			}
-			
+			System.out.println("list : " + list);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -317,5 +326,61 @@ public class BoardDao {
 		}else {
 			return 0;
 		}
+	}
+
+	public HashMap<String, Object> selectOneReviewMap(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		ArrayList<BoardFile> list = null;
+		Board b = null;
+		BoardFile bf = null;
+		
+		String query = prop.getProperty("selectReviewOne");
+		System.out.println("BoardDao num : " + num);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<BoardFile>();
+			
+			while(rset.next()) {
+				b = new Board();
+				b.setBoardSort(rset.getString("board_sort"));
+				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setuCode(rset.getString("u_name"));
+				
+				bf = new BoardFile();
+				bf.setBoard_id(rset.getInt("board_id"));
+				bf.setOrigin_name(rset.getString("origin_name"));
+				bf.setEdit_name(rset.getString("edit_name"));
+				bf.setFile_src(rset.getString("file_src"));
+				bf.setFile_date(rset.getDate("file_date"));
+				bf.setFile_no(rset.getInt("file_no"));
+				bf.setBoard_sort(rset.getString("board_sort"));
+				bf.setU_code(rset.getInt("u_code"));
+				bf.setFile_level(rset.getInt("file_level"));
+				
+				list.add(bf);
+			}
+			
+			hmap = new HashMap<String, Object>();
+			hmap.put("board", b);
+			hmap.put("boardFile", list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return hmap;
 	}
 }

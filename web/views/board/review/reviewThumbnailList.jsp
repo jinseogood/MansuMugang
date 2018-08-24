@@ -93,7 +93,7 @@
 		</div>
 			
 			<script>
-					$(".thmb-list").click(function(){
+					$(".thumb-list").click(function(){
 						var num = $(this).children().children().eq(0).val();
 						
 						console.log(num);

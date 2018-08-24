@@ -105,6 +105,12 @@ public class ReviewDao {
 				pstmt.setInt(4, fileList.get(i).getBoard_id());
 				pstmt.setInt(5, fileList.get(i).getU_code());
 				
+				int level = 0;
+				if(i == 0) level = 0;
+				else level = 1;
+				
+				pstmt.setInt(6, level);
+				
 				result += pstmt.executeUpdate();
 			}
 		}catch(Exception e) {

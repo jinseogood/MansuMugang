@@ -7,6 +7,7 @@ import static com.msmg.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.msmg.board.information.model.dao.BoardDao;
 import com.msmg.board.information.model.vo.Board;
@@ -149,6 +150,21 @@ public class BoardService {
 		close(con);
 		
 		return result;
+	}
+
+	public HashMap<String, Object> selectOneReview(int num) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> hmap = new BoardDao().selectOneReviewMap(con, num);
+		
+		/*조회수 : int result = new BoardDao().updateCount(con, num);*/
+		
+		if(hmap != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		return hmap;
 	}
 
 	
