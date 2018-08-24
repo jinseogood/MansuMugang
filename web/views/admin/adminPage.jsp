@@ -307,16 +307,12 @@
 						var $noTd=$("<td>").text(data[key].board_no);
 						var $titleTd=$("<td>").text(data[key].title);
 						var $writerTd=$("<td>").text(data[key].u_name);
-						var $contentTd=$("<td>").text(data[key].content);
-						//$contentTd.find("p").remove();
-						console.log($contentTd.find("p"));
 						var $dateTd=$("<td>").text(data[key].board_date);
 						var $countTd=$("<td>").text(data[key].b_count);
 						
 						$tr.append($noTd);
 						$tr.append($titleTd);
 						$tr.append($writerTd);
-						$tr.append($contentTd);
 						$tr.append($dateTd);
 						$tr.append($countTd);
 						$tableBody.append($tr);
@@ -349,25 +345,48 @@
 		//정보게시판조회
 		$("#iSearch").click(function(){
 			$.ajax({
-				url:"selectInfoList",
+				url:"/msmg/selectInfoList",
 				type:"get",
 				success:function(data){
-					/* console.log(data);
+					console.log(data);
 					
-					$tableBody = $("#userInfoTable tbody");
+					$tableBody = $("#infoTable tbody");
 					$tableBody.html('');
 					
-					$.each(data, function(index, value){
+					
+					for(var key in data){
+						console.log(key);
+			
 						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(value.userNo);
-						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
-						var $nationTd=$("<td>").text(decodeURIComponent(value.userNation));
+						var $noTd=$("<td>").text(data[key].boardNo);
+						var $titleTd=$("<td>").text(data[key].title);
+						var $writerTd=$("<td>").text(data[key].uCode);
+						var $dateTd=$("<td>").text(data[key].boardDate);
+						var $countTd=$("<td>").text(data[key].bCount);
 						
 						$tr.append($noTd);
-						$tr.append($nameTd);
-						$tr.append($nationTd);
+						$tr.append($titleTd);
+						$tr.append($writerTd);
+						$tr.append($dateTd);
+						$tr.append($countTd);
 						$tableBody.append($tr);
-					}); */
+					}
+					
+					/* $.each(data, function(index, value){
+					var $tr=$("<tr>");
+					var $noTd=$("<td>").text(value.bNo);
+					var $titleTd=$("<td>").text(decodeURIComponent(value.bTitle));
+					var $writerTd=$("<td>").text(decodeURIComponent(value.bWriter));
+					var $dateTd=$("<td>").text(value.bDate);
+					var $countTd=$("<td>").text(value.bCount);
+					
+					$tr.append($noTd);
+					$tr.append($titleTd);
+					$tr.append($writerTd);
+					$tr.append($dateTd);
+					$tr.append($countTd);
+					$tableBody.append($tr);
+				}); */
 				},
 				error:function(){
 					console.log("error");
@@ -378,7 +397,7 @@
 		//후기게시판조회
 		$("#rSearch").click(function(){
 			$.ajax({
-				url:"selectReviewList",
+				url:"/msmg/selectReviewList",
 				type:"get",
 				success:function(data){
 					/* console.log(data);
@@ -444,7 +463,7 @@
 		//주문조회
 		$("#oSearch").click(function(){
 			$.ajax({
-				url:"selectOrderList",
+				url:"/msmg/selectOrderList",
 				type:"get",
 				success:function(data){
 					/* console.log(data);
@@ -473,7 +492,7 @@
 		//문의조회
 		$("#qSearch").click(function(){
 			$.ajax({
-				url:"selectQnAList",
+				url:"/msmg/selectQnAList",
 				type:"get",
 				success:function(data){
 					/* console.log(data);
@@ -588,13 +607,12 @@
 				<table id="noticeTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="6" style="text-align:right;"><button id="nSearch">조회</button>&nbsp;<button id="nWrite">작성</button></td>
+							<td colspan="5" style="text-align:right;"><button id="nSearch">조회</button>&nbsp;<button id="nWrite">작성</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
 							<td width="10%"><b>글번호</b></td>
 							<td width="25%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="30%"><b>내용</b></td>
 							<td width="15%"><b>작성일</b></td>
 							<td width="10%"><b>조회수</b></td>
 						</tr>
@@ -610,13 +628,12 @@
 				<table id="infoTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="6" style="text-align:right;"><button id="iSearch">조회</button></td>
+							<td colspan="5" style="text-align:right;"><button id="iSearch">조회</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
 							<td width="10%"><b>글번호</b></td>
 							<td width="25%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="30%"><b>내용</b></td>
 							<td width="15%"><b>작성일</b></td>
 							<td width="10%"><b>조회수</b></td>
 						</tr>
