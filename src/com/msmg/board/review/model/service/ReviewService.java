@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.msmg.board.information.model.dao.BoardDao;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.review.model.dao.ReviewDao;
 import com.msmg.board.review.model.vo.BoardFile;
@@ -56,6 +57,22 @@ public class ReviewService {
 		
 		return list;
 	}
+
+	public HashMap<String, Object> selectOneReview(int num) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> hmap = new ReviewDao().selectOneReviewMap(con, num);
+		
+		/*조회수 : int result = new BoardDao().updateCount(con, num);*/
+		
+		if(hmap != null) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		return hmap;
+	}
+
 
 
 }

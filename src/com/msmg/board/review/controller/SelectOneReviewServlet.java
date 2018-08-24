@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.information.model.service.BoardService;
 import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.review.model.service.ReviewService;
 import com.msmg.board.review.model.vo.BoardFile;
 
 /**
@@ -40,7 +40,7 @@ public class SelectOneReviewServlet extends HttpServlet {
 		
 		System.out.println(num);
 		
-		HashMap<String, Object> hmap = new BoardService().selectOneReview(num);
+		HashMap<String, Object> hmap = new ReviewService().selectOneReview(num);
 		
 		String page = "";
 		
