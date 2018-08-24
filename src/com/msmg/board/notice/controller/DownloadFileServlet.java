@@ -18,7 +18,7 @@ import com.msmg.board.notice.model.vo.Attachment;
 /**
  * Servlet implementation class DownloadFileServlet
  */
-@WebServlet("/downloadFile.bo")
+@WebServlet("/downloadFile.no")
 public class DownloadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

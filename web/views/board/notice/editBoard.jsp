@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "java.util.*, com.msmg.board.notice.model.vo.*"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.board.notice.model.vo.*, com.msmg.member.model.vo.*"%>
 <%
 	Notice no = (Notice)request.getAttribute("no");
-	
+	Member loginUser=(Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -82,7 +82,7 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.bo?bno=<%=no.getBoard_no()%>",
+               url : "<%= request.getContextPath() %>/imgUpload.no?bno=<%=no.getBoard_no()%>&num=<%=loginUser.getU_code() %>",
                enctype: 'multipart/form-data',
                cache : false,
                contentType : false,
@@ -100,13 +100,13 @@ margin-right : auto;
            });   
        }
        
-       
+       //사진 삭제
        function deleteFile(src) {
 
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete.bo", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete.no", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -114,7 +114,7 @@ margin-right : auto;
     	    });
     	    
     	}
-       
+       //첨부파일 input 추가
        function addbtn(){
     	   
     	   if(cnt == 0){
@@ -125,6 +125,7 @@ margin-right : auto;
     	   }
        };
        
+       //첨부파일 input 삭제
        function delbtn(){
     	   console.log(cnt);
     	   if(cnt == 1){
@@ -137,6 +138,7 @@ margin-right : auto;
     	   }
        }
        
+       //파일 업로드
        function loadImg(value){
 				if(value.files && value.files[0]){
 					var reader = new FileReader();
@@ -144,6 +146,7 @@ margin-right : auto;
 				}
 			}
        
+       //form 삭제
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
     	   $("#smnoteval").val(values);
@@ -157,9 +160,22 @@ margin-right : auto;
     		   $("#attachfile3").remove();
     	   }
     	   
+    	   if($("[name=title]").val() == ""){
+    		   alert("제목을 작성하세요");
+    		   $("[name=title]").focus();
+    		   return false;
+    	   }
     	   
+    	   if(values == "<p><br></p>" || values == ""){
+    		   alert("내용을 작성하세요");
+    		   $('#summernote').summernote('focus');
+    		   return false;
+    	   }
     	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/editNotice.bo?bno=<%= no.getBoard_no() %>');
+    	   alert("작성완료");
+    	   
+    	   $("#frm").attr("action", '<%=request.getContextPath()%>/editNotice.no?bno=<%= no.getBoard_no() %>&num=<%=loginUser.getU_code() %>');
+   	   		$("#frm").submit();
        }
    </script>
 
@@ -170,10 +186,7 @@ margin-right : auto;
 <body>
 
 <!-- 게시판 쓰기 -->
-	<div id = "jjff">
-<%@ include file = "../../common/menubar.jsp" %>
 	
-	</div>
 <%if(loginUser != null && loginUser.getU_name().equals("관리자")){ %>
 	<div id='wrap' align = 'left'>
 	
@@ -224,7 +237,7 @@ margin-right : auto;
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">수정하기</button>
+				<button type='button' class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">수정하기</button>
 				</div>
 			</form>
 			<div class="output"></div>
@@ -258,20 +271,21 @@ margin-right : auto;
            console.log(files);
              
              for (var i = files.length - 1; i >= 0; i--) {
-            	 
+            	 //확장자 검사
              	for(var j = 0; j < fileExtension.length; j++){
              		var extleng = files[i].name.length;
              		var extdot = files[i].name.lastIndexOf('.');
              		var ext = files[i].name.substring(extdot, extleng).toLowerCase();
 
             		 console.log(ext + ' / ' + fileExtension[j]) 
+            		 //다중 파일 처리
             	 if(ext == fileExtension[j]){
          		  sendFile(files[i], this); 
              	}
                 }
              }
       },
-      
+      //사진 삭제시
       onMediaDelete : function(target) {
           deleteFile(target[0].src);
           console.log(target[0].src)

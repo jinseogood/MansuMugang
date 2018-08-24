@@ -115,7 +115,22 @@ border : 1px solid tomato;
     	   var values = $("#summernote").summernote('code');
     	   $("#smnoteval").val(values);
     	       	   
+    	   if($("[name=title]").val() == ""){
+    		   alert("제목을 작성하세요");
+    		   $("[name=title]").focus();
+    		   return false;
+    	   }
+    	   
+    	   if(values == "<p><br></p>" || values == ""){
+    		   alert("내용을 작성하세요");
+    		   $('#summernote').summernote('focus');
+    		   return false;
+    	   }
+    	   
+    	   alert("작성완료");
+    	   
     	   $("#frm").attr("action", '<%=request.getContextPath()%>/editQna.qna?bid=<%= qna.getBoard_id() %>&ucode=<%=ucode%>');
+   	   		$("#frm").submit();
        }
    </script>
 
@@ -134,18 +149,6 @@ border : 1px solid tomato;
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
-		<!-- 게시판 헤더 시작 -->
-		<!-- <table align='center' cellpadding="0" cellspacing="0" border="0">
-			<tr
-				style="background: url('../image/table_mid.gif'); /* #E8E8E8 */ background-repeat: repeat-x;">
-				<td width="5"><img src="../image/table_left.gif" width="7"
-					height="30" /></td>
-				<td width="1030" align='center'><span>글쓰기</span></td>
-				<td width="5"><img src="../image/table_right.gif" width="7"
-					height="30" /></td>
-			</tr>
-		</table> -->
-		<!-- 게시판 헤더 끝 -->
 		<br>
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
@@ -177,7 +180,7 @@ border : 1px solid tomato;
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">수정하기</button>
+				<button type = 'button' class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">수정하기</button>
 				</div>
 			</form>
 			<div class="output"></div>

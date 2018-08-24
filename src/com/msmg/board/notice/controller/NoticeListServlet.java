@@ -17,7 +17,7 @@ import com.msmg.board.notice.model.vo.PageInfo;
 /**
  * Servlet implementation class NoticeListServlet
  */
-@WebServlet("/noticeList.bo")
+@WebServlet("/noticeList.no")
 public class NoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -8,6 +8,7 @@ public class SelectFood implements java.io.Serializable{
 	private int ggi;
 	private int day;
 	private int side;
+	private int user;
 	
 	public SelectFood(){}
 
@@ -72,7 +73,12 @@ public class SelectFood implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "SelectFood [go=" + go + ", dang=" + dang + ", head=" + head + ", ggi=" + ggi + ", day=" + day
-				+ ", side=" + side + "]";
+				+ ", side=" + side + ", user=" + user + "]";
 	}
+
+
+
+
+	
 	
 }

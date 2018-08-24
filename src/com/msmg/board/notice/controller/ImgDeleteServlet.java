@@ -13,7 +13,7 @@ import com.msmg.board.notice.model.service.NoticeService;
 /**
  * Servlet implementation class ImgDeleteServlet
  */
-@WebServlet("/imgDelete.bo")
+@WebServlet("/imgDelete.no")
 public class ImgDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

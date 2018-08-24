@@ -36,6 +36,9 @@ public class QnaDetailServlet extends HttpServlet {
 		
 		Qna qna = new QnaService().selectOne(bid);
 		
+		System.out.println("qna bno : " + qna.getBoard_id());
+		System.out.println("qna ref : " + qna.getRef_bno());
+		
 		String page = "";
 		
 		if(qna != null){

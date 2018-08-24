@@ -8,7 +8,7 @@
 <style>
 	#content{
 		width:330px;
-		height:280px;
+		height:230px;
 	}
 	#content > label{
 		font-weight:bold;
