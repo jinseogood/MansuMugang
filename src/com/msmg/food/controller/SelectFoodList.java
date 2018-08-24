@@ -26,7 +26,7 @@ public class SelectFoodList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		System.out.println("넘어오냐");
+		int user = Integer.parseInt(request.getParameter("user"));
 		int go = Integer.parseInt(request.getParameter("go"));
 		int dang = Integer.parseInt(request.getParameter("dang"));
 		int head = Integer.parseInt(request.getParameter("head"));
@@ -57,9 +57,10 @@ public class SelectFoodList extends HttpServlet {
 		
 		ArrayList<Menu> list = null;
 		
-		list = new FoodService().selectFood(sf);
+		list = new FoodService().selectFood(sf, user);
 		
 		System.out.println(list);
+
 				String page = "";
 				
 				if(list != null){
@@ -68,8 +69,9 @@ public class SelectFoodList extends HttpServlet {
 					request.setAttribute("sf", sf);
 					request.setAttribute("msg", "메뉴 리스트");
 				}else{
-					page = "views/common/errorPage.jsp";
-					request.setAttribute("msg", "메뉴 리스트 불러오기 실패");
+					System.out.println("오긴오냐");
+					page = "/views/common/errorPage.jsp";
+					request.setAttribute("msg", "해당하는 메뉴가 없습니다.");
 				}
 				
 				RequestDispatcher view = request.getRequestDispatcher(page);
