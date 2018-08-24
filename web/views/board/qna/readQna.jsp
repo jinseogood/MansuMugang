@@ -174,10 +174,10 @@ table{
 				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
-			<% if(user.getU_id().equals("admin1") && qna.getBoard_id() == qna.getRef_bno()){%>
+			<%-- <% if(user.getU_id().equals("admin1") && qna.getBoard_id() == qna.getRef_bno()){%> --%>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>'">답글하기</button>
-			<%} %>
+			<%-- <%} %> --%>
 		</div>
 
 	</div>
