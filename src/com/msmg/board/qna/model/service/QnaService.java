@@ -2,10 +2,7 @@ package com.msmg.board.qna.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import com.msmg.board.notice.model.dao.NoticeDao;
-import com.msmg.board.notice.model.vo.Notice;
 import com.msmg.board.qna.model.dao.QnaDao;
 import com.msmg.board.qna.model.vo.Qna;
 import com.msmg.board.qna.model.vo.Attachment;
@@ -169,16 +166,6 @@ public class QnaService {
 		
 		
 		return result;
-	}
-
-	public ArrayList<String> selectChangeName(int bno) {
-		Connection conn = getConnection();
-		
-		ArrayList<String> list = new NoticeDao().selectChangeName(conn, bno);
-		
-		close(conn);
-		
-		return list;
 	}
 
 	public int deleteQna(int bid) {

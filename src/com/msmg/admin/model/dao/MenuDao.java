@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.admin.model.vo.Menu;
+import com.msmg.admin.model.vo.MenuInfo;
 
 import static com.msmg.common.JDBCTemplate.*;
 
@@ -72,11 +73,12 @@ public class MenuDao {
 			while(rset.next()){
 				Menu m=new Menu();
 				
-				m.setMenuCode(rset.getString("menu_code"));
+				m.setMenuCode(Integer.parseInt(rset.getString("menu_code")));
 				m.setMenuName(rset.getString("menu_name"));
 				m.setMainMat(rset.getString("menu_main"));
 				m.setSubMat(rset.getString("menu_sub"));
 				m.setPrice(rset.getInt("price"));
+				m.setMenuInfo(rset.getString("menu_info"));
 				
 				menuList.add(m);
 			}
@@ -88,6 +90,59 @@ public class MenuDao {
 		}
 		
 		return menuList;
+	}
+
+
+	public int selectCurrval(Connection con) {
+		int menuCode=0;
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectCurrval");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			if(rset.next()){
+				menuCode=rset.getInt("currval");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return menuCode;
+	}
+
+
+	public int insertMenuInfo(ArrayList<MenuInfo> fileList, Connection con) {
+		int result=0;
+		PreparedStatement pst=null;
+		
+		String query=prop.getProperty("insertMenuInfo");
+		
+		try {
+			for(int i=0;i<fileList.size();i++){
+				pst=con.prepareStatement(query);
+				pst.setString(1, fileList.get(i).getOriginName());
+				pst.setString(2, fileList.get(i).getFilePath());
+				pst.setString(3, fileList.get(i).getInfo());
+				pst.setString(4, fileList.get(i).getEditName());
+				
+				result+=pst.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pst);
+		}
+		
+		return result;
 	}
 
 }

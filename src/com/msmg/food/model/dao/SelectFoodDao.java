@@ -32,11 +32,12 @@ public class SelectFoodDao {
 		}
 	}
 
-	public ArrayList<Menu> selectFood(Connection con, SelectFood sf) {
+	public ArrayList<Menu> selectFood(Connection con, SelectFood sf, int user) {
 		ArrayList<Menu> list = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "";
+		Menu m = null;
 		
 		try {
 			if(sf.getGo() == 1 && sf.getDang() == 0 && sf.getHead() == 0){
@@ -57,14 +58,17 @@ public class SelectFoodDao {
 			}
 			
 			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, user);
+			
 			rset = pstmt.executeQuery();
 			
+	
 			list = new ArrayList<Menu>();
 			
 			while(rset.next()){
-				Menu m = new Menu();
+				m = new Menu();
 				
-				m.setImg_name(rset.getString("menu_img_name"));
+				m.setImg_name(rset.getString("menu_img_ename"));
 				m.setImg_src(rset.getString("menu_img_src"));
 				m.setInfo(rset.getString("menu_info"));
 				m.setName(rset.getString("menu_name"));
@@ -75,6 +79,7 @@ public class SelectFoodDao {
 				
 				list.add(m);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -12,10 +12,10 @@ import com.msmg.food.model.vo.SelectFood;
 
 public class FoodService {
 
-	public ArrayList<Menu> selectFood(SelectFood sf) {
+	public ArrayList<Menu> selectFood(SelectFood sf, int user) {
 		Connection con = getConnection();
 		
-		ArrayList<Menu> list = new SelectFoodDao().selectFood(con, sf);
+		ArrayList<Menu> list = new SelectFoodDao().selectFood(con, sf, user);
 		
 		close(con);
 		return list;

@@ -172,7 +172,7 @@ public class NoticeDao {
 		}
 	}
 	
-	public int insertAttachment(Connection conn, Attachment at) {
+	public int insertAttachment(Connection conn, Attachment at, int ucode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -184,6 +184,7 @@ public class NoticeDao {
 			pstmt.setString(2, at.getChangeName());
 			pstmt.setString(3, at.getFilePath());
 			pstmt.setInt(4, at.getBoard_no());
+			pstmt.setInt(5, ucode);
 			
 			result = pstmt.executeUpdate();
 			
@@ -292,7 +293,7 @@ public class NoticeDao {
 		
 		return result;
 	}
-	public int insertDocument(Connection conn, ArrayList<Attachment> fileList) {
+	public int insertDocument(Connection conn, ArrayList<Attachment> fileList, int ucode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -307,6 +308,7 @@ public class NoticeDao {
 			pstmt.setString(2, fileList.get(i).getChangeName());
 			pstmt.setString(3, fileList.get(i).getFilePath());
 			pstmt.setInt(4, fileList.get(i).getBoard_no());
+			pstmt.setInt(5, ucode);
 			
 			result = pstmt.executeUpdate();
 			
@@ -452,7 +454,7 @@ public class NoticeDao {
 				list = new ArrayList<Attachment>();
 				Attachment at = new Attachment();
 				
-				at.setBoard_no(rset.getInt("board_no"));
+				at.setBoard_no(rset.getInt("board_id"));
 				at.setBoard_sort(rset.getString("board_sort"));
 				at.setChangeName(rset.getString("edit_name"));
 				at.setFid(rset.getInt("file_no"));
@@ -489,7 +491,7 @@ public class NoticeDao {
 			if(rset.next()){
 				at = new Attachment();
 				
-				at.setBoard_no(rset.getInt("board_no"));
+				at.setBoard_no(rset.getInt("board_id"));
 				at.setBoard_sort(rset.getString("board_sort"));
 				at.setChangeName(rset.getString("edit_name"));
 				at.setFid(rset.getInt("file_no"));

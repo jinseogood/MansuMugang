@@ -31,6 +31,10 @@ table tr:first-child {
 	font-size: 12;
 }
 
+table{
+font-family: 'Nanum Gothic', sans-serif;
+}
+
 a {
 	text-decoration: none;
 	color: black;
@@ -149,8 +153,14 @@ div #offi {
 		%>
 		<tr id='content'>
 			<td></td>
+			<% if(q.getRef_bno() == q.getBoard_id()){ %>
 			<td><%= q.getBoard_no() %></td>
-			<td><a href = "<%= request.getContextPath() %>/qnaDetail.qna?board_id=<%=q.getBoard_id() %>"><%= q.getTitle()  %></a></td>
+			<td style = "text-align : left;"><a href = "<%= request.getContextPath() %>/qnaDetail.qna?board_id=<%=q.getBoard_id() %>"><%= q.getTitle()  %></a></td>
+			<%}else{ %>
+			<td></td>
+			<td style = "text-align : left;"><a href = "<%= request.getContextPath() %>/qnaDetail.qna?board_id=<%=q.getBoard_id() %>">
+			<img src = '/msmg/images/board/enter.png'><%= q.getTitle() %></a></td>
+			<%} %>
 			<td><%= q.getU_name() %></td>
 			<td><%= q.getBoard_date() %></td>
 			<td><%= q.getB_count() %></td>

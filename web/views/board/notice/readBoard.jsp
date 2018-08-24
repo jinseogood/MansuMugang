@@ -131,7 +131,7 @@ div[id=date-writer-hit2] {
 		var check = window.confirm("글을 삭제하시겠습니까?");
 		console.log("아아아");
 		if(check == true){
-			window.location = '<%=request.getContextPath() %>/deleteNotice.bo?bno=<%= no.getBoard_no()%>';
+			window.location = '<%=request.getContextPath() %>/deleteNotice.no?bno=<%= no.getBoard_no()%>';
 		}
 	}
 </script>
@@ -159,7 +159,7 @@ div[id=date-writer-hit2] {
 				<dl>
 					<dt>첨부파일</dt>
 					<%for(Attachment at : list){ %>
-						<dd><a href = "downloadFile.bo?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
+						<dd><a href = "downloadFile.no?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
 					<%} %>
 				</dl>
 				<%} %>
@@ -172,7 +172,7 @@ div[id=date-writer-hit2] {
 				<tr style="border-top: 1px solid #ff6347;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 						다음글</td>
-					<td align="center" width='700'><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=nextNo.getBoard_no()%>"><%= nextNo.getTitle() %></a></td>
+					<td align="center" width='700'><a href="<%= request.getContextPath()%>/noticeDetail.no?board_no=<%=nextNo.getBoard_no()%>"><%= nextNo.getTitle() %></a></td>
 					<td width="100"><%= nextNo.getBoard_date() %></td>
 				</tr>
 			<%} %>
@@ -180,7 +180,7 @@ div[id=date-writer-hit2] {
 				<tr style="border-top: 1px solid #ff6347;">
 					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 						이전글</td>
-					<td align="center"><a href="<%= request.getContextPath()%>/noticeDetail.bo?board_no=<%=preNo.getBoard_no()%>"><%= preNo.getTitle() %></a></td>
+					<td align="center"><a href="<%= request.getContextPath()%>/noticeDetail.no?board_no=<%=preNo.getBoard_no()%>"><%= preNo.getTitle() %></a></td>
 					<td><%= preNo.getBoard_date() %></td>
 				</tr>
 			<%} %>
@@ -194,7 +194,7 @@ div[id=date-writer-hit2] {
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
 			<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.bo?num=<%= no.getBoard_no() %>'">수정하기</button>
+				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.no?num=<%= no.getBoard_no() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
 		</div>

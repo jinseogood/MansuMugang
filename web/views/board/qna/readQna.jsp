@@ -10,6 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <title>글읽기</title>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
+	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -75,6 +77,7 @@ div[id=date-writer-hit2] {
 	width: 100%;
 	margin: 20px 0 0 0;
 	padding: 10px 0 10px 0;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
 .bbs-table th {
@@ -124,6 +127,10 @@ div[id=date-writer-hit2] {
 	height:200px;
 	width:100%;
 }
+
+table{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
 </style>
 <script>
 	function alertDelete(){
@@ -167,9 +174,10 @@ div[id=date-writer-hit2] {
 				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
+			<%-- <% if(user.getU_id().equals("admin1") && qna.getBoard_id() == qna.getRef_bno()){%> --%>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>'">답글하기</button>
-			
+			<%-- <%} %> --%>
 		</div>
 
 	</div>
