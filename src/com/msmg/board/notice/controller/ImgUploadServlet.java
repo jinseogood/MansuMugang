@@ -24,7 +24,7 @@ import com.oreilly.servlet.MultipartRequest;
 /**
  * Servlet implementation class ImgUploadServlet
  */
-@WebServlet("/imgUpload.bo")
+@WebServlet("/imgUpload.no")
 public class ImgUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -84,6 +84,7 @@ public class ImgUploadServlet extends HttpServlet {
 				
 			}
 			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
+			int ucode = Integer.parseInt(multiRequest.getParameter("num"));
 			
 			//attachment 객체 생성해서 arrayList객체 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
@@ -97,7 +98,7 @@ public class ImgUploadServlet extends HttpServlet {
 				
 			
 			//Service로 전송
-			int result = new NoticeService().insertThumbnail(at);
+			int result = new NoticeService().insertThumbnail(at, ucode);
 			
 			if(result > 0){
 			String path2 = request.getContextPath()+"/attach_file/pic_file/" + saveFile;

@@ -15,7 +15,7 @@ import com.msmg.board.notice.model.vo.Notice;
 /**
  * Servlet implementation class FixUpdateNoticeServlet
  */
-@WebServlet("/selectOneEdit.bo")
+@WebServlet("/selectOneEdit.no")
 public class SelectOneEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -16,7 +16,7 @@ import com.msmg.member.model.vo.Member;
 /**
  * Servlet implementation class InsertBoardServlet
  */
-@WebServlet("/insertBoard.bo")
+@WebServlet("/insertNotice.no")
 public class InsertBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -15,7 +15,6 @@ import java.util.Random;
 
 import com.msmg.board.qna.model.vo.Attachment;
 import com.msmg.board.qna.model.vo.Qna;
-import com.msmg.board.notice.model.vo.Notice;
 
 public class QnaDao {
 	private Properties prop = new Properties();
@@ -105,8 +104,9 @@ public class QnaDao {
 			
 			pstmt.setInt(1, adminCode);
 			pstmt.setInt(2, code);
-			pstmt.setInt(3, startRow);
-			pstmt.setInt(4, endRow);
+			pstmt.setInt(3, code);
+			pstmt.setInt(4, startRow);
+			pstmt.setInt(5, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -122,6 +122,7 @@ public class QnaDao {
 				qna.setU_name(rset.getString("u_name"));
 				qna.setBoard_date(rset.getDate("board_date"));
 				qna.setB_count(rset.getInt("b_count"));
+				qna.setRef_bno(rset.getInt("ref_bno"));
 				
 				list.add(qna);
 			}
@@ -162,6 +163,7 @@ public class QnaDao {
 				qna.setU_name(rset.getString("u_name"));
 				qna.setBoard_no(rset.getInt("board_no"));
 				qna.setRef_ucode(rset.getInt("ref_ucode"));
+				qna.setRef_bno(rset.getInt("ref_bno"));
 				
 			}
 		} catch (SQLException e) {
@@ -205,7 +207,7 @@ public class QnaDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("insertAttachment");
+		String query = prop.getProperty("insertImg");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -325,34 +327,7 @@ public class QnaDao {
 		return result;
 	}
 	
-	public int insertDocument(Connection conn, ArrayList<Attachment> fileList) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		String query = prop.getProperty("insertDocument");
-		
-		try {
-			for(int i = 0; i < fileList.size(); i++){
-				
-			pstmt = conn.prepareStatement(query);
-			
-			pstmt.setString(1, fileList.get(i).getOriginName());
-			pstmt.setString(2, fileList.get(i).getChangeName());
-			pstmt.setString(3, fileList.get(i).getFilePath());
-			pstmt.setInt(4, fileList.get(i).getBoard_no());
-			
-			result = pstmt.executeUpdate();
-			
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
+	
 	public int selectPhoto(Connection conn, int bid, int ucode) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -406,80 +381,7 @@ public class QnaDao {
 		return result;
 	}
 	
-	public ArrayList<Attachment> selectAttachment(Connection conn, String bno) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Attachment> list = null;
-		
-		String query = prop.getProperty("selectAttach");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, bno);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				list = new ArrayList<Attachment>();
-				Attachment at = new Attachment();
-				
-				at.setBoard_no(rset.getInt("board_no"));
-				at.setBoard_sort(rset.getString("board_sort"));
-				at.setChangeName(rset.getString("edit_name"));
-				at.setFid(rset.getInt("file_no"));
-				at.setFilePath(rset.getString("file_src"));
-				at.setOriginName(rset.getString("origin_name"));
-				at.setUploadDate(rset.getDate("file_date"));
-				
-				list.add(at);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	}
-	public Attachment selectOneAttachment(Connection conn, String editName) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Attachment at = null;
-		
-		String query = prop.getProperty("selectOneAttach");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, editName);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				at = new Attachment();
-				
-				at.setBoard_no(rset.getInt("board_no"));
-				at.setBoard_sort(rset.getString("board_sort"));
-				at.setChangeName(rset.getString("edit_name"));
-				at.setFid(rset.getInt("file_no"));
-				at.setFilePath(rset.getString("file_src"));
-				at.setOriginName(rset.getString("origin_name"));
-				at.setUploadDate(rset.getDate("file_date"));
-				
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return at;
-	}
+	
 	public Qna selectOneEdit(Connection conn, String num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -561,37 +463,7 @@ public class QnaDao {
 		
 		return result;
 	}
-	public ArrayList<String> selectChangeName(Connection conn, int bno) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<String> list = new ArrayList<String>();
-		
-		String query = prop.getProperty("selectChangeName");
-		System.out.println("변화값 받아옴");
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bno);
-			
-			System.out.println("쿼리 수행");
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
-				String name = rset.getString(1);
-				
-				list.add(name);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if(list.size() > 0){
-			return list;
-		}else{
-			return null;
-		}
-	}
+	
 	public int DeleteNotice(Connection conn, String bno) {
 		PreparedStatement pstmt = null;
 		
@@ -600,35 +472,7 @@ public class QnaDao {
 		
 		return 0;
 	}
-	public ArrayList<String> selectDoc(Connection conn, int bno) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		ArrayList<String> list = new ArrayList<String>();
-		
-		String query = prop.getProperty("selectDoc");
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bno);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
-				String name = rset.getString(1);
-				
-				list.add(name);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	}
+	
 	public int selectPho(Connection conn, int bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

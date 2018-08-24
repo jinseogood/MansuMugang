@@ -16,7 +16,7 @@ import com.msmg.board.notice.model.service.NoticeService;
 /**
  * Servlet implementation class DeleteNoticeServlet
  */
-@WebServlet("/deleteNotice.bo")
+@WebServlet("/deleteNotice.no")
 public class DeleteNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -57,7 +57,7 @@ public class DeleteNoticeServlet extends HttpServlet {
 		String page = "";
 		
 		if(deleteList != null){
-			response.sendRedirect(request.getContextPath() + "/noticeList.bo");
+			response.sendRedirect(request.getContextPath() + "/noticeList.no");
 		}else{
 			request.setAttribute("msg", "글 삭제 실패");
 			request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);

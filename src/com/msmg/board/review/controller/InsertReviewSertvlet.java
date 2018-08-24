@@ -116,6 +116,7 @@ public class InsertReviewSertvlet extends HttpServlet {
 				bf.setFile_date(day);
 				bf.setU_code(Integer.parseInt(uCode));
 				
+				
 				fileList.add(bf);
 			}
 			
