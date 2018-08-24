@@ -13,11 +13,12 @@ public class Board implements java.io.Serializable{
 	private int buyInfoNo;
 	private int bCount;
 	private int refBno;
+	private String writeYn;
 	
 	public Board() {}
 
 	public Board(int boardId, int boardNo, String boardSort, String uName, String title, String content, Date boardDate, String uCode,
-			int buyInfoNo, int bCount, int refBno) {
+			int buyInfoNo, int bCount, int refBno, String writeYn) {
 		super();
 		this.boardId = boardId;
 		this.boardNo = boardNo;
@@ -29,6 +30,7 @@ public class Board implements java.io.Serializable{
 		this.buyInfoNo = buyInfoNo;
 		this.bCount = bCount;
 		this.refBno = refBno;
+		this.writeYn = writeYn;
 	}
 
 	public int getBoardId() {
@@ -69,6 +71,10 @@ public class Board implements java.io.Serializable{
 
 	public int getRefBno() {
 		return refBno;
+	}
+	
+	public String getWriteYn() {
+		return writeYn;
 	}
 
 	public void setBoardId(int boardId) {
@@ -111,12 +117,15 @@ public class Board implements java.io.Serializable{
 		this.refBno = refBno;
 	}
 	
+	public void setWriteYn(String writeYn) {
+		this.writeYn = writeYn;
+	}
 
 	@Override
 	public String toString() {
 		return "board [boardId =" + boardId + ", boardNo=" + boardNo + ", boardSort=" + boardSort + ", title=" + title + ", content=" + content
 				+ ", boardDate=" + boardDate + ", uCode=" + uCode + ", buyInfoNo=" + buyInfoNo + ", bCount=" + bCount
-				+ ", refBno=" + refBno + "]";
+				+ ", refBno=" + refBno + ", writeYn="+ writeYn + "]";
 	}
 
 }
