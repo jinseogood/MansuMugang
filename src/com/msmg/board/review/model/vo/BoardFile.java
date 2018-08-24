@@ -9,14 +9,14 @@ public class BoardFile implements java.io.Serializable{
 	private String file_src;
 	private Date file_date;
 	private String board_sort;
-	private int Board_no;
+	private int Board_id;
 	private String file_type;
 	private int u_code;
 	
 	public BoardFile() {}
 
 	public BoardFile(int file_no, String origin_name, String edit_name, String file_src, Date file_date,
-			String board_sort, int board_no, String file_type, int u_code) {
+			String board_sort, int board_id, String file_type, int u_code) {
 		super();
 		this.file_no = file_no;
 		this.origin_name = origin_name;
@@ -24,7 +24,7 @@ public class BoardFile implements java.io.Serializable{
 		this.file_src = file_src;
 		this.file_date = file_date;
 		this.board_sort = board_sort;
-		this.Board_no = board_no;
+		this.Board_id = board_id;
 		this.file_type = file_type;
 		this.u_code = u_code;
 		
@@ -54,8 +54,8 @@ public class BoardFile implements java.io.Serializable{
 		return board_sort;
 	}
 
-	public int getBoard_no() {
-		return Board_no;
+	public int getBoard_id() {
+		return Board_id;
 	}
 
 	public String getFile_type() {
@@ -90,8 +90,8 @@ public class BoardFile implements java.io.Serializable{
 		this.board_sort = board_sort;
 	}
 
-	public void setBoard_no(int board_no) {
-		Board_no = board_no;
+	public void setBoard_id(int board_id) {
+		Board_id = board_id;
 	}
 
 	public void setFile_type(String file_type) {
@@ -105,8 +105,8 @@ public class BoardFile implements java.io.Serializable{
 	@Override
 	public String toString() {
 		return "BoardFile [file_no=" + file_no + ", origin_name=" + origin_name + ", edit_name=" + edit_name
-				+ ", file_src=" + file_src + ", file_date=" + file_date + ", board_sort=" + board_sort + ", Board_no="
-				+ Board_no + ", file_type=" + file_type + ", u_code=" + u_code + "]";
+				+ ", file_src=" + file_src + ", file_date=" + file_date + ", board_sort=" + board_sort + ", Board_id="
+				+ Board_id + ", file_type=" + file_type + ", u_code=" + u_code + "]";
 	}
 	
 }

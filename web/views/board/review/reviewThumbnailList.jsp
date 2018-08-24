@@ -72,32 +72,20 @@
 	</div>
 	<div class="outer">
 		<br>
-		<!-- <h2 aling="left">후기 게시판</h2> -->
-		 
-		<div id="search2" align="right" style="margin-right: 50px; margin-bottom:40px;">
-			<select name="searchArea" id="result"
-				style="width: 50px; height: 27px;">
-				<option value="이름">이름</option>
-				<option value="제목">제목</option>
-			</select>
-			<input id="search" type="text" name="search">
-			<i id="fas" class="fas fa-search fa-lg"></i>
-		</div>
-		
-		
+
 		<div class="thumbnailArea">
 			<% 
 			for(int i = 0; i < list.size(); i++) {
 				HashMap<String, Object> hmap = list.get(i);
 			%>
-			<div class="thumb-list">
+			<div class="thumb-list" align="center">
 				<div>
-				<input type="hidden" value="<%= hmap.get("boardNo")%>">
+				<input type="hidden" value="<%= hmap.get("boardId")%>">
 					<img
 						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
 						width="200px" height="150px">
 				</div>
-				<p>No. <%=hmap.get("boardNo") %> <%= hmap.get("title") %><br>
+				<p>No. <%=hmap.get("boardId") %> <%= hmap.get("title") %><br>
 				     조회수 : <%= hmap.get("bCount") %>
 				</p>
 			</div>
@@ -105,12 +93,13 @@
 		</div>
 			
 			<script>
-				$(function(){
 					$(".thmb-list").click(function(){
 						var num = $(this).children().children().eq(0).val();
-						location.href="<%=request.getContextPath()%>/selectOne.tn?num=" + num;
+						
+						console.log(num);
+						
+						location.href="<%=request.getContextPath()%>/selectOne.rev?num=" + num;
 					});	
-				});
 				
 			</script>
 		<button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button>
