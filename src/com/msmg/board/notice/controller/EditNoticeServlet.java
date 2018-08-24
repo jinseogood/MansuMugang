@@ -22,7 +22,7 @@ import com.oreilly.servlet.MultipartRequest;
 /**
  * Servlet implementation class EditNoticeServlet
  */
-@WebServlet("/editNotice.bo")
+@WebServlet("/editNotice.no")
 public class EditNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -70,6 +70,7 @@ public class EditNoticeServlet extends HttpServlet {
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("smnoteval");
 			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
+			int ucode = Integer.parseInt(multiRequest.getParameter("num"));
 			
 			Notice no = new Notice();
 			no.setTitle(title);
@@ -99,12 +100,12 @@ public class EditNoticeServlet extends HttpServlet {
 			}
 			System.out.println("파일 삭제 완료");
 
-			int result = new NoticeService().editNotice(no, fileList);
+			int result = new NoticeService().editNotice(no, fileList, ucode);
 			
 			System.out.println("수정완료");
 			
 			if(result > 0){
-				response.sendRedirect(request.getContextPath() + "/noticeDetail.bo?board_no=" + no.getBoard_no());
+				response.sendRedirect(request.getContextPath() + "/noticeDetail.no?board_no=" + no.getBoard_no());
 			}else{
 				for(int i = 0; i < saveFiles.size(); i++){
 					File failedFile = new File(savePath + saveFiles.get(i));

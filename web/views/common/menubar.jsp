@@ -164,7 +164,7 @@
 				<a href = "<%=request.getContextPath()%>/selectList.rev">후기게시판</a>
 			</div>
 			<div id="submenuTitle">
-				<a href = "<%= request.getContextPath() %>/noticeList.bo">공지사항</a>
+				<a href = "<%= request.getContextPath() %>/noticeList.no">공지사항</a>
 				<br><br><br>
 				<a href="<%= request.getContextPath() %>/qnaList.qna">Q&A</a>
 			</div>

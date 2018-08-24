@@ -71,10 +71,10 @@ public class NoticeService {
 	}
 
 
-	public int insertThumbnail(Attachment at) {
+	public int insertThumbnail(Attachment at, int ucode) {
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().insertAttachment(conn, at);
+		int result = new NoticeDao().insertAttachment(conn, at, ucode);
 		
 		if(result > 0){
 			commit(conn);
@@ -103,7 +103,7 @@ public class NoticeService {
 		return result;
 	}
 
-	public int updateBoard(Notice no, ArrayList<Attachment> fileList) {
+	public int updateBoard(Notice no, ArrayList<Attachment> fileList, int ucode) {
 		Connection conn = getConnection();
 		
 		int result = new NoticeDao().updateBoard(conn, no);
@@ -130,7 +130,7 @@ public class NoticeService {
 		}
 		
 		if(fileList.size() > 0){
-			result3 = new NoticeDao().insertDocument(conn, fileList);
+			result3 = new NoticeDao().insertDocument(conn, fileList, ucode);
 		}
 		
 		System.out.println("result2 - " + result2);
@@ -198,7 +198,7 @@ public class NoticeService {
 		return no;
 	}
 
-	public int editNotice(Notice no, ArrayList<Attachment> fileList) {
+	public int editNotice(Notice no, ArrayList<Attachment> fileList, int ucode) {
 		Connection conn = getConnection();
 		System.out.println("글수정");
 		int result = new NoticeDao().editBoard(conn, no);
@@ -206,7 +206,7 @@ public class NoticeService {
 		int result2 = new NoticeDao().deleteDocument(conn, no.getBoard_no());
 		System.out.println("db파일 입력");
 		if(fileList.size() > 0){
-			int result3 = new NoticeDao().insertDocument(conn, fileList);
+			int result3 = new NoticeDao().insertDocument(conn, fileList, ucode);
 		}
 		
 		if(result > 0){

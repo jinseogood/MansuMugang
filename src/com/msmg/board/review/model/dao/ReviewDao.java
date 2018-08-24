@@ -141,7 +141,7 @@ public class ReviewDao {
 				hmap.put("fileSrc", rset.getString("file_src"));
 				hmap.put("fileDate", rset.getDate("file_date"));
 				hmap.put("boardSort", rset.getInt("board_sort"));
-				hmap.put("boardNo", rset.getInt("board_no"));
+				hmap.put("boardNo", rset.getInt("board_id"));
 				hmap.put("uCode", rset.getInt("u_code"));
 				hmap.put("title", rset.getString("title"));
 				hmap.put("content", rset.getString("content"));

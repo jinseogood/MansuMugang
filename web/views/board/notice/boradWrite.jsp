@@ -82,7 +82,7 @@ margin-right : auto;
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.bo?bno=<%=bno%>",
+               url : "<%= request.getContextPath() %>/imgUpload.no?bno=<%=bno%>&num=<%=loginUser.getU_code() %>",
                enctype: 'multipart/form-data',
                cache : false,
                contentType : false,
@@ -106,7 +106,7 @@ margin-right : auto;
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete.bo", // replace with your url
+    	        url: "<%= request.getContextPath() %>/imgDelete.no", // replace with your url
     	        cache: false,
     	        success: function(resp) {
     	            console.log(resp);
@@ -146,7 +146,6 @@ margin-right : auto;
        
        function submitBoard(){
     	   var values = $("#summernote").summernote('code');
-    	   alert("작성완료");
     	   $("#smnoteval").val(values);
     	   //alert($("#smnoteval").val());
     	   if($("#attachfile1").val() == ""){
@@ -159,8 +158,21 @@ margin-right : auto;
     		   $("#attachfile3").remove();
     	   }
     	   
-   	   	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateBoard.bo?bno=<%= bno %>');
-   	   	   
+    	   if($("[name=title]").val() == ""){
+    		   alert("제목을 작성하세요");
+    		   $("[name=title]").focus();
+    		   return false;
+    	   }
+    	   
+    	   if(values == "<p><br></p>" || values == ""){
+    		   alert("내용을 작성하세요");
+    		   $('#summernote').summernote('focus');
+    		   return false;
+    	   }
+    	   
+    	   alert("작성완료");
+   	   	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateNotice.no?bno=<%= bno %>&num=<%=loginUser.getU_code() %>');
+   	   		$("#frm").submit();
        }
    </script>
 
@@ -234,7 +246,7 @@ margin-right : auto;
 			<br><br>
 				<div align='center'>
 				<button type="reset" class="btn btn-primary btn-sm" id = 'dobtn' onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">작성하기</button>
+				<button type = 'button' class="btn btn-primary btn-sm" id = 'dobtn' onclick = "submitBoard()">작성하기</button>
 				</div>
 			</form>
 			<div class="output"></div>
