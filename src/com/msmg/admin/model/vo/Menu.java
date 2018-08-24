@@ -1,23 +1,25 @@
 package com.msmg.admin.model.vo;
 
 public class Menu implements java.io.Serializable{
-	private String menuCode;
+	private int menuCode;
 	private String menuName;
 	private String mainMat;
 	private String subMat;
 	private int price;
+	private String menuInfo;
 	
 	public Menu(){}
-	public Menu(String menuCode, String menuName, String mainMat, String subMat, int price) {
+	public Menu(int menuCode, String menuName, String mainMat, String subMat, int price, String menuInfo) {
 		super();
 		this.menuCode = menuCode;
 		this.menuName = menuName;
 		this.mainMat = mainMat;
 		this.subMat = subMat;
 		this.price = price;
+		this.menuInfo = menuInfo;
 	}
 
-	public String getMenuCode() {
+	public int getMenuCode() {
 		return menuCode;
 	}
 
@@ -36,8 +38,12 @@ public class Menu implements java.io.Serializable{
 	public int getPrice() {
 		return price;
 	}
+	
+	public String getMenuInfo(){
+		return menuInfo;
+	}
 
-	public void setMenuCode(String menuCode) {
+	public void setMenuCode(int menuCode) {
 		this.menuCode = menuCode;
 	}
 
@@ -56,11 +62,15 @@ public class Menu implements java.io.Serializable{
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	
+	public void setMenuInfo(String menuInfo){
+		this.menuInfo = menuInfo;
+	}
 
 	@Override
 	public String toString() {
 		return "Menu [menuCode=" + menuCode + ", menuName=" + menuName + ", mainMat=" + mainMat + ", subMat=" + subMat
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", menuInfo=" + menuInfo + "]";
 	}
 	
 }

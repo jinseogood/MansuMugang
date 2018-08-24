@@ -4,20 +4,33 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.msmg.admin.model.dao.MenuDao;
-import com.msmg.admin.model.vo.Attachment;
+import com.msmg.admin.model.vo.MenuInfo;
 import com.msmg.admin.model.vo.Menu;
 
 import static com.msmg.common.JDBCTemplate.*;
 
 public class MenuService {
 
-	public int insertMenu(Menu menu, ArrayList<Attachment> fileList) {
+	public int insertMenu(Menu menu, ArrayList<MenuInfo> fileList) {
 		Connection con=getConnection();
 		
-		int result=new MenuDao().insertMenu(menu, con);
+		int result=0;
 		
-		if(result>0){
+		int result1=new MenuDao().insertMenu(menu, con);
+		
+		if(result1>0){
+			int menuCode=new MenuDao().selectCurrval(con);
+			
+			for(int i=0;i<fileList.size();i++){
+				fileList.get(i).setMenuCode(menuCode);
+			}
+		}
+		
+		int result2=new MenuDao().insertMenuInfo(fileList, con);
+		
+		if(result1>0 && result2>0){
 			commit(con);
+			result=1;
 		}
 		else{
 			rollback(con);

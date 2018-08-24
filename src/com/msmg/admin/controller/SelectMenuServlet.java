@@ -32,11 +32,12 @@ public class SelectMenuServlet extends HttpServlet {
 		for(Menu menu : menuList){
 			menuInfo=new JSONObject();
 			
-			menuInfo.put("menuCode", URLEncoder.encode(menu.getMenuCode(), "UTF-8"));
+			menuInfo.put("menuCode", menu.getMenuCode());
 			menuInfo.put("menuName", URLEncoder.encode(menu.getMenuName(), "UTF-8"));
 			menuInfo.put("mainMat", URLEncoder.encode(menu.getMainMat(), "UTF-8"));
 			menuInfo.put("subMat", URLEncoder.encode(menu.getSubMat(), "UTF-8"));
 			menuInfo.put("price", menu.getPrice());
+			menuInfo.put("info", URLEncoder.encode(menu.getMenuInfo(), "UTF-8"));
 			
 			result.add(menuInfo);
 		}
