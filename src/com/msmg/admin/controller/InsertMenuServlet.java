@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.msmg.admin.model.service.MenuService;
-import com.msmg.admin.model.vo.Attachment;
 import com.msmg.admin.model.vo.Menu;
+import com.msmg.admin.model.vo.MenuInfo;
 import com.msmg.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -28,18 +28,6 @@ public class InsertMenuServlet extends HttpServlet {
     public InsertMenuServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*String menuName=request.getParameter("menuName");
-		String mainMat=request.getParameter("mainMat");
-		String subMat=request.getParameter("subMat");
-		String price=request.getParameter("price");
-		
-		Menu menu=new Menu();
-		menu.setMenuName(menuName);
-		menu.setMainMat(mainMat);
-		menu.setSubMat(subMat);
-		menu.setPrice(Integer.parseInt(price));
-		
-		int result=new MenuService().insertMenu(menu);*/
 		
 		if(ServletFileUpload.isMultipartContent(request)){
 			//전송 파일에 대한 용량 제한 : 10MB
@@ -86,11 +74,13 @@ public class InsertMenuServlet extends HttpServlet {
 			String mainMat=multiRequest.getParameter("mainMat");
 			String subMat=multiRequest.getParameter("subMat");
 			String price=multiRequest.getParameter("price");
+			String info=multiRequest.getParameter("info");
 			
 			System.out.println(menuName);
 			System.out.println(mainMat);
 			System.out.println(subMat);
 			System.out.println(price);
+			System.out.println(info);
 			System.out.println(saveFiles);
 			System.out.println(originFiles);
 			
@@ -102,22 +92,23 @@ public class InsertMenuServlet extends HttpServlet {
 			menu.setPrice(Integer.parseInt(price));
 			
 			//Attachment객체 생성해서 arrayList객체 생성
-			ArrayList<Attachment> fileList=new ArrayList<Attachment>();
+			ArrayList<MenuInfo> fileList=new ArrayList<MenuInfo>();
 			//전송순서 역순으로 파일이 list에 저장되기 때문에 반복문을 역으로 수행
 			for(int i=originFiles.size()-1;i>=0;i--){
-				Attachment at=new Attachment();
-				at.setFilePath(savePath);
-				at.setOriginName(originFiles.get(i));
-				at.setChangeName(saveFiles.get(i));
+				MenuInfo mi=new MenuInfo();
+				mi.setFilePath(savePath);
+				mi.setOriginName(originFiles.get(i));
+				mi.setEditName(saveFiles.get(i));
+				mi.setInfo(info);
 				
-				fileList.add(at);
+				fileList.add(mi);
 			}
 			
 			//Service로 전송
 			int result=new MenuService().insertMenu(menu, fileList);
 			
 			if(result>0){
-				response.sendRedirect(request.getContextPath() + "/selectList.tn");
+				response.sendRedirect(request.getContextPath() + "/views/admin/addMenu.jsp");
 			}
 			else{
 				//실패 시 저장된 사진 삭제
@@ -129,7 +120,7 @@ public class InsertMenuServlet extends HttpServlet {
 				}
 				
 				//에러페이지로 forward
-				request.setAttribute("msg", "사진게시판 등록 실패!");
+				request.setAttribute("msg", "메뉴 등록 실패!");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 		}

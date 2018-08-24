@@ -88,6 +88,10 @@
 		margin-left:5%;
 		text-align:center;
 	}
+	#pageArea{
+		width:100%;
+		height:20px;
+	}
 	#menuTable{
 		border:1px solid lightgray;
 		width:90%;
@@ -190,7 +194,44 @@
 							$tableBody.append($tr);
 						}
 						else{
+							var startPage=value.startPage;
+							var endPage=value.endPage;
+							var maxPage=value.maxPage;
+							var currentPage=value.currentPage;
+							var limit=value.limit;
+							var listCount=value.listCount;
 							
+							<%-- $pageBody.append("<button onclick=\"location.href='<%= request.getContextPath() %>/selectMatList?currentPage=1'\"><<</button>"); --%>
+							$pageBody.append("<button onclick='goFirstPage();'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								<%-- $pageBody.append("<button onclick=\"location.href='<%= request.getContextPath() %>/selectMatList?currentPage=(currentPage-1)'\"><</button>"); --%>
+								$pageBody.append("<button onclick='goPrevPage();'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									<%-- $pageBody.append("<button onclick=\"location.href='<%= request.getContextPath() %>/selectMatList?currentPage="+p+"'\">"+p+"</button>"); --%>
+									$pageBody.append("<button onclick='goPage();'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								<%-- $pageBody.append("<button onclick=\"location.href='<%= request.getContextPath() %>/selectMatList?currentPage="+(currentPage+1)+"'\">></button"); --%>
+								$pageBody.append("<button onclick='goNextPage();'>></button");
+							}
+							
+							<%-- $pageBody.append("<button onclick=\"location.href='<%= request.getContextPath() %>/selectMatList?currentPage="+maxPage+"'\">>></button>"); --%>
+							$pageBody.append("<button onclick='goLastPage();'>>></button>");
 						}
 					});
 					
@@ -201,10 +242,9 @@
 			});
 		});
 	
-		0
 		//메뉴추가
 		$("#fAdd").click(function(){
-			window.open("/msmg/views/admin/addMenu.jsp", "메뉴추가", "width=330, height=280, top=20, left=20, scrollbars=no");
+			window.open("/msmg/views/admin/addMenu.jsp", "메뉴추가", "width=340, height=280, top=20, left=20, scrollbars=no");
 		});
 		
 		//메뉴조회
@@ -220,11 +260,11 @@
 					
 					$.each(data, function(index, value){
 						var $tr=$("<tr>");
-						var $codeTd=$("<td>").text(decodeURIComponent(value.menuCode));
+						var $codeTd=$("<td>").text(value.menuCode);
 						var $nameTd=$("<td>").text(decodeURIComponent(value.menuName));
 						var $mMatTd=$("<td>").text(decodeURIComponent(value.mainMat));
 						var $sMatTd=$("<td>").text(decodeURIComponent(value.subMat));
-						var $mInfoTd=$("<td>").text("-");
+						var $mInfoTd=$("<td>").text(decodeURIComponent(value.info));
 						var $priceTd=$("<td>").text(value.price);
 						
 						$tr.append($codeTd);
@@ -510,49 +550,8 @@
 					</tbody>
 				</table>
 				<br>
-				<div class="pageArea" align="center">
-					<%-- <button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=1'"><<</button>
-					<%
-						if(currentPage <= 1){
-					%>
-							<button disabled><</button>
-					<%
-						}
-						else{
-					%>
-							<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= currentPage - 1 %>'"><</button>
-					<%
-						}
-					%>
+				<div id="pageArea" align="center">
 					
-					<%
-						for(int p=startPage;p<=endPage;p++){
-							if(p==currentPage){
-					%>
-								<button disabled><%= p %></button>
-					<%
-							}
-							else{
-					%>
-								<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= p %>'"><%= p %></button>
-					<%		
-							}
-						}
-					%>
-					
-					<%
-						if(currentPage >= maxPage){
-					%>
-							<button disabled>></button>
-					<%
-						}
-						else{
-					%>
-							<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= currentPage + 1 %>'">></button>
-					<%
-						}
-					%>
-					<button onclick="location.href='<%= request.getContextPath() %>/selectMatList?currentPage=<%= maxPage %>'">>></button> --%>
 				</div>
 			</div>
 			<div id="food-2">
@@ -611,13 +610,15 @@
 				<table id="infoTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="4" style="text-align:right;"><button id="iSearch">조회</button></td>
+							<td colspan="6" style="text-align:right;"><button id="iSearch">조회</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="15%"><b>글번호</b></td>
-							<td width="30%"><b>제목</b></td>
+							<td width="10%"><b>글번호</b></td>
+							<td width="25%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="45%"><b>내용</b></td>
+							<td width="30%"><b>내용</b></td>
+							<td width="15%"><b>작성일</b></td>
+							<td width="10%"><b>조회수</b></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -631,13 +632,15 @@
 				<table id="reviewTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="4" style="text-align:right;"><button id="rSearch">조회</button></td>
+							<td colspan="6" style="text-align:right;"><button id="rSearch">조회</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="15%"><b>글번호</b></td>
-							<td width="30%"><b>제목</b></td>
+							<td width="10%"><b>글번호</b></td>
+							<td width="25%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="45%"><b>내용</b></td>
+							<td width="30%"><b>내용</b></td>
+							<td width="15%"><b>작성일</b></td>
+							<td width="10%"><b>조회수</b></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -697,13 +700,14 @@
 				<table id="qnaTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="4" style="text-align:right;"><button id="qSearch">조회</button></td>
+							<td colspan="5" style="text-align:right;"><button id="qSearch">조회</button></td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="15%"><b>글번호</b></td>
+							<td width="10%"><b>글번호</b></td>
 							<td width="30%"><b>제목</b></td>
 							<td width="10%"><b>작성자</b></td>
-							<td width="45%"><b>내용</b></td>
+							<td width="35%"><b>내용</b></td>
+							<td width="15%"><b>작성일</b></td>
 						</tr>
 					</thead>
 					<tbody>
