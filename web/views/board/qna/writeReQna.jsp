@@ -146,7 +146,7 @@ border : 1px solid tomato;
 	
 	</div>
 	<!-- 접근 범위 지정 -->
-<%if(loginUser != null && loginUser.getU_id().equals("admin1")){ %>
+<%if(loginUser != null){ %>
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
