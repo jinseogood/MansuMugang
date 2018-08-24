@@ -95,14 +95,14 @@ public class ReviewDao {
 		
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
-				System.out.println("dao board_no : " + fileList.get(i).getBoard_no());
+				System.out.println("dao board_no : " + fileList.get(i).getBoard_id());
 				
 				
 				pstmt = con.prepareStatement(query);
 				pstmt.setString(1, fileList.get(i).getOrigin_name());
 				pstmt.setString(2, fileList.get(i).getEdit_name());
 				pstmt.setString(3, fileList.get(i).getFile_src());
-				pstmt.setInt(4, fileList.get(i).getBoard_no());
+				pstmt.setInt(4, fileList.get(i).getBoard_id());
 				pstmt.setInt(5, fileList.get(i).getU_code());
 				
 				result += pstmt.executeUpdate();
@@ -137,27 +137,27 @@ public class ReviewDao {
 				
 				hmap.put("fileNo", rset.getInt("file_no"));
 				hmap.put("originName", rset.getString("origin_name"));
-				hmap.put("editName",rset.getString("edit_name"));
+				hmap.put("editName", rset.getString("edit_name"));
 				hmap.put("fileSrc", rset.getString("file_src"));
 				hmap.put("fileDate", rset.getDate("file_date"));
 				hmap.put("boardSort", rset.getInt("board_sort"));
-				hmap.put("boardNo", rset.getInt("board_id"));
+				hmap.put("boardId", rset.getInt("board_id"));
 				hmap.put("uCode", rset.getInt("u_code"));
+				hmap.put("uName", rset.getString("u_name"));
 				hmap.put("title", rset.getString("title"));
 				hmap.put("content", rset.getString("content"));
 				
 				list.add(hmap);
 			}
-			
-			System.out.println("dao : " + list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(stmt);
 			close(rset);
 		}
-		
 		return list;
 	}
+
+	
 
 }

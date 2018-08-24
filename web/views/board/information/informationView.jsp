@@ -236,7 +236,7 @@ input[type=text]{
 			<%for(int i=0; i < list2.size(); i++) {%>
 				<tr>
 				<td width="100px"><%= list2.get(i).getU_code() %>
-				                  <br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
+				                  <br><div id="date" ><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px"><%= list2.get(i).getRe_content() %></td>
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
 					<td width='100px'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
@@ -271,8 +271,8 @@ input[type=text]{
 					console.log(data);
 					$("#replyAddTable").html("");
 					for(var i = 0; i < data.length; i++){
-						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code , data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
-								+ "<td width='100'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
+						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
+								+ "<td width='100px'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
 					}
 				},
 				error:function(data){

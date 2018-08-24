@@ -73,7 +73,7 @@ public class InsertReviewSertvlet extends HttpServlet {
 			String content = multiRequest.getParameter("content");
 			String uCode = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
 			String date = multiRequest.getParameter("date");
-			String boardNo = multiRequest.getParameter("boardNo");
+			String boardid = multiRequest.getParameter("boardId");
 			
 			java.sql.Date day = null;
 			
@@ -87,12 +87,10 @@ public class InsertReviewSertvlet extends HttpServlet {
 				
 				day = new java.sql.Date(new GregorianCalendar(arr[0], arr[1]-1, arr[2]).getTimeInMillis());
 				System.out.println(day);
+				
 			}else {
 				day = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
 			}
-			
-			
-			
 			
 			System.out.println(title);
 			System.out.println(content);

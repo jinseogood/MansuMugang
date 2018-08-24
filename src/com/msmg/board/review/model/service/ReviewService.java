@@ -24,11 +24,11 @@ public class ReviewService {
 		System.out.println("result1 : " + result1);
 		
 		if(result1 > 0) {
-			int bno = new ReviewDao().selectCurrval(con);
-			System.out.println("ReviewService : " + bno);
+			int bid = new ReviewDao().selectCurrval(con);
+			System.out.println("ReviewService : " + bid);
 			
 			for(int i = 0; i < fileList.size(); i++) {
-				fileList.get(i).setBoard_no(bno);
+				fileList.get(i).setBoard_id(bid);
 			}
 		}
 		
@@ -56,5 +56,6 @@ public class ReviewService {
 		
 		return list;
 	}
+
 
 }
