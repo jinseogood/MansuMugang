@@ -126,12 +126,18 @@ div[id=date-writer-hit2] {
 	width:100%;
 }
 </style>
-
+<script>
+	function alertDelete(){
+		var check = window.confirm("글을 삭제하시겠습니까?");
+		console.log("아아아");
+		if(check == true){
+			window.location = '<%=request.getContextPath() %>/deleteNotice.no?bno=<%= no.getBoard_no()%>';
+		}
+	}
+</script>
 </head>
 <body>
-	 <div id="jjff">
-		<%@ include file="../../common/menubar.jsp"%>
-	</div> 
+	 
 	<div id="main">
 		<!-- 게시판 읽기 -->
 		<div>
@@ -185,16 +191,14 @@ div[id=date-writer-hit2] {
 		<div class="btnlist">
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary befo btn-sm"
+			<button class="btn btn-primary befo btn-sm"
 				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.no?num=<%= no.getBoard_no() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
 		</div>
 
 	</div>
-	 <div id="mainBottom">
-	<%@include file="../../common/footer.jsp"%>
-	</div>
+	 
 </body>
 </html>
 

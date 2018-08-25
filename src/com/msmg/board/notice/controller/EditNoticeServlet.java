@@ -105,7 +105,7 @@ public class EditNoticeServlet extends HttpServlet {
 			System.out.println("수정완료");
 			
 			if(result > 0){
-				response.sendRedirect(request.getContextPath() + "/noticeDetail.no?board_no=" + no.getBoard_no());
+				response.sendRedirect(request.getContextPath() + "/noticeDetail.admin?board_no=" + no.getBoard_no());
 			}else{
 				for(int i = 0; i < saveFiles.size(); i++){
 					File failedFile = new File(savePath + saveFiles.get(i));

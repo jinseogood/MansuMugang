@@ -1,6 +1,7 @@
-package com.msmg.board.qna.controller;
+package com.msmg.board.notice.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.qna.model.service.QnaService;
-import com.msmg.member.model.vo.Member;
+import com.msmg.board.notice.model.service.NoticeService;
+import com.msmg.board.notice.model.vo.Attachment;
+import com.msmg.board.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class writeReQnaServlet
+ * Servlet implementation class AdminNoticeDetailServlet
  */
-@WebServlet("/writeRe.qna")
-public class writeReQnaServlet extends HttpServlet {
+@WebServlet("/noticeDetail.admin")
+public class AdminNoticeDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public writeReQnaServlet() {
+    public AdminNoticeDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +33,24 @@ public class writeReQnaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ucode = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
-		int bid = Integer.parseInt(request.getParameter("num"));
-		System.out.println("답글할 글 id " + bid);
-		int result = new QnaService().insertReQna(ucode, bid);
+		String bno = request.getParameter("board_no");
+		System.out.println("bno : " + bno);
+		Notice no = new NoticeService().selectOne(bno);
+		Notice preNo = new NoticeService().selectPreNo(bno);
+		Notice nextNo = new NoticeService().selectNextNo(bno);
+		ArrayList<Attachment> list = new NoticeService().selectAttachment(bno);
 		
+		
+		System.out.println("nno : " +  nextNo);
 		String page = "";
 		
-		if(result > 0){
-		page = "/views/board/qna/readQnaDetail.qna?board_id="+bid;
-		request.setAttribute("bid", result);
-		request.setAttribute("ucode", ucode);
-		request.setAttribute("num", bid);
+		if(no != null){
+			page = "/views/board/notice/adminNoticeDetail.jsp";
+			request.setAttribute("no", no);
+			request.setAttribute("preNo", preNo);
+			request.setAttribute("nextNo", nextNo);
+			request.setAttribute("list", list);
+			
 		}else{
 			page = "../../common/errorPage.jsp";
 			request.setAttribute("msg", "글쓰기 에러");

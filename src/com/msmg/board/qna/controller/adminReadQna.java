@@ -1,6 +1,8 @@
 package com.msmg.board.qna.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.board.qna.model.service.QnaService;
+import com.msmg.board.qna.model.vo.Qna;
 
 /**
- * Servlet implementation class UpdateReQnaServlet
+ * Servlet implementation class adminReadQna
  */
-@WebServlet("/updateReQna.qna")
-public class UpdateReQnaServlet extends HttpServlet {
+@WebServlet("/readQnaDetail.qna")
+public class adminReadQna extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateReQnaServlet() {
+    public adminReadQna() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,25 +31,26 @@ public class UpdateReQnaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String content = request.getParameter("smnoteval");
-		int bid = Integer.parseInt(request.getParameter("bid"));
-		int ucode = Integer.parseInt(request.getParameter("ucode"));
-		int num = Integer.parseInt(request.getParameter("num"));
-	
-	
-		int result = new QnaService().updateReQna(title, content, bid, ucode, num);
-
+		int bid = Integer.parseInt(request.getParameter("board_id"));
 		
-		if(result > 0){
-			response.sendRedirect(request.getContextPath() + "/readQnaDetail.qna?board_id=" + bid);
+		Qna qna = new QnaService().selectOne(bid);
+		
+		System.out.println("qna bno : " + qna.getBoard_id());
+		System.out.println("qna ref : " + qna.getRef_bno());
+		
+		String page = "";
+		
+		if(qna != null){
+			page = "/views/board/qna/adminReadQna.jsp";
+			request.setAttribute("qna", qna);
+			
 		}else{
-			
-			//에러페이지로 forward
-			request.setAttribute("msg", "qna 게시판 작성 에러");
-			request.getRequestDispatcher("/views/common/errorPage.jsp").forward(request, response);
-			
+			page = "../../common/errorPage.jsp";
+			request.setAttribute("msg", "글쓰기 에러");
 		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
