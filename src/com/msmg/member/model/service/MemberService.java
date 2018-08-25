@@ -27,7 +27,7 @@ public class MemberService {
 		return member;
 		
 	}
-
+  
 	public Member loginCheck(String userId, String userPwd) {
 		Connection con = getConnection();
 		

@@ -27,7 +27,7 @@ public class InsertMemberServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String[] alCode = request.getParameterValues("allergy");
 		
-		System.out.println(uid);
+		System.out.println(uid);  
 		System.out.println(userPwd);
 		System.out.println(userName);
 		System.out.println(alCode);

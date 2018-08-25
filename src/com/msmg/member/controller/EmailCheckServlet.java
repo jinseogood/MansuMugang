@@ -24,7 +24,7 @@ public class EmailCheckServlet extends HttpServlet {
    private static final long serialVersionUID = 1L;
        
     public EmailCheckServlet() {
-        super();
+        super();  
     }
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
