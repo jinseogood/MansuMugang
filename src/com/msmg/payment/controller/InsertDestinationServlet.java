@@ -20,7 +20,7 @@ public class InsertDestinationServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertDestinationServlet() {
+    public InsertDestinationServlet() {  
         super();
         // TODO Auto-generated constructor stub
     }

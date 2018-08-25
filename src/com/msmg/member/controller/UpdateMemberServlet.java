@@ -17,7 +17,7 @@ public class UpdateMemberServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateMemberServlet() {
+    public UpdateMemberServlet() {  
         super();
         // TODO Auto-generated constructor stub
     }

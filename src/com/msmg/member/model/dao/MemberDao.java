@@ -26,7 +26,7 @@ public class MemberDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		   
 	}
 	
 	public Member insertMember(Connection con, Member m) {
