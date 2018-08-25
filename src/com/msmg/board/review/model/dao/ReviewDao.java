@@ -189,28 +189,23 @@ public class ReviewDao {
 			while(rset.next()) {
 				b = new Board();
 				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
 				b.setBoardSort(rset.getString("board_sort"));
 				b.setTitle(rset.getString("title"));
 				b.setContent(rset.getString("content"));
 				b.setBoardDate(rset.getDate("board_date"));
 				b.setuCode(rset.getString("u_name"));
-				b.setBuyInfoNo(rset.getInt("buy_info_no"));
-				b.setRefBno(rset.getInt("ref_bno"));
 				b.setbCount(rset.getInt("b_count"));
 				b.setWriteYn(rset.getString("write_yn"));
 				
-				System.out.println(b);
-				
 				
 				bf = new BoardFile();
-				bf.setBoard_id(rset.getInt("board_id"));
 				bf.setOrigin_name(rset.getString("origin_name"));
 				bf.setEdit_name(rset.getString("edit_name"));
 				bf.setFile_src(rset.getString("file_src"));
 				bf.setFile_date(rset.getDate("file_date"));
 				bf.setFile_no(rset.getInt("file_no"));
 				bf.setBoard_sort(rset.getString("board_sort"));
-				bf.setU_code(rset.getInt("u_code"));
 				bf.setFile_level(rset.getInt("file_level"));
 				
 				
