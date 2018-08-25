@@ -189,7 +189,7 @@ input[type=text]{
 <body>
 <div id="back">
 	<%@ include file="../../common/menubar.jsp"%>
-</div>
+</div> 
 	<div id="outer">
 		<table class="bbs-table">
 			<tr>

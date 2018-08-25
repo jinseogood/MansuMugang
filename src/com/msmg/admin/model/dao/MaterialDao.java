@@ -110,7 +110,7 @@ public class MaterialDao {
 		Statement st=null;
 		ResultSet rset=null;
 		
-		String query=prop.getProperty("listCount");
+		String query=prop.getProperty("matlistCount");
 		
 		try {
 			st=con.createStatement();
@@ -128,6 +128,42 @@ public class MaterialDao {
 		}
 		
 		return listCount;
+	}
+
+
+	public ArrayList<Material> selectMatList(Connection con) {
+		ArrayList<Material> matList=new ArrayList<Material>();
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectMatList");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			while(rset.next()){
+				Material mat=new Material();
+				
+				mat.setM_code(rset.getString("grad_code"));
+				mat.setM_name(rset.getString("grad_name"));
+				mat.setA_code(rset.getString("al_code"));
+				mat.setD_go(rset.getString("go"));
+				mat.setD_dang(rset.getString("dang"));
+				mat.setD_head(rset.getString("head"));
+				
+				matList.add(mat);				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		
+		return matList;
 	}
 
 }

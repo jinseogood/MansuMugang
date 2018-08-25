@@ -56,40 +56,6 @@ public class SelectMaterialList extends HttpServlet {
 		
 		ArrayList<Material> matList=new MaterialService().selectMatList(currentPage, limit);
 		
-		/*String page="";
-		
-		if(matList != null){
-			JSONArray result=new JSONArray();
-			JSONObject matInfo=null;
-			for(Material mat : matList){
-				matInfo=new JSONObject();
-				
-				matInfo.put("matCode", URLEncoder.encode(mat.getM_code(), "UTF-8"));
-				matInfo.put("matName", URLEncoder.encode(mat.getM_name(), "UTF-8"));
-				matInfo.put("alleCode", URLEncoder.encode(mat.getA_code(), "UTF-8"));
-				matInfo.put("d_go", URLEncoder.encode(mat.getD_go(), "UTF-8"));
-				matInfo.put("d_dang", URLEncoder.encode(mat.getD_dang(), "UTF-8"));
-				matInfo.put("d_head", URLEncoder.encode(mat.getD_head(), "UTF-8"));
-				
-				result.add(matInfo);
-			}
-			
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			
-			PrintWriter out=response.getWriter();
-			out.print(result.toJSONString());
-			
-			out.flush();
-			out.close();
-		}
-		else{
-			page="/views/common/errorPage.jsp";
-			request.setAttribute("msg", "관리자 재료 조회 실패");
-			RequestDispatcher view=request.getRequestDispatcher(page);
-			view.forward(request, response);
-		}*/
-		
 		System.out.println(pi);
 		
 		if(matList != null){

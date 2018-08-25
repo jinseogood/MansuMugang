@@ -15,8 +15,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.msmg.admin.model.service.MenuService;
-import com.msmg.admin.model.vo.Material;
 import com.msmg.admin.model.vo.Menu;
+import com.msmg.admin.model.vo.PageInfo;
 
 @WebServlet("/selectMenuList")
 public class SelectMenuServlet extends HttpServlet {
@@ -25,10 +25,38 @@ public class SelectMenuServlet extends HttpServlet {
     public SelectMenuServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Menu> menuList=new MenuService().selectMenuList();
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		currentPage=1;
+				
+		if(request.getParameter("currentPage") != null){
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		}
+				
+		int listCount=new MenuService().getListCount();
+		
+		limit=10;
+				
+		maxPage=(int)((double)listCount / limit + 0.9);
+				
+		startPage=((int)(((double)currentPage / limit + 0.9) - 1) * limit + 1);
+				
+		endPage=startPage+limit-1;
+				
+		if(maxPage < endPage){
+			endPage=maxPage;
+		}
+				
+		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		ArrayList<Menu> menuList=new MenuService().selectMenuList(currentPage, limit);
 		
 		JSONArray result=new JSONArray();
 		JSONObject menuInfo=null;
+		JSONObject menuPage=new JSONObject();
 		for(Menu menu : menuList){
 			menuInfo=new JSONObject();
 			
@@ -41,6 +69,14 @@ public class SelectMenuServlet extends HttpServlet {
 			
 			result.add(menuInfo);
 		}
+		menuPage.put("currentPage", pi.getCurrentPage());
+		menuPage.put("listCount", pi.getListCount());
+		menuPage.put("limit", pi.getLimit());
+		menuPage.put("maxPage", pi.getMaxPage());
+		menuPage.put("startPage", pi.getStartPage());
+		menuPage.put("endPage", pi.getEndPage());
+		
+		result.add(menuPage);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

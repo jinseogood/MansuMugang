@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.admin.model.vo.*"%>
+<%
+	ArrayList<Material> matList=(ArrayList<Material>)request.getAttribute("matList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,11 +30,31 @@
 			</tr>
 			<tr>
 				<td style="background:lightgray;">주재료</td>
-				<td colspan="2"><input type="text" name="mainMat"></td>
+				<td colspan="2"><!-- <input type="text" name="mainMat"> -->
+					<select name="mainMat">
+						<%
+							for(int i=0;i<matList.size();i++){
+						%>
+								<option value="<%= matList.get(i).getA_code() %>"><%= matList.get(i).getM_name() %></option>
+						<%
+							}
+						%>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td style="background:lightgray;">보조재료</td>
-				<td colspan="2"><input type="text" name="subMat"></td>
+				<td colspan="2"><!-- <input type="text" name="subMat"> -->
+					<select name="subMat">
+						<%
+							for(int i=0;i<matList.size();i++){
+						%>
+								<option value="<%= matList.get(i).getA_code() %>"><%= matList.get(i).getM_name() %></option>
+						<%
+							}
+						%>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td style="background:lightgray;">가격</td>

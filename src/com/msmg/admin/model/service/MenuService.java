@@ -41,14 +41,24 @@ public class MenuService {
 		return result;
 	}
 
-	public ArrayList<Menu> selectMenuList() {
+	public ArrayList<Menu> selectMenuList(int currentPage, int limit) {
 		Connection con=getConnection();
 		
-		ArrayList<Menu> menuList=new MenuDao().selectMenuList(con);
+		ArrayList<Menu> menuList=new MenuDao().selectMenuList(currentPage, limit, con);
 		
 		close(con);
 		
 		return menuList;
+	}
+
+	public int getListCount() {
+		Connection con=getConnection();
+		
+		int listCount=new MenuDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
 	}
 
 }

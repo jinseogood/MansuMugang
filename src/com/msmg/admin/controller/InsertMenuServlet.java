@@ -108,7 +108,7 @@ public class InsertMenuServlet extends HttpServlet {
 			int result=new MenuService().insertMenu(menu, fileList);
 			
 			if(result>0){
-				response.sendRedirect(request.getContextPath() + "/views/admin/addMenu.jsp");
+				response.sendRedirect(request.getContextPath() + "/selectMatAddMenu");
 			}
 			else{
 				//실패 시 저장된 사진 삭제
