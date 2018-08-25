@@ -2,7 +2,15 @@
 	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*"%>
 <% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("list"); 
 	String[][] add = new String[4][3];
-%> 
+%>
+
+<% 
+	Payment p = (Payment)session.getAttribute("u_code");
+	/* p.getMenu_code();
+	p.getBuy_date();
+	p.getBuy_no();
+	p.getStatus(); */
+%>
  
 <% if(list != null){
 for(int i = 0; i < list.size(); i++){
@@ -246,11 +254,8 @@ section {
 				</div>
 			</section>
 		
-<%-- 		<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
-		<input type="hidden" name="menu_code" value=<%= %>>
-		<input type="hidden" name="buy_date" value="">
-		<input type="hidden" name="status" value=<%= %>> --%>
-		
+<%--  		<input type="hidden" name="buy_no" value=<%= p.getBuy_no() %>>
+		<input type="hidden" name="status" value=<%= p.getStatus() %>>  --%>
 		
 			<section>
 				<h1>주문자 정보</h1>
@@ -353,11 +358,13 @@ section {
 							<tr>
 								<th bgcolor=tomato>휴대전화</th>
 									<td colspan="4">
-										<input type="text" name="hpno1" id="hpno1" size="4" maxlength="4">
-										<span>－</span> 
-										<input type="text" name="hpno2" id="hpno2" size="4" maxlength="4">
-										<span>－</span>
-										<input type="text" name="hpno3" id="hpno3" size="4" maxlength="4">
+										<form id="phn" action="<%=request.getContextPath()%>/insertPhone.pm" method="post">
+											<input type="text" name="hpno1" id="hpno1" size="4" maxlength="4">
+											<span>－</span> 
+											<input type="text" name="hpno2" id="hpno2" size="4" maxlength="4">
+											<span>－</span>
+											<input type="text" name="hpno3" id="hpno3" size="4" maxlength="4">
+										</form>
 									</td>
 							</tr>
 						
@@ -563,6 +570,8 @@ section {
 					
 					var postcode = pst;
 					
+					
+					
 					/* console.log(postcode); */
 
 					if (sender == "") {
@@ -612,6 +621,9 @@ section {
 																			function(
 																					rsp) { // callback
 																				if (rsp.success) {
+																					
+																					$("#phn").submit();
+																					
 																					jQuery .ajax(
 																									{
 																										url : "http://localhost:8001/msmg/views/payment/paymentConfirm.jsp", // 가맹점 서버
@@ -629,11 +641,12 @@ section {
 																										location.href = "paymentConfirm.jsp"
 																									}) */
 																									function(data) {
-																										
+																							
 																										if($("#AddrSaveCheck").is(":checked")){
 																											
 																											/* $("#pstcd").submit(); */
 																											$("#addrrs").submit();
+																											
 																											
 																										} else {
 																											location.href = "paymentConfirm.jsp";
