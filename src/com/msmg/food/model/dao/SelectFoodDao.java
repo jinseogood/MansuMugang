@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.msmg.food.model.vo.Buy;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.SelectFood;
 
@@ -89,6 +90,29 @@ public class SelectFoodDao {
 		}
 		
 		return list;
+	}
+
+	public int insertMenuBuy(Connection con, ArrayList<Buy> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertMenuBuy");
+		
+		for(int i = 0 ; i < list.size() ; i++){
+			try {
+				pstmt = con.prepareStatement(query);
+			
+				pstmt.setString(1, list.get(i).getUcode());
+				pstmt.setString(2, list.get(i).getMcode());
+			
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				close(pstmt);
+			}
+		}
+		return result;
 	}
 
 }
