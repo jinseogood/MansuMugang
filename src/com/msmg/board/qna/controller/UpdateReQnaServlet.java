@@ -39,7 +39,7 @@ public class UpdateReQnaServlet extends HttpServlet {
 
 		
 		if(result > 0){
-			response.sendRedirect(request.getContextPath() + "/qnaList.qna");
+			response.sendRedirect(request.getContextPath() + "/readQnaDetail.qna?board_id=" + bid);
 		}else{
 			
 			//에러페이지로 forward

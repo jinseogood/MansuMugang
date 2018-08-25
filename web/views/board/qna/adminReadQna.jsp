@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "com.msmg.board.notice.model.vo.*, java.util.*"%>
+	pageEncoding="UTF-8" import = "com.msmg.board.qna.model.vo.*, java.util.*, com.msmg.member.model.vo.*"%>
 <%
-	Notice no = (Notice)request.getAttribute("no");
-	Notice preNo = (Notice)request.getAttribute("preNo");
-	Notice nextNo = (Notice)request.getAttribute("nextNo");
-	 ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
+	Member user = (Member)request.getSession().getAttribute("loginUser");
+	
+	Qna qna = (Qna)request.getAttribute("qna");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>글읽기</title>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
+	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet"
@@ -76,6 +77,7 @@ div[id=date-writer-hit2] {
 	width: 100%;
 	margin: 20px 0 0 0;
 	padding: 10px 0 10px 0;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
 .bbs-table th {
@@ -110,13 +112,13 @@ div[id=date-writer-hit2] {
 #jjff {
 	width: 100%;
 	height: 400px;
-	background-image: url("/msmg/images/common/notice.png");
+	background-image: url("/msmg/images/common/Q.png");
 	margin-bottom: 10px;
 }
 
 #main {
 	width: 1000px;
-	height: 800px;
+	height: 1300px;
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -125,59 +127,40 @@ div[id=date-writer-hit2] {
 	height:200px;
 	width:100%;
 }
-</style>
 
+table{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
+</style>
+<script>
+	function alertDelete(){
+		var check = window.confirm("글을 삭제하시겠습니까?");
+		if(check == true){
+			window.location = '<%=request.getContextPath() %>/deleteQna.qna?bid=<%= qna.getBoard_id()%>';
+		}
+	}
+</script>
 </head>
 <body>
-	 <div id="jjff">
-		<%@ include file="../../common/menubar.jsp"%>
-	</div> 
+	<% if(user != null && (user.getU_name() == qna.getU_name() || user.getU_code() == qna.getRef_ucode() || user.getU_name().equals("admin"))){ %>
+	
+	
 	<div id="main">
 		<!-- 게시판 읽기 -->
 		<div>
 			<table class="bbs-table">
 				<tr>
-					<th style=" color: #555; text-align: center;"><%= no.getTitle() %></th>
+					<th style=" color: #555; text-align: center;"><%= qna.getTitle() %></th>
 				</tr>
 			</table>
 			<div id="detail">
 				<div id="date-writer-hit2">
-					<span>작성자 &nbsp; l &nbsp; <%= no.getU_name() %></span>
-					<span id="date-writer-hit"> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= no.getB_count() %></span>
+					<span>작성자 &nbsp; l &nbsp; <%= qna.getU_name() %></span>
+					<span id="date-writer-hit"> <%= qna.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= qna.getB_count() %></span>
 				</div>
-				<div id="article-content"><%= no.getContent() %></div>
-				<div id ='attachArea'>
-				<%if(list != null){ %>
-				<dl>
-					<dt>첨부파일</dt>
-					<%for(Attachment at : list){ %>
-						<dd><a href = "downloadFile.no?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
-					<%} %>
-				</dl>
-				<%} %>
-				</div>
+				<div id="article-content"><%= qna.getContent() %></div>
+				
 			</div>
-		</div>
-		<div id='whiptable'>
-			<table id='whip'>
-			<% if(nextNo != null){ %>
-				<tr style="border-top: 1px solid #ff6347;">
-					<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
-						다음글</td>
-					<td align="center" width='700'><a href="<%= request.getContextPath()%>/noticeDetail.no?board_no=<%=nextNo.getBoard_no()%>"><%= nextNo.getTitle() %></a></td>
-					<td width="100"><%= nextNo.getBoard_date() %></td>
-				</tr>
-			<%} %>
-			<%if(preNo != null){ %>
-				<tr style="border-top: 1px solid #ff6347;">
-					<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
-						이전글</td>
-					<td align="center"><a href="<%= request.getContextPath()%>/noticeDetail.no?board_no=<%=preNo.getBoard_no()%>"><%= preNo.getTitle() %></a></td>
-					<td><%= preNo.getBoard_date() %></td>
-				</tr>
-			<%} %>
-			
-			</table>
 		</div>
 		<br>
 
@@ -185,16 +168,27 @@ div[id=date-writer-hit2] {
 		<div class="btnlist">
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
-				<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.no?num=<%= no.getBoard_no() %>'">수정하기</button>
+			<%if(user.getU_code() == qna.getRef_ucode()) %>
+			<button class="btn btn-primary befo btn-sm"
+				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "alertDelete();">삭제하기</button>
+			<%} %>
+			<% if(user.getU_id().equals("admin") && qna.getBoard_id() == qna.getRef_bno()){%>
+			<button class="btn btn-primary befo btn-sm"
+				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>'">답글하기</button>
+			<%} %>
 		</div>
 
 	</div>
-	 <div id="mainBottom">
+	<div id="mainBottom">
 	<%@include file="../../common/footer.jsp"%>
 	</div>
+	<%}else{
+		request.setAttribute("msg", "잘못된 경로");
+		request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	}%>
+	
 </body>
 </html>
 

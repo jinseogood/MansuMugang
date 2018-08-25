@@ -170,6 +170,7 @@ section {
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black;
+    visibility: visible;
 }
 
 .tooltip .tooltiptext {
@@ -180,6 +181,7 @@ section {
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
+    visibility: visible;
 
     /* Position the tooltip */
     position: absolute;
@@ -518,27 +520,26 @@ section {
 					<table class="basket_list_tbl2">
 						<tbody>
 							<tr class=total>
-								<td>최종 결제 금액 <span class="red">(총가격)</span>원<input
-									type="text" style="display: none;"></td>
+								<td>최종 결제 금액 <span class="red">(총가격)</span>원<input type="text" style="display: none;"></td>
 						</tbody>
 					</table>
 				</div>
 			</section>
 
 			<div align="center">
-				<input type="checkbox" id="confirmSettlement"
-					name="confirmSettlement"><label for="confirmSettlement"
-					align="center">주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며 구매에 동의합니다.</label>
-					<div class="tooltip">상세보기
-  <span class="tooltiptext">
-		주문제작상품 구매 동의<br>
-		· 본 상품은 주문제작상품으로 특정 주문자 만을 위하여 개별적으로 제작 및 생산되는 상품으로서, 다른 소비자에게 재판매가 불가능한 상품을 의미합니다.<br>
-		· 주문제작상품은 반품/취소 제한에 동의해야 결제가 진행되며 전자상거래법에 따라 반품/취소가 불가능 할 수 있습니다.<br>
-		· 다만, 주문제작상품으로 인정되지 않는 상품의 경우 구매자는 반품/취소 제한에 동의하였는지 여부를 불문하고 전자상거래 관련법령에 의거 보호를 받을 수 있습니다.<br>
-</span>
-</div>
+				<input type="checkbox" id="confirmSettlement" name="confirmSettlement">
+					<label for="confirmSettlement" align="center">주문할 상품의 상품명, 상품가격, 배송정보를 확인하였으며 구매에 동의합니다.</label>
+					
+				<div class="tooltip"> 상세보기 
+					<span class="tooltiptext"> 
+						주문제작상품 구매 동의<br>
+						· 본 상품은 주문제작상품으로 특정 주문자 만을 위하여 개별적으로 제작 및 생산되는 상품으로서, 다른 소비자에게 재판매가 불가능한 상품을 의미합니다.<br> 
+						· 주문제작상품은 반품/취소 제한에 동의해야 결제가 진행되며 전자상거래법에 따라 반품/취소가 불가능 할 수 있습니다.<br> 
+						· 다만, 주문제작상품으로 인정되지 않는 상품의 경우 구매자는 반품/취소 제한에 동의하였는지 여부를 불문하고 전자상거래 관련법령에 의거 보호를 받을 수 있습니다.<br>
+					</span>
+				</div>
 			</div>
-			
+
 
 			<br> <br>
 
@@ -618,11 +619,10 @@ section {
 																				buyer_addr,
 																				buyer_postcode : $('#postcode').val(),
 																			},
-																			function(
-																					rsp) { // callback
+																			function(rsp) { // callback\
 																				if (rsp.success) {
 																					
-																					$("#phn").submit();
+																					
 																					
 																					jQuery .ajax(
 																									{
@@ -637,10 +637,11 @@ section {
 																										}
 																									})
 																							.done(
-																									/* function(data) {
-																										location.href = "paymentConfirm.jsp"
-																									}) */
+																									
+																									
 																									function(data) {
+																										
+																										$("#phn").submit();
 																							
 																										if($("#AddrSaveCheck").is(":checked")){
 																											
@@ -649,6 +650,7 @@ section {
 																											
 																											
 																										} else {
+																											
 																											location.href = "paymentConfirm.jsp";
 																										}
 	

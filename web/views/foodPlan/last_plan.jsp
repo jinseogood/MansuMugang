@@ -4,6 +4,7 @@
 	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
 	SelectFood sf = (SelectFood)request.getAttribute("sf");
 	int total_price = 0;
+	int side_price = sf.getDay()*sf.getGgi()*500;
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -212,6 +213,7 @@
 										<td><%= list.get(rand).getSub_grad()%></td>
 										<td><%= list.get(rand).getPrice()%></td>
 										<input type = "hidden" name="" value = "<%= rand %>">
+										<input type = "hidden" name="" value = "<%= list.get(rand).getMenu_code() %>">
 										<% total_price += list.get(rand).getPrice();%>
 									</tr>
 									<tr>
@@ -219,16 +221,28 @@
 									</tr>
 									
 								</table>
-
+								
 							</div>
 						</td>
 					<% } %>
 				</tr>
 				<% } %>
+				
 				<tr>
-					<td colspan = "<%= sf.getGgi() %>" bgcolor = "yellow">총가격 : <%= total_price %></td>
+					<% if(sf.getSide() == 1){
+							total_price += side_price;
+					%>		
+						<td colspan = "<%= sf.getGgi() %>" bgcolor = "yellow">총가격(밑반찬 포함) : <%= total_price %></td>
+					<%
+						}else{
+					%>
+						<td colspan = "<%= sf.getGgi() %>" bgcolor = "yellow">총가격(밑반찬 미포함) : <%= total_price %></td>
+					<%
+						}
+					%>
 				</tr>
 			</table>
+			
 		</div>
 				
 				<div class = "images">
@@ -270,6 +284,7 @@
 				<input type = "hidden" name="" value = "<%= list.get(b).getPrice() %>">
 				<input type = "hidden" name="" value = "<%= list.get(b).getInfo() %>">
 				<input type = "hidden" name="" value = "<%= b %>">
+				<input type = "hidden" name="" value = "<%= list.get(b).getMenu_code() %>">
 				<label for="l<%= b %>"><%= list.get(b).getName() %></label>	
 				</div>
 		  <% } %>
@@ -300,6 +315,7 @@
 		var last_price;
 		var p;
 		var seq;
+		var m_code;
         $("#OK_btn").off().click(function(){
     		var name = $('input[name="menu_change"]:checked').val();
     	        t.children().eq(0).text(name);
@@ -317,14 +333,21 @@
     	  	    t.children().eq(1).children().eq(0).children().eq(0).children().eq(3).children().eq(0).text(info);
     	  	    seq = $('input[name="menu_change"]:checked').parents().children().eq(6).val();    
     	  		t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val(seq);
+    	  		m_code = $('input[name="menu_change"]:checked').parents().children().eq(7).val(); 
+    	  		t.children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(4).val(m_code);
     	  		
     	    $("#myModal").modal('hide');
 			last_price = first_price + Number(price) - Number(p);
 			first_price = last_price;
 
-			var day = Number(<%= sf.getDay() %>*2+1);
+			var day = Number(<%= sf.getDay() %>*2);
 			
-			$("#test").children().eq(0).children().eq(15).children().eq(0).text(first_price);
+			if(<%= sf.getSide()%> == 1){
+				$("#test").children().eq(0).children().eq(day).children().eq(0).text("총가격(밑반찬 포함) : " + first_price);
+			}else{
+				$("#test").children().eq(0).children().eq(day).children().eq(0).text("총가격(밑반찬 미포함) : " + first_price);
+			}
+			
 			
 			console.log(first_price);
 			console.log(seq);
@@ -333,6 +356,7 @@
 	});
 	$(function(){
 		$(".throw").click(function(){ 
+
 			var day = <%= sf.getDay() %>;
 			var ggi = <%= sf.getGgi() %>;
 			var side = <%= sf.getSide() %>;
@@ -344,7 +368,7 @@
 			var result = "";
 			//var num = $("#test").children().eq(0).children().eq(3).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();
 			                                                    /*1, 3, 5       0, 1, 2*/
-			for(var i = 1 ; i < (day*2); i+=2){
+			/* for(var i = 1 ; i < (day*2); i+=2){
 				for(var j = 0 ; j < ggi; j++){
 					var name = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(0).text();		
 																		//1,3,5,7,9,11,13    0,1,2
@@ -357,10 +381,23 @@
 					}													
 					//console.log(result);
 				}
-			}
+			} */
 			
+			for(var i = 1 ; i < (day*2); i+=2){
+				for(var j = 0 ; j < ggi; j++){
+					var mcode = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(4).val();							
+					if(i==day*2-1 && j == ggi-1){
+						
+						result += mcode;
+					}else{
+						result += mcode + ", ";
+					}													
+					//console.log(result);
+				}
+			}
 			console.log(result); 
-			location.href="<%= request.getContextPath()%>/insertBuy.fo?result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price;
+			var user = "<%= loginUser.getU_code() %>";
+			location.href="<%= request.getContextPath()%>/insertBuy.fo?result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price + "&user=" + user;
 		});
 	});
 

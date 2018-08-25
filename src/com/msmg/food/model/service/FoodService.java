@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.msmg.food.model.dao.SelectFoodDao;
+import com.msmg.food.model.vo.Buy;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.SelectFood;
 
@@ -19,6 +20,15 @@ public class FoodService {
 		
 		close(con);
 		return list;
+	}
+
+	public int insertMenuBuy(ArrayList<Buy> list) {
+		Connection con = getConnection();
+		
+		int result = new SelectFoodDao().insertMenuBuy(con, list);
+		
+		close(con);
+		return 0;
 	}
 
 }

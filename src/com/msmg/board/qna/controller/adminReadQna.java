@@ -1,52 +1,56 @@
-package com.msmg.payment.controller;
+package com.msmg.board.qna.controller;
 
 import java.io.IOException;
-import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.payment.model.service.PaymentService;
-import com.msmg.payment.model.vo.Payment;
- 
+import com.msmg.board.qna.model.service.QnaService;
+import com.msmg.board.qna.model.vo.Qna;
+
 /**
- * Servlet implementation class UpdateOrderServlet
+ * Servlet implementation class adminReadQna
  */
-@WebServlet("/updateOrder.pm")
-public class UpdateOrderServlet extends HttpServlet {
+@WebServlet("/readQnaDetail.qna")
+public class adminReadQna extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateOrderServlet() {
+    public adminReadQna() {
         super();
         // TODO Auto-generated constructor stub
-    } 
+    }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int bid = Integer.parseInt(request.getParameter("board_id"));
 		
-		int buy_no = request.getParameter("buy_no");
-		String u_code = request.getParameter("u_code");
-		String menu_code = request.getParameter("menu_code");
-		Date buy_date = request.getParameter("buy_date");
-		String status = request.getParameter("status");
+		Qna qna = new QnaService().selectOne(bid);
 		
-		Payment p = new Payment();
-		p.setBuy_no(buy_no);
-		p.setU_code(u_code);
-		p.setMenu_code(menu_code);
-		p.setBuy_date(buy_date);
-		p.setStatus(status);
+		System.out.println("qna bno : " + qna.getBoard_id());
+		System.out.println("qna ref : " + qna.getRef_bno());
 		
-		int result = new PaymentService().updateOrder(p);
+		String page = "";
 		
+		if(qna != null){
+			page = "/views/board/qna/adminReadQna.jsp";
+			request.setAttribute("qna", qna);
+			
+		}else{
+			page = "../../common/errorPage.jsp";
+			request.setAttribute("msg", "글쓰기 에러");
+		}
 		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**

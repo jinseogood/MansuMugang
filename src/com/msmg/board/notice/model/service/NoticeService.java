@@ -137,6 +137,7 @@ public class NoticeService {
 		
 		System.out.println("result3 - " + result3);
 		if(result > 0){
+			result = bno;
 			commit(conn);
 		}else{
 			rollback(conn);
