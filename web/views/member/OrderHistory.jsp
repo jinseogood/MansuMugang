@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>주문내역</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <script> 
 	$(window).on(
 			"load resize ",
@@ -212,8 +214,8 @@ body {
 							<td>고혈압 7일 3끼</td>
 							<td>330,000원</td>
 							<td>신용카드</td>
-							<td>환불</td>
-							<td>반품완료</td>
+							<td>결제완료</td>
+							<td><div class="w3-button w3-ripple w3-yellow">주문취소</div></td>
 						</tr>
 					</tbody>
 				</table>

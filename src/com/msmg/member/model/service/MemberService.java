@@ -97,9 +97,21 @@ public class MemberService {
 		return result;
 	}
 
-	public Member EmailCheck(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public int EmailCheck(String userId) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().EmailCheck(con, userId);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		
+		return result;
 	}
 
 	

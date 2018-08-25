@@ -268,4 +268,32 @@ public class MemberDao {
 		return result;
 	}
 
+	public int EmailCheck(Connection con, String userId) {
+		System.out.println("이멜첵 다오");
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("db갓다와서 " + result);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		System.out.println("이멜첵 다오 리턴 전 : " + result);
+		return result;
+	}
+
 }

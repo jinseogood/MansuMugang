@@ -9,6 +9,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,13 +29,17 @@ public class EmailCheckServlet extends HttpServlet {
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
-      String email = request.getParameter("userId");
+      String userId = request.getParameter("userId");
      
-      Member m = new MemberService().EmailCheck(email);
+      int result = new MemberService().EmailCheck(userId);
       
       //기존 회원 여부 확인
-      if(m != null){
+      String page = "";
+      if(result > 0){
          response.getWriter().println(1);
+    	  /*request.setAttribute("msg", "중복된 아이디");
+    	  request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);*/
+     
       }else{
          
          String authenticationNum = randomStr();
@@ -73,8 +78,10 @@ public class EmailCheckServlet extends HttpServlet {
               System.out.println("??");
               try{
                   Message message = new MimeMessage(session); 
-                  message.setFrom(new InternetAddress(username));// 
-                  message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(email)); 
+                  message.setFrom(new InternetAddress(username));
+                  System.out.println("이멜 서블릿 userId전까지"); 
+                  message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(userId)); 
+                  System.out.println("이멜 서블릿 userId후");
                   message.setSubject(subject);
                   message.setText(text);
                   Transport.send(message); 
@@ -87,6 +94,9 @@ public class EmailCheckServlet extends HttpServlet {
               
          response.getWriter().println(authenticationNum);
       }
+      
+      /*RequestDispatcher view = request.getRequestDispatcher(page);
+      view.forward(request, response);*/
       
    }
    
