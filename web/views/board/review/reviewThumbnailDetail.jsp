@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="com.msmg.board.review.model.vo.*, java.util.*
+	, com.msmg.board.information.model.vo.*"%>
+<%
+	Board b = (Board)request.getAttribute("b");
+	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
+	BoardFile TitleImg = null;
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +80,7 @@ a {
 }
 
 div[id=date-writer-hit2] {
+	width:100%;
 	border-bottom: 1px solid black;
 }
 
@@ -81,7 +88,7 @@ div[id=date-writer-hit2] {
 	font-size: 0.9em;
 	color: #333;
 	min-height: 400px;
-	border-bottom: 1px solid #e83f26;
+	border-bottom: 1px solid tomato;
 }
 
 .bbs-table {
@@ -92,8 +99,8 @@ div[id=date-writer-hit2] {
 
 .bbs-table th {
 	color: #e83f26;
-	border-top: 1px solid #e83f26;
-	border-bottom: 1px solid #e83f26;
+	border-top: 1px solid tomato;
+	border-bottom: 1px solid tomato;
 	padding-top: 8px;
 	padding-bottom: 8px;
 	font-size: 1.3em;
@@ -105,7 +112,7 @@ div[id=date-writer-hit2] {
 }
 
 #whip tr {
-	border-bottom: 1px solid #e83f26;
+	border-bottom: 1px solid tomato;
 	height: 35px;
 	font-size: 14px;
 }
@@ -146,55 +153,57 @@ div[id=date-writer-hit2] {
 	<div id="outer">
 		<table class="bbs-table">
 			<tr>
-				<th style="text-align: left; color: #555; text-align: center;">후기게시판 제목 테스트</th>
+				<th style="text-align: left; color: #555; text-align: center;"><%= b.getTitle() %></th>
 			</tr>
 		</table>
 		<div id="detail">
 			<div id="date-writer-hit2">
-				<span> 2018 08-07 17:50:30 &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp;
-					hit 1330
-				</span> <span id="date-writer-hit">작성자 l 관리자</span>
+				<span>  &nbsp;&nbsp;&nbsp; <%= b.getBoardDate() %>&nbsp;&nbsp;&nbsp;&nbsp;
+					조회수 : <%= b.getbCount() %>
+				</span> <span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
 			</div>
 			<div id="article-content" align="center">
 				<table>
 					<tr>
-						<td>대표사진</td>
-						<td>
+						<%-- <td>
 							<div id="titleImgArea" align="center">
-								<img id="titleImg" src="/msmg/thumbnail_uploadFiles/b.png">
+								<img id="titleImg" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= titleImg.getEdit_name()%>">
 							</div>
-						</td>
+						</td> --%>
 					</tr>
 					<table class="detail">
+					<%for (int i = 0; i < fileList.size(); i++) {%>
+					<%	   TitleImg = fileList.get(i);%>
 						<tr>
-							<td>추가 사진</td>
 							<td>
 								<div class="detailImgArea">
-									<img id="detailImg1" class="detailImg" src="/msmg/thumbnail_uploadFiles/b.png">
-								</div>
-							</td>
-							<td>
-								<div class="detailImgArea">
-									<img id="detailImg2" class="detailImg" src="/msmg/thumbnail_uploadFiles/b.png">
-								</div>
-							</td>
-							<td>
-								<div class="detailImgArea">
-									<img id="detailImg3" class="detailImg" src="/msmg/thumbnail_uploadFiles/b.png">
+								<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%=TitleImg.getEdit_name()%>">
 								</div>
 							</td>
 						</tr>
+						
+					<%} %>
+					
+						<%-- <tr>
+							<td>
+								<div class="detailImgArea">
+									<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%=detailImg1.getEdit_name()%>">
+								</div>
+							</td>
+							<td>
+								<div class="detailImgArea">
+									<img id="detailImg2" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%= detailImg2.getEdit_name()%>">
+								</div>
+							</td>
+							
+						</tr> --%>
 					</table>
-					
-					
-					
-					
 					
 					
 					<tr>
 						<td>
 							<p id="contentArea" style="height:30px" align="center">
-								사진 메모 테스트
+								<%=b.getContent() %>
 							</p>
 						</td>
 					</tr>

@@ -107,6 +107,9 @@ hr {
 	height:200px;
 }
 
+#content {
+	height:400px;
+}
 
 </style>
 </head>
@@ -132,16 +135,16 @@ hr {
 						value="<%=df.format(new Date())%>" readonly></td>
 				</tr>
 				<table id="ImgTable" align="center">
-				<tr>
+				<!-- <tr>
 					<td>* 대표 이미지</td>
 					<td>
 						<div id="titleImgArea">
 							<img id="titleImg" width="380px" height="200px" style="margin-top:10px; margin-bottom:10px">
 						</div>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
-					<td>추가 사진</td>
+					<!-- <td>추가 사진</td>
 					<td>
 						<div class="con" id="contentImgArea1">
 							<img id="contentImg1" width="120px" height="100px">
@@ -152,14 +155,40 @@ hr {
 						<div class="con" id="contentImgArea3">
 							<img id="contentImg3" width="120px" height="100px">
 						</div>
-					</td>
+					</td> -->
 				</tr>
 				<tr>
-					<td>사진 메모</td>
-					<td><textArea name="content" row="10" cols="45"
+					<td><textArea id="content"name="content" row="10" cols="90"
 						style="resize:none"></textArea></td>
 				</tr>
+				<tr>
+				<div>
+					<td>
+						<div class="con" id="contentImgArea1">
+							<img id="contentImg1" width="120px" height="100px">
+						</div>
+						<div class="con" id="contentImgArea2">
+							<img id="contentImg2" width="120px" height="100px">
+						</div>
+						<div class="con" id="contentImgArea3">
+							<img id="contentImg3" width="120px" height="100px">
+						</div>
+						
+					</td>
+				<button id="AddBtn" onclick="AddButton();" value="사진 추가">사진 추가</button>
+				</div>
+				</tr>
 				</table>
+				<!-- <script>
+					function AddButton(){
+		        		$("#AddBtn").click(function(){
+		        			var html = '<div class="con" Id="contentImgArea4"><Img id = "contentImg3" width="120px" height="100px"></div>';
+		        			$('.con').append(html);
+		        		});
+		        	
+		       		}
+				</script> -->
+				
 			</table>
 			<div id="fileArea">
 				<input type="file" id="thumbnailImg1" name="thumbnailImg1" multiple onchange="loadImg(this, 1)">
@@ -182,20 +211,20 @@ hr {
 	$(function(){
 		$("#fileArea").hide();
 		
-		$("#titleImgArea").click(function(){
+		/* $("#titleImgArea").click(function(){
+			$("#thumbnailImg1").click();
+		}); */
+		
+		$("#contentImgArea1").click(function(){
 			$("#thumbnailImg1").click();
 		});
 		
-		$("#contentImgArea1").click(function(){
+		$("#contentImgArea2").click(function(){
 			$("#thumbnailImg2").click();
 		});
 		
-		$("#contentImgArea2").click(function(){
-			$("#thumbnailImg3").click();
-		});
-		
 		$("#contentImgArea3").click(function(){
-			$("#thumbnailImg4").click();
+			$("#thumbnailImg3").click();
 		});
 		
 	});
@@ -205,10 +234,10 @@ hr {
 			var reader = new FileReader();
 			reader.onload = function(e){
 				switch(num){
-					case 1 : $("#titleImg").attr("src", e.target.result); break;
-					case 2 : $("#contentImg1").attr("src", e.target.result); break;
-					case 3 : $("#contentImg2").attr("src", e.target.result); break;
-					case 4 : $("#contentImg3").attr("src", e.target.result); break;
+					/* case 1 : $("#titleImg").attr("src", e.target.result); break; */
+					case 1 : $("#contentImg1").attr("src", e.target.result); break;
+					case 2 : $("#contentImg2").attr("src", e.target.result); break;
+					case 3 : $("#contentImg3").attr("src", e.target.result); break;
 				}
 			}
 			reader.readAsDataURL(value.files[0]);
