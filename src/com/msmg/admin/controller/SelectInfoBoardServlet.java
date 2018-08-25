@@ -90,12 +90,16 @@ public class SelectInfoBoardServlet extends HttpServlet {
 		out.flush();
 		out.close();*/
 		
-		System.out.println("servlet : " + infoList);
+		System.out.println("servlet pi : " + pi);
+		System.out.println("servlet infoList : " + infoList);
 					
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		new Gson().toJson(infoList, response.getWriter());
+		Gson gson=new Gson();
+		//gson.toJson(pi, response.getWriter());
+		gson.toJson(infoList, response.getWriter());
+		//new Gson().toJson(infoList, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

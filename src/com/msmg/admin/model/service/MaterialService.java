@@ -47,4 +47,14 @@ public class MaterialService {
 		return listCount;
 	}
 
+	public ArrayList<Material> selectMatList() {
+		Connection con=getConnection();
+		
+		ArrayList<Material> matList=new MaterialDao().selectMatList(con);
+		
+		close(con);
+		
+		return matList;
+	}
+
 }

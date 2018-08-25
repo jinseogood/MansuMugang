@@ -59,16 +59,27 @@ public class MenuDao {
 	}
 
 
-	public ArrayList<Menu> selectMenuList(Connection con) {
+	public ArrayList<Menu> selectMenuList(int currentPage, int limit, Connection con) {
 		ArrayList<Menu> menuList=new ArrayList<Menu>();
-		Statement st=null;
+		//Statement st=null;
+		PreparedStatement pst=null;
 		ResultSet rset=null;
 		
-		String query=prop.getProperty("selectMenuList");
+		//String query=prop.getProperty("selectMenuList");
+		String query=prop.getProperty("selectMenuListPaging");
 		
 		try {
-			st=con.createStatement();
-			rset=st.executeQuery(query);
+			//st=con.createStatement();
+			//rset=st.executeQuery(query);
+			
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			pst=con.prepareStatement(query);
+			pst.setInt(1, startRow);
+			pst.setInt(2, endRow);
+			
+			rset=pst.executeQuery();
 			
 			while(rset.next()){
 				Menu m=new Menu();
@@ -86,7 +97,8 @@ public class MenuDao {
 			e.printStackTrace();
 		} finally{
 			close(rset);
-			close(st);
+			//close(st);
+			close(pst);
 		}
 		
 		return menuList;
@@ -143,6 +155,32 @@ public class MenuDao {
 		}
 		
 		return result;
+	}
+
+
+	public int getListCount(Connection con) {
+		int listCount=0;
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("menulistCount");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return listCount;
 	}
 
 }
