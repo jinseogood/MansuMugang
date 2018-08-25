@@ -26,7 +26,7 @@
 <style>
 #wrap {
 	width : 1000px;
-	height: 1300px;
+	height: 800px;
 	margin-left : auto;
 	margin-right : auto;
 }
@@ -303,9 +303,9 @@ margin-right : auto;
 
 
 	</div>
-	<div id="mainBottom">
+	<%-- <div id="mainBottom">
 	<%@include file = "../../common/footer.jsp" %>
-	</div>
+	</div> --%>
 	
 	<%}else{ 
 		request.setAttribute("msg", "잘못된 경로");

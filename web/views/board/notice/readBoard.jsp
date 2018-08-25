@@ -116,7 +116,7 @@ div[id=date-writer-hit2] {
 
 #main {
 	width: 1000px;
-	height: 1300px;
+	height: 800px;
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -137,9 +137,9 @@ div[id=date-writer-hit2] {
 </script>
 </head>
 <body>
-	<div id="jjff">
+	<%-- <div id="jjff">
 		<%@ include file="../../common/menubar.jsp"%>
-	</div>
+	</div> --%>
 	<div id="main">
 		<!-- 게시판 읽기 -->
 		<div>
@@ -200,9 +200,9 @@ div[id=date-writer-hit2] {
 		</div>
 
 	</div>
-	<div id="mainBottom">
+	<%-- <div id="mainBottom">
 	<%@include file="../../common/footer.jsp"%>
-	</div>
+	</div> --%>
 </body>
 </html>
 

@@ -36,6 +36,8 @@ public class QnaService {
 		
 		ArrayList<Qna> list = new QnaDao().selectList(conn, currentPage, pageLimit, adminCode, code);
 		
+		System.out.println("service : " + list);
+		
 		close(conn);
 		
 		return list;
