@@ -336,9 +336,9 @@ input[type=text]{
 	
 </div>
 
-<div id="mainBottom">
+<%-- <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>
-</div>
+</div> --%>
 
 </body>
 </html>

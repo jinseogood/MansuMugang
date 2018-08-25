@@ -101,6 +101,8 @@ public class QnaDao {
 			int endRow = startRow + pageLimit - 1;
 			
 			System.out.println(startRow + " + " + endRow);
+			System.out.println("adminCode : " + adminCode);
+			System.out.println("code : " + code);
 			
 			pstmt.setInt(1, adminCode);
 			pstmt.setInt(2, code);
@@ -109,6 +111,8 @@ public class QnaDao {
 			pstmt.setInt(5, endRow);
 			
 			rset = pstmt.executeQuery();
+			
+			System.out.println("rset : " + rset);
 			
 			list = new ArrayList<Qna>();
 			
@@ -124,8 +128,13 @@ public class QnaDao {
 				qna.setB_count(rset.getInt("b_count"));
 				qna.setRef_bno(rset.getInt("ref_bno"));
 				
+				System.out.println("dao qna : " + qna);
+				
 				list.add(qna);
 			}
+			
+			System.out.println("dao : " + list);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

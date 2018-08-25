@@ -150,6 +150,18 @@
 			location.href = "<%= request.getContextPath() %>/logout.me"
 		}
 	}
+	
+	function openNotice(boardNo){
+		console.log(boardNo);
+		window.open("<%= request.getContextPath() %>/noticeDetail.no?board_no="+boardNo+"", "공지사항 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	}
+	
+	function openInfo(boardNo){
+		var num=String(boardNo);
+		console.log("num : " + num);
+		console.log("num type : " + typeof(num));
+		window.open("<%= request.getContextPath() %>/selectOne.bo?num="+num+"", "정보게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	}
 
 	$(function(){
 		
@@ -285,7 +297,7 @@
 		
 		//공지작성
 		$("#nWrite").click(function(){
-			window.open("/msmg/insertBoard.bo", "공지작성", "width=1100, height=800, top=20, left=20, scrollbars=no");
+			window.open("/msmg/insertNotice.no", "공지작성", "width=1100, height=800, top=20, left=20, scrollbars=no");
 		});
 		
 		//공지조회
@@ -303,7 +315,7 @@
 					for(var key in data){
 						console.log(key);
 			
-						var $tr=$("<tr>");
+						var $tr=$("<tr onclick='openNotice("+data[key].board_no+");'>");
 						var $noTd=$("<td>").text(data[key].board_no);
 						var $titleTd=$("<td>").text(data[key].title);
 						var $writerTd=$("<td>").text(data[key].u_name);
@@ -357,7 +369,7 @@
 					for(var key in data){
 						console.log(key);
 			
-						var $tr=$("<tr>");
+						var $tr=$("<tr onclick='openInfo("+data[key].boardId+");'>");
 						var $noTd=$("<td>").text(data[key].boardNo);
 						var $titleTd=$("<td>").text(data[key].title);
 						var $writerTd=$("<td>").text(data[key].uCode);
@@ -495,12 +507,12 @@
 				url:"/msmg/selectQnAList",
 				type:"get",
 				success:function(data){
-					/* console.log(data);
+					console.log(data);
 					
 					$tableBody = $("#userInfoTable tbody");
 					$tableBody.html('');
 					
-					$.each(data, function(index, value){
+					/* $.each(data, function(index, value){
 						var $tr=$("<tr>");
 						var $noTd=$("<td>").text(value.userNo);
 						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
@@ -511,6 +523,24 @@
 						$tr.append($nationTd);
 						$tableBody.append($tr);
 					}); */
+					
+					for(var key in data){
+						console.log(key);
+			
+						var $tr=$("<tr>");
+						var $noTd=$("<td>").text(data[key].board_no);
+						var $titleTd=$("<td>").text(data[key].title);
+						var $writerTd=$("<td>").text(data[key].u_name);
+						var $dateTd=$("<td>").text(data[key].board_date);
+						var $countTd=$("<td>").text(data[key].b_count);
+						
+						$tr.append($noTd);
+						$tr.append($titleTd);
+						$tr.append($writerTd);
+						$tr.append($dateTd);
+						$tr.append($countTd);
+						$tableBody.append($tr);
+					}
 				},
 				error:function(){
 					console.log("error");
