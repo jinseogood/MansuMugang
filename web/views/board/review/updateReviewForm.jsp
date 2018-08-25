@@ -148,6 +148,18 @@ hr {
 				</tr>
 				<tr>
 				<div>
+				
+					<table class="detail">
+					
+						<tr>
+							<td>
+								<div id="contentImg">
+								<img class="con" id="contentImgArea" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
+								</div>
+							</td>
+						</tr> 
+					</table>
+					
 					<td>
 						<div id="contentImg">
 						<div class="con" id="contentImgArea1">

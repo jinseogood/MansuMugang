@@ -4,14 +4,13 @@
 <%
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
-	BoardFile TitleImg = null;
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>썸네일 상세보기</title>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
@@ -19,17 +18,13 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<!-- 부가적인 테마 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
-/* body {
-	background:pink;
-} */
+
 #back {
 	width:100%;
 	height:400px;
@@ -141,8 +136,32 @@ div[id=date-writer-hit2] {
 }
 
 .detailImg {
-	height:150px;
+	height:200px;
 }
+
+#comment_content {
+	width:600px;
+	height:50px;
+}
+
+#AddBtn:hover {
+	cursor:pointer;
+}
+
+#viewBtn {
+	float:right;
+	width:200px;
+}
+
+.btn {
+	background:tomato;
+	border:none;
+}
+
+.btn:hover {
+	background:tomato;
+}
+
 
 </style>
 </head>
@@ -162,44 +181,25 @@ div[id=date-writer-hit2] {
 					조회수 : <%= b.getbCount() %>
 				</span> <span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
 			</div>
+			<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardId()%>">
 			<div id="article-content" align="center">
 				<table>
 					<tr>
-						<%-- <td>
-							<div id="titleImgArea" align="center">
-								<img id="titleImg" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%= titleImg.getEdit_name()%>">
-							</div>
-						</td> --%>
 					</tr>
 					<table class="detail">
 					<%for (int i = 0; i < fileList.size(); i++) {%>
-					<%	   TitleImg = fileList.get(i);%>
+					<%	  BoardFile detail = fileList.get(i);    %>
 						<tr>
 							<td>
 								<div class="detailImgArea">
-								<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%=TitleImg.getEdit_name()%>">
+								<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
 								</div>
 							</td>
-						</tr>
-						
+						</tr> 
 					<%} %>
 					
-						<%-- <tr>
-							<td>
-								<div class="detailImgArea">
-									<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%=detailImg1.getEdit_name()%>">
-								</div>
-							</td>
-							<td>
-								<div class="detailImgArea">
-									<img id="detailImg2" class="detailImg" src="<%= request.getContextPath()%>/thumnail_uploadFiles/<%= detailImg2.getEdit_name()%>">
-								</div>
-							</td>
-							
-						</tr> --%>
+					
 					</table>
-					
-					
 					<tr>
 						<td>
 							<p id="contentArea" style="height:30px" align="center">
@@ -209,64 +209,7 @@ div[id=date-writer-hit2] {
 					</tr>
 				</table>
 			</div>
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	<div id="comment" style="margin-top:10px; text-align:center">
-		<table border="1" bordercolor="#e83f26" height="50px">
-			<tr>
-				<!-- 아이디, 작성날짜 -->
-				<td width="150">
-					<!-- <div></div> -->
-				</td>
-				<!-- 댓글 내용 -->
-				<td width="550">
-					<!-- <div></div> -->
-				</td>
-				<td width="150">
-					<!-- <div id="btn" style="text-align:center;"> -->
-						<a href="#">답변</a>
-						<!-- 댓글 작성자만 수정, 삭제 가능하도록 -->
-							<a href="#">수정</a>
-							<a href="#">삭제</a>
-					<!-- </div> -->
-				</td>
-			</tr>
-			<tr bgcolor="#25e849">
-			<form id="writeCommentForm">
-				<!-- <input name="comment_board"/>
-				<input name="comment_id"/> -->
-				<!-- 아이디 -->
-				<td width="150">
-					<!-- <div></div> -->
-				</td>
-				<!-- 본문 작성 -->
-				<td width="550">
-					<!-- <div></div> -->
-						<textarea name = "comment_content" rows="4" cols="70"></textarea>
-				</td>
-				<td width="100">
-					<!-- <div id="btn" style="text-align:center;"> -->
-						<p><a href="#" onclick="writeCmt()">댓글등록</a></p>
-					<!-- </div> -->
-				</td>
-			</form>
-			
-			</tr>
-		</table>
 	
-	</div>
-
-
-
-
 
 	</div>
 	<div id='whiptable'>
@@ -289,18 +232,42 @@ div[id=date-writer-hit2] {
 	<br>
 
 
-	<div class="btnlist">
-		<button class="btn btn-default befo btn-sm"
-			onclick="location.href='../board/informationBoard.jsp'">이전으로</button>
-		<button class="btn btn-default ddl btn-sm">삭제</button>
-		<button class="btn btn-default ddl btn-sm" onclick="location.href='../review/reviewThumbnailInsertForm.jsp'">수정</button>
+	<div class="btnlist" >
+		<button class="btn btn-success"
+			onclick="location.href='<%=request.getContextPath()%>/selectList.rev'" value="이전으로">이전으로</button>
+		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
+			<div id="viewBtn" align="right">
+			<button id="updateBtn" type="button" class="btn btn-success" name="bid"
+				onclick="location.href='<%=request.getContextPath()%>/update.rev?num=<%=b.getBoardId()%>'">수정</button>
+			<button id="deleteBtn" type="button" class="btn btn-success">삭제</button>
+			</div>
+		<%} %>
 	</div>
+	<script>
+	$(function(){
+		$("#deleteBtn").click(function(){
+			var bid = $("#bid2").val();
+			
+			$.ajax({
+				url:"/msmg/delete.rev",
+				data:{bid:bid},
+				type:"post",
+				success:function(data){
+					alert("게시글을 삭제하시겠습니까?");
+					location.href = "/msmg/selectList.rev";
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
+	</script>
 </div>
 
 <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>
 </div>
-
 
 </body>
 </html>

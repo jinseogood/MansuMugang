@@ -177,6 +177,7 @@ public class BoardDao {
 		
 		String query = prop.getProperty("updateCount");
 		
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, Integer.parseInt(bid));

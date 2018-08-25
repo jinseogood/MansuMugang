@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.information.model.vo.Reply;
 import com.msmg.board.review.model.vo.BoardFile;
 
 public class ReviewDao {
@@ -37,6 +38,7 @@ public class ReviewDao {
 		int result = 0;
 		
 		String query = prop.getProperty("insertReview");
+		/*String query2 = prop.getProperty("AddPoint"); 포인트 값 증가*/
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -152,6 +154,7 @@ public class ReviewDao {
 				hmap.put("uName", rset.getString("u_name"));
 				hmap.put("title", rset.getString("title"));
 				hmap.put("content", rset.getString("content"));
+				hmap.put("bcount", rset.getInt("b_count"));
 				
 				list.add(hmap);
 			}
@@ -164,7 +167,7 @@ public class ReviewDao {
 		return list;
 	}
 
-	public HashMap<String, Object> selectOneReviewMap(Connection con, int num) {
+	public HashMap<String, Object> selectOneReviewMap(Connection con, String num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
@@ -177,7 +180,7 @@ public class ReviewDao {
 		try {
 			System.out.println("BoardDao num : " + num);
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, num);
+			pstmt.setInt(1, Integer.parseInt(num));
 			
 			System.out.println("query : " + query);
 			rset = pstmt.executeQuery();
@@ -198,8 +201,10 @@ public class ReviewDao {
 				b.setbCount(rset.getInt("b_count"));
 				b.setWriteYn(rset.getString("write_yn"));
 				
+				System.out.println("b : " + b);
 				
 				bf = new BoardFile();
+				bf.setBoard_id(rset.getInt("board_id"));
 				bf.setOrigin_name(rset.getString("origin_name"));
 				bf.setEdit_name(rset.getString("edit_name"));
 				bf.setFile_src(rset.getString("file_src"));
@@ -209,7 +214,7 @@ public class ReviewDao {
 				bf.setFile_level(rset.getInt("file_level"));
 				
 				
-				System.out.println("bf");
+				System.out.println("bf : " + bf);
 				
 				list.add(bf);
 			}
@@ -225,6 +230,110 @@ public class ReviewDao {
 		}
 		
 		return hmap;
+	}
+
+	public int insertReply(Connection con, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, r.getU_code());
+			pstmt.setString(2, r.getRe_content());
+			pstmt.setInt(3, r.getBoard_id());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection con, int board_id) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Reply r = null;
+		ArrayList<Reply> list = new ArrayList<Reply>();
+		
+		System.out.println("ReviewDao board_id : " + board_id);
+		
+		String query = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_id);
+			
+			System.out.println("boardId Dao:"+ board_id);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				r = new Reply();
+				r.setBoard_sort(rset.getString("board_sort"));
+				r.setRe_content(rset.getString("re_content"));
+				r.setU_code(rset.getString("u_name"));
+				r.setBoard_id(rset.getInt("board_id"));
+				r.setRe_date(rset.getDate("re_date"));
+				
+				
+				list.add(r);
+			}
+			System.out.println("ReviewDao list : " + r);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+ 		
+		return list;
+	}
+
+	public int updateCount(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			pstmt.setString(2, num);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteReview(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteReview");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	
