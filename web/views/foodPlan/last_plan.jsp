@@ -225,6 +225,9 @@
 					<% } %>
 				</tr>
 				<% } %>
+				<tr>
+					<td colspan = "<%= sf.getGgi() %>" bgcolor = "yellow">총가격 : <%= total_price %></td>
+				</tr>
 			</table>
 		</div>
 				
@@ -319,6 +322,10 @@
 			last_price = first_price + Number(price) - Number(p);
 			first_price = last_price;
 
+			var day = Number(<%= sf.getDay() %>*2+1);
+			
+			$("#test").children().eq(0).children().eq(15).children().eq(0).text(first_price);
+			
 			console.log(first_price);
 			console.log(seq);
         });
