@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import com.msmg.board.information.model.dao.BoardDao;
 import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.information.model.vo.Reply;
 import com.msmg.board.review.model.dao.ReviewDao;
 import com.msmg.board.review.model.vo.BoardFile;
 
@@ -58,19 +59,56 @@ public class ReviewService {
 		return list;
 	}
 
-	public HashMap<String, Object> selectOneReview(int num) {
+	public HashMap<String, Object> selectOneReview(String num) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> hmap = new ReviewDao().selectOneReviewMap(con, num);
+		HashMap<String, Object> hmap = null;
 		
-		/*조회수 : int result = new BoardDao().updateCount(con, num);*/
+		int result = new ReviewDao().updateCount(con, num);
 		
-		if(hmap != null) {
+		if(result > 0) {
+			hmap = new ReviewDao().selectOneReviewMap(con, num);
+			
+			if(hmap != null) commit(con);
+			else rollback(con);
+		}
+		
+		close(con);
+		
+		return hmap;
+	}
+
+	public ArrayList<Reply> insertReply(Reply r) {
+		Connection con = getConnection();
+		ArrayList<Reply> replyList = null;
+		
+		int result = new ReviewDao().insertReply(con,r);
+		
+		if(result > 0) {
+			commit(con);
+			replyList = new ReviewDao().selectReplyList(con, r.getBoard_id());
+		}else {
+			rollback(con);
+		}
+		
+		return replyList;
+	}
+
+	public int deleteReview(int bid) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new ReviewDao().deleteReview(con, bid);
+		
+		if(result > 0) {
 			commit(con);
 		}else {
 			rollback(con);
 		}
-		return hmap;
+		
+		close(con);
+		
+		return result;
 	}
 
 

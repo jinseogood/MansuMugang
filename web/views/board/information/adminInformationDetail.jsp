@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*" %>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*
+	, com.msmg.member.model.vo.*" %>
 <% 
-	/* ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist"); */
 	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 	
 	Board b = (Board)request.getAttribute("b");
    
@@ -187,9 +188,7 @@ input[type=text]{
 </style>
 </head>
 <body>
-<div id="back">
-	<%@ include file="../../common/menubar.jsp"%>
-</div> 
+
 	<div id="outer">
 		<table class="bbs-table">
 			<tr>
@@ -303,7 +302,7 @@ input[type=text]{
 
 	<div class="btnlist">
 		<button id="boardList" class="btn btn-success"
-			onclick="location.href='<%=request.getContextPath()%>/selectList.bo'" value="이전으로">이전으로</button>
+			onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">이전으로</button>
 		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
 			<div id="viewBtn" align="right">
 			<button id="updateBtn" type="button" class="btn btn-success" name="bid"
@@ -322,7 +321,6 @@ input[type=text]{
 				data:{bid:bid},
 				type:"post",
 				success:function(data){
-					alert("게시글을 삭제하시겠습니까?");
 					location.href = "/msmg/selectList.bo";
 				},
 				error:function(data){
@@ -334,10 +332,6 @@ input[type=text]{
 	</script>
 	
 </div>
-
-<div id="mainBottom">
-<%@include file = "../../common/footer.jsp" %>
-</div> 
 
 </body>
 </html>

@@ -37,12 +37,13 @@ public class SelectOneBoardServlet extends HttpServlet {
 		
 		
 		String page = "";
-		
+		String page2 = "";
 		
 		if(b != null) {
 			page = "views/board/information/informationView.jsp";
 			request.setAttribute("b", b);
 			request.setAttribute("r", replyList);
+			
 		}else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패!");

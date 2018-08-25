@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.msmg.board.information.model.service.BoardService;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.review.model.service.ReviewService;
 import com.msmg.board.review.model.vo.BoardFile;
@@ -36,7 +37,7 @@ public class SelectOneReviewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("selectOne 넘어옴");
 		
-		int num = Integer.parseInt(request.getParameter("num"));
+		String num = request.getParameter("num");
 		
 		System.out.println(num);
 		
@@ -49,6 +50,9 @@ public class SelectOneReviewServlet extends HttpServlet {
 			
 			request.setAttribute("b", (Board)hmap.get("board"));
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
+			
+			System.out.println("fileList : " + (ArrayList<BoardFile>)hmap.get("boardFile"));
+			
 		} else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "사진 게시판 상세 보기 실패!");

@@ -19,7 +19,6 @@
 	height: 1300px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top:50px;
 }
 
 #back {
@@ -40,9 +39,9 @@
 }
 
 .thumbnailArea {
-	width:760px;
+	width:1000px;
 	height:550px;
-	margin-left:auto;
+ 	margin-left:auto;
 	margin-right:auto;
 }
 
@@ -78,15 +77,15 @@
 			for(int i = 0; i < list.size(); i++) {
 				HashMap<String, Object> hmap = list.get(i);
 			%>
-			<div class="thumb-list" align="center">
+			<div class="thumb-list" align="Center">
 				<div>
 				<input type="hidden" value="<%= hmap.get("boardId")%>">
 					<img
 						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
-						width="200px" height="150px">
+						width="220px" height="200px">
 				</div>
-				<p>No. <%=hmap.get("boardId") %> <%= hmap.get("title") %><br>
-				     조회수 : <%= hmap.get("bCount") %>
+				<p><b><%= hmap.get("title") %></b><br>
+				     조회수 : <%= hmap.get("bcount") %>
 				</p>
 			</div>
 			<%} %>
