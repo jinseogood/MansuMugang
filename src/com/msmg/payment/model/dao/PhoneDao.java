@@ -1,29 +1,29 @@
 package com.msmg.payment.model.dao;
-
+ 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.msmg.payment.model.vo.Payment;
-
+import com.msmg.payment.model.vo.Phone;
 import static com.msmg.common.JDBCTemplate.*;
 
-public class PaymentDao {
+public class PhoneDao {
 	
 	private Properties prop = new Properties();
 
-	public int updateOrder(Connection con, Payment p) {
+	public int insertPhone(Connection con, Phone ph) {
+		
 		PreparedStatement pstmt = null;
+		
 		int result = 0;
 		
-		String query = prop.getProperty("updateOrder");
+		String query = prop.getProperty("insertPhone");
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			
-			pstmt.setString(1, p.getStatus());
-			pstmt.setInt(2, p.getBuy_no());
+			pstmt.setString(1, ph.getTel());
+			pstmt.setString(2, ph.getU_code());
 			
 			result = pstmt.executeUpdate();
 			
@@ -35,7 +35,6 @@ public class PaymentDao {
 		}
 		
 		return result;
-		
-	} 
+	}
 
 }
