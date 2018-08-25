@@ -141,10 +141,7 @@ border : 1px solid tomato;
 <body>
 
 <!-- 게시판 쓰기 -->
-	<div id = "jjff">
-<%@ include file = "../../common/menubar.jsp" %>
 	
-	</div>
 	<!-- 접근 범위 지정 -->
 <%if(loginUser != null){ %>
 	<div id='wrap' align = 'left'>
@@ -241,9 +238,7 @@ border : 1px solid tomato;
 
 
 	</div>
-	<div id="mainBottom">
-		<%@include file = "../../common/footer.jsp" %>
-	</div>
+	
 	<%}else{ 
 		request.setAttribute("msg", "잘못된 경로");
 		request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
