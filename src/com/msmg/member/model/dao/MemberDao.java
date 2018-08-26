@@ -173,16 +173,27 @@ public class MemberDao {
 		
 		return result;
   }
-	public ArrayList<Member> selectMemberList(Connection con) {
+	public ArrayList<Member> selectMemberList(int currentPage, int limit, Connection con) {
 		ArrayList<Member> mList=new ArrayList<Member>();
-		Statement st=null;
+		//Statement st=null;
+		PreparedStatement pst=null;
 		ResultSet rset=null;
 		
-		String query=prop.getProperty("selectMemberList");
+		//String query=prop.getProperty("selectMemberList");
+		String query=prop.getProperty("selectMemberListPaging");
 		
 		try {
-			st=con.createStatement();
-			rset=st.executeQuery(query);
+			//st=con.createStatement();
+			//rset=st.executeQuery(query);
+			
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			pst=con.prepareStatement(query);
+			pst.setInt(1, startRow);
+			pst.setInt(2, endRow);
+			
+			rset=pst.executeQuery();
 			
 			while(rset.next()){
 				Member m=new Member();
@@ -200,7 +211,7 @@ public class MemberDao {
 			e.printStackTrace();
 		} finally{
 			close(rset);
-			close(st);
+			//close(st);
 		}
 		
 		return mList;
@@ -294,6 +305,148 @@ public class MemberDao {
 		
 		System.out.println("이멜첵 다오 리턴 전 : " + result);
 		return result;
+	}
+
+	public int getListCount(Connection con) {
+		int listCount=0;
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("memberlistCount");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return listCount;
+	}
+
+	public int getSearchListCount(String type, String content, Connection con) {
+		int listCount=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		System.out.println("dao type : " + type);
+		
+		String query="";
+		
+		if(type.equals("u_code")){
+			query=prop.getProperty("uCodeListCount");
+		}
+		else if(type.equals("u_name")){
+			query=prop.getProperty("uNameListCount");
+		}
+		else if(type.equals("u_id")){
+			query=prop.getProperty("uIdListCount");
+		}
+		else if(type.equals("tel")){
+			query=prop.getProperty("telListCount");
+		}
+		else if(type.equals("des")){
+			query=prop.getProperty("desListCount");
+		}
+		else if(type.equals("type")){
+			query=prop.getProperty("typeListCount");
+		}
+		else if(type.equals("drop_yn")){
+			query=prop.getProperty("statusListCount");
+		}
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Member> searchMemberList(int currentPage, int limit, String type, String content, Connection con) {
+		ArrayList<Member> mSearchList=new ArrayList<Member>();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("u_code")){
+			query=prop.getProperty("searchUCodeListPaging");
+		}
+		else if(type.equals("u_name")){
+			query=prop.getProperty("searchUNameListPaging");
+		}
+		else if(type.equals("u_id")){
+			query=prop.getProperty("searchUIdListPaging");
+		}
+		else if(type.equals("tel")){
+			query=prop.getProperty("searchTelListPaging");
+		}
+		else if(type.equals("des")){
+			query=prop.getProperty("searchDesListPaging");
+		}
+		else if(type.equals("type")){
+			query=prop.getProperty("searchTypeListPaging");
+		}
+		else if(type.equals("drop_yn")){
+			query=prop.getProperty("searchStatusListPaging");
+		}
+		
+		try {
+			
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			System.out.println("dao sql : " + query);
+			
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			pst.setInt(2, startRow);
+			pst.setInt(3, endRow);
+			
+			rset=pst.executeQuery();
+			
+			while(rset.next()){
+				Member m=new Member();
+				m.setU_code(Integer.parseInt(rset.getString("u_code")));
+				m.setU_name(rset.getString("u_name"));
+				m.setU_id(rset.getString("u_id"));
+				m.setU_tel(rset.getString("tel"));
+				m.setU_addr(rset.getString("des"));
+				m.setU_type(rset.getString("type"));
+				m.setDrop_yn(rset.getString("drop_yn"));
+				
+				mSearchList.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return mSearchList;
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.msmg.admin.model.vo;
 
 public class Material implements java.io.Serializable{
-	private String m_code;
+	private int m_code;
 	private String m_name;
 	private String a_code;
 	private String d_go;
@@ -9,7 +9,7 @@ public class Material implements java.io.Serializable{
 	private String d_head;
 	
 	public Material(){}
-	public Material(String m_code, String m_name, String a_code, String d_go, String d_dang, String d_head) {
+	public Material(int m_code, String m_name, String a_code, String d_go, String d_dang, String d_head) {
 		super();
 		this.m_code = m_code;
 		this.m_name = m_name;
@@ -19,7 +19,7 @@ public class Material implements java.io.Serializable{
 		this.d_head = d_head;
 	}
 
-	public String getM_code() {
+	public int getM_code() {
 		return m_code;
 	}
 
@@ -43,7 +43,7 @@ public class Material implements java.io.Serializable{
 		return d_head;
 	}
 
-	public void setM_code(String m_code) {
+	public void setM_code(int m_code) {
 		this.m_code = m_code;
 	}
 

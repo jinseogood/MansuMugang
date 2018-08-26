@@ -61,4 +61,24 @@ public class MenuService {
 		return listCount;
 	}
 
+	public int getSearchListCount(String type, String content) {
+		Connection con=getConnection();
+		
+		int listCount=new MenuDao().getSearchListCount(type, content, con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<Menu> searchMenuList(int currentPage, int limit, String type, String content) {
+		Connection con=getConnection();
+		
+		ArrayList<Menu> menuSearchList=new MenuDao().searchMenuList(currentPage, limit, type, content, con);
+		
+		close(con);
+		
+		return menuSearchList;
+	}
+
 }

@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,13 +18,16 @@ import com.msmg.admin.model.service.MaterialService;
 import com.msmg.admin.model.vo.Material;
 import com.msmg.admin.model.vo.PageInfo;
 
-@WebServlet("/selectMatList")
-public class SelectMaterialList extends HttpServlet {
+@WebServlet("/searchMatList")
+public class SearchMaterialList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectMaterialList() {}
+    public SearchMaterialList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type=request.getParameter("sType");
+		String content=request.getParameter("sContent");
+		
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -38,7 +40,7 @@ public class SelectMaterialList extends HttpServlet {
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
 				
-		int listCount=new MaterialService().getListCount();
+		int listCount=new MaterialService().getSearchListCount(type, content);
 		
 		limit=10;
 				
@@ -54,7 +56,7 @@ public class SelectMaterialList extends HttpServlet {
 				
 		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<Material> matList=new MaterialService().selectMatList(currentPage, limit);
+		ArrayList<Material> matList=new MaterialService().searchMatList(currentPage, limit, type, content);
 		
 		System.out.println(pi);
 		
@@ -97,7 +99,6 @@ public class SelectMaterialList extends HttpServlet {
 		else{
 			System.out.println("error");
 		}
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

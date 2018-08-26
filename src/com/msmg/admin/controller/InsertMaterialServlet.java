@@ -24,19 +24,10 @@ public class InsertMaterialServlet extends HttpServlet {
 		String disease1=request.getParameter("disease_go");
 		String disease2=request.getParameter("disease_dang");
 		String disease3=request.getParameter("disease_head");
-		/*String[] disease=request.getParameterValues("disease");
-		String diseases="";
 		
-		if(disease != null){
-			for(int i=0;i<disease.length;i++){
-				if(i==0){
-					diseases+=disease[i];
-				}
-				else{
-					diseases += ", " + disease[i];
-				}
-			}
-		}*/
+		System.out.println("disease1 : " + disease1);
+		System.out.println("disease2 : " + disease2);
+		System.out.println("disease3 : " + disease3);
 		
 		if(disease1 != null){
 			disease1="1";
@@ -58,6 +49,10 @@ public class InsertMaterialServlet extends HttpServlet {
 		else{
 			disease3="0";
 		}
+		
+		System.out.println("after disease1 : " + disease1);
+		System.out.println("after disease2 : " + disease2);
+		System.out.println("after disease3 : " + disease3);
 		
 		Material m=new Material();
 		m.setM_name(matName);

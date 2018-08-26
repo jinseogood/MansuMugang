@@ -35,8 +35,10 @@ public class MenuDao {
 	public int insertMenu(Menu menu, Connection con) {
 		int result=0;
 		PreparedStatement pst=null;
+		PreparedStatement pst2=null;
 		
 		String query=prop.getProperty("insertMenu");
+		String query2=prop.getProperty("insertGradMenu");
 		
 		try {
 			pst=con.prepareStatement(query);
@@ -46,6 +48,26 @@ public class MenuDao {
 			pst.setInt(4, menu.getPrice());
 			
 			result=pst.executeUpdate();
+			
+			if(!menu.getSubMat().equals("NO")){
+				PreparedStatement pst2_sub=null;
+				
+				pst2=con.prepareStatement(query2);
+				pst2.setInt(1, Integer.parseInt(menu.getMainMat()));
+				
+				int result2=pst2.executeUpdate();
+				
+				pst2_sub=con.prepareStatement(query2);
+				pst2_sub.setInt(1, Integer.parseInt(menu.getSubMat()));
+				
+				int result2_sub=pst2_sub.executeUpdate();
+			}
+			else{
+				pst2=con.prepareStatement(query2);
+				pst2.setInt(1, Integer.parseInt(menu.getMainMat()));
+				
+				int result2=pst2.executeUpdate();
+			}
 			
 			System.out.println(result);
 			
@@ -181,6 +203,119 @@ public class MenuDao {
 		}
 		
 		return listCount;
+	}
+
+
+	public int getSearchListCount(String type, String content, Connection con) {
+		int listCount=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		System.out.println("dao type : " + type);
+		
+		String query="";
+		
+		if(type.equals("menu_code")){
+			query=prop.getProperty("menuCodeListCount");
+		}
+		else if(type.equals("menu_name")){
+			query=prop.getProperty("menuNameListCount");
+		}
+		else if(type.equals("menu_main")){
+			query=prop.getProperty("menuMainListCount");
+		}
+		else if(type.equals("menu_sub")){
+			query=prop.getProperty("menuSubListCount");
+		}
+		else if(type.equals("menu_info")){
+			query=prop.getProperty("menuInfoListCount");
+		}
+		else if(type.equals("price")){
+			query=prop.getProperty("priceListCount");
+		}
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return listCount;
+	}
+
+
+	public ArrayList<Menu> searchMenuList(int currentPage, int limit, String type, String content, Connection con) {
+		ArrayList<Menu> menuSearchList=new ArrayList<Menu>();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("menu_code")){
+			query=prop.getProperty("searchMenuCodeListPaging");
+		}
+		else if(type.equals("menu_name")){
+			query=prop.getProperty("searchMenuNameListPaging");
+		}
+		else if(type.equals("menu_main")){
+			query=prop.getProperty("searchMenuMainListPaging");
+		}
+		else if(type.equals("menu_sub")){
+			query=prop.getProperty("searchMenuSubListPaging");
+		}
+		else if(type.equals("menu_info")){
+			query=prop.getProperty("searchMenuInfoListPaging");
+		}
+		else if(type.equals("price")){
+			query=prop.getProperty("searchPriceListPaging");
+		}
+		
+		try {
+			
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			System.out.println("dao sql : " + query);
+			
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			pst.setInt(2, startRow);
+			pst.setInt(3, endRow);
+			
+			rset=pst.executeQuery();
+			
+			while(rset.next()){
+				Menu m=new Menu();
+				
+				m.setMenuCode(Integer.parseInt(rset.getString("menu_code")));
+				m.setMenuName(rset.getString("menu_name"));
+				m.setMainMat(rset.getString("menu_main"));
+				m.setSubMat(rset.getString("menu_sub"));
+				m.setPrice(rset.getInt("price"));
+				m.setMenuInfo(rset.getString("menu_info"));
+				
+				menuSearchList.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return menuSearchList;
 	}
 
 }

@@ -18,13 +18,16 @@ import com.msmg.admin.model.vo.PageInfo;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
-@WebServlet("/selectMemberList")
-public class SelectMemberServlet extends HttpServlet {
+@WebServlet("/searchMemberList")
+public class SearchMemberList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectMemberServlet() {}
+    public SearchMemberList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type=request.getParameter("sType");
+		String content=request.getParameter("sContent");
+		
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -37,7 +40,7 @@ public class SelectMemberServlet extends HttpServlet {
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount=new MemberService().getListCount();
+		int listCount=new MemberService().getSearchListCount(type, content);
 		
 		limit=10;
 		
@@ -53,7 +56,7 @@ public class SelectMemberServlet extends HttpServlet {
 				
 		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
-		ArrayList<Member> mList=new MemberService().selectMemberList(currentPage, limit);
+		ArrayList<Member> mList=new MemberService().searchMemberList(currentPage, limit, type, content);
 		
 		JSONArray result=new JSONArray();
 		JSONObject mInfo=null;
