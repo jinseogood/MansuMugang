@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import = "java.util.*, com.msmg.mainIndex.model.vo.*"%>
+<%
+	ArrayList<MenuIndex> goList = (ArrayList<MenuIndex>)request.getAttribute("goList");
+	ArrayList<MenuIndex> dangList = (ArrayList<MenuIndex>)request.getAttribute("dangList");
+	ArrayList<MenuIndex> headList = (ArrayList<MenuIndex>)request.getAttribute("headList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,7 +120,8 @@
 		} 
 	} 
 </style>
-
+<script>
+</script>
 </head>
 <body>
 	<div id="mainTop">
@@ -162,26 +168,41 @@
 		<div id="g" class="topMenuArea">
 			<br>
 			<h4 align="left">고혈압 인기메뉴 >></h4>
+			<%if(goList != null){
+			for(int i = 0; i < goList.size(); i++){ %>
 			<div id="g1" class="topMenu">
 				<div id="g1-img" class="topMenuImg">
-					<img src="/msmg/images/main/food1.png">
+					<img src="/msmg/images/food/<%= goList.get(i).getMenu_img_ename() %>">
+					<span><%= goList.get(i).getMenu_name() %></span>
 				</div>
 			</div>
-			<div id="g2" class="topMenu">
+			<%}} %>
+			<%-- <div id="g2" class="topMenu">
 				<div id="g2-img" class="topMenuImg">
-					<img src="/msmg/images/main/food1.png">
+					<img src="/msmg/images/food/<%= goList.get(0).getMenu_img_ename() %>">
+					<span><%= goList.get(0).getMenu_name() %></span>
 				</div>
 			</div>
 			<div id="g3" class="topMenu">
 				<div id="g3-img" class="topMenuImg">
 					<img src="/msmg/images/main/food1.png">
+					<span><%= goList.get(0).getMenu_name() %></span>
 				</div>
-			</div>
+			</div> --%>
 		</div>
 		<div id="d" class="topMenuArea">
 			<br>
 			<h4 align="left">당뇨병 인기메뉴 >></h4>
-			<div id="d1" class="topMenu">
+			<%if(dangList != null){
+			for(int i = 0; i < dangList.size(); i++){ %>
+			<div id="g1" class="topMenu">
+				<div id="g1-img" class="topMenuImg">
+					<img src="/msmg/images/food/<%= dangList.get(i).getMenu_img_ename() %>">
+					<span><%= dangList.get(i).getMenu_name() %></span>
+				</div>
+			</div>
+			<%}} %>
+			<!-- <div id="d1" class="topMenu">
 				<div id="d1-img" class="topMenuImg">
 					<img src="/msmg/images/main/food1.png">
 				</div>
@@ -195,12 +216,21 @@
 				<div id="d3-img" class="topMenuImg">
 					<img src="/msmg/images/main/food1.png">
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div id="b" class="topMenuArea">
 			<br>
 			<h4 align="left">뇌질환 인기메뉴 >></h4>
-			<div id="b1" class="topMenu">
+			<%if(headList != null){
+			for(int i = 0; i < headList.size(); i++){ %>
+			<div id="g1" class="topMenu">
+				<div id="g1-img" class="topMenuImg">
+					<img src="/msmg/images/food/<%= headList.get(i).getMenu_img_ename() %>">
+					<span><%= headList.get(i).getMenu_name() %></span>
+				</div>
+			</div>
+			<%}} %>
+			<!-- <div id="b1" class="topMenu">
 				<div id="b1-img" class="topMenuImg">
 					<img src="/msmg/images/main/food1.png">
 				</div>
@@ -214,7 +244,7 @@
 				<div id="b3-img" class="topMenuImg">
 					<img src="/msmg/images/main/food1.png">
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<br><br><br><br><br><br><br>
