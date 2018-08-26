@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import = "java.util.*, com.msmg.mainIndex.model.vo.*"%>
+<%
+	ArrayList<MenuIndex> goList = (ArrayList<MenuIndex>)request.getAttribute("goList");
+	ArrayList<MenuIndex> dangList = (ArrayList<MenuIndex>)request.getAttribute("dangList");
+	ArrayList<MenuIndex> headList = (ArrayList<MenuIndex>)request.getAttribute("headList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +120,11 @@
 		} 
 	} 
 </style>
+<script>
+	console.log("<%= goList.get(0).getMenu_name() %>");
+	console.log("<%= dangList.get(0).getMenu_name() %>");
+	console.log("<%= headList.get(0).getMenu_name() %>");
+</script>
 </head>
 <body>
 	<div id="mainTop">
