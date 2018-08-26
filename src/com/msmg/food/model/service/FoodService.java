@@ -6,9 +6,11 @@ import static com.msmg.common.JDBCTemplate.getConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.msmg.food.controller.MenuListG;
 import com.msmg.food.model.dao.SelectFoodDao;
 import com.msmg.food.model.vo.Buy;
 import com.msmg.food.model.vo.Menu;
+import com.msmg.food.model.vo.MenuList;
 import com.msmg.food.model.vo.SelectFood;
 
 public class FoodService {
@@ -29,6 +31,16 @@ public class FoodService {
 		
 		close(con);
 		return 0;
+	}
+
+	public ArrayList<MenuList> menuListG() {
+		
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> list = new SelectFoodDao().menuListG(con);
+		
+		close(con);
+		return list;
 	}
 
 }

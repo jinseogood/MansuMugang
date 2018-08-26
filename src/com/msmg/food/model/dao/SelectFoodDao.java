@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.msmg.food.model.vo.Buy;
 import com.msmg.food.model.vo.Menu;
+import com.msmg.food.model.vo.MenuList;
 import com.msmg.food.model.vo.SelectFood;
 
 public class SelectFoodDao {
@@ -113,6 +114,42 @@ public class SelectFoodDao {
 			}
 		}
 		return result;
+	}
+
+	public ArrayList<MenuList> menuListG(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListG");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }
