@@ -452,7 +452,7 @@
 	
 	function openNotice(boardNo){
 		console.log(boardNo);
-		window.open("<%= request.getContextPath() %>/noticeDetail.no?board_no="+boardNo+"", "공지사항 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+		window.open("<%= request.getContextPath() %>/noticeDetail.admin?board_no="+boardNo+"", "공지사항 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
 	function openInfo(boardNo){

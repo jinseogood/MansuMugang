@@ -32,25 +32,29 @@ public class DeleteNoticeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int bno = Integer.parseInt(request.getParameter("bno"));
+		int bno = Integer.parseInt(request.getParameter("bno")); // 글번호 가져오기
 		
+		 // 글번호에 관련된 내역 hashmap으로 리턴 리턴 및 DB삭제
 		HashMap<String, ArrayList<String>> deleteList = new NoticeService().deleteNotice(bno);
 		
 		String root = request.getSession().getServletContext().getRealPath("/");
 		
-		String photoPath = root + "attach_file/pic_file/";
-		String docPath = root + "attach_file/doc_file/";
+		String photoPath = root + "attach_file/pic_file/"; // 사진 저장 경로
+		String docPath = root + "attach_file/doc_file/"; // 문서 저장 경로
 		
+		//리스트에 저장
 		ArrayList<String> photoList = deleteList.get("photo");
 		ArrayList<String> docList = deleteList.get("doc");
 		
+		//파일의 유무 확인
 		for(int i = 0; i < photoList.size(); i++){
-			File deleteFile = new File(photoPath + photoList.get(i));
+			File deleteFile = new File(photoPath + photoList.get(i)); //사진 파일 생성
 			deleteFile.delete();
 		}
 		
+		//파일의 유무 확인
 		for(int i = 0; i < docList.size(); i++){
-			File deleteFile = new File(docPath + docList.get(i));
+			File deleteFile = new File(docPath + docList.get(i)); //문서 파일 생성
 			deleteFile.delete();
 		}
 		

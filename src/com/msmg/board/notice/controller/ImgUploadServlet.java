@@ -47,37 +47,23 @@ public class ImgUploadServlet extends HttpServlet {
 			String root = request.getSession().getServletContext().getRealPath("/");
 			System.out.println(root);
 			
-			String savePath = root + "attach_file/pic_file/";
+			String savePath = root + "attach_file/pic_file/"; //사진 저장 경로
 			
-			//사용자가 올린 파일명을 그대로 저장하지 않는 것이 일반적이다.
-			//1. 같은 파일명이 있는 경우 이전파일 덮어 쓸 수 있다.
-			//2. 한글로 된 파일명, 특수기호, 띄어쓰기등은 서버에 따라 문제가 생길 수 있다
-			//DefaultFileRenamePolicy는 cos.jar안에 존재하는 클래스로
-			//같은 파일명이 존재하는지 검사하고 있을 경우 뒤에 숫자를 붙여준다.
-			//ex) aaa.zip, aaa1.zip, aaa2.zip
-			//MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-		
 			//FileReNamepolicy 상속 후 오버라이딩
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new RenameFilePolicy());
 			
-			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
-			//저장한 파일의 이름을 저장할 arrayList를 생성한다.
-			ArrayList<String> saveFiles = new ArrayList<String>();
+			//저장한 파일의 이름을 저장할 변수 생성
 			String saveFile = "";
 			
-			//원본 파일의 이름을 저장할 arrayList를 생성한다.
-			ArrayList<String> originFiles = new ArrayList<String>();
+			//원본 파일의 이름을 저장할 변수 생성
 			String originFile = "";
 			
 			//파일이 전송된 이름을 반환한다.
 			Enumeration<String> files = multiRequest.getFileNames();
 			
-			//각 파일의 정보를 구해온 후 DBㅇ 저장할 목적의 데이터를 꺼내온다
+			//각 파일의 정보를 구해온 후 DB에 저장할 목적의 데이터를 꺼내온다
 			while(files.hasMoreElements()){
 				String name = files.nextElement();
-				
-				saveFiles.add(multiRequest.getFilesystemName(name));
-				originFiles.add(multiRequest.getOriginalFileName(name));
 				
 				saveFile = multiRequest.getFilesystemName(name);
 				originFile = multiRequest.getOriginalFileName(name);
@@ -86,36 +72,34 @@ public class ImgUploadServlet extends HttpServlet {
 			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
 			int ucode = Integer.parseInt(multiRequest.getParameter("num"));
 			
-			//attachment 객체 생성해서 arrayList객체 생성
-			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
-			
 			//전송순서 역순으로 파일이 list에 저장되기 때문에 반복문을 역으로 수행
-				Attachment at = new Attachment();
-				at.setFilePath(savePath);
-				at.setOriginName(originFile);
-				at.setChangeName(saveFile);
-				at.setBoard_no(bno);
+			Attachment at = new Attachment();
+			at.setFilePath(savePath);
+			at.setOriginName(originFile);
+			at.setChangeName(saveFile);
+			at.setBoard_no(bno);
 				
 			
 			//Service로 전송
-			int result = new NoticeService().insertThumbnail(at, ucode);
+			int result = new NoticeService().insertAttachment(at, ucode);
 			
 			if(result > 0){
 			String path2 = request.getContextPath()+"/attach_file/pic_file/" + saveFile;
 			 
-			 JSONObject jobj = new JSONObject();
-				jobj.put("url", path2); 
+			JSONObject jobj = new JSONObject();
+			jobj.put("url", path2); 
 				
-				String data = jobj.toString();
+			String data = jobj.toString();
 				
-				response.setContentType("application/json"); // 데이터 타입을 json으로 설정하기 위한 세팅
-				response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json"); // 데이터 타입을 json으로 설정하기 위한 세팅
+			response.setCharacterEncoding("UTF-8");
 				
-				PrintWriter out = response.getWriter();
-				out.print(jobj.toJSONString());
-				out.flush();
-				out.close();
-			}
+			//출력
+			PrintWriter out = response.getWriter();
+			out.print(jobj.toJSONString());
+			out.flush();
+			out.close();
+		}
 	}
 
 	/**
