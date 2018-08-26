@@ -1,11 +1,19 @@
 package com.msmg.board.review.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.review.model.service.ReviewService;
+import com.msmg.board.review.model.vo.BoardFile;
 
 /**
  * Servlet implementation class UpdateReviewServlet
@@ -23,7 +31,29 @@ public class UpdateReviewServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String num = request.getParameter("num");
 		
+		System.out.println(num);
+		
+		HashMap<String, Object> hmap = new ReviewService().updateReview(num);
+		
+		System.out.println("update hamp : " + hmap);
+		
+		String page = "";
+		
+		if(hmap != null) {
+			page = "views/board/review/updateReviewForm.jsp";
+			
+			request.setAttribute("b", (Board)hmap.get("board"));
+			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
+			
+		} else {
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "사진 수정 페이지 보기 실패!");
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	
 	
 	

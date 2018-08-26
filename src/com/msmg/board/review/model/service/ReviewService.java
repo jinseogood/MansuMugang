@@ -111,6 +111,17 @@ public class ReviewService {
 		return result;
 	}
 
+	public HashMap<String, Object> updateReview(String num) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> hmap = new ReviewDao().updateReview(con, num);
+		
+		if(hmap != null) commit(con);
+		else rollback(con);
+		
+		return hmap;
+	}
+
 
 
 }

@@ -28,20 +28,23 @@ public class SelectOneBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-		System.out.println("selectOne:"+num);
+		
 		
 		Board b = new BoardService().selectOne(num);
+		Board preB = new BoardService().selectPreB(num);
+		Board nextB = new BoardService().selectNextB(num);
 		ArrayList<Reply> replyList = new BoardService().selectReply(num);
 		
 		System.out.println("servlet:"+b);
 		
 		
 		String page = "";
-		String page2 = "";
 		
 		if(b != null) {
 			page = "views/board/information/informationView.jsp";
 			request.setAttribute("b", b);
+			request.setAttribute("preB", preB);
+			request.setAttribute("nextB", nextB);
 			request.setAttribute("r", replyList);
 			
 		}else {

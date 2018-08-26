@@ -180,8 +180,8 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, Integer.parseInt(bid));
-			pstmt.setInt(2, Integer.parseInt(bid));
+			pstmt.setString(1, bid);
+			pstmt.setString(2, bid);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -327,6 +327,71 @@ public class BoardDao {
 		}else {
 			return 0;
 		}
+	}
+
+	public Board selectPreB(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String query = prop.getProperty("selectPreBoard");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board();
+				
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setTitle(rset.getString("title"));
+				b.setBoardDate(rset.getDate("board_date"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+			
+		}
+		
+		return b;
+	}
+
+	public Board selectNextB(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String query = prop.getProperty("selectNextBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board();
+				
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setTitle(rset.getString("title"));
+				b.setBoardDate(rset.getDate("board_date"));
+			}
+			System.out.println("nextB : " + b);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+			
+		}
+		
+		return b;
 	}
 
 }
