@@ -135,7 +135,7 @@
 	</div>
 	<div id="menubar" class = "hidden-xs">
 		<div id="menubarLogo" align="center">
-			<a href="/msmg/index.jsp"><img src="/msmg/images/common/menubarLogo2.png"></a>
+			<a href="<%= request.getContextPath() %>"><img src="/msmg/images/common/menubarLogo2.png"></a>
 		</div>
 		<div id="menuContent">
 			<div id="menuTitle"><a href="#">소개</a></div>
