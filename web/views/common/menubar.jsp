@@ -153,7 +153,7 @@
 				<a href="/msmg/views/intro/guide.jsp">이용가이드</a>
 			</div>
 			<div id="submenuTitle">
-				<a href="/msmg/views/menu/menuIntro.jsp">메뉴소개</a>
+				<a href="<%= request.getContextPath()%>/MenuListG.fo">메뉴소개</a>
 				<br><br><br>
 				<a href="/msmg/views/foodPlan/menu_plan.jsp">식단짜기</a>
 			</div>
