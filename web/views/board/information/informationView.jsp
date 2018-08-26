@@ -5,6 +5,8 @@
 	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
 	
 	Board b = (Board)request.getAttribute("b");
+	Board preB = (Board)request.getAttribute("preB");
+	Board nextB = (Board)request.getAttribute("nextB");
    
 %>
 <!DOCTYPE html>
@@ -284,18 +286,25 @@ input[type=text]{
 
 	<div id='whiptable'>
 		<table id='whip'>
-			<tr style="border-top: 1px solid #e83f26;">
-				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
-					이전글</td>
-				<td align="center" width='700'><a href="#">이전글 입니다</a></td>
-				<td width="100">2018-08-07</td>
-			</tr>
+		<%if(nextB != null) {%>
 			<tr>
-				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
+				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					다음글</td>
-				<td align="center"><a href="#">다음글 입니다</a></td>
-				<td>2018-08-07</td>
+				<td align="center"><a href="<%=request.getContextPath()%>/selectOne.bo?board_no=<%=nextB.getBoardNo()%>"><%=nextB.getTitle() %></a></td>
+				<td><%=nextB.getBoardDate() %></td>
 			</tr>
+			<%} %>
+			
+			<% if(preB != null) {%>
+			<tr style="border-top: 1px solid #e83f26;">
+				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
+					이전글</td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?board_no=<%=preB.getBoardNo()%>"><%=preB.getTitle() %></a></td>
+				<td width="100"><%=preB.getBoardDate() %></td>
+			</tr>
+			<%} %>
+			
+			
 		</table>
 	</div>
 	<br>

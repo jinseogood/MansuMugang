@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*"%>
+	pageEncoding="UTF-8" import="com.msmg.board.review.model.vo.*, java.util.*
+	, com.msmg.board.information.model.vo.*"%>
+<%
+	Board b = (Board)request.getAttribute("b");
+	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
+%>
 
 <!DOCTYPE>
 <html>
@@ -118,6 +123,31 @@ hr {
 	margin-left:50px;
 }
 
+#date-writer-hit2 {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	color: #555;
+	text-align: right;
+	margin-top: 10px;
+	border-bottom:1px solid tomato;
+	margin-right:10px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+div[id=date-writer-hit2] {
+	width:730;
+	border-bottom: 1px solid black;
+
+}
+
+#date-writer-hit {
+	margin-left:10px;
+	float:left;
+}
+
 </style>
 </head>
 <body>
@@ -130,55 +160,46 @@ hr {
 		<br>
 		<div id="view">
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
-		<form action="<%=request.getContextPath() %>/insert.rev" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/update.rev" method="post" encType="multipart/form-data">
 			<table id="tableView">
 				<tr id="tableView2" style="border-bottom: 1px solid lightgray">
 					<td class="titleN" id="title">제목</td>
-					<td><input type="text" name="title"
-						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px;"></td>
+					<td><input type="text" name="title" id="title2"
+						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px; margin-left:20px;" value="<%=b.getTitle() %>"></td>
 					<td class="titleN" id="date">작성일</td>
-					<td><input type="text" name="date"
+					<td><input type="text" name="date" id="date2"
 						style="background-color: transparent; border: 0 solid black; text-align: center; width: 250px;" 
 						value="<%=df.format(new Date())%>" readonly></td>
+					<td><input type="hidden" value="<%=b.getBoardId() %>"></td>
+					
 				</tr>
 				<table id="ImgTable" align="center">
+				
 				<tr>
+				<div id="date-writer-hit2">
+				<span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
+				<span>
+					<div id="rightArea">
+					<span id="count" style="width:50px;" value="<%= b.getbCount() %>">조회수 : <%= b.getbCount() %></span>
+					</div>
+				</span>
 					<td><textArea id="content"name="content" row="10" cols="90"
-						style="resize:none"></textArea></td>
+						style="resize:none;" ><%=b.getContent() %></textArea></td>
 				</tr>
 				<tr>
 				<div>
-				
-					<table class="detail">
-					
-						<tr>
+					<%for (int i = 0; i < fileList.size(); i++) {%>
+					<%	  BoardFile detail = fileList.get(i);    %>
 							<td>
-								<div id="contentImg">
-								<img class="con" id="contentImgArea" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
-								</div>
+							<div>
+							<div class="con" id="contentImgArea1">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
+							</div>
+							
+							</div>
 							</td>
-						</tr> 
-					</table>
+					<%} %>
 					
-					<td>
-						<div id="contentImg">
-						<div class="con" id="contentImgArea1">
-							<img id="contentImg1" width="120px" height="100px">
-						</div>
-						<div class="con" id="contentImgArea2">
-							<img id="contentImg2" width="120px" height="100px">
-						</div>
-						<div class="con" id="contentImgArea3">
-							<img id="contentImg3" width="120px" height="100px">
-						</div>
-						<div class="con" id="contentImgArea4" style="display:none;">
-							<img id="contentImg4" width="120px" height="100px">
-						</div>
-						<div class="con" id="contentImgArea5" style="display:none;">
-							<img id="contentImg5" width="120px" height="100px">
-						</div>
-						</div>
-					</td>
 				</div>
 				</tr>
 				</table>
@@ -210,7 +231,7 @@ hr {
 		<div id="writeBtn">
 			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
 			&nbsp;
-			<button type="submit" class="btn btn-primary" value="등록 완료">등록 완료</button>
+			<button id="updateBtn" type="submit" class="btn btn-primary" >수정 완료</button>
 		</div>
 		</form>
 	</div>
@@ -259,8 +280,45 @@ hr {
 		}
 		
 	}
-	
+	$(function(){
+		$("#updateBtn").click(function(){
+			var bid = <%= b.getBoardId()%>
+			var title = $("#title2").val();
+			var content = $("#content").val();
+			var date = $("#date2").val();
+			var count = $("#count").val();
+			
+			
+			$.ajax({
+				url:"/msmg/updateList.rev",
+				data:{bid:bid,
+					  title:title,
+					  content:content,
+					  date:date,
+					  count:count},
+				type:"post",
+				success:function(data){
+					if(!title2.value){
+						alert("제목을 입력하세요.");
+						title2.focus();
+						return;
+					}
+					if(!summernote.value){
+						alert("내용을 입력하세요.")
+						summernote.focus();
+						return;
+					}
+					
+					location.href = "/msmg/selectList.bo";
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
 </script>
+	
 <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>
 </div>

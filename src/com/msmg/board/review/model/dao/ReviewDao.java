@@ -336,6 +336,71 @@ public class ReviewDao {
 		return result;
 	}
 
+	public HashMap<String, Object> updateReview(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		ArrayList<BoardFile> list = null;
+		Board b = null;
+		BoardFile bf = null;
+		
+		String query = prop.getProperty("updateReview");
+		
+		try {
+			System.out.println("BoardDao num : " + num);
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(num));
+			
+			System.out.println("query : " + query);
+			rset = pstmt.executeQuery();
+			System.out.println("rset : " + rset);
+			
+			list = new ArrayList<BoardFile>();
+			System.out.println("list : " + list);
+			
+			while(rset.next()) {
+				b = new Board();
+				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardSort(rset.getString("board_sort"));
+				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setuCode(rset.getString("u_name"));
+				b.setbCount(rset.getInt("b_count"));
+				b.setWriteYn(rset.getString("write_yn"));
+				
+				System.out.println("b : " + b);
+				
+				bf = new BoardFile();
+				bf.setBoard_id(rset.getInt("board_id"));
+				bf.setOrigin_name(rset.getString("origin_name"));
+				bf.setEdit_name(rset.getString("edit_name"));
+				bf.setFile_src(rset.getString("file_src"));
+				bf.setFile_date(rset.getDate("file_date"));
+				bf.setFile_no(rset.getInt("file_no"));
+				bf.setBoard_sort(rset.getString("board_sort"));
+				bf.setFile_level(rset.getInt("file_level"));
+				
+				
+				System.out.println("bf : " + bf);
+				
+				list.add(bf);
+			}
+			
+			hmap = new HashMap<String, Object>();
+			hmap.put("board", b);
+			hmap.put("boardFile", list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return hmap;
+	}
+
 	
 
 }

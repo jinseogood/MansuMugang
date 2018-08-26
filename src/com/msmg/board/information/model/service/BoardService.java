@@ -152,6 +152,26 @@ public class BoardService {
 		return result;
 	}
 
+	public Board selectPreB(String num) {
+		Connection con = getConnection();
+		
+		Board preB = new BoardDao().selectPreB(con, num);
+		
+		close(con);
+		
+		return preB;
+	}
+
+	public Board selectNextB(String num) {
+		Connection con = getConnection();
+		
+		Board nextB = new BoardDao().selectNextB(con, num);
+		
+		close(con);
+		
+		return nextB;
+	}
+
 	
 	
 
