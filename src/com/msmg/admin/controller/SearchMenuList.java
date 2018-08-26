@@ -14,17 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.msmg.admin.model.service.MenuService;
+import com.msmg.admin.model.vo.Menu;
 import com.msmg.admin.model.vo.PageInfo;
-import com.msmg.member.model.service.MemberService;
-import com.msmg.member.model.vo.Member;
 
-@WebServlet("/selectMemberList")
-public class SelectMemberServlet extends HttpServlet {
+@WebServlet("/searchMenuList")
+public class SearchMenuList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectMemberServlet() {}
+    public SearchMenuList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type=request.getParameter("sType");
+		String content=request.getParameter("sContent");
+		
 		int currentPage;
 		int limit;
 		int maxPage;
@@ -36,11 +39,11 @@ public class SelectMemberServlet extends HttpServlet {
 		if(request.getParameter("currentPage") != null){
 			currentPage=Integer.parseInt(request.getParameter("currentPage"));
 		}
-		
-		int listCount=new MemberService().getListCount();
+				
+		int listCount=new MenuService().getSearchListCount(type, content);
 		
 		limit=10;
-		
+				
 		maxPage=(int)((double)listCount / limit + 0.9);
 				
 		startPage=((int)(((double)currentPage / limit + 0.9) - 1) * limit + 1);
@@ -52,33 +55,31 @@ public class SelectMemberServlet extends HttpServlet {
 		}
 				
 		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		
-		ArrayList<Member> mList=new MemberService().selectMemberList(currentPage, limit);
+		ArrayList<Menu> menuList=new MenuService().searchMenuList(currentPage, limit, type, content);
 		
 		JSONArray result=new JSONArray();
-		JSONObject mInfo=null;
-		JSONObject mPage=new JSONObject();
-		for(Member m : mList){
-			mInfo=new JSONObject();
+		JSONObject menuInfo=null;
+		JSONObject menuPage=new JSONObject();
+		for(Menu menu : menuList){
+			menuInfo=new JSONObject();
 			
-			mInfo.put("mCode", m.getU_code());
-			mInfo.put("mName", URLEncoder.encode(m.getU_name(), "UTF-8"));
-			mInfo.put("mId", URLEncoder.encode(m.getU_id(), "UTF-8"));
-			mInfo.put("mTel", URLEncoder.encode(m.getU_tel(), "UTF-8"));
-			mInfo.put("mAddr", URLEncoder.encode(m.getU_addr(), "UTF-8"));
-			mInfo.put("mType", URLEncoder.encode(m.getU_type(), "UTF-8"));
-			mInfo.put("mDrop", URLEncoder.encode(m.getDrop_yn(), "UTF-8"));
+			menuInfo.put("menuCode", menu.getMenuCode());
+			menuInfo.put("menuName", URLEncoder.encode(menu.getMenuName(), "UTF-8"));
+			menuInfo.put("mainMat", URLEncoder.encode(menu.getMainMat(), "UTF-8"));
+			menuInfo.put("subMat", URLEncoder.encode(menu.getSubMat(), "UTF-8"));
+			menuInfo.put("price", menu.getPrice());
+			menuInfo.put("info", URLEncoder.encode(menu.getMenuInfo(), "UTF-8"));
 			
-			result.add(mInfo);
+			result.add(menuInfo);
 		}
-		mPage.put("currentPage", pi.getCurrentPage());
-		mPage.put("listCount", pi.getListCount());
-		mPage.put("limit", pi.getLimit());
-		mPage.put("maxPage", pi.getMaxPage());
-		mPage.put("startPage", pi.getStartPage());
-		mPage.put("endPage", pi.getEndPage());
+		menuPage.put("currentPage", pi.getCurrentPage());
+		menuPage.put("listCount", pi.getListCount());
+		menuPage.put("limit", pi.getLimit());
+		menuPage.put("maxPage", pi.getMaxPage());
+		menuPage.put("startPage", pi.getStartPage());
+		menuPage.put("endPage", pi.getEndPage());
 		
-		result.add(mPage);
+		result.add(menuPage);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

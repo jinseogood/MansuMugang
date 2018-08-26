@@ -57,4 +57,24 @@ public class MaterialService {
 		return matList;
 	}
 
+	public int getSearchListCount(String type, String content) {
+		Connection con=getConnection();
+		
+		int listCount=new MaterialDao().getSearchListCount(type, content, con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<Material> searchMatList(int currentPage, int limit, String type, String content) {
+		Connection con=getConnection();
+		
+		ArrayList<Material> matSearchList=new MaterialDao().searchMatList(currentPage, limit, type, content, con);
+		
+		close(con);
+		
+		return matSearchList;
+	}
+
 }

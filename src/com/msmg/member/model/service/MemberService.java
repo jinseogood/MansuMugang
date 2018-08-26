@@ -58,10 +58,10 @@ public class MemberService {
 		
 		return result;
   }
-	public ArrayList<Member> selectMemberList() {
+	public ArrayList<Member> selectMemberList(int currentPage, int limit) {
 		Connection con=getConnection();
 		
-		ArrayList<Member> mList=new MemberDao().selectMemberList(con);
+		ArrayList<Member> mList=new MemberDao().selectMemberList(currentPage, limit, con);
 		
 		close(con);
 		
@@ -112,6 +112,36 @@ public class MemberService {
 		
 		
 		return result;
+	}
+
+	public int getListCount() {
+		Connection con=getConnection();
+		
+		int listCount=new MemberDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public int getSearchListCount(String type, String content) {
+		Connection con=getConnection();
+		
+		int listCount=new MemberDao().getSearchListCount(type, content, con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	public ArrayList<Member> searchMemberList(int currentPage, int limit, String type, String content) {
+		Connection con=getConnection();
+		
+		ArrayList<Member> mSearchList=new MemberDao().searchMemberList(currentPage, limit, type, content, con);
+		
+		close(con);
+		
+		return mSearchList;
 	}
 
 	

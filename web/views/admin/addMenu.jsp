@@ -35,7 +35,7 @@
 						<%
 							for(int i=0;i<matList.size();i++){
 						%>
-								<option value="<%= matList.get(i).getA_code() %>"><%= matList.get(i).getM_name() %></option>
+								<option value="<%= matList.get(i).getM_code() %>"><%= matList.get(i).getM_name() %></option>
 						<%
 							}
 						%>
@@ -46,10 +46,11 @@
 				<td style="background:lightgray;">보조재료</td>
 				<td colspan="2"><!-- <input type="text" name="subMat"> -->
 					<select name="subMat">
+						<option value="NO">없음</option>
 						<%
 							for(int i=0;i<matList.size();i++){
 						%>
-								<option value="<%= matList.get(i).getA_code() %>"><%= matList.get(i).getM_name() %></option>
+								<option value="<%= matList.get(i).getM_code() %>"><%= matList.get(i).getM_name() %></option>
 						<%
 							}
 						%>
