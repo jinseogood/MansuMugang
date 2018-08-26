@@ -43,4 +43,22 @@ public class FoodService {
 		return list;
 	}
 
+	public ArrayList<MenuList> menuListD() {
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> list = new SelectFoodDao().menuListD(con);
+		
+		close(con);
+		return list;
+	}
+
+	public ArrayList<MenuList> menuListH() {
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> list = new SelectFoodDao().menuListH(con);
+		
+		close(con);
+		return list;
+	}
+
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*"%>
 <%
-	ArrayList<MenuList> list = (ArrayList<MenuList>)request.getAttribute("list");
+	ArrayList<MenuList> list = (ArrayList<MenuList>) request.getAttribute("list");
 	int count = 0;
 %>
 <!DOCTYPE>
@@ -89,14 +89,44 @@
 	/* position:absolute; */
 }
 
-.topMenuImg>img {
+.topMenuImg>div>img {
 	width: 100%;
 	height: 100%;
 }
-table td{
-	height:200px;
-	width:330px;
+
+table td {
+	height: 200px;
+	width: 30%px;
 }
+td .info {
+	height:70px;
+}
+
+td .like {
+	text-align: right;
+	font-size:20px;
+}
+@media ( max-width: 1023px ) {
+        .images{
+        	float: none;
+       		width: auto;
+       		height:auto;
+        }
+         .topMenuImg{
+ 	 		float: none;
+       		width:auto
+        }
+        .topMenu{
+			display:block;
+			width:auto;
+			height:auto;
+		}
+	}
+	@media ( max-width: 767px ) {
+        .topMenu{
+			height:auto;
+		} 
+	} 
 </style>
 </head>
 <body>
@@ -117,38 +147,49 @@ table td{
 			</div>
 			<div id="btn" class="btn-group-vertical">
 				<button type="button" class="btn btn-primary"
-					OnClick="location='<%= request.getContextPath()%>/MenuListG.fo'">고혈압</button>
+					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo'">고혈압</button>
 				<button type="button" class="btn btn-primary"
-					OnClick="location='menuIntro2.jsp'">당뇨병</button>
+					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo'">당뇨병</button>
 				<button type="button" class="btn btn-primary"
-					OnClick="location='menuIntro3.jsp'">뇌질환</button>
+					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo'">뇌질환</button>
 			</div>
 			<div class="images">
 				<table align="center" text-align="center">
-					<% for(int j = 0 ; j <= list.size()/3 ; j++){ %>
-						
+					<%
+						for (int j = 0; j <= list.size() / 3; j++) {
+					%>
+
 					<tr>
-						<% for(int i = count ; i < list.size() ; ){ %>
+						<%
+							for (int i = count; i < list.size();) {
+						%>
 						<td align="center">
 							<div id="g1" class="topMenu">
 								<div id="g1-img" class="topMenuImg">
-									<img
-										src="<%= request.getContextPath() %>/images/food/<%= list.get(i).getImg_name() %>">
-										<%=list.get(i).getMenu_info() %>
+									<div>
+										<img
+											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
+									</div>
+									<div class="info"><%=list.get(i).getMenu_info()%></div>
+									<div class="like" text-align="right">♡♥</div>
 								</div>
 							</div>
 						</td>
-						<% 
-										i++;
-										count = i;
-										if(count%3 == 0){
-											break;
-											
-										}
-									%>
-						<% } %>
+						<%
+							i++;
+									count = i;
+									if (count % 3 == 0) {
+										break;
+
+									}
+						%>
+						<%
+							}
+						%>
 					</tr>
-					<% } %>
+					<%
+						}
+					%>
 				</table>
 			</div>
 		</div>

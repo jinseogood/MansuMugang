@@ -152,5 +152,77 @@ public class SelectFoodDao {
 		return list;
 	}
 
+	public ArrayList<MenuList> menuListD(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListD");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<MenuList> menuListH(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListH");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
 }
 
