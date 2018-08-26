@@ -11,6 +11,10 @@
 	p.getBuy_no();
 	p.getStatus(); */
 %>
+
+<% 
+	PaymentInfo pi = (PaymentInfo)session.getAttribute("buy_no");
+%>
  
 <% if(list != null){
 for(int i = 0; i < list.size(); i++){
@@ -605,6 +609,10 @@ section {
 													} else {
 														if (radioVal1 == 'on') {
 															// IMP.request_pay(param, callback) 호출
+															
+															<%-- <%= pi.setSort("구매완료")%>
+															<%= pi.setBuy_sort("카드구매")%> --%>
+															
 															IMP.init("imp86047661");
 															IMP.request_pay(
 																			{ // param
@@ -638,6 +646,8 @@ section {
 																									})
 																							.done(
 																									
+																									<%-- <%= pi.setSort("구매완료")%>
+																									<%= pi.setBuy_sort("카드결제") %> --%>
 																									
 																									function(data) {
 																										
@@ -661,6 +671,10 @@ section {
 																			});
 
 														} else if (radioVal2 == 'on') {
+															
+															<%-- <%= pi.setSort("결제대기")%>
+															<%= pi.setBuy_sort("무통장결제") %> --%>
+															
 															alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
 															location.href = "/msmg/views/member/OrderHistory.jsp";
 														}
