@@ -16,7 +16,7 @@ import com.msmg.mainIndex.model.vo.MenuIndex;
 /**
  * Servlet implementation class mainIndexServlet
  */
-@WebServlet("")
+@WebServlet("/ttt")
 public class mainIndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
