@@ -55,7 +55,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		String page = "";
 		if(member != null || result != 0){
-			page = "/index.jsp";
+			page = "";
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 가입 실패!!");

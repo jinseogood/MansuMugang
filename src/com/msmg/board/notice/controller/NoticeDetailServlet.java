@@ -34,12 +34,14 @@ public class NoticeDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bno = request.getParameter("board_no");
-		System.out.println("bno : " + bno);
+		
+		//해당 글과 글에 관련된 문서 가져옴
 		Notice no = new NoticeService().selectOne(bno);
+		ArrayList<Attachment> list = new NoticeService().selectAttachment(bno);
+
+		//이전글과 다음글 내역을 가져옴
 		Notice preNo = new NoticeService().selectPreNo(bno);
 		Notice nextNo = new NoticeService().selectNextNo(bno);
-		ArrayList<Attachment> list = new NoticeService().selectAttachment(bno);
-		
 		
 		System.out.println("nno : " +  nextNo);
 		String page = "";

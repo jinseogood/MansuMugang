@@ -37,10 +37,10 @@ public class NoticeService {
 		Connection conn = getConnection();
 		Notice no = null;
 		
-		int result = new NoticeDao().updateCount(conn, bno);
+		int result = new NoticeDao().updateCount(conn, bno); // 조회수 증가 후
 		
 		if(result > 0){
-			no = new NoticeDao().selectOne(conn, bno);
+			no = new NoticeDao().selectOne(conn, bno); // 글 선택
 			
 			if(no != null){
 				commit(conn);
@@ -71,7 +71,7 @@ public class NoticeService {
 	}
 
 
-	public int insertThumbnail(Attachment at, int ucode) {
+	public int insertAttachment(Attachment at, int ucode) {
 		Connection conn = getConnection();
 		
 		int result = new NoticeDao().insertAttachment(conn, at, ucode);
@@ -106,6 +106,7 @@ public class NoticeService {
 	public int updateBoard(Notice no, ArrayList<Attachment> fileList, int ucode) {
 		Connection conn = getConnection();
 		
+		//글번호도 새로 갱신하여 업데이트
 		int result = new NoticeDao().updateBoard(conn, no);
 		int result2 = 0;
 		int result3 = 0;
@@ -114,29 +115,34 @@ public class NoticeService {
 		int randbno = 0;
 		
 		if(result > 0){
+			//새로 갱신 된 글번호
 			bno = new NoticeDao().selectCurrval(conn);
 			
+			//현재 랜덤으로 지정된 글번호
 			randbno = no.getBoard_no();
-			System.out.println("bno = " + bno + " / randbno = " + randbno);
+
+			//파일들에 글번호를 지정
 			for(int i = 0; i < fileList.size(); i++){
 				fileList.get(i).setBoard_no(bno);
 			}
 		}
 		
+		//랜덤값으로 입력된 사진들을 조회
 		int photoCount = new NoticeDao().selectPhoto(conn, randbno);
 		
+		//사진이 있으면
 		if(photoCount > 0){
+			//사진의 글번호를 새로 갱신된 글번호로 변경
 			result2 = new NoticeDao().updatePhotho(conn, bno, randbno);
 		}
 		
+		//문서가 존재하면 문서 저장
 		if(fileList.size() > 0){
 			result3 = new NoticeDao().insertDocument(conn, fileList, ucode);
 		}
 		
-		System.out.println("result2 - " + result2);
-		
-		System.out.println("result3 - " + result3);
-		if(result > 0){
+		if((result > 0 && result2 > 0 && result3 > 0) || (result > 0 && result2 > 0)
+				|| (result > 0 && result3 > 0) || result > 0){
 			result = bno;
 			commit(conn);
 		}else{
@@ -201,16 +207,22 @@ public class NoticeService {
 
 	public int editNotice(Notice no, ArrayList<Attachment> fileList, int ucode) {
 		Connection conn = getConnection();
-		System.out.println("글수정");
+		
+		//변경내용 수정
 		int result = new NoticeDao().editBoard(conn, no);
-		System.out.println("db파일 삭제");
+		
+		//문서 삭제
 		int result2 = new NoticeDao().deleteDocument(conn, no.getBoard_no());
-		System.out.println("db파일 입력");
+
+		int result3 = 0;
+		//새로 업로드한 파일이 존재시
 		if(fileList.size() > 0){
-			int result3 = new NoticeDao().insertDocument(conn, fileList, ucode);
+			result3 = new NoticeDao().insertDocument(conn, fileList, ucode);
 		}
 		
-		if(result > 0){
+		//수행 확인
+		if((result > 0 && result2 > 0 && result3 > 0) || (result > 0 && result2 > 0) ||
+				(result > 0 && result3 > 0) || result > 0){
 			commit(conn);
 		}else{
 			rollback(conn);
@@ -235,22 +247,28 @@ public class NoticeService {
 	public HashMap<String, ArrayList<String>> deleteNotice(int bno) {
 		Connection conn = getConnection();
 		HashMap<String, ArrayList<String>> deleteList = null;
+		int result1 = 0;
+		int result2 = 0;
+		int result3 = 0;
 		
-		ArrayList<String> docList = new NoticeDao().selectDoc(conn, bno);
 		
-		if(docList.size() > 0){
-			int result = new NoticeDao().deleteDocument(conn, bno);
+		ArrayList<String> docList = new NoticeDao().selectDoc(conn, bno); // 글번호에 관련된 문서 선택
+		
+		if(docList.size() > 0){ //문서가 있으면
+			result1 = new NoticeDao().deleteDocument(conn, bno); //문서 삭제
 		}
 		
-		ArrayList<String> photoList = new NoticeDao().selectPho(conn, bno);
+		ArrayList<String> photoList = new NoticeDao().selectPho(conn, bno); // 글번호에 관련된 사진 선택
 		
-		if(photoList.size() > 0){
-			int result = new NoticeDao().deletePhoto(conn, bno);
+		if(photoList.size() > 0){ //사진이 있으면
+			result2 = new NoticeDao().deletePhoto(conn, bno); //사진 삭제
 		}
 		
-		int result = new NoticeDao().DeleteNotice(conn, bno);
+		result3 = new NoticeDao().DeleteNotice(conn, bno); //공지 삭제
 		
-		if(result > 0){
+		//수행 결과 확인
+		if((result1 > 0 && result3 > 0) || (result2 > 0 && result3 > 0) 
+				|| (result1 > 0 && result2 > 0 && result3 > 0) || result3 > 0){
 			deleteList = new HashMap<String, ArrayList<String>>();
 			
 			deleteList.put("doc", docList);

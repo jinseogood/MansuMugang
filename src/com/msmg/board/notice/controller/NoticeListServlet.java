@@ -45,26 +45,24 @@ public class NoticeListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = new NoticeService().getListCount(); //15
+		int listCount = new NoticeService().getListCount(); //전체 글 갯수
 		
-		listLimit = 10;
-		pageLimit = 5;
+		listLimit = 10; // 한페이지에 최대 출력 갯수
+		pageLimit = 5; // 한번에 볼수있는 최대 페이지 갯수
 		
-		maxPage = (int)((double)listCount / listLimit + 0.9);
-		System.out.println("maxpage = " + maxPage);
+		maxPage = (int)((double)listCount / listLimit + 0.9); //최대 페이지
 		
-		startPage = ((int)((double)currentPage / pageLimit + 0.8) - 1) * pageLimit + 1;
-		System.out.println("startPage : " + startPage);
-		endPage = startPage + pageLimit - 1;
-		System.out.println("endPage : " + endPage);
+		startPage = ((int)((double)currentPage / pageLimit + 0.8) - 1) * pageLimit + 1; //시작 페이지
+		endPage = startPage + pageLimit - 1; //끝 페이지
+
 		if(maxPage < endPage){
 			endPage = maxPage;
 		}
-		System.out.println("maxPage : " + maxPage);
+		
 		PageInfo pi = new PageInfo(currentPage, listCount, listLimit, pageLimit, maxPage, startPage, endPage);
-		
+
+		//리스트 가져오기
 		ArrayList<Notice> list = new NoticeService().selectList(currentPage, listLimit);
-		
 		
 		String page = "";
 		

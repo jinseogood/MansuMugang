@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUser", loginUser);
 
-			response.sendRedirect("index.jsp");
+			request.getRequestDispatcher("").forward(request, response);
 		}else{
 			request.setAttribute("msg", "로그인 실패!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

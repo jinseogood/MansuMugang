@@ -34,10 +34,11 @@ public class DownloadFileServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String editName = request.getParameter("edit_name");
+		String editName = request.getParameter("edit_name"); //파일 이름 가져오기
 
-		Attachment file = new NoticeService().downloadFile(editName);
+		Attachment file = new NoticeService().downloadFile(editName); //파일 객체 가져오기
 		
+		//입력 스트림 생성
 		BufferedInputStream buf = null;
 		
 		//클라이언트에게 내보낼 출력 스트림 생성
