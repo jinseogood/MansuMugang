@@ -8,6 +8,7 @@ public class PaymentInfo implements java.io.Serializable{
 	private int amount;
 	private String buy_sort;
 	
+	public PaymentInfo(){}
 	
 	public int getBuy_info_no() {
 		return buy_info_no;
