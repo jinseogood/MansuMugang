@@ -2,6 +2,7 @@ package com.msmg.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.msmg.board.qna.model.service.QnaService;
-import com.msmg.board.qna.model.vo.PageInfo;
-import com.msmg.board.qna.model.vo.Qna;
+import com.msmg.admin.model.service.NoticeService;
+import com.msmg.admin.model.service.QnAService;
+import com.msmg.admin.model.vo.PageInfo;
+import com.msmg.admin.model.vo.QnA;
 import com.msmg.member.model.vo.Member;
 
 @WebServlet("/selectQnAList")
@@ -23,54 +25,45 @@ public class SelectQnAServlet extends HttpServlet {
     public SelectQnAServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member user = (Member)request.getSession().getAttribute("loginUser");
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
 		
-		if(user != null){
-			int currentPage;
-			int listLimit;
-			int pageLimit;
-			int maxPage;
-			int startPage;
-			int endPage;
-			int code = (int)user.getU_code();
+		currentPage = 1;
 		
-			currentPage = 1;
-			if(request.getParameter("currentPage") != null){
-				currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			}
+		if(request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		int listCount = new QnAService().getListCount();
+		
+		limit = 10;
+		
+		maxPage = (int)((double)listCount / limit + 0.9);
+		
+		startPage = (((int)((double)currentPage / limit + 0.9)) -1) * limit + 1;
+		
+		endPage = startPage + limit - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		ArrayList<QnA> qList=new QnAService().selectQnAList(currentPage, limit);
 			
-			int adminCode = new QnaService().getAdminCode();
+		HashMap<String, Object> hmap=new HashMap<String, Object>();
+		hmap.put("pi", pi);
+		hmap.put("qList", qList);
 			
-			int listCount = new QnaService().getListCount(adminCode, code); //15
+		System.out.println("servlet : " + qList);
 			
-			listLimit = 10;
-			pageLimit = 5;
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 			
-			maxPage = (int)((double)listCount / listLimit + 0.9);
-			System.out.println("maxpage = " + maxPage);
-			
-			startPage = ((int)((double)currentPage / pageLimit + 0.8) - 1) * pageLimit + 1;
-			System.out.println("startPage : " + startPage);
-			endPage = startPage + pageLimit - 1;
-			System.out.println("endPage : " + endPage);
-			if(maxPage < endPage){
-				endPage = maxPage;
-			}
-			System.out.println("maxPage : " + maxPage);
-			PageInfo pi = new PageInfo(currentPage, listCount, listLimit, pageLimit, maxPage, startPage, endPage);
-			ArrayList<Qna> qList=new QnaService().selectList(currentPage, pageLimit, adminCode, code);
-			
-			System.out.println("servlet : " + qList);
-			
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			
-			new Gson().toJson(qList, response.getWriter());
-		}else{
-			
-			System.out.println("접근에러");
-				
-			}
+		new Gson().toJson(hmap, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

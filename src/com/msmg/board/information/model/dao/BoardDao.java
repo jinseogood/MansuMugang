@@ -110,8 +110,8 @@ public class BoardDao {
 
 	//총 게시물 수
 	public int getListCount(Connection con) {
-		Statement stmt = null;
 		int listCount = 0;
+		Statement stmt = null;
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("listCount");

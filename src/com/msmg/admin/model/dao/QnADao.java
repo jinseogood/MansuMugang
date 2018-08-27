@@ -11,15 +11,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.msmg.admin.model.vo.Notice;
+import com.msmg.admin.model.vo.QnA;
 
 import static com.msmg.common.JDBCTemplate.*;
 
-public class NoticeDao {
+public class QnADao {
 	private Properties prop=new Properties();
 	
-	public NoticeDao(){
-		String fileName=NoticeDao.class.getResource("/sql/admin/admin-query.properties").getPath();
+	public QnADao(){
+		String fileName=QnADao.class.getResource("/sql/admin/admin-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -28,21 +28,39 @@ public class NoticeDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
-	public ArrayList<Notice> selectNoticeList(int currentPage, int limit, Connection con) {
-		ArrayList<Notice> nList=new ArrayList<Notice>();
-		//Statement st=null;
+	public int getListCount(Connection con) {
+		int listCount=0;
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("qnaListCount");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return listCount;
+	}
+	public ArrayList<QnA> selectQnAList(int currentPage, int limit, Connection con) {
+		ArrayList<QnA> qList=new ArrayList<QnA>();
 		PreparedStatement pst=null;
 		ResultSet rset=null;
 		
-		//String query=prop.getProperty("selectNoticeList");
-		String query=prop.getProperty("selectNoticeListPaging");
+		String query=prop.getProperty("selectQnAListPaging");
 		
 		try {
-			//st=con.createStatement();
-			//rset=st.executeQuery(query);
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
 			
@@ -53,54 +71,30 @@ public class NoticeDao {
 			rset=pst.executeQuery();
 			
 			while(rset.next()){
-				Notice n=new Notice();
+				QnA qna=new QnA();
 				
-				n.setBoard_no(rset.getInt("board_no"));
-				n.setTitle(rset.getString("title"));
-				n.setU_name(rset.getString("u_name"));
-				n.setContent(rset.getString("content"));
-				n.setBoard_date(rset.getDate("board_date"));
-				n.setB_count(rset.getInt("b_count"));
+				qna.setBoard_id(rset.getInt("board_id"));
+				qna.setBoard_no(rset.getInt("board_no"));
+				qna.setTitle(rset.getString("title"));
+				qna.setContent(rset.getString("content"));
+				qna.setU_name(rset.getString("u_name"));
+				qna.setBoard_date(rset.getDate("board_date"));
+				qna.setB_count(rset.getInt("b_count"));
+				qna.setRef_bno(rset.getInt("ref_bno"));
 				
-				nList.add(n);				
+				qList.add(qna);
 			}
 			
-			System.out.println("dao : " + nList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
 			close(rset);
-			//close(st);
 			close(pst);
 		}
 		
-		return nList;
+		return qList;
 	}
-
-	public int getListCount(Connection con) {
-		int listCount=0;
-		Statement stmt = null;
-		ResultSet rset = null;
-		
-		String query = prop.getProperty("nListCount");
-		
-		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
-			
-			if(rset.next()) {
-				listCount = rset.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(stmt);
-			close(rset);
-		}
-		
-		return listCount;
-	}
-
+	
 	public int getSearchListCount(String type, String content, Connection con) {
 		int listCount=0;
 		PreparedStatement pst=null;
@@ -109,10 +103,10 @@ public class NoticeDao {
 		String query="";
 		
 		if(type.equals("title")){
-			query=prop.getProperty("nTitleListCount");
+			query=prop.getProperty("qTitleListCount");
 		}
 		else if(type.equals("u_name")){
-			query=prop.getProperty("nUNameListCount");
+			query=prop.getProperty("qUNameListCount");
 		}
 		
 		try {
@@ -134,19 +128,18 @@ public class NoticeDao {
 		
 		return listCount;
 	}
-
-	public ArrayList<Notice> searchNoticeList(int currentPage, int limit, String type, String content, Connection con) {
-		ArrayList<Notice> nSearchList=new ArrayList<Notice>();
+	public ArrayList<QnA> searchQnAList(int currentPage, int limit, String type, String content, Connection con) {
+		ArrayList<QnA> qSearchList=new ArrayList<QnA>();
 		PreparedStatement pst=null;
 		ResultSet rset=null;
 		
 		String query="";
 		
 		if(type.equals("title")){
-			query=prop.getProperty("searchNTitleListPaging");
+			query=prop.getProperty("searchQTitleListPaging");
 		}
 		else if(type.equals("u_name")){
-			query=prop.getProperty("searchNUNameListPaging");
+			query=prop.getProperty("searchQUNameListPaging");
 		}
 		
 		try {
@@ -161,19 +154,20 @@ public class NoticeDao {
 			rset=pst.executeQuery();
 			
 			while(rset.next()){
-				Notice n=new Notice();
+				QnA qna=new QnA();
 				
-				n.setBoard_no(rset.getInt("board_no"));
-				n.setTitle(rset.getString("title"));
-				n.setU_name(rset.getString("u_name"));
-				n.setContent(rset.getString("content"));
-				n.setBoard_date(rset.getDate("board_date"));
-				n.setB_count(rset.getInt("b_count"));
+				qna.setBoard_id(rset.getInt("board_id"));
+				qna.setBoard_no(rset.getInt("board_no"));
+				qna.setTitle(rset.getString("title"));
+				qna.setContent(rset.getString("content"));
+				qna.setU_name(rset.getString("u_name"));
+				qna.setBoard_date(rset.getDate("board_date"));
+				qna.setB_count(rset.getInt("b_count"));
+				qna.setRef_bno(rset.getInt("ref_bno"));
 				
-				nSearchList.add(n);				
+				qSearchList.add(qna);
 			}
 			
-			System.out.println("dao : " + nSearchList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -181,7 +175,7 @@ public class NoticeDao {
 			close(pst);
 		}
 		
-		return nSearchList;
+		return qSearchList;
 	}
 
 }

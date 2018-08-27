@@ -334,7 +334,82 @@
 		}
 		//공지 조회
 		else if(type == 3){
+			$.ajax({
+				url:"/msmg/selectNoticeList",
+				type:"get",
+				data:{currentPage:currentPage},
+				success:function(data){
+					console.log(data);
 					
+					$tableBody = $("#noticeTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#noticepageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						
+						if(key == "nList"){
+							var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
+							var $noTd=$("<td>").text(data[key][i].board_no);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].u_name);
+							var $dateTd=$("<td>").text(data[key][i].board_date);
+							var $countTd=$("<td>").text(data[key][i].b_count);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tr.append($countTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstPage("+currentPage+", 3);'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevPage("+currentPage+", 3);'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goPage("+p+", 3);'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextPage("+currentPage+", 3);'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastPage("+maxPage+", 3);'>>></button>");
+						}
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
 		}
 		//정보 조회
 		else if(type == 4){
@@ -502,7 +577,79 @@
 		}
 		//문의 조회
 		else if(type == 8){
-			
+			$.ajax({
+				url:"/msmg/selectQnAList",
+				type:"get",
+				data:{currentPage:currentPage},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#qnaTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#qnapageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "qList"){
+							var $tr=$("<tr>");
+							var $noTd=$("<td>").text(data[key][i].board_no);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].u_name);
+							var $dateTd=$("<td>").text(data[key][i].board_date);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstPage("+currentPage+", 8);'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevPage("+currentPage+", 8);'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goPage("+p+", 8);'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextPage("+currentPage+", 8);'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastPage("+maxPage+", 8);'>>></button>");
+						}
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
 		}
 		
 	}
@@ -667,11 +814,161 @@
 		}
 		//공지검색
 		else if(type == 3){
-			
+			$.ajax({
+				url:"/msmg/searchNoticeList",
+				type:"get",
+				data:{currentPage:currentPage, sType:sType, sContent:sContent},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#noticeTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#noticepageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						
+						if(key == "nList"){
+							var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
+							var $noTd=$("<td>").text(data[key][i].board_no);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].u_name);
+							var $dateTd=$("<td>").text(data[key][i].board_date);
+							var $countTd=$("<td>").text(data[key][i].b_count);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tr.append($countTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goSearchPage("+p+", 3, "+sType+", "+sContent+");'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 3, "+sType+", "+sContent+");'>>></button>");
+						}
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
 		}
 		//정보검색
 		else if(type == 4){
-			
+			$.ajax({
+				url:"/msmg/searchInfoList",
+				type:"get",
+				data:{currentPage:currentPage, sType:sType, sContent:sContent},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#infoTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#infopageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "infoList"){
+							var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
+							var $noTd=$("<td>").text(data[key][i].boardNo);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].uCode);
+							var $dateTd=$("<td>").text(data[key][i].boardDate);
+							var $countTd=$("<td>").text(data[key][i].bCount);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tr.append($countTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goSearchPage("+p+", 4, "+sType+", "+sContent+");'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 4, "+sType+", "+sContent+");'>>></button>");
+						}
+					}
+				},
+				error:function(data){
+					console.log(data);
+					console.log("error");
+				}
+			});
 		}
 		//후기검색
 		else if(type == 5){
@@ -760,7 +1057,79 @@
 		}
 		//문의검색
 		else if(type == 8){
-			
+			$.ajax({
+				url:"/msmg/searchQnAList",
+				type:"get",
+				data:{currentPage:currentPage, sType:sType, sContent:sContent},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#qnaTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#qnapageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "qList"){
+							var $tr=$("<tr>");
+							var $noTd=$("<td>").text(data[key][i].board_no);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].u_name);
+							var $dateTd=$("<td>").text(data[key][i].board_date);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goSearchPage("+p+", 8, "+sType+", "+sContent+");'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 8, "+sType+", "+sContent+");'>>></button>");
+						}
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
 		}
 	}
 	
@@ -885,39 +1254,16 @@
 		$("#nSearch").click(function(){
 			var currentPage=1;
 			
-			$.ajax({
-				url:"/msmg/selectNoticeList",
-				type:"get",
-				data:{currentPage:currentPage},
-				success:function(data){
-					console.log(data);
-					
-					$tableBody = $("#noticeTable tbody");
-					$tableBody.html('');
-					
-					
-					for(var key in data){
-						console.log(key);
+			pagingAJAX(currentPage, 3);
+		});
+		
+		//공지검색
+		$("#noticeDSearch").click(function(){
+			var currentPage=1;
+			var stype=$("#noticeSType").val();
+			var sContent=$("#noticeSText").val();
 			
-						var $tr=$("<tr onclick='openNotice("+data[key].board_no+");'>");
-						var $noTd=$("<td>").text(data[key].board_no);
-						var $titleTd=$("<td>").text(data[key].title);
-						var $writerTd=$("<td>").text(data[key].u_name);
-						var $dateTd=$("<td>").text(data[key].board_date);
-						var $countTd=$("<td>").text(data[key].b_count);
-						
-						$tr.append($noTd);
-						$tr.append($titleTd);
-						$tr.append($writerTd);
-						$tr.append($dateTd);
-						$tr.append($countTd);
-						$tableBody.append($tr);
-					}
-				},
-				error:function(data){
-					console.log(data);
-				}
-			});
+			searchPagingAJAX(currentPage, 3, stype, sContent);
 		});
 		
 		//정보게시판조회
@@ -925,40 +1271,15 @@
 			var currentPage=1;
 			
 			pagingAJAX(currentPage, 4);
+		});
+		
+		//정보게시판 검색
+		$("#infoDSearch").click(function(){
+			var currentPage=1;
+			var stype=$("#infoSType").val();
+			var sContent=$("#infoSText").val();
 			
-			/* $.ajax({
-				url:"/msmg/selectInfoList",
-				type:"get",
-				data:{currentPage:currentPage},
-				success:function(data){
-					console.log(data);
-					
-					$tableBody = $("#infoTable tbody");
-					$tableBody.html('');
-					
-					
-					for(var key in data){
-						console.log(key);
-			
-						var $tr=$("<tr onclick='openInfo("+data[key].boardId+");'>");
-						var $noTd=$("<td>").text(data[key].boardNo);
-						var $titleTd=$("<td>").text(data[key].title);
-						var $writerTd=$("<td>").text(data[key].uCode);
-						var $dateTd=$("<td>").text(data[key].boardDate);
-						var $countTd=$("<td>").text(data[key].bCount);
-						
-						$tr.append($noTd);
-						$tr.append($titleTd);
-						$tr.append($writerTd);
-						$tr.append($dateTd);
-						$tr.append($countTd);
-						$tableBody.append($tr);
-					}
-				},
-				error:function(){
-					console.log("error");
-				}
-			}); */
+			searchPagingAJAX(currentPage, 4, stype, sContent);
 		});
 		
 		//후기게시판조회
@@ -991,6 +1312,15 @@
 					console.log("error");
 				}
 			});
+		});
+		
+		//후기게시판 검색
+		$("#reviewDSearch").click(function(){
+			var currentPage=1;
+			var stype=$("#reviewSType").val();
+			var sContent=$("#reviewSText").val();
+			
+			searchPagingAJAX(currentPage, 5, stype, sContent);
 		});
 		
 		//회원조회
@@ -1044,54 +1374,29 @@
 			});
 		});
 		
+		//주문내역 검색
+		$("#orderDSearch").click(function(){
+			var currentPage=1;
+			var stype=$("#orderSType").val();
+			var sContent=$("#orderSText").val();
+			
+			searchPagingAJAX(currentPage, 7, stype, sContent);
+		});
+		
 		//문의조회
 		$("#qSearch").click(function(){
 			var currentPage=1;
 			
-			$.ajax({
-				url:"/msmg/selectQnAList",
-				type:"get",
-				data:{currentPage:currentPage},
-				success:function(data){
-					console.log(data);
-					
-					$tableBody = $("#qnaTable tbody");
-					$tableBody.html('');
-					
-					/* $.each(data, function(index, value){
-						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(value.userNo);
-						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
-						var $nationTd=$("<td>").text(decodeURIComponent(value.userNation));
-						
-						$tr.append($noTd);
-						$tr.append($nameTd);
-						$tr.append($nationTd);
-						$tableBody.append($tr);
-					}); */
-					
-					for(var key in data){
-						console.log(key);
+			pagingAJAX(currentPage, 8);
+		});
+		
+		//문의내역 검색
+		$("#qnaDSearch").click(function(){
+			var currentPage=1;
+			var stype=$("#qnaSType").val();
+			var sContent=$("#qnaSText").val();
 			
-						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(data[key].board_no);
-						var $titleTd=$("<td>").text(data[key].title);
-						var $writerTd=$("<td>").text(data[key].u_name);
-						var $dateTd=$("<td>").text(data[key].board_date);
-						var $countTd=$("<td>").text(data[key].b_count);
-						
-						$tr.append($noTd);
-						$tr.append($titleTd);
-						$tr.append($writerTd);
-						$tr.append($dateTd);
-						$tr.append($countTd);
-						$tableBody.append($tr);
-					}
-				},
-				error:function(){
-					console.log("error");
-				}
-			});
+			searchPagingAJAX(currentPage, 8, stype, sContent);
 		});
 	});
 </script>
@@ -1213,14 +1518,11 @@
 					<thead>
 						<tr height="20px">
 							<td colspan="5" style="text-align:right;">
-								<select name="noticeSType">
-									<option value="board_no">글번호</option>
+								<select name="noticeSType" id="noticeSType">
 									<option value="title">제목</option>
 									<option value="u_name">작성자</option>
-									<option value="board_date">작성일</option>
-									<option value="b_count">조회수</option>
 								</select>
-								<input type="text" name="noticeSText" size="20">
+								<input type="text" name="noticeSText" id="noticeSText" size="20">
 								<button id="noticeDSearch">검색</button>&nbsp;
 								<button id="nSearch">조회</button>&nbsp;
 								<button id="nWrite">작성</button>
@@ -1249,14 +1551,11 @@
 					<thead>
 						<tr height="20px">
 							<td colspan="5" style="text-align:right;">
-								<select name="infoSType">
-									<option value="board_no">글번호</option>
+								<select name="infoSType" id="infoSType">
 									<option value="title">제목</option>
 									<option value="u_name">작성자</option>
-									<option value="board_date">작성일</option>
-									<option value="b_count">조회수</option>
 								</select>
-								<input type="text" name="infoSText" size="20">
+								<input type="text" name="infoSText" id="infoSText" size="20">
 								<button id="infoDSearch">검색</button>&nbsp;
 								<button id="iSearch">조회</button>
 							</td>
@@ -1284,14 +1583,11 @@
 					<thead>
 						<tr height="20px">
 							<td colspan="5" style="text-align:right;">
-								<select name="reviewSType">
-									<option value="board_no">글번호</option>
+								<select name="reviewSType" id="reviewSType">
 									<option value="title">제목</option>
 									<option value="u_name">작성자</option>
-									<option value="board_date">작성일</option>
-									<option value="b_count">조회수</option>
 								</select>
-								<input type="text" name="reviewSText" size="20">
+								<input type="text" name="reviewSText" id="reviewSText" size="20">
 								<button id="reviewDSearch">검색</button>&nbsp;
 								<button id="rSearch">조회</button>
 							</td>
@@ -1361,13 +1657,13 @@
 					<thead>
 						<tr height="20px">
 							<td colspan="4" style="text-align:right;">
-								<select name="orderSType">
+								<select name="orderSType" id="orderSType">
 									<option value="menu_code">메뉴코드</option>
 									<option value="menu_name">메뉴명</option>
 									<option value="price">가격</option>
 									<option value="menu_info">메뉴정보</option>
 								</select>
-								<input type="text" name="orderSText" size="20">
+								<input type="text" name="orderSText" id="orderSText" size="20">
 								<button id="orderDSearch">검색</button>&nbsp;
 								<button id="oSearch">조회</button>
 							</td>
@@ -1394,13 +1690,11 @@
 					<thead>
 						<tr height="20px">
 							<td colspan="4" style="text-align:right;">
-								<select name="qnaSType">
-									<option value="board_no">글번호</option>
+								<select name="qnaSType" id="qnaSType">
 									<option value="title">제목</option>
 									<option value="u_name">작성자</option>
-									<option value="board_date">작성일</option>
 								</select>
-								<input type="text" name="qnaSText" size="20">
+								<input type="text" name="qnaSText" id="qnaSText" size="20">
 								<button id="qnaDSearch">검색</button>&nbsp;
 								<button id="qSearch">조회</button>
 							</td>
