@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.review.model.service.ReviewService;
 import com.msmg.board.review.model.vo.BoardFile;
 
@@ -35,17 +34,19 @@ public class UpdateReviewServlet extends HttpServlet {
 		
 		System.out.println(num);
 		
+		/*int result = new ReviewService().deleteReviewBoardFile(num);*/
+		
 		HashMap<String, Object> hmap = new ReviewService().updateReview(num);
 		
-		System.out.println("update hamp : " + hmap);
+		System.out.println("update hmap : " + hmap);
 		
 		String page = "";
 		
+		
 		if(hmap != null) {
 			page = "views/board/review/updateReviewForm.jsp";
-			
-			request.setAttribute("b", (Board)hmap.get("board"));
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
+			request.setAttribute("b", hmap.get("board"));
 			
 		} else {
 			page = "views/common/errorPage.jsp";
@@ -54,14 +55,6 @@ public class UpdateReviewServlet extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	}
 

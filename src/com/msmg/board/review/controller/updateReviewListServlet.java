@@ -41,7 +41,6 @@ public class updateReviewListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		
 		System.out.println("servletFileUpload 들어가기 전");
 		if(ServletFileUpload.isMultipartContent(request)) {
@@ -62,15 +61,19 @@ public class updateReviewListServlet extends HttpServlet {
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
 			String date = multiRequest.getParameter("date");
-			String boardid = multiRequest.getParameter("boardId");
+			String boardId = multiRequest.getParameter("boardId");
 			String boardFile = multiRequest.getParameter("board_file");
+			String fileNo = multiRequest.getParameter("file_no");
+			String boardSort = multiRequest.getParameter("board_sort");
+			String fileType = multiRequest.getParameter("FileType");
 			
+			System.out.println("boardId : " + boardId);
 			System.out.println("uCode : " + uCode);
-			System.out.println("boardId : " + boardid);
 			System.out.println("title : " + title);
 			System.out.println("content : " + content);
 			System.out.println("date : " + date);
-			
+			System.out.println("file_no : " + fileNo);
+			System.out.println("boardSort : " + boardSort);
 			
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
 			//저장한 파일의 이름을 저장할 arrayList를 생성한다.
@@ -115,9 +118,11 @@ public class updateReviewListServlet extends HttpServlet {
 			b.setTitle(title);
 			b.setContent(content);
 			b.setuCode(uCode);
-			b.setBoardId(Integer.parseInt(boardid));
+			b.setBoardId(Integer.parseInt(boardId));
+			b.setBoardSort(boardSort);
 			
 			
+			System.out.println("board b : " + b);
 			
 			//Attachment객체 생성해서 arrayList객체 생성
 			ArrayList<BoardFile> fileList = new ArrayList<BoardFile>();
@@ -128,7 +133,10 @@ public class updateReviewListServlet extends HttpServlet {
 				bf.setOrigin_name(originFiles.get(i));
 				bf.setEdit_name(saveFiles.get(i));
 				bf.setFile_date(day);
-				bf.setU_code(Integer.parseInt(uCode));				
+				bf.setU_code(Integer.parseInt(uCode));	
+				bf.setFile_no(Integer.parseInt(fileNo));
+				bf.setBoard_id(Integer.parseInt(boardId));
+				bf.setFile_type(fileType);
 				
 				fileList.add(bf);
 			}
