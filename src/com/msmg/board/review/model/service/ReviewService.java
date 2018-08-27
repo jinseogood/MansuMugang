@@ -133,12 +133,34 @@ public class ReviewService {
 		int result2 = new ReviewDao().updateBoardFile(con, fileList);
 		System.out.println("result2 : " + result2);
 		
+		if(result1 > 0) {
+			int bid = new ReviewDao().selectCurrval2(con);
+			System.out.println("ReviewService : " + bid);
+			
+			for(int i = 0; i < fileList.size(); i++) {
+				fileList.get(i).setBoard_id(bid);
+			}
+		}
+		
 		if(result1 > 0 && result2 > 0) {
 			commit(con);
 			result = 1;
 		}else {
 			rollback(con);
 		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteReviewBoardFile(String num) {
+		Connection con = getConnection();
+		
+		int result = new ReviewDao().deleteReviewBoardFile(con, num);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
 		
 		close(con);
 		

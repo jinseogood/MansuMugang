@@ -356,37 +356,36 @@ public class ReviewDao {
 			System.out.println("rset : " + rset);
 			
 			list = new ArrayList<BoardFile>();
-			System.out.println("list : " + list);
 			
 			while(rset.next()) {
 				b = new Board();
 				b.setBoardId(rset.getInt("board_id"));
 				b.setBoardNo(rset.getInt("board_no"));
-				b.setBoardSort(rset.getString("board_sort"));
 				b.setTitle(rset.getString("title"));
 				b.setContent(rset.getString("content"));
 				b.setBoardDate(rset.getDate("board_date"));
 				b.setuCode(rset.getString("u_name"));
 				b.setbCount(rset.getInt("b_count"));
 				b.setWriteYn(rset.getString("write_yn"));
+				b.setBoardSort(rset.getString("board_sort"));
+				
 				
 				System.out.println("b : " + b);
 				
 				bf = new BoardFile();
-				bf.setBoard_id(rset.getInt("board_id"));
 				bf.setOrigin_name(rset.getString("origin_name"));
 				bf.setEdit_name(rset.getString("edit_name"));
 				bf.setFile_src(rset.getString("file_src"));
 				bf.setFile_date(rset.getDate("file_date"));
 				bf.setFile_no(rset.getInt("file_no"));
-				bf.setBoard_sort(rset.getString("board_sort"));
 				bf.setFile_level(rset.getInt("file_level"));
-				
+				bf.setFile_type(rset.getString("file_type"));
 				
 				System.out.println("bf : " + bf);
 				
 				list.add(bf);
 			}
+			
 			
 			hmap = new HashMap<String, Object>();
 			hmap.put("board", b);
@@ -434,6 +433,7 @@ public class ReviewDao {
 		
 		String query = prop.getProperty("updateBoardFile");
 		
+		
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
 				
@@ -444,20 +444,73 @@ public class ReviewDao {
 				pstmt.setInt(4, fileList.get(i).getBoard_id());
 				pstmt.setInt(5, fileList.get(i).getU_code());
 				
-						
 				int level = 0;
 				if(i == 0) level = 0;
 				else level = 1;
 				
 				pstmt.setInt(6, level);
-				pstmt.setInt(7, fileList.get(i).getBoard_id());
 				
 				result += pstmt.executeUpdate();
 				
 			}
+			
+			System.out.println("reviewDao result : " + result);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectCurrval2(Connection con) {
+		System.out.println("selectCurrval2넘어옴");
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		int bid = 0;
+		
+		System.out.println("쿼리문 작성2");
+		String query = prop.getProperty("selectCurrval2");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			System.out.println("try rset :" + rset);
+			if(rset.next()) {
+				System.out.println("If rset : " + rset);
+				bid = rset.getInt("currval");
+				System.out.println("ReviewDao : " + bid);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+		}
+		
+		return bid;
+	}
+
+	public int deleteReviewBoardFile(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteReviewBoardFile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			close(pstmt);
 		}
 		
