@@ -33,16 +33,19 @@ public class writeReQnaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ucode = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
 		int bid = Integer.parseInt(request.getParameter("num"));
+		int ref_ucode = Integer.parseInt(request.getParameter("ref_ucode"));
+		
 		System.out.println("답글할 글 id " + bid);
 		int result = new QnaService().insertReQna(ucode, bid);
 		
 		String page = "";
 		
 		if(result > 0){
-		page = "/views/board/qna/readQnaDetail.qna?board_id="+bid;
+		page = "/views/board/qna/writeReQna.jsp";
 		request.setAttribute("bid", result);
 		request.setAttribute("ucode", ucode);
 		request.setAttribute("num", bid);
+		request.setAttribute("ref_ucode", ref_ucode);
 		}else{
 			page = "../../common/errorPage.jsp";
 			request.setAttribute("msg", "글쓰기 에러");

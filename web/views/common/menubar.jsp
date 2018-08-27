@@ -123,7 +123,7 @@
 	<% 
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
-			<div id = 'noticeAlert'><a href="<%= request.getContextPath() %>/qnaList.qna">
+			<div id = 'noticeAlert'><a onclick = 'moveQna();'>
 	  				<img src="/msmg/images/admin/adminAlertIcon.png" id="adminAlert">
   			</a></div>
 			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
@@ -181,6 +181,7 @@
 		</div>
 	</div>
 	<script>
+		
 		$(document).ready(function(){
 		    $("#menuContent").hover(function(){
 		        $("#submenubar").slideDown("slow");
@@ -189,14 +190,14 @@
 		    	$("#submenubar").slideUp("slow");
 		    });
 		    
-		    <% if(loginUser != null){ %>
-		    setInterval(function(){
+		   <% if(loginUser != null){ %>
+		    
 		    	$.ajax({
 		    		url : "checkAlert.qna",
 					data : {ucode:<%= loginUser.getU_code() %>},
 					type : "get",
 					success:function(data){
-						if(data == 1){
+						if(localStorage.getItem("checkVal") == 1 && data == 1){
 							$("#noticeAlert").css('display', 'inline-block');
 						}
 					},
@@ -206,18 +207,70 @@
 						console.log(status);
 						console.log(msg);
 					}
-		    	})
-		    }, 5000)
-		    <%} %>
+		    	});
 		    
+		    webSocket = new WebSocket('ws://localhost:8001'+ '<%=request.getContextPath()%>/unicast');
+			
+			// 웹 소켓을 통해 연결이 이루어 질 때 동작할 메소드
+			webSocket.onopen = function(event){
+				console.log("웹소켓 연결");
+				
+			};
+			
+			// 서버로부터 메시지를 전달 받을 때 동작하는 메소드
+			webSocket.onmessage = function(event){
+				onMessage(event);
+			};
+			
+			// 서버에서 에러가 발생할 경우 동작할 메소드
+			webSocket.onerror = function(event){
+				onError(event);
+			};
+			
+			// 서버와의 연결이 종료될 경우 동작하는 메소드
+			webSocket.onclose = function(event){
+				onClose(event);
+			};
+		    
+			function onMessage(event) {
+				var message = event.data.split("|");
+				
+				// 보낸 사람의 ID
+				var sender = message[0];
+				
+				// 전달한 내용
+				var content = message[1];
+				
+				if(content == "" || !sender.match(<%=loginUser.getU_code() %>)){
+					
+				} else {
+					localStorage.setItem("checkVal", 1);
+					$("#noticeAlert").css('display', 'inline-block');
+				}
+			}
+			
+			function onError(event) {
+				alert(event.data);
+			}
+			
+			function onClose(event) {
+				alert(event);
+			}
+			
+		<%} %> 
 		});
 		
 		function logout(){
 			var check = window.confirm("로그아웃 하시겠습니까?");
 			
 			if(check == true){
-				location.href = "<%= request.getContextPath() %>/logout.me"
+				location.href = "<%= request.getContextPath() %>/logout.me";
 			}
+		}
+		
+		function moveQna(){
+			localStorage.setItem("checkVal", 0);
+			location.href="<%= request.getContextPath() %>/qnaList.qna"
 		}
 	</script>
 </body>
