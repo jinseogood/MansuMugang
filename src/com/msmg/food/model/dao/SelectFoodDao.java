@@ -6,9 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -98,12 +100,21 @@ public class SelectFoodDao {
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("insertMenuBuy");
 		
+		long time = System.currentTimeMillis();
+		 
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMddhhmmss");
+		 
+		String nowTime = dayTime.format(new Date(time));
+		
+		String user_date = nowTime+list.get(0).getUcode();
+		
 		for(int i = 0 ; i < list.size() ; i++){
 			try {
 				pstmt = con.prepareStatement(query);
 			
 				pstmt.setString(1, list.get(i).getUcode());
 				pstmt.setString(2, list.get(i).getMcode());
+				pstmt.setString(3, user_date);
 			
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
@@ -136,6 +147,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getString("menu_code"));
 					
 					list.add(ml);
 				}
@@ -172,6 +184,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getString("menu_code"));
 					
 					list.add(ml);
 				}
@@ -208,6 +221,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getString("menu_code"));
 					
 					list.add(ml);
 				}

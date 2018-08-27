@@ -3,6 +3,7 @@ package com.msmg.food.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,6 +48,21 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		int result = new FoodService().insertMenuBuy(list);
 		
+
+		String page = "";
+		
+		if(result > 0){
+			page = "/views/payment/paymentPage.jsp";
+			request.setAttribute("list", list);
+			request.setAttribute("msg", "결제페이지로 이동");
+		}else{
+			page = "/views/common/errorPage.jsp";
+			request.setAttribute("msg", "결제할 메뉴가 없습니다.");
+		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

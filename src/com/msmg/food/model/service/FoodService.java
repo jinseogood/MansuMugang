@@ -30,7 +30,7 @@ public class FoodService {
 		int result = new SelectFoodDao().insertMenuBuy(con, list);
 		
 		close(con);
-		return 0;
+		return result;
 	}
 
 	public ArrayList<MenuList> menuListG() {

@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -96,37 +97,52 @@
 
 table td {
 	height: 200px;
-	width: 30%px;
+	width: 30% px;
 }
+
 td .info {
-	height:70px;
+	height: 70px;
 }
 
 td .like {
 	text-align: right;
-	font-size:20px;
+	/* font-size:20px; */
 }
-@media ( max-width: 1023px ) {
-        .images{
-        	float: none;
-       		width: auto;
-       		height:auto;
-        }
-         .topMenuImg{
- 	 		float: none;
-       		width:auto
-        }
-        .topMenu{
-			display:block;
-			width:auto;
-			height:auto;
-		}
+
+.like>a {
+	text-decoration: none;
+}
+.fa {
+    font-size: 25px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.fa:hover {
+  color: darkblue;
+}
+@media ( max-width : 1023px ) {
+	.images {
+		float: none;
+		width: auto;
+		height: auto;
 	}
-	@media ( max-width: 767px ) {
-        .topMenu{
-			height:auto;
-		} 
-	} 
+	.topMenuImg {
+		float: none;
+		width: auto
+	}
+	.topMenu {
+		display: block;
+		width: auto;
+		height: auto;
+	}
+}
+
+@media ( max-width : 767px ) {
+	.topMenu {
+		height: auto;
+	}
+}
 </style>
 </head>
 <body>
@@ -171,7 +187,10 @@ td .like {
 											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
 									</div>
 									<div class="info"><%=list.get(i).getMenu_info()%></div>
-									<div class="like" text-align="right">♡♥</div>
+									<div class="like" text-align="right">
+										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">
+										<i onclick="myFunction(this)" class="fa fa-thumbs-down"></i>
+									</div>
 								</div>
 							</div>
 						</td>
@@ -197,5 +216,26 @@ td .like {
 	<div id="mainBottom">
 		<%@include file="../common/footer.jsp"%>
 	</div>
+	<script>
+	function myFunction(x) {
+	    x.classList.toggle("fa-thumbs-up");
+	    
+	   /*  var firstNum = $("#firstNum").val();
+		var secondNum = $("#secondNum").val();
+		
+		$.ajax({
+			url:"test3.do",
+			type:"get",
+			data:{firstNum:firstNum, secondNum:secondNum},
+			success:function(data){ //response.getWriter().print의 값이 data로 넘어온다
+				$("#p2").text(data); //여러개 넘겨줘도 하나의 문자열로 합쳐져서 넘어옴
+			},
+			error:function(data){
+				console.log("실패");
+			}
+			
+		}); */
+	}
+	</script>
 </body>
 </html>
