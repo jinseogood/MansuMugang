@@ -105,10 +105,13 @@ public class DestinationDao {
 			while(rset.next()){
 				d = new Destination();
 				
+				d.setDestination_no(rset.getInt("destination_no"));
 				d.setDestionation(rset.getString("des"));
 				
 				list.add(d);
 			}
+			
+			System.out.println("dao:" + list);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

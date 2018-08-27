@@ -50,7 +50,7 @@ public class CommonServlet extends HttpServlet {
 		String ucode = request.getParameter("u_code");
 		
 		if(destination1 != null && destination2 != null && destination3 != null){
-			finDest = postcode + "{*}" + destination1 + "{*}" + destination2 + "{*}" + destination3;
+			finDest = postcode + "h8282h" + destination1 + "h8282h" + destination2 + "h8282h" + destination3;
 		};
 
 		Destination d = new Destination();

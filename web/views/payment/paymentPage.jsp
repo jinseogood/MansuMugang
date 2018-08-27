@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*"%>
-<% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("list"); 
-	String[][] add = new String[4][3];
+	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*,com.msmg.food.model.vo.*"%>
+<% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("desList"); 
+	int totalprice = (int)request.getAttribute("totalprice");
+  	int day = (int)request.getAttribute("day");
+	int ggi = (int)request.getAttribute("ggi");
+
+	String[][] add = new String[3][4];
 %>
 
-<% 
+<%-- <% 
 	Payment p = (Payment)session.getAttribute("u_code");
 	/* p.getMenu_code();
 	p.getBuy_date();
@@ -14,18 +18,19 @@
 
 <% 
 	PaymentInfo pi = (PaymentInfo)session.getAttribute("buy_no");
-%>
+%> --%>
  
-<% if(list != null){
-for(int i = 0; i < list.size(); i++){
+<% 
+	if(list != null){
+	for(int i = 0; i < list.size(); i++){
 	
-	String[] add2 = list.get(i).getDestionation().split("{*}");
+		String[] add2 = list.get(i).getDestionation().split("h8282h");
 	
-	for(int j = 0; j < add2.length; j++){
-		add[i][j] = add2[j];
-	}
+		for(int j = 0; j < add2.length; j++){
+			add[i][j] = add2[j];
+		}
 	
-}}
+	}}
 %>
 
 
@@ -251,11 +256,11 @@ section {
 				<div class="tbl-content table1">
 					<table cellpadding="0" cellspacing="0" border="0">
 						<tbody>
-							<tr>
-								<td>(상품정보)</td>
+							<tr>  
+								<td><%=day%>일 <%=ggi%>끼</td>
 								<!-- <td>(수량)</td> -->
 								<!-- <td>(예정일)</td> -->
-								<td>(____원)</td>
+								<td><%=totalprice %>원</td>
 							</tr>
 						</tbody>
 					</table>
@@ -622,8 +627,8 @@ section {
 																				pg : "inicis",
 																				pay_method : "card",
 																				merchant_uid : 'merchant_'+ new Date().getTime(),
-																				name : "노르웨이 회전 의자",
-																				amount : 100,
+																				name : "ㅠㅠ",
+																				amount : <%= totalprice%>,
 																				buyer_email : $('#buyer_email').val(),
 																				buyer_name : $('#receiver').val(),
 																				buyer_tel : $('#buyer_tel').val(),
@@ -652,21 +657,24 @@ section {
 																									<%-- <%= pi.setSort("구매완료")%>
 																									<%= pi.setBuy_sort("카드결제") %> --%>
 																									
-																									
-																									
 																									function(data) {
 																							
-																										if($("#AddrSaveCheck").is(":checked")){
+																										/* if($("#AddrSaveCheck").is(":checked")){ */
 																											
 																											$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
 																											$("#com").submit();
 																											
-																										} else {
+																											location.href = "<%=request.getContextPath()%>/updateOrder.pm?s=";
 																											
-																											location.href = "paymentConfirm.jsp";
-																										}
+																										/* } else { */
+																											
+																											/* location.href = "paymentConfirm.jsp"; */
+																										/* } */
 	
-																									})
+																									}
+																									
+																							
+																								 )
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 																				}
@@ -676,9 +684,6 @@ section {
 															
 															<%-- <%= pi.setSort("결제대기")%>
 															<%= pi.setBuy_sort("무통장결제") %> --%>
-															
-															$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
-															$("#com").submit();
 															
 															alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
 															location.href = "/msmg/views/member/OrderHistory.jsp";
