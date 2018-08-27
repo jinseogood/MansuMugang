@@ -4,13 +4,16 @@
 <%
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
+	
+	BoardFile detail[] = new BoardFile[fileList.size()];
+	
 %>
 
 <!DOCTYPE>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>썸네일 삽입</title>
+<title>후기게시판 글 수정</title>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -20,7 +23,6 @@
 <!-- include summernote css/js-->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-
 
 <style>
  
@@ -114,6 +116,12 @@ hr {
 }
 
 #content {
+	width:800px;
+	height:400px;
+}
+
+#content22 {
+	width:800px;
 	height:400px;
 }
 
@@ -148,6 +156,14 @@ div[id=date-writer-hit2] {
 	float:left;
 }
 
+.btn{
+	color:white;
+}
+
+.btn:hover{
+	color:white;
+}
+
 </style>
 </head>
 <body>
@@ -160,7 +176,7 @@ div[id=date-writer-hit2] {
 		<br>
 		<div id="view">
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
-		<form action="<%=request.getContextPath() %>/update.rev" method="post" encType="multipart/form-data">
+		<form action="<%=request.getContextPath() %>/updateList.rev" method="post" accept-charset="UTF-8" encType="multipart/form-data">
 			<table id="tableView">
 				<tr id="tableView2" style="border-bottom: 1px solid lightgray">
 					<td class="titleN" id="title">제목</td>
@@ -170,52 +186,174 @@ div[id=date-writer-hit2] {
 					<td><input type="text" name="date" id="date2"
 						style="background-color: transparent; border: 0 solid black; text-align: center; width: 250px;" 
 						value="<%=df.format(new Date())%>" readonly></td>
-					<td><input type="hidden" value="<%=b.getBoardId() %>"></td>
+					<td><input type="hidden" name="boardId" value="<%=b.getBoardId() %>"></td>
 					
 				</tr>
-				<table id="ImgTable" align="center">
-				
+				<table id="ImgTable">
 				<tr>
-				<div id="date-writer-hit2">
-				<span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
-				<span>
-					<div id="rightArea">
-					<span id="count" style="width:50px;" value="<%= b.getbCount() %>">조회수 : <%= b.getbCount() %></span>
-					</div>
-				</span>
-					<td><textArea id="content"name="content" row="10" cols="90"
-						style="resize:none;" ><%=b.getContent() %></textArea></td>
+					<td><input type="text" id="content22" name="content"
+						style="resize:none;" value="<%=b.getContent()%>"></input></td>
+					<td><input type="hidden" id="count" value="<%=b.getbCount()%>"></td>
+					<td><input type="hidden" id="boardId" value="<%=b.getBoardId()%>"></td>
 				</tr>
 				<tr>
 				<div>
-					<%for (int i = 0; i < fileList.size(); i++) {%>
-					<%	  BoardFile detail = fileList.get(i);    %>
-							<td>
-							<div>
+					<td>
+					<div id="contentImg">
+						<%if(fileList.size() == 1){
+							detail[0] = fileList.get(0);  %>
 							<div class="con" id="contentImgArea1">
-								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[0].getEdit_name()%>">
 							</div>
+							<div class="con" id="contentImgArea2" style="display:none;">
+								<img id="contentImg2" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea3" style="display:none;">
+								<img id="contentImg3" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea4" style="display:none;">
+								<img id="contentImg4" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea5" style="display:none;">
+								<img id="contentImg5" width="120px" height="100px">
+							</div>
+							<%}%>
 							
+							<%if(fileList.size() == 2){
+							detail[0] = fileList.get(0);
+							detail[1] = fileList.get(1); %>
+							<div class="con" id="contentImgArea1">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[0].getEdit_name()%>">
 							</div>
-							</td>
-					<%} %>
+							<div class="con" id="contentImgArea2">
+								<img id="contentImg2" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[1].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea3" style="display:none;">
+								<img id="contentImg3" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea4" style="display:none;">
+								<img id="contentImg4" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea5" style="display:none;">
+								<img id="contentImg5" width="120px" height="100px">
+							</div>
+							<% }%>
+							
+							<%if(fileList.size() == 3){
+							detail[0] = fileList.get(0);
+							detail[1] = fileList.get(1);
+							detail[2] = fileList.get(2);%>
+							<div class="con" id="contentImgArea1">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[0].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea2">
+								<img id="contentImg2" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[1].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea3">
+								<img id="contentImg3" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[2].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea4" style="display:none;">
+								<img id="contentImg4" width="120px" height="100px">
+							</div>
+							<div class="con" id="contentImgArea5" style="display:none;">
+								<img id="contentImg5" width="120px" height="100px">
+							</div>
+							<% }%>
+							
+							<%if(fileList.size() == 4){
+							detail[0] = fileList.get(0);
+							detail[1] = fileList.get(1);
+							detail[2] = fileList.get(2);
+							detail[3] = fileList.get(3);%>
+							<div class="con" id="contentImgArea1">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[0].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea2">
+								<img id="contentImg2" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[1].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea3">
+								<img id="contentImg3" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[2].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea4">
+								<img id="contentImg4" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[3].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea5">
+								<img id="contentImg5" width="120px" height="100px">
+							</div>
+							<%}%>
+							
+							<%if(fileList.size() == 5){
+							detail[0] = fileList.get(0);
+							detail[1] = fileList.get(1);
+							detail[2] = fileList.get(2);
+							detail[3] = fileList.get(3);
+							detail[4] = fileList.get(4);%>
+							<div class="con" id="contentImgArea1">
+								<img id="contentImg1" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[0].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea2">
+								<img id="contentImg2" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[1].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea3">
+								<img id="contentImg3" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[2].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea4">
+								<img id="contentImg4" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[3].getEdit_name()%>">
+							</div>
+							<div class="con" id="contentImgArea5">
+								<img id="contentImg5" width="120px" height="100px" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail[4].getEdit_name()%>">
+							</div>
+							<%}%>
+						
+					</div>
+				</td>
 					
 				</div>
 				</tr>
 				</table>
+				
 				<p>이미지 추가 (최대 5개)</p>
+				<%if(fileList.size() == 1) {%>
 				<div id="AddBtn" onclick="AddButton();"><i class="far fa-plus-square fa-lg"></i></div>
 				<div id="AddBtn2" onclick="AddButton2();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn3" onclick="AddButton3();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn4" onclick="AddButton4();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn5" onclick="AddButton5();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<%} else if (fileList.size() == 2){%>
+				<div id="AddBtn2" onclick="AddButton2();"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn3" onclick="AddButton3();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn4" onclick="AddButton4();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn5" onclick="AddButton5();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<%} else if(fileList.size() == 3) {%>
+				<div id="AddBtn3" onclick="AddButton3();"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn4" onclick="AddButton4();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<div id="AddBtn5" onclick="AddButton5();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
+				<%} else if(fileList.size() == 4) {%>
+				<div id="AddBtn4" onclick="AddButton4();"><i class="far fa-plus-square fa-lg"></i></div>
+				<%} else if(fileList.size() == 5) {%>
+				
+				<%} %>
+				
 				<script>
 					function AddButton(){
-		        			$("#contentImgArea4").show();
-		        			$("#AddBtn").hide();
-		        			$("#AddBtn2").show();
-		       		}
-					
-					function AddButton2(){
-							$("#contentImgArea5").show();
+	        			$("#contentImgArea2").show();
+	        			$("#AddBtn").hide();
+	        			$("#AddBtn2").show();
 					}
+	        			
+	        		function AddButton2(){
+		        		$("#contentImgArea3").show();
+		        		$("#AddBtn2").hide();
+		        		$("#AddBtn3").show();
+	        		}
+		        	function AddButton3(){
+			        	$("#contentImgArea4").show();
+			        	$("#AddBtn3").hide();
+			        	$("#AddBtn4").show();
+		        	}
+			        function AddButton4(){
+			        	$("#contentImgArea5").show();
+	       			}
 				</script> 
 				
 			</table>
@@ -225,13 +363,14 @@ div[id=date-writer-hit2] {
 				<input type="file" id="thumbnailImg3" name="thumbnailImg3" multiple onchange="loadImg(this, 3)">
 				<input type="file" id="thumbnailImg4" name="thumbnailImg4" multiple onchange="loadImg(this, 4)">
 				<input type="file" id="thumbnailImg5" name="thumbnailImg5" multiple onchange="loadImg(this, 5)">
+			
 			</div>
 		<hr>
 		<br>
 		<div id="writeBtn">
-			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
+			<button type="button" class="btn" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
 			&nbsp;
-			<button id="updateBtn" type="submit" class="btn btn-primary" >수정 완료</button>
+			<button id="updateBtn" type="submit" class="btn" >수정 완료</button>
 		</div>
 		</form>
 	</div>
@@ -240,7 +379,7 @@ div[id=date-writer-hit2] {
 <script>
 	$(function(){
 		$("#fileArea").hide();
-	
+		
 		$("#contentImgArea1").click(function(){
 			$("#thumbnailImg1").click();
 		});
@@ -260,7 +399,6 @@ div[id=date-writer-hit2] {
 		$("#contentImgArea5").click(function(){
 			$("#thumbnailImg5").click();
 		});
-		
 	});
 	
 	function loadImg(value, num){
@@ -268,7 +406,6 @@ div[id=date-writer-hit2] {
 			var reader = new FileReader();
 			reader.onload = function(e){
 				switch(num){
-					/* case 1 : $("#titleImg").attr("src", e.target.result); break; */
 					case 1 : $("#contentImg1").attr("src", e.target.result); break;
 					case 2 : $("#contentImg2").attr("src", e.target.result); break;
 					case 3 : $("#contentImg3").attr("src", e.target.result); break;
@@ -278,13 +415,15 @@ div[id=date-writer-hit2] {
 			}
 			reader.readAsDataURL(value.files[0]);
 		}
-		
 	}
-	$(function(){
+	
+	<%-- $(function(){
 		$("#updateBtn").click(function(){
+			console.log("등록완료 버튼 누름");
+			
 			var bid = <%= b.getBoardId()%>
 			var title = $("#title2").val();
-			var content = $("#content").val();
+			var content = $("#content22").val();
 			var date = $("#date2").val();
 			var count = $("#count").val();
 			
@@ -303,20 +442,19 @@ div[id=date-writer-hit2] {
 						title2.focus();
 						return;
 					}
-					if(!summernote.value){
+					if(!content22.value){
 						alert("내용을 입력하세요.")
-						summernote.focus();
+						content22.focus();
 						return;
 					}
-					
-					location.href = "/msmg/selectList.bo";
+					location.href = "/msmg/selectList.rev";
 				},
 				error:function(data){
 					console.log("실패");
 				}
 			});
 		});
-	});
+	}); --%>
 </script>
 	
 <div id="mainBottom">

@@ -34,8 +34,9 @@
 
 #outer {
 	width: 800px;
-	height:1300px;
+	min-height:1300px;
 	margin:0 auto;
+	margin-bottom:700px;
 }
 
 #detail {
@@ -163,6 +164,7 @@ div[id=date-writer-hit2] {
 }
 
 
+
 </style>
 </head>
 <body>
@@ -191,14 +193,12 @@ div[id=date-writer-hit2] {
 					<%	  BoardFile detail = fileList.get(i);    %>
 						<tr>
 							<td>
-								<div class="detailImgArea">
+								<div class="detailImgArea" align="center">
 								<img id="detailImg1" class="detailImg" src="<%= request.getContextPath()%>/thumbnail_uploadFiles/<%=detail.getEdit_name()%>">
 								</div>
 							</td>
 						</tr> 
 					<%} %>
-					
-					
 					</table>
 					<tr>
 						<td>

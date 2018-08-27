@@ -205,7 +205,7 @@ public class BoardDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, r.getU_code());
 			pstmt.setString(2, r.getRe_content());
-			pstmt.setInt(3, r.getBoard_id());
+			pstmt.setString(3, r.getBoard_id());
 			
 			result = pstmt.executeUpdate();
 			
@@ -218,7 +218,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public ArrayList<Reply> selectReplyList(Connection con, int boardId) {
+	public ArrayList<Reply> selectReplyList(Connection con, String boardId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Reply r = null;
@@ -228,7 +228,7 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, boardId);
+			pstmt.setString(1, boardId);
 			
 			System.out.println("boardId Dao:"+boardId);
 			
@@ -240,7 +240,7 @@ public class BoardDao {
 				r.setBoard_sort(rset.getString("board_sort"));
 				r.setRe_content(rset.getString("re_content"));
 				r.setU_code(rset.getString("u_name"));
-				r.setBoard_id(rset.getInt("board_id"));
+				r.setBoard_id(rset.getString("board_id"));
 				r.setRe_date(rset.getDate("re_date"));
 				
 				
@@ -340,15 +340,21 @@ public class BoardDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, num);
+			pstmt.setString(2, num);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				b = new Board();
 				
+				b.setuCode(rset.getString("u_name"));
+				b.setBoardId(rset.getInt("board_id"));
 				b.setBoardNo(rset.getInt("board_no"));
 				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
 				b.setBoardDate(rset.getDate("board_date"));
+				
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -371,15 +377,20 @@ public class BoardDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, num);
+			pstmt.setString(2, num);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				b = new Board();
 				
+				b.setuCode(rset.getString("u_name"));
+				b.setBoardId(rset.getInt("board_id"));
 				b.setBoardNo(rset.getInt("board_no"));
 				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
 				b.setBoardDate(rset.getDate("board_date"));
+				
 			}
 			System.out.println("nextB : " + b);
 			

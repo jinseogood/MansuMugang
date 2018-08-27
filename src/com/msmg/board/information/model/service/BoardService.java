@@ -96,7 +96,7 @@ public class BoardService {
 		Connection con = getConnection();
 		ArrayList<Reply> replyList = null;
 		
-		replyList = new BoardDao().selectReplyList(con, Integer.parseInt(num));
+		replyList = new BoardDao().selectReplyList(con, num);
 		System.out.println("serviceReply:"+replyList);
 		
 		close(con);
@@ -153,6 +153,8 @@ public class BoardService {
 	}
 
 	public Board selectPreB(String num) {
+		System.out.println("selectPreB" + num);
+		
 		Connection con = getConnection();
 		
 		Board preB = new BoardDao().selectPreB(con, num);
