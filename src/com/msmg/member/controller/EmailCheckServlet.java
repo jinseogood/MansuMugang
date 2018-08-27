@@ -30,8 +30,10 @@ public class EmailCheckServlet extends HttpServlet {
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       
       String userId = request.getParameter("userId");
-     
+      String authenticationNum = "";
       int result = new MemberService().EmailCheck(userId);
+      
+      System.out.println(userId);
       
       //기존 회원 여부 확인
       String page = "";
@@ -42,14 +44,15 @@ public class EmailCheckServlet extends HttpServlet {
      
       }else{
          
-         String authenticationNum = randomStr();
-         String subject = "이메일 인증을 진행해 주세요.";
-         String text = "만수무강에 오신걸 진심으로 환영합니다."
+         authenticationNum = randomStr();
+         String subject = "만수무강에 오신것을 진심으로 환영합니다! 이메일 인증을 진행해 주세요.";
+         String text = "\n만수무강에 오신걸 진심으로 환영합니다."
                    + "\n이메일 인증을 통해 회원가입을 완료해주시기 바랍니다."
                   + "\n이메일 인증을 완료하시면, 만수무강의 모든 서비스를 이용하실 수 있습니다. "
                   + "\n타인에게 정보가 유출될 경우 악용의 우려가 있으니 노출되지 않도록 각별히 주의하시기 바랍니다."
                   + "\n궁금하신 사항은 만수무강 고객센터(080-777-8281)로 연락 주시면 성심 성의껏 상담해드리겠습니다. 감사합니다."
-                  + "\n<인증번호 : " + authenticationNum + ">";
+                  + "\n\n<인증번호 : " + authenticationNum + ">"
+                  + "\n\n\n\n\n\n\n\n\n\n\n";
          
          String username = "mansumugang4444@gmail.com";
          String password = "msmgmsmg4444";
@@ -93,10 +96,16 @@ public class EmailCheckServlet extends HttpServlet {
               }
               
          response.getWriter().println(authenticationNum);
+         
       }
       
-      /*RequestDispatcher view = request.getRequestDispatcher(page);
-      view.forward(request, response);*/
+		
+		page = "views/member/MemberJoinForm.jsp";
+		request.setAttribute("authenticationNum", authenticationNum);
+		
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
       
    }
    

@@ -11,7 +11,7 @@
 	$(function() {
 
 	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),
+	        $window    = $(window),ㅇ
 	        offset     = $sidebar.offset(),
 	        topPadding = 15;
 

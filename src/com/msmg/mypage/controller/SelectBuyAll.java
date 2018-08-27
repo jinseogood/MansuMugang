@@ -3,6 +3,7 @@ package com.msmg.mypage.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +41,14 @@ public class SelectBuyAll extends HttpServlet {
 		ba.setU_code(ucode);
 
 		ArrayList<BuyAll> bList = new MypageService().selectBuyAll(ba);
+		
+		String page = "";
+		
+		page = "views/member/OrderHistory.jsp";
+		request.setAttribute("bList", bList);
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 

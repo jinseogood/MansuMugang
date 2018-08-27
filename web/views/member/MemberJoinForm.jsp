@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% String authenticationNum = (String)request.getAttribute("authenticationNum"); 
+System.out.println(authenticationNum);%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,17 +144,17 @@ div a {
 	</div>
 	<div id="main" align="center">
 		<section>
-			<form name="f" action="<%= request.getContextPath() %>/insertMember.me" method="post">
+			<form name="f"<%--  action="<%= request.getContextPath() %>/insertMember.me"  --%>method="post">
 			<div class="tbl-content table1" align="center">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" id="userId" name="userId"><div class="w3-button w3-ripple w3-yellow" id="idCheck" onclick="return idCheck();">중복확인</div></button></td>
+							<td><input type="text" id="userId" name="userId"> <div class="w3-button w3-ripple w3-yellow" id="idCheck" onclick="return idCheck();">중복확인</div> <div class="w3-button w3-ripple w3-yellow" id="emailCheck" onclick="return emailCheck();">인증번호 발송</div></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
-							<td><input type="text"> <div class="w3-button w3-ripple w3-yellow" onclick="location.href='<%=request.getContextPath()%>/emailCheck.me'">확인</div></td>
+							<td><input type="text" name="cerNum" id="cerNum"> <div class="w3-button w3-ripple w3-yellow" id="cerNum" onclick="return cerNum();">확인</div></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
@@ -278,7 +280,7 @@ div a {
 
 제1조(목적) <br>
 <br>
-이 약관은 장터넷 주식회사 회사(전자거래 사업자)가 운영하는 동물사랑APS 사이버 몰(이하 "몰"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 사이버몰과 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다. <br>
+이 약관은 장터넷 주식회사 회사(전자거래 사업자)가 운영하는 만수무강 사이버 몰(이하 "몰"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 사이버몰과 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다. <br>
 ※ 「PC통신등을 이용하는 전자거래에 대해서도 그 성질에 반하지 않는 한 이 약관을 준용합니다」 <br>
 <br>
 <br>
@@ -301,11 +303,11 @@ div a {
 										<div class="tooltip">
  										 <span class="tooltiptext">
     									1. 개인정보 수집에 대한 동의 <br>
-동물사랑APS은 이용자의 개인정보보호방침 또는 이용약관의 내용에 대해 「동의합니다」버튼 또는 「동의하지 않습니다」버튼을 클릭할 수 있는 절차를 마련하여, 「동의합니다」버튼을 클릭하면 개인정보 수집에 대해 동의한 것으로 봅니다.<br>
+    									만수무강은 이용자의 개인정보보호방침 또는 이용약관의 내용에 대해 「동의합니다」버튼 또는 「동의하지 않습니다」버튼을 클릭할 수 있는 절차를 마련하여, 「동의합니다」버튼을 클릭하면 개인정보 수집에 대해 동의한 것으로 봅니다.<br>
 <br>
 2. 개인정보의 수집목적 및 이용목적<br>
 "개인정보"라 함은 생존하는 개인에 관한 정보로서 당해 정보에 포함되어 있는 성명, 휴대폰번호 등의 사항에 의하여 당해 개인을 식별할 수 있는 정보(당해 정보만으로는 특정 개인을 식별할 수 없더라도 다른 정보와 용이하게 결합하여 식별할 수 있는 것을 포함)를 말합니다.<br>
-대부분의 서비스는 별도의 사용자 등록이 없이 언제든지 사용할 수 있습니다. 그러나 동물사랑APS은 회원서비스를 통하여 이용자들에게 맞춤식 서비스를 비롯한 보다 더 향상된 양질의 서비스를 제공하기 위하여 다음과 같은 목적으로 이용자 개인의 정보를 수집 · 이용하고 있습니다.<br>
+대부분의 서비스는 별도의 사용자 등록이 없이 언제든지 사용할 수 있습니다. 그러나 만수무강은 회원서비스를 통하여 이용자들에게 맞춤식 서비스를 비롯한 보다 더 향상된 양질의 서비스를 제공하기 위하여 다음과 같은 목적으로 이용자 개인의 정보를 수집 · 이용하고 있습니다.<br>
 <br>
 - 성명, 아이디, 비밀번호, 닉네임 : 회원제 서비스 이용에 따른 본인 확인 절차에 이용<br>
 - 이메일, 휴대폰번호 : 고지사항 전달, 불만처리 등을 위한 원활한 의사소통 경로의 확보, 새로운 서비스 및 신상품이나 이벤트 정보 등의 안내<br>
@@ -332,7 +334,7 @@ div a {
 재단은 이용자에 대하여 보다 더 질 높은 서비스 제공을 위해 아래와 같이 이용자의 개인정보 처리 업무를 외부전문업체에 위탁하고 있습니다.<br>
 <br>
 "이용자"는 위 개인정보에 수집 및 이용에 동의하지 않을 권리가 있습니다.<br>
-다만 동의를 거부할 경우 서비스 이용에 장애(자연이랑 물품 구매 및 배송 등)가 있을 수 있습니다.<br>
+다만 동의를 거부할 경우 서비스 이용에 장애(만수무강 물품 구매 및 배송 등)가 있을 수 있습니다.<br>
 <br>
 개인정보 수탁자로 표기된 모두에게 (제공되는)개인정보 항목에 있는 정보가 전달되는 것이 아니라,회원이 특정(요청)또는 거래하는 자에게만 정보가 전달 됩니다. <br>
 따라서 이용자께서 특정(요청) 또는 거래하지 않는(은)자에게는 동의란에 표시 하시더라도 회원님의 개인정보가 공유되지 않습니다.<br>
@@ -349,7 +351,7 @@ div a {
  										 <span class="tooltiptext">
     									개인정보 제3자 제공<br>
 <br>
-자연이랑은 이용자가 소속회사로부터 지원금 혜택을 받는 경우 이용자의 주문에 대한 원활한 지원금 지원 및 급여공제 등을 위해 이용자가 소속된 회사 등(회사 등의 담당자에 한 함)에 개인정보를 제공할 수 있습니다.<br>
+만수무강은 이용자가 소속회사로부터 지원금 혜택을 받는 경우 이용자의 주문에 대한 원활한 지원금 지원 및 급여공제 등을 위해 이용자가 소속된 회사 등(회사 등의 담당자에 한 함)에 개인정보를 제공할 수 있습니다.<br>
 <br>
 										</span>
 										</div>
@@ -385,7 +387,7 @@ div a {
 						<div class="clear"></div>
 							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성하기">
 							<!-- <input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기" onclick="validation();"> -->
-							<button onclick="return validation();" class="w3-button w3-ripple w3-yellow">가입하기</button>
+							<button onclick="return validation();" class="w3-button w3-ripple w3-yellow" onclick="">가입하기</button>
 
 						</td>
 					</tr>
@@ -422,6 +424,43 @@ div a {
 			});
 		});
 	});
+	
+	
+	$(function emailCheck(){
+		$("#emailCheck").click(function(){
+			var userId = $("#userId").val();
+			console.log(userId);
+			$.ajax({
+				url:"/msmg/emailCheck.me",
+				type:"post",
+				data:{userId:userId},
+				success:function(data){
+					console.log(data);
+					if(data == "fail"){
+						alert("아이디가 중복됩니다. 다른 아이디로 변경해주세요."); return false;
+					}else{
+						alert("인증번호를 입력해주세요.");
+						return true;
+					}
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+	});
+	
+	function cerNum(){
+		console.log("function cerNum");
+		var cerNum = $('#cerNum').val();
+		if(cerNum == authenticationNum){
+			alert("이메일 인증이 완료되었습니다."); return true;
+		}else{
+			alert("이메일 인증에 실패하셨습니다. 인증번호를 확인해주세요."); return false;
+		}
+	}
+	
+	
 	
 	$(function(){ //전체선택 체크박스 클릭
 		$("#allCheck").click(function(){ //만약 전체 선택 체크박스가 체크된상태일경우
@@ -467,6 +506,11 @@ div a {
 					}
 				}
 			}
+		}
+		
+		function join(){
+			$("#f").attr("action", '<%=request.getContextPath()%>/insertMember.me');
+   	   		$("#f").submit();
 		}
 
 		/* 
