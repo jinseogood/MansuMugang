@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.food.model.service.FoodService;
 import com.msmg.food.model.vo.Buy;
+import com.msmg.payment.model.service.DestinationService;
+import com.msmg.payment.model.vo.Destination;
 
 @WebServlet("/insertBuy.fo")
 public class InsertBuyFoodServlet extends HttpServlet {
@@ -34,6 +36,8 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		String ucode = request.getParameter("user");
 		String[] mcode = resultlist.split(", ");
 		
+		ArrayList<Destination> desList = new DestinationService().selectList(ucode);
+		
 		ArrayList<Buy> list = new ArrayList<Buy>();
 		
 		if(mcode != null){
@@ -53,7 +57,12 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		if(result > 0){
 			page = "/views/payment/paymentPage.jsp";
-			request.setAttribute("list", list);
+			request.setAttribute("totalprice", total_price);
+			request.setAttribute("day", day);
+			request.setAttribute("ggi", ggi);
+			request.setAttribute("side", side);
+			request.setAttribute("buyList", list);
+			request.setAttribute("desList", desList);
 			request.setAttribute("msg", "결제페이지로 이동");
 		}else{
 			page = "/views/common/errorPage.jsp";
