@@ -258,7 +258,7 @@
 			<div class = "btn2"><a href = "#">
 				<img src = "/msmg/images/button/basketbutton.png">
 			</a></div>
-			<div class = "btn2 throw"><a href = "#">
+			<div class = "btn2 throw"><a href="#">
 				<img src = "/msmg/images/button/paybutton.png">
 			</a></div>
 	</div>

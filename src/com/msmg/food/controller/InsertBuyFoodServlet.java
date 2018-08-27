@@ -46,6 +46,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		}
 		
 		int result = new FoodService().insertMenuBuy(list);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
