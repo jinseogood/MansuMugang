@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -92,13 +93,17 @@ public class SelectInfoBoardServlet extends HttpServlet {
 		
 		System.out.println("servlet pi : " + pi);
 		System.out.println("servlet infoList : " + infoList);
+		
+		HashMap<String, Object> hmap=new HashMap<String, Object>();
+		hmap.put("pi", pi);
+		hmap.put("infoList", infoList);
 					
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		Gson gson=new Gson();
 		//gson.toJson(pi, response.getWriter());
-		gson.toJson(infoList, response.getWriter());
+		gson.toJson(hmap, response.getWriter());
 		//new Gson().toJson(infoList, response.getWriter());
 	}
 
