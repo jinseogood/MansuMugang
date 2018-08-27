@@ -100,4 +100,92 @@ public class InfoDao {
 		return infoList;
 	}
 
+	public int getSearchListCount(String type, String content, Connection con) {
+		int sListCount=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("title")){
+			query=prop.getProperty("iTitleListCount");
+		}
+		else if(type.equals("u_name")){
+			query=prop.getProperty("iUNameListCount");
+		}
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				sListCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return sListCount;
+	}
+
+	public ArrayList<Info> searchInfoList(int currentPage, int limit, String type, String content, Connection con) {
+		ArrayList<Info> sInfoList=new ArrayList<Info>();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("title")){
+			query=prop.getProperty("searchITitleListPaging");
+		}
+		else if(type.equals("u_name")){
+			query=prop.getProperty("searchIUNameListPaging");
+		}
+		
+		try {
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			pst.setInt(2, startRow);
+			pst.setInt(3, endRow);
+			
+			rset=pst.executeQuery();
+			
+			while(rset.next()) {
+				Info info = new Info();
+				
+				info.setBoardId(rset.getInt("board_id"));
+				info.setBoardNo(rset.getInt("board_no"));
+				info.setBoardSort(rset.getString("board_sort"));
+				info.setTitle(rset.getString("title"));
+				info.setContent(rset.getString("content"));
+				info.setBoardDate(rset.getDate("board_date"));
+				info.setuCode(rset.getString("u_name"));
+				info.setBuyInfoNo(rset.getInt("buy_info_no"));
+				info.setRefBno(rset.getInt("ref_bno"));
+				info.setbCount(rset.getInt("b_count"));
+				info.setWriteYn(rset.getString("write_yn"));
+				
+				sInfoList.add(info);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return sInfoList;
+	}
+
 }

@@ -32,4 +32,24 @@ public class InfoService {
 		
 	}
 
+	public int getSearchListCount(String type, String content) {
+		Connection con=getConnection();
+		
+		int sListCount=new InfoDao().getSearchListCount(type, content, con);
+		
+		close(con);
+		
+		return sListCount;
+	}
+
+	public ArrayList<Info> searchInfoList(int currentPage, int limit, String type, String content) {
+		Connection con=getConnection();
+		
+		ArrayList<Info> sInfoList=new InfoDao().searchInfoList(currentPage, limit, type, content, con);
+		
+		close(con);
+		
+		return sInfoList;
+	}
+
 }

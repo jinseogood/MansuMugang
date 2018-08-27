@@ -595,7 +595,7 @@
 					for(var key in data){
 						console.log(key);
 						if(key == "qList"){
-							var $tr=$("<tr>");
+							var $tr=$("<tr onclick='openQnA("+data[key][i].board_no+");'>");
 							var $noTd=$("<td>").text(data[key][i].board_no);
 							var $titleTd=$("<td>").text(data[key][i].title);
 							var $writerTd=$("<td>").text(data[key][i].u_name);
@@ -695,16 +695,14 @@
 							var currentPage=value.currentPage;
 							var limit=value.limit;
 							var listCount=value.listCount;
-							console.log("sType : " + sType);
-							console.log("sContent : " + sContent);
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 1, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 1, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 1, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 1, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -712,10 +710,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									var test=p+", 1, "+sType+", "+sContent;
-									console.log(test);
-									/* $pageBody.append("<button onclick='goSearchPage("+p+", 1, "+sType+", "+sContent+");'>"+p+"</button>"); */
-									$pageBody.append("<button onclick='goSearchPage("+test+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 1, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -723,10 +718,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 1, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 1, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 1, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 1, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					});
 					
@@ -777,13 +772,13 @@
 							var limit=value.limit;
 							var listCount=value.listCount;
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 2, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 2, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 2, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 2, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -791,7 +786,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									$pageBody.append("<button onclick='goSearchPage("+p+", 2, "+sType+", "+sContent+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 2, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -799,10 +794,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 2, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 2, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 2, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 2, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					});
 					
@@ -857,13 +852,13 @@
 							var limit=data[key].limit;
 							var listCount=data[key].listCount;
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 3, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 3, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -871,7 +866,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									$pageBody.append("<button onclick='goSearchPage("+p+", 3, "+sType+", "+sContent+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 3, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -879,10 +874,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 3, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 3, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 3, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 3, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					}
 				},
@@ -935,13 +930,13 @@
 							var limit=data[key].limit;
 							var listCount=data[key].listCount;
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 4, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 4, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -949,7 +944,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									$pageBody.append("<button onclick='goSearchPage("+p+", 4, "+sType+", "+sContent+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 4, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -957,10 +952,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 4, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 4, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 4, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 4, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					}
 				},
@@ -1017,13 +1012,13 @@
 							var limit=value.limit;
 							var listCount=value.listCount;
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 6, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 6, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 6, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 6, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -1031,7 +1026,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									$pageBody.append("<button onclick='goSearchPage("+p+", 6, "+sType+", "+sContent+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 6, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -1039,10 +1034,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 6, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 6, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 6, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 6, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					});
 				},
@@ -1075,7 +1070,7 @@
 					for(var key in data){
 						console.log(key);
 						if(key == "qList"){
-							var $tr=$("<tr>");
+							var $tr=$("<tr onclick='openQnA("+data[key][i].board_no+");'>");
 							var $noTd=$("<td>").text(data[key][i].board_no);
 							var $titleTd=$("<td>").text(data[key][i].title);
 							var $writerTd=$("<td>").text(data[key][i].u_name);
@@ -1097,13 +1092,13 @@
 							var limit=data[key].limit;
 							var listCount=data[key].listCount;
 							
-							$pageBody.append("<button onclick='goFirstSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'><<</button>");
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 8, '"+sType+"', '"+sContent+"');\"><<</button>");
 							
 							if(currentPage <= 1){
 								$pageBody.append("<button disabled><</button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goPrevSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'><</button>");
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 8, '"+sType+"', '"+sContent+"');\"><</button>");
 							}
 							
 							for(var p=startPage;p<=endPage;p++){
@@ -1111,7 +1106,7 @@
 									$pageBody.append("<button disabled>"+p+"</button>");
 								}
 								else{
-									$pageBody.append("<button onclick='goSearchPage("+p+", 8, "+sType+", "+sContent+");'>"+p+"</button>");
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 8, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
 								}
 							}
 							
@@ -1119,10 +1114,10 @@
 								$pageBody.append("<button disabled>></button>");
 							}
 							else{
-								$pageBody.append("<button onclick='goNextSearchPage("+currentPage+", 8, "+sType+", "+sContent+");'>></button");
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 8, '"+sType+"', '"+sContent+"');\">></button");
 							}
 							
-							$pageBody.append("<button onclick='goLastSearchPage("+maxPage+", 8, "+sType+", "+sContent+");'>>></button>");
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 8, '"+sType+"', '"+sContent+"');\">>></button>");
 						}
 					}
 				},
@@ -1196,6 +1191,12 @@
 		console.log("num type : " + typeof(num));
 		window.open("<%= request.getContextPath() %>/selectOne.bo?num="+num+"", "정보게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
+	
+	//문의내역 상세보기 메소드
+	function openQnA(boardId){
+		console.log(boardId);
+		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardId+"", "문의내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	}
 
 	$(function(){
 		
@@ -1238,9 +1239,6 @@
 			var currentPage=1;
 			var stype=$("#menuSType").val();
 			var sContent=$("#menuSText").val();
-			
-			console.log("type : " + stype);
-			console.log("sContent : " + sContent);
 			
 			searchPagingAJAX(currentPage, 2, stype, sContent);
 		});
