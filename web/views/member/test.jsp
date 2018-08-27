@@ -87,7 +87,7 @@
                                         <td width="30%">아이디</td>
                                         <td width="70%"><input type="text" name="userid"
                                             size="20" maxlength="20"></td>
-                                    </tr>
+                                    </tr>  
                                     <tr>
                                         <td>패스워드</td>
                                         <td><input type="password" name="pwd" size="20"

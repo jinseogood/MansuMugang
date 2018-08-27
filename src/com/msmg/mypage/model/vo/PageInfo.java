@@ -23,7 +23,7 @@ public class PageInfo implements java.io.Serializable{
 	public int getCurrentPage() {
 		return currentPage;
 	}
-
+  
 	public int getListCount() {
 		return listCount;
 	}

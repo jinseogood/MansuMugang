@@ -3,7 +3,7 @@ package com.msmg.mypage.model.vo;
 import java.sql.Date;
 
 public class BuyAll implements java.io.Serializable{
-	private int buy_no;
+	private int buy_no;  
 	private String u_code;
 	private String menu_code;
 	private Date buy_date;

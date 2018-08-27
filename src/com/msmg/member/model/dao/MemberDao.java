@@ -122,7 +122,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("idCheck");
-		
+		  
 		
 		try {
 			pstmt = con.prepareStatement(query);

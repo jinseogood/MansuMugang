@@ -159,7 +159,7 @@ div a {
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
 							<td><input type="password" name="userPwd" id="userPwd"></td>
-						</tr>
+						</tr>  
 						<tr>
 							<th bgcolor=tomato>비밀번호 확인<span class="red">*</span></th>
 							<td><input type="password" name="userPwd1" id="userPwd1"></td>

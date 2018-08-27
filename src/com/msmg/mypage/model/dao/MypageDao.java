@@ -45,7 +45,7 @@ public class MypageDao {
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()){
+			while(rset.next()){  
 				b = new BuyAll();
 				b.setBuy_no(rset.getInt("buy_no"));
 				b.setU_code(rset.getString("u_code"));

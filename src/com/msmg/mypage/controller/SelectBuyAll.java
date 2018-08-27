@@ -37,7 +37,7 @@ public class SelectBuyAll extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ucode = String.valueOf((int)((Member)request.getSession().getAttribute("loginUser")).getU_code());
 		
-		BuyAll ba = new BuyAll();
+		BuyAll ba = new BuyAll();  
 		ba.setU_code(ucode);
 
 		ArrayList<BuyAll> bList = new MypageService().selectBuyAll(ba);

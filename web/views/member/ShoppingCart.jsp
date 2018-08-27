@@ -105,7 +105,7 @@ td {
    /* background: -webkit-linear-gradient(left, #25c481, #25b7c4); */
   /* background: linear-gradient(to right, #25c481, #25b7c4); */
 }
-
+  
 	#sidebar { 
   width: 190px; 
   position: fixed; 

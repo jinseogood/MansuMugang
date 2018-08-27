@@ -86,7 +86,7 @@ public class EmailCheckServlet extends HttpServlet {
                   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(userId)); 
                   System.out.println("이멜 서블릿 userId후");
                   message.setSubject(subject);
-                  message.setText(text);
+                  message.setText(text);  
                   Transport.send(message); 
                   System.out.println("SEND");
                   
