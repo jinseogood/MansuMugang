@@ -8,7 +8,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link ="stylesheet" type="text/css" href="/msmg/web/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -189,7 +191,9 @@ td .like {
 									<div class="info"><%=list.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
 										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">
-										<i onclick="myFunction(this)" class="fa fa-thumbs-down"></i>
+										
+										
+										<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
 									</div>
 								</div>
 							</div>
@@ -217,25 +221,55 @@ td .like {
 		<%@include file="../common/footer.jsp"%>
 	</div>
 	<script>
-	function myFunction(x) {
-	    x.classList.toggle("fa-thumbs-up");
-	    
-	   /*  var firstNum = $("#firstNum").val();
-		var secondNum = $("#secondNum").val();
-		
-		$.ajax({
-			url:"test3.do",
-			type:"get",
-			data:{firstNum:firstNum, secondNum:secondNum},
-			success:function(data){ //response.getWriter().print의 값이 data로 넘어온다
-				$("#p2").text(data); //여러개 넘겨줘도 하나의 문자열로 합쳐져서 넘어옴
-			},
-			error:function(data){
-				console.log("실패");
-			}
-			
-		}); */
-	}
+	function like(num, click){
+		console.log(click);
+	
+        if($(click).attr('class') == 'fa fa-star-o'){
+           <%if(loginUser != null){%>
+           $(click).attr('class', 'fa fa-star');
+              
+              $.ajax({
+                 url:'InsertLike.fo',
+                 data:{
+                    num : num,
+                    user_no : <%=loginUser.getU_code()%>
+                 },
+                 success:function(data){
+                    if(data != 0){
+                       alert('해당 상품을 (좋아요) 하셨습니다!');
+                    }else{
+                       alert('이미 해당 상품을 (좋아요) 하셨습니다!');
+                    }
+                 }
+              });
+              
+           <%}else{%>
+              alert('로그인이 필요한 기능입니다.');
+           <%}%>
+        }else{
+           <%if(loginUser != null){%>
+           $(click).attr('class', 'fa fa-star-o');
+           
+           $.ajax({
+              url:'DeleteLike.fo',
+              data:{
+                 num : num,
+                 user_no : <%=loginUser.getU_code()%>
+              },
+              success:function(data){
+                 if(data != 0){
+                    alert('해당 상품을 (좋아요)에서 제거하셨습니다!');
+                 }else{
+                    alert('(좋아요)제거에 실패하셨습니다.');
+                 }
+              }
+           });
+           
+        <%}else{%>
+           alert('로그인 하셔야지 찜을 하실수 있습니다.');
+        <%}%>
+        }
+     }
 	</script>
 </body>
 </html>
