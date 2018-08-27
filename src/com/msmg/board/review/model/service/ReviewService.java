@@ -122,6 +122,29 @@ public class ReviewService {
 		return hmap;
 	}
 
+	public int updateReviewList(Board b, ArrayList<BoardFile> fileList) {
+		Connection con = getConnection();
+		
+		int result = 0;
+		
+		int result1 = new ReviewDao().updateReviewList(con,b);
+		
+		System.out.println("update fileList : " + fileList);
+		int result2 = new ReviewDao().updateBoardFile(con, fileList);
+		System.out.println("result2 : " + result2);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(con);
+			result = 1;
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 
 
 }

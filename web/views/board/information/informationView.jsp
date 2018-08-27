@@ -113,6 +113,7 @@ div[id=date-writer-hit2] {
 }
 
 #whip tr {
+	border-top: 1px solid #e83f26;
 	border-bottom: 1px solid #e83f26;
 	height: 35px;
 	font-size: 14px;
@@ -286,25 +287,23 @@ input[type=text]{
 
 	<div id='whiptable'>
 		<table id='whip'>
-		<%if(nextB != null) {%>
-			<tr>
-				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
-					다음글</td>
-				<td align="center"><a href="<%=request.getContextPath()%>/selectOne.bo?board_no=<%=nextB.getBoardNo()%>"><%=nextB.getTitle() %></a></td>
-				<td><%=nextB.getBoardDate() %></td>
-			</tr>
-			<%} %>
-			
-			<% if(preB != null) {%>
+		<% if(preB != null) {%>
 			<tr style="border-top: 1px solid #e83f26;">
-				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
+				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					이전글</td>
-				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?board_no=<%=preB.getBoardNo()%>"><%=preB.getTitle() %></a></td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preB.getBoardNo()%>"><%=preB.getTitle() %></a></td>
 				<td width="100"><%=preB.getBoardDate() %></td>
 			</tr>
 			<%} %>
 			
-			
+		<%if(nextB != null) {%>
+			<tr>
+				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
+					다음글</td>
+				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextB.getBoardNo()%>"><%=nextB.getTitle() %></a></td>
+				<td width="100"><%=nextB.getBoardDate() %></td>
+			</tr>
+			<%} %>
 		</table>
 	</div>
 	<br>

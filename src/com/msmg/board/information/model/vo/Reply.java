@@ -7,11 +7,11 @@ public class Reply implements java.io.Serializable{
 	private String u_code;
 	private String re_content;
 	private Date re_date;
-	private int board_id;
+	private String board_id;
 	
 	public Reply() {}
 	
-	public Reply(String board_sort, String u_code, String re_content, Date re_date, int board_id) {
+	public Reply(String board_sort, String u_code, String re_content, Date re_date, String board_id) {
 		super();
 		this.board_sort = board_sort;
 		this.u_code = u_code;
@@ -36,7 +36,7 @@ public class Reply implements java.io.Serializable{
 		return re_date;
 	}
 
-	public int getBoard_id() {
+	public String getBoard_id() {
 		return board_id;
 	}
 
@@ -56,7 +56,7 @@ public class Reply implements java.io.Serializable{
 		this.re_date = re_date;
 	}
 
-	public void setBoard_id(int board_id) {
+	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
 	}
 
