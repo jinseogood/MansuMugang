@@ -229,6 +229,35 @@ public class QnaService {
 		return result;
 	}
 
+	public int checkQnaCount(int ucode) {
+		Connection conn = getConnection();
+		
+		//작성자가 작성한 글 리스트 갯수를 불러온다
+		int userCount = new QnaDao().countUserQna(conn, ucode);
+		
+		//관리자 코드를 불러온다
+		int adminCode = new QnaDao().getAdminCode(conn);
+		
+		//글에 관리자가 쓴 글 갯수를 불러온다
+		int adminCount = new QnaDao().countAdminQna(conn, ucode, adminCode);
+		
+		System.out.println("usercount = " + userCount);
+		System.out.println("adminCode = " + adminCode);
+		System.out.println("adminCount = " + adminCount);
+		
+		int result = 0;
+		if(userCount > 0 && adminCount > 0){
+			result = userCount - adminCount;
+			System.out.println("result = " + result);
+			
+			if(result == 0){
+				return 1;
+			}
+		}
+
+		return 0;
+	}
+
 	
 
 }

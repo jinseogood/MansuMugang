@@ -109,6 +109,13 @@
 		cursor:pointer;
 		color:gray;
 	}
+	#adminAlert{
+		width:10%;
+		height:100%;
+	}
+	#noticeAlert {
+		display : none;
+	}
 </style>
 </head>
 <body>
@@ -116,6 +123,9 @@
 	<% 
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
+			<div id = 'noticeAlert'><a href="<%= request.getContextPath() %>/qnaList.qna">
+	  				<img src="/msmg/images/admin/adminAlertIcon.png" id="adminAlert">
+  			</a></div>
 			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
 	<% 
 		}else if(loginUser != null && loginUser.getU_id().equals("admin")){
@@ -178,6 +188,27 @@
 		    $("#submenubar").mouseleave(function(){
 		    	$("#submenubar").slideUp("slow");
 		    });
+		    
+		    <% if(loginUser != null){ %>
+		    setInterval(function(){
+		    	$.ajax({
+		    		url : "checkAlert.qna",
+					data : {ucode:<%= loginUser.getU_code() %>},
+					type : "get",
+					success:function(data){
+						if(data == 1){
+							$("#noticeAlert").css('display', 'inline-block');
+						}
+					},
+					error:function(data, status, msg){
+						console.log("서버 전송 실패");
+						console.log(data);
+						console.log(status);
+						console.log(msg);
+					}
+		    	})
+		    }, 5000)
+		    <%} %>
 		    
 		});
 		

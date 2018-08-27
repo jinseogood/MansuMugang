@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "java.util.*"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.member.model.vo.*"%>
 <%
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	
 	int bid = (int)request.getAttribute("bid");
 	int ucode = (int)request.getAttribute("ucode");
 	int num = (int)request.getAttribute("num");
@@ -143,7 +145,7 @@ border : 1px solid tomato;
 <!-- 게시판 쓰기 -->
 	
 	<!-- 접근 범위 지정 -->
-<%if(loginUser != null){ %>
+<%if(loginUser != null && loginUser.getU_id().equals("admin")){ %>
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
