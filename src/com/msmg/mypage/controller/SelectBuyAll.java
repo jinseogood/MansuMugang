@@ -3,6 +3,7 @@ package com.msmg.mypage.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,10 +37,18 @@ public class SelectBuyAll extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String ucode = String.valueOf((int)((Member)request.getSession().getAttribute("loginUser")).getU_code());
 		
-		BuyAll ba = new BuyAll();
+		BuyAll ba = new BuyAll();  
 		ba.setU_code(ucode);
 
 		ArrayList<BuyAll> bList = new MypageService().selectBuyAll(ba);
+		
+		String page = "";
+		
+		page = "views/member/OrderHistory.jsp";
+		request.setAttribute("bList", bList);
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 

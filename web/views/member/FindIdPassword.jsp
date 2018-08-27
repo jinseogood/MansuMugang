@@ -6,30 +6,7 @@
 <meta charset="UTF-8">
 <title>아이디/비밀번호 찾기</title>
  
-<script>
-	
-	$(function() {
-
-	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),
-	        offset     = $sidebar.offset(),
-	        topPadding = 15;
-
-	    $window.scroll(function() {
-	        if ($window.scrollTop() > offset.top) {
-	            $sidebar.stop().animate({
-	                marginTop: $window.scrollTop() - offset.top + topPadding
-	            });
-	        } else {
-	            $sidebar.stop().animate({
-	                marginTop: 0
-	            });
-	        }
-	    });
-	    
-	});
-</script>
-
+  
 <style>
 	.clear{
 		weight:300px;

@@ -95,7 +95,7 @@ public class MemberService {
 		close(con);
 		
 		return result;
-	}
+	}  
 
 	public int EmailCheck(String userId) {
 		Connection con = getConnection();

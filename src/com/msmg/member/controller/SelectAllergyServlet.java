@@ -42,7 +42,7 @@ public class SelectAllergyServlet extends HttpServlet {
 		al.setU_code(ucode);
 		
 		ArrayList<UserAllergy> alList = new MemberService().selectAlList(al);
-		
+		  
 		/*alList.add(al);*/
 		System.out.println(alList);
 		

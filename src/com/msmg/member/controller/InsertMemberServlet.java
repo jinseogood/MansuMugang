@@ -46,7 +46,7 @@ public class InsertMemberServlet extends HttpServlet {
 				ua.setAl_code(alCode[i]);
 				ua.setU_code(Integer.toString(member.getU_code()));
 				
-				list.add(ua);
+				list.add(ua);  
 				System.out.println("알러지 리스트를 에드햇다" + list);
 			}
 		}

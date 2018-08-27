@@ -149,7 +149,7 @@ border : 1px solid tomato;
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
-		<br>
+		<br>  
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %>
 		<!-- 게시글 작성 시작 -->
 		<div id="container">

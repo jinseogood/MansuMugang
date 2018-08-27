@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.mypage.model.vo.*" %>
+<% 
+	ArrayList<BuyAll> list = (ArrayList<BuyAll>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();  
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,21 +217,33 @@ body {
 					</thead>
 				</table>
 			</div>
-			<%-- <% if() %> --%>
 			<div class="tbl-content table1">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
+			<% if(list == null){ %>
 						<tr>
-							<td>2018.09.18</td>
+							<td colspan="6"><div align="center">주문하신 내역이 없습니다.</div></td>
+						</tr>
+			<% }else{ %>
+				<% for(BuyAll b : list){ %>
+						<tr>
+							<td><%= b.getBuy_date() %></td>
 							<td>고혈압 7일 3끼</td>
 							<td>330,000원</td>
-							<td>신용카드</td>
-							<td>결제완료</td>
+							<td><%= b.getBuy_sort() %></td>
+							<td><%= b.getSort() %></td>
+							<%-- <% if() %> --%>
 							<td><div class="w3-button w3-ripple w3-yellow">주문취소</div></td>
 						</tr>
+				<% } %>
+			<% } %>
 					</tbody>
 				</table>
 			</div>
+			
+			
+			
+					
 		</section>
 		</div>
 		

@@ -119,7 +119,7 @@ div #offi {
 	text-decoration:none;
 }
 .ui-widget-header { padding: 0.3em; }
-</style>
+</style>  
 </head>
 <body>
 <div class="mainmenu">

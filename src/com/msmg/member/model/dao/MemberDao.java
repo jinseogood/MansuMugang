@@ -122,7 +122,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("idCheck");
-		
+		  
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -283,15 +283,18 @@ public class MemberDao {
 		System.out.println("이멜첵 다오");
 		int result = 0;
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
 		String query = prop.getProperty("idCheck");
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			
 			pstmt.setString(1, userId);
 			
-			result = pstmt.executeUpdate();
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
 			
 			System.out.println("db갓다와서 " + result);
 			
@@ -301,6 +304,7 @@ public class MemberDao {
 			e.printStackTrace();
 		}finally{
 			close(pstmt);
+			close(rset);
 		}
 		
 		System.out.println("이멜첵 다오 리턴 전 : " + result);
