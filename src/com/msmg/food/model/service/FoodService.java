@@ -61,4 +61,22 @@ public class FoodService {
 		return list;
 	}
 
+	public int insertLike(int u_code, int m_code) {
+		Connection con = getConnection();
+		
+		int result = new SelectFoodDao().insertLike(con, u_code, m_code);
+		
+		close(con);
+		return result;
+	}
+
+	public int deleteLike(int u_code, int m_code) {
+		Connection con = getConnection();
+		
+		int result = new SelectFoodDao().deleteLike(con, u_code, m_code);
+		
+		close(con);
+		return result;
+	}
+
 }

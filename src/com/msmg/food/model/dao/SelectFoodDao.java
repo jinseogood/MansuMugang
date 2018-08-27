@@ -238,5 +238,47 @@ public class SelectFoodDao {
 		return list;
 	}
 
+	public int insertLike(Connection con, int u_code, int m_code) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertLike");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u_code);
+			pstmt.setInt(2, m_code);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteLike(Connection con, int u_code, int m_code) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteLike");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u_code);
+			pstmt.setInt(2, m_code);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
 
