@@ -46,50 +46,37 @@ public class UpdateBoardServlet extends HttpServlet {
 			String root = request.getSession().getServletContext().getRealPath("/");
 			System.out.println(root);
 			
-			String savePath = root + "attach_file/doc_file/";
+			String savePath = root + "attach_file/doc_file/"; //문서 저장 경로
 			
-			//사용자가 올린 파일명을 그대로 저장하지 않는 것이 일반적이다.
-			//1. 같은 파일명이 있는 경우 이전파일 덮어 쓸 수 있다.
-			//2. 한글로 된 파일명, 특수기호, 띄어쓰기등은 서버에 따라 문제가 생길 수 있다
-			//DefaultFileRenamePolicy는 cos.jar안에 존재하는 클래스로
-			//같은 파일명이 존재하는지 검사하고 있을 경우 뒤에 숫자를 붙여준다.
-			//ex) aaa.zip, aaa1.zip, aaa2.zip
-			//MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-		
 			//FileReNamepolicy 상속 후 오버라이딩
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new RenameFilePolicy());
 			
-			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
-			//저장한 파일의 이름을 저장할 arrayList를 생성한다.
+			//저장한 파일의 이름을 저장할 리스트 생성
 			ArrayList<String> saveFiles = new ArrayList<String>();
 			
-			//원본 파일의 이름을 저장할 arrayList를 생성한다.
+			//원본 파일의 이름을 저장할 리스트 생성
 			ArrayList<String> originFiles = new ArrayList<String>();
 			
-			//파일이 전송된 이름을 반환한다.
+			//파일이 전송된 이름을 반환
 			Enumeration<String> files = multiRequest.getFileNames();
 			
-			//각 파일의 정보를 구해온 후 DBㅇ 저장할 목적의 데이터를 꺼내온다
+			//각 파일의 정보를 구해온 후 DB에 저장 할 목적으로 가져온다
 			while(files.hasMoreElements()){
 				
 				String name = files.nextElement();
-				System.out.println("update : " +  name);
+
+				//썸머노트 에디터 외 파일만 저장
 				if(!name.equals("files")){
 					saveFiles.add(multiRequest.getFilesystemName(name));
 					originFiles.add(multiRequest.getOriginalFileName(name));
 					
 				}
-				
-				
-				
 			}
 			
-			//multipartRequest 객체에서 파일 외의 값을 가져올 수도 있다.
-			String title = multiRequest.getParameter("title");
-			String content = multiRequest.getParameter("smnoteval");
-			System.out.println(content);
-			int bno = Integer.parseInt(multiRequest.getParameter("bno"));
-			int ucode = Integer.parseInt(multiRequest.getParameter("num"));
+			String title = multiRequest.getParameter("title"); // 제목
+			String content = multiRequest.getParameter("smnoteval"); // 내용
+			int bno = Integer.parseInt(multiRequest.getParameter("bno")); // 글번호
+			int ucode = Integer.parseInt(multiRequest.getParameter("num")); // 유저 코드
 			
 			//Board객체 생성
 			Notice no = new Notice();
@@ -97,7 +84,7 @@ public class UpdateBoardServlet extends HttpServlet {
 			no.setContent(content);
 			no.setBoard_no(bno);
 			
-			//attachment 객체 생성해서 arrayList객체 생성
+			//attachment 객체 생성해서 리스트 생성
 			ArrayList<Attachment> fileList = new ArrayList<Attachment>();
 			
 			//전송순서 역순으로 파일이 list에 저장되기 때문에 반복문을 역으로 수행
@@ -106,15 +93,15 @@ public class UpdateBoardServlet extends HttpServlet {
 				at.setFilePath(savePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
-				System.out.println(at);
+
 				fileList.add(at);
 			}
-			System.out.println("서비스로 전송전");
+			
 			//Service로 전송
 			int result = new NoticeService().updateBoard(no, fileList, ucode);
-			System.out.println("서비스로 전송후");
+
+			//해당 글번호 내용으로 이동
 			if(result > 0){
-				System.out.println("작성완료");
 				response.sendRedirect(request.getContextPath() + "/noticeDetail.admin?board_no="+ result);
 			}else{
 				//실패시 저장된 사진 삭제

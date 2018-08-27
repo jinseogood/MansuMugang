@@ -34,14 +34,13 @@ public class AdminNoticeDetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bno = request.getParameter("board_no");
-		System.out.println("bno : " + bno);
-		Notice no = new NoticeService().selectOne(bno);
-		Notice preNo = new NoticeService().selectPreNo(bno);
-		Notice nextNo = new NoticeService().selectNextNo(bno);
-		ArrayList<Attachment> list = new NoticeService().selectAttachment(bno);
 		
+		Notice no = new NoticeService().selectOne(bno); //해당 글 내용
+		ArrayList<Attachment> list = new NoticeService().selectAttachment(bno); // 해당 글 관련 첨부파일
 		
-		System.out.println("nno : " +  nextNo);
+		Notice preNo = new NoticeService().selectPreNo(bno); //이전글 내역
+		Notice nextNo = new NoticeService().selectNextNo(bno); //다음글 내역
+		
 		String page = "";
 		
 		if(no != null){

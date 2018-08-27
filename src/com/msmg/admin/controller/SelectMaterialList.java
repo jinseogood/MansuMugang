@@ -65,7 +65,7 @@ public class SelectMaterialList extends HttpServlet {
 			for(Material mat : matList){
 				matInfo=new JSONObject();
 				
-				matInfo.put("matCode", URLEncoder.encode(mat.getM_code(), "UTF-8"));
+				matInfo.put("matCode", mat.getM_code());
 				matInfo.put("matName", URLEncoder.encode(mat.getM_name(), "UTF-8"));
 				matInfo.put("alleCode", URLEncoder.encode(mat.getA_code(), "UTF-8"));
 				matInfo.put("d_go", URLEncoder.encode(mat.getD_go(), "UTF-8"));

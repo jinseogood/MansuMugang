@@ -6,6 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.msmg.payment.model.service.PaymentInfoService;
+import com.msmg.payment.model.vo.PaymentInfo;
  
 /** 
  * Servlet implementation class InsertOrderHistoryServlet
@@ -26,8 +29,24 @@ public class InsertOrderHistoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		String sort = request.getParameter("sort");
+		int buy_no = request.getParameter("buy_no");
+		int amount = request.getParameter("amount");
+		String buy_sort = request.getParameter("buy_sort");
+	
+		PaymentInfo pi = new PaymentInfo();
+		pi.setSort(sort);
+		pi.setBuy_sort(buy_sort);
+		pi.getAmount(amount);
+		pi.setBuy_no(buy_no);
+		
+		int result = new PaymentInfoService().insertPaymentInfo(pi);
+		
+		if(result > 0){
+			response.sendRedirect("view/payment/paymentConfirm.jsp");
+		}
+	
 	}
 
 	/**

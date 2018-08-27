@@ -34,6 +34,7 @@ public class InsertBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ucode = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
 		
+		//글 작성시 db에 저장
 		int result = new NoticeService().insertBoard(ucode);
 		
 		String page = "";

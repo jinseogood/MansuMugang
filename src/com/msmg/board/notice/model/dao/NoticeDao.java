@@ -145,6 +145,8 @@ public class NoticeDao {
 	public int insertBoard(Connection conn, int ucode) {
 		PreparedStatement pstmt = null;
 		int result = 0;
+		
+		//글번호를 랜덤값으로 지정
 		int rand = new Random().nextInt(1000) + 1;
 		
 		

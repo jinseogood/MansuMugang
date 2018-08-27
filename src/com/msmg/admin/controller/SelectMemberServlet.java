@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.msmg.admin.model.vo.PageInfo;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
@@ -24,10 +25,39 @@ public class SelectMemberServlet extends HttpServlet {
     public SelectMemberServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Member> mList=new MemberService().selectMemberList();
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		currentPage=1;
+				
+		if(request.getParameter("currentPage") != null){
+			currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		}
+		
+		int listCount=new MemberService().getListCount();
+		
+		limit=10;
+		
+		maxPage=(int)((double)listCount / limit + 0.9);
+				
+		startPage=((int)(((double)currentPage / limit + 0.9) - 1) * limit + 1);
+				
+		endPage=startPage+limit-1;
+				
+		if(maxPage < endPage){
+			endPage=maxPage;
+		}
+				
+		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		
+		ArrayList<Member> mList=new MemberService().selectMemberList(currentPage, limit);
 		
 		JSONArray result=new JSONArray();
 		JSONObject mInfo=null;
+		JSONObject mPage=new JSONObject();
 		for(Member m : mList){
 			mInfo=new JSONObject();
 			
@@ -41,6 +71,14 @@ public class SelectMemberServlet extends HttpServlet {
 			
 			result.add(mInfo);
 		}
+		mPage.put("currentPage", pi.getCurrentPage());
+		mPage.put("listCount", pi.getListCount());
+		mPage.put("limit", pi.getLimit());
+		mPage.put("maxPage", pi.getMaxPage());
+		mPage.put("startPage", pi.getStartPage());
+		mPage.put("endPage", pi.getEndPage());
+		
+		result.add(mPage);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

@@ -11,6 +11,10 @@
 	p.getBuy_no();
 	p.getStatus(); */
 %>
+
+<% 
+	PaymentInfo pi = (PaymentInfo)session.getAttribute("buy_no");
+%>
  
 <% if(list != null){
 for(int i = 0; i < list.size(); i++){
@@ -226,8 +230,10 @@ section {
 				</div>
 			</div>
 
-			
-		<form id="buy" action="<%=request.getContextPath()%>/updateOrder.pm" method="post">
+
+ <form id="com" method="post">
+
+
 			<section>
 				<h1>주문상품 확인</h1>
 				<div class="tbl-header table1">
@@ -284,12 +290,9 @@ section {
 					</table>
 				</div>
 			</section>
-		</form>
-
-
-
-
 		
+
+	
 			<section>
 				<h1>배송지 정보</h1>
 
@@ -302,7 +305,8 @@ section {
 								<td colspan="4">
 									<button class="w3-button w3-ripple w3-yellow"
 										data-toggle="modal" data-book-id="my_id_value"
-										class="identifyingClass" data-target="#myModal">목록</button> 
+										class="identifyingClass" data-target="#myModal"
+										type="button" onclick="test();">목록</button> 
 										<span>※기존에 보낸 주소 목록에서 선택하거나 직접 새로운 주소를 입력하세요.</span>
 								</td>
 							</tr>
@@ -324,12 +328,14 @@ section {
 								
 									<div style="padding: 7px 0 10px;">
 										<div>
+											
 											<%-- <form id="pstcd" action="<%=request.getContextPath() %>/insertDestination.pm" method="post"> --%>
 												<input type="text" readonly name="postcode1" class="postcodify_postcode5" id="postcode">
+											
 											<!-- </form> -->
 											
 											<!-- <br> -->
-											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow">검색</button>
+											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow" type="button" >검색</button>
 											
 										</div>
 									</div>
@@ -338,16 +344,16 @@ section {
 									<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 									<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 									
-								<form id="addrrs" action="<%=request.getContextPath()%>/insertDestination.pm" method="post">
+								
 									<div>
 										<input type="hidden" name="postcode" readonly class="postcodify_postcode5" id="postcode">
 										<input type="text" name="addr1" readonly class="postcodify_address" size="60" maxlength="50" id="buyer_addr1"> 
 										<input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2"> 
 										<input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3"> 
 										<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
-										<!-- <input type="text" name="id"><input type="checkbox" id="idSaveCheck"> -->
 									</div>
-								</form>
+								
+								
 									<div style="padding: 5px 0;" class="checks">
 										<input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">
 										<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장 (체크하지 않을 시 최근 배송지로 저장되지 않습니다.) </label>
@@ -360,13 +366,14 @@ section {
 							<tr>
 								<th bgcolor=tomato>휴대전화</th>
 									<td colspan="4">
-										<form id="phn" action="<%=request.getContextPath()%>/insertPhone.pm" method="post">
+										
+										<%-- <form id="phn" action="<%=request.getContextPath()%>/insertPhone.pm" method="post"> --%>
 											<input type="text" name="hpno1" id="hpno1" size="4" maxlength="4">
 											<span>－</span> 
 											<input type="text" name="hpno2" id="hpno2" size="4" maxlength="4">
 											<span>－</span>
 											<input type="text" name="hpno3" id="hpno3" size="4" maxlength="4">
-										</form>
+										
 									</td>
 							</tr>
 						
@@ -391,7 +398,7 @@ section {
 					</table>
 				</div>
 			</section>
-
+		
 
 			<!-- 최근 배송지로 저장된 주소 불러오는 모달 -->
 			<div class="modal fade" id="myModal" role="dialog">
@@ -436,8 +443,7 @@ section {
 							
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						</div>
 					</div>
 				</div>
@@ -479,8 +485,8 @@ section {
 								<th>적립금</th>
 								<td id="savedpoint">(사용 가능한 금액 표시)</td>
 								<td><input type="text"></td>
-								<td><button class="w3-button w3-ripple w3-yellow" id="lilpoint">사용</button>
-								<td><button class="w3-button w3-ripple w3-yellow" id="fullpoint">전부 사용</button>
+								<td><button type="button" class="w3-button w3-ripple w3-yellow" id="lilpoint">사용</button>
+								<td><button type="button" class="w3-button w3-ripple w3-yellow" id="fullpoint">전부 사용</button>
 							</tr>
 						</tbody>
 					</table>
@@ -544,13 +550,14 @@ section {
 			<br> <br>
 
 			<div class="final_button" align="center">
-				<button class="w3-button w3-ripple w3-yellow">이전 단계로 이동</button>
-				<button onclick="requestPay()" class="w3-button w3-ripple w3-yellow"> 결제하기</button>
+				<button type="button"class="w3-button w3-ripple w3-yellow" onclick = 'history.go(-1)'>이전 단계로 이동</button>
+				<button type="button" onclick="requestPay()" class="w3-button w3-ripple w3-yellow"> 결제하기</button>
 			</div>
 			
+</form> 
 
 			<script>
-		
+				
 
 				function requestPay() {
 
@@ -605,6 +612,10 @@ section {
 													} else {
 														if (radioVal1 == 'on') {
 															// IMP.request_pay(param, callback) 호출
+															
+															<%-- <%= pi.setSort("구매완료")%>
+															<%= pi.setBuy_sort("카드구매")%> --%>
+															
 															IMP.init("imp86047661");
 															IMP.request_pay(
 																			{ // param
@@ -638,16 +649,17 @@ section {
 																									})
 																							.done(
 																									
+																									<%-- <%= pi.setSort("구매완료")%>
+																									<%= pi.setBuy_sort("카드결제") %> --%>
+																									
+																									
 																									
 																									function(data) {
-																										
-																										$("#phn").submit();
 																							
 																										if($("#AddrSaveCheck").is(":checked")){
 																											
-																											/* $("#pstcd").submit(); */
-																											$("#addrrs").submit();
-																											
+																											$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
+																											$("#com").submit();
 																											
 																										} else {
 																											
@@ -661,6 +673,13 @@ section {
 																			});
 
 														} else if (radioVal2 == 'on') {
+															
+															<%-- <%= pi.setSort("결제대기")%>
+															<%= pi.setBuy_sort("무통장결제") %> --%>
+															
+															$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
+															$("#com").submit();
+															
 															alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
 															location.href = "/msmg/views/member/OrderHistory.jsp";
 														}
@@ -696,62 +715,6 @@ section {
 	
 
 </script>
-
-
-
-<!-- <script>
-$(document).ready(function(){
-    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-    var userInputId = getCookie("userInputId");
-    $("input[name='id']").val(userInputId);        
-        
-    }
-     
-    $("#idSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
-        if($("#idSaveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
-            var userInputId = $("input[name='id']").val();
-            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
-        }else{ // ID 저장하기 체크 해제 시,
-            deleteCookie("userInputId");
-        }
-    });  
-     
-    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-    $("input[name='id']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-        if($("#idSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-            var userInputId = $("input[name='id']").val();
-            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
-        }
-    });
-});
- 
-function setCookie(cookieName, value, exdays){
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
-}
- 
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-}
- 
-function getCookie(cookieName) {
-    cookieName = cookieName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cookieName);
-    var cookieValue = '';
-    if(start != -1){
-        start += cookieName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cookieValue = cookieData.substring(start, end);
-    }
-    return unescape(cookieValue);
-}
-</script> -->
 
 			<br> <br> <br> <br> <br> <br> <br>
 			<br> <br> <br>

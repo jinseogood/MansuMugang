@@ -27,10 +27,11 @@ public class SelectOneBoardServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
-		
+		System.out.println("num : " + num);
 		
 		
 		Board b = new BoardService().selectOne(num);
+		
 		Board preB = new BoardService().selectPreB(num);
 		Board nextB = new BoardService().selectNextB(num);
 		ArrayList<Reply> replyList = new BoardService().selectReply(num);

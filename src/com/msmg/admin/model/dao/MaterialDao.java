@@ -30,7 +30,6 @@ public class MaterialDao {
 		}
 	}
 	
-	
 	public int insertMaterial(Material m, Connection con) {
 		int result=0;
 		PreparedStatement pst=null;
@@ -55,7 +54,6 @@ public class MaterialDao {
 		
 		return result;
 	}
-
 
 	public ArrayList<Material> selectMatList(int currentPage, int limit, Connection con) {
 		ArrayList<Material> matList=new ArrayList<Material>();
@@ -82,7 +80,7 @@ public class MaterialDao {
 			while(rset.next()){
 				Material m=new Material();
 				
-				m.setM_code(rset.getString("grad_code"));
+				m.setM_code(rset.getInt("grad_code"));
 				m.setM_name(rset.getString("grad_name"));
 				m.setA_code(rset.getString("al_code"));
 				m.setD_go(rset.getString("go"));
@@ -103,8 +101,6 @@ public class MaterialDao {
 		return matList;
 	}
 
-
-	//페이징 처리 시 게시판 글 수 확인용 메소드
 	public int getListCount(Connection con) {
 		int listCount=0;
 		Statement st=null;
@@ -130,7 +126,6 @@ public class MaterialDao {
 		return listCount;
 	}
 
-
 	public ArrayList<Material> selectMatList(Connection con) {
 		ArrayList<Material> matList=new ArrayList<Material>();
 		Statement st=null;
@@ -145,7 +140,7 @@ public class MaterialDao {
 			while(rset.next()){
 				Material mat=new Material();
 				
-				mat.setM_code(rset.getString("grad_code"));
+				mat.setM_code(rset.getInt("grad_code"));
 				mat.setM_name(rset.getString("grad_name"));
 				mat.setA_code(rset.getString("al_code"));
 				mat.setD_go(rset.getString("go"));
@@ -164,6 +159,116 @@ public class MaterialDao {
 		
 		
 		return matList;
+	}
+
+
+	public int getSearchListCount(String type, String content, Connection con) {
+		int listCount=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("grad_code")){
+			query=prop.getProperty("gradCodeListCount");
+		}
+		else if(type.equals("grad_name")){
+			query=prop.getProperty("gradNameListCount");
+		}
+		else if(type.equals("al_code")){
+			query=prop.getProperty("alCodeListCount");
+		}
+		else if(type.equals("go")){
+			query=prop.getProperty("goListCount");
+		}
+		else if(type.equals("dang")){
+			query=prop.getProperty("dangListCount");
+		}
+		else if(type.equals("head")){
+			query=prop.getProperty("headListCount");
+		}
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Material> searchMatList(int currentPage, int limit, String type, String content, Connection con) {
+		ArrayList<Material> matSearchList=new ArrayList<Material>();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query="";
+		
+		if(type.equals("grad_code")){
+			query=prop.getProperty("searchMatCodeListPaging");
+		}
+		else if(type.equals("grad_name")){
+			query=prop.getProperty("searchMatNameListPaging");
+		}
+		else if(type.equals("al_code")){
+			query=prop.getProperty("searchAlCodeListPaging");
+		}
+		else if(type.equals("go")){
+			query=prop.getProperty("searchGoListPaging");
+		}
+		else if(type.equals("dang")){
+			query=prop.getProperty("searchDangListPaging");
+		}
+		else if(type.equals("head")){
+			query=prop.getProperty("searchHeadListPaging");
+		}
+		
+		try {
+			int startRow=(currentPage - 1) * limit + 1;
+			int endRow=startRow + limit - 1;
+			
+			System.out.println("dao sql : " + query);
+			
+			pst=con.prepareStatement(query);
+			pst.setString(1, content);
+			pst.setInt(2, startRow);
+			pst.setInt(3, endRow);
+			
+			rset=pst.executeQuery();
+			
+			while(rset.next()){
+				Material mat=new Material();
+				
+				mat.setM_code(rset.getInt("grad_code"));
+				mat.setM_name(rset.getString("grad_name"));
+				mat.setA_code(rset.getString("al_code"));
+				mat.setD_go(rset.getString("go"));
+				mat.setD_dang(rset.getString("dang"));
+				mat.setD_head(rset.getString("head"));
+				
+				matSearchList.add(mat);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		
+		return matSearchList;
 	}
 
 }

@@ -48,6 +48,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		int result = new FoodService().insertMenuBuy(list);
 		
+
 		String page = "";
 		
 		if(result > 0){
@@ -61,6 +62,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -33,6 +33,7 @@ public class SelectOneEditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
+		//해당 글 번호에 맞는 게시글 가져오기
 		Notice no = new NoticeService().selectOneEdit(num);
 		
 		String page = "";

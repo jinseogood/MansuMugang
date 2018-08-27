@@ -8,17 +8,17 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>글수정</title>
-	
-<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
-	rel="stylesheet">
-	
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<title>공지사항 :: 공지사항 수정</title>
+
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+
+<!-- 썸머노트 에디터 관련 css / js -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 
-<!-- <link href="/msmg/resource/summernote-master/dist/summernote.css" rel="stylesheet">
-<script src="/msmg/resource/summernote-master/dist/summernote.min.js"></script>  -->
+<!-- 썸머노트 에디터 관련 CDN / 언어 -->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 <script src = "/msmg/resource/summernote-master/lang/summernote-ko-KR.js"></script>
@@ -70,118 +70,107 @@ margin-left : auto;
 margin-right : auto;
 }
 
-
 </style>
 <script type="text/javascript">
-		var cnt = 0;
-        /* summernote에서 이미지 업로드시 실행할 함수 */
-        function sendFile(file, editor) {
-            // 파일 전송을 위한 폼생성
-          data = new FormData();
-           data.append("uploadFile", file);
-           $.ajax({ // ajax를 통해 파일 업로드 처리
-               data : data,
-               type : "POST",
-               url : "<%= request.getContextPath() %>/imgUpload.no?bno=<%=no.getBoard_no()%>&num=<%=loginUser.getU_code() %>",
-               enctype: 'multipart/form-data',
-               cache : false,
-               contentType : false,
-               processData : false,
-               success : function(data) { // 처리가 성공할 경우
-                    // 에디터에 이미지 출력
-                  $(editor).summernote('editor.insertImage', data.url);
-               },
-               error:function(request,status,error){
-                  alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                
-               
-               }
-
-           });   
-       }
+	var cnt = 0;
+    
+	/* summernote에서 이미지 업로드시 실행할 함수 */
+    function sendFile(file, editor) {
+    	// 파일 전송을 위한 폼생성
+        data = new FormData();
+        data.append("uploadFile", file);
+        
+        $.ajax({ // ajax를 통해 파일 업로드 처리
+        	data : data,
+            type : "POST",
+            url : "<%= request.getContextPath() %>/imgUpload.no?bno=<%=no.getBoard_no()%>&num=<%=loginUser.getU_code() %>",
+            enctype: 'multipart/form-data',
+            cache : false,
+            contentType : false,
+            processData : false,
+            success : function(data) { // 처리가 성공할 경우
+            	// 에디터에 이미지 출력
+                $(editor).summernote('editor.insertImage', data.url);
+            },
+            error:function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });   
+    }
        
-       //사진 삭제
-       function deleteFile(src) {
+    //사진 삭제 시 호출 함수
+    function deleteFile(src) {
 
-    	    $.ajax({
-    	        data: {src : src},
-    	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/imgDelete.no", // replace with your url
-    	        cache: false,
-    	        success: function(resp) {
-    	            console.log(resp);
-    	        }
-    	    });
-    	    
+    	$.ajax({
+    		data: {src : src},
+    	    type: "POST",
+    	    url: "<%= request.getContextPath() %>/imgDelete.no",
+    	    cache: false,
+    	    success: function(resp) {
+    	    console.log(resp);
+    	    }
+    	});
+   	}
+
+    //첨부파일 input 추가
+    function addbtn(){
+    	   
+		if(cnt == 0){
+			$("#attachfile2").show();
+			cnt++;
+		}else if(cnt == 1){
+			$("#attachfile3").show();
+		}
+	};
+       
+    //첨부파일 input 삭제
+    function delbtn(){
+
+    	if(cnt == 1){
+    	   $("#attachfile3").val("");
+    	   $("#attachfile3").hide();
+    	   cnt--;
+    	}else if(cnt == 0){
+    	   $("#attachfile2").val("");
+    	   $("#attachfile2").hide();
     	}
-       //첨부파일 input 추가
-       function addbtn(){
-    	   
-    	   if(cnt == 0){
-    	   $("#attachfile2").show();
-    	   cnt++;
-    	   }else if(cnt == 1){
-    		   $("#attachfile3").show();
-    	   }
-       };
+    }
        
-       //첨부파일 input 삭제
-       function delbtn(){
-    	   console.log(cnt);
-    	   if(cnt == 1){
-    		   $("#attachfile3").val("");
-    		   $("#attachfile3").hide();
-    		   cnt--;
-    	   }else if(cnt == 0){
-    		   $("#attachfile2").val("");
-    		   $("#attachfile2").hide();
-    	   }
+    //form 삭제
+    function submitBoard(){
+       var values = $("#summernote").summernote('code');
+       $("#smnoteval").val(values);
+    	   
+       if($("#attachfile1").val() == ""){
+    	   $("#attachfile1").remove();
        }
-       
-       //파일 업로드
-       function loadImg(value){
-				if(value.files && value.files[0]){
-					var reader = new FileReader();
-					reader.readAsDataURL(value.files[0]);
-				}
-			}
-       
-       //form 삭제
-       function submitBoard(){
-    	   var values = $("#summernote").summernote('code');
-    	   $("#smnoteval").val(values);
-    	   if($("#attachfile1").val() == ""){
-    		   $("#attachfile1").remove();
-    	   }
-    	   if($("#attachfile2").val() == ""){
-    		   $("#attachfile2").remove();
-    	   }
-    	   if($("#attachfile3").val() == ""){
-    		   $("#attachfile3").remove();
-    	   }
-    	   
-    	   if($("[name=title]").val() == ""){
-    		   alert("제목을 작성하세요");
-    		   $("[name=title]").focus();
-    		   return false;
-    	   }
-    	   
-    	   if(values == "<p><br></p>" || values == ""){
-    		   alert("내용을 작성하세요");
-    		   $('#summernote').summernote('focus');
-    		   return false;
-    	   }
-    	   
-    	   alert("작성완료");
-    	   
-    	   $("#frm").attr("action", '<%=request.getContextPath()%>/editNotice.no?bno=<%= no.getBoard_no() %>&num=<%=loginUser.getU_code() %>');
-   	   		$("#frm").submit();
-       }
-   </script>
+    
+       if($("#attachfile2").val() == ""){
+    	   $("#attachfile2").remove();
+	   }
+    	
+       if($("#attachfile3").val() == ""){
+    	   $("#attachfile3").remove();
+	   }
 
+       if($("[name=title]").val() == ""){
+    	   alert("제목을 작성하세요");
+    	   $("[name=title]").focus();
+    	   return false;
+	   }
+    	   
+	   if(values == "<p><br></p>" || values == ""){
+    	  alert("내용을 작성하세요");
+    	  $('#summernote').summernote('focus');
+    	  return false;
+	   }
+    	
+	   alert("작성완료");
 
-
-
+	   $("#frm").attr("action", '<%=request.getContextPath()%>/editNotice.no?bno=<%= no.getBoard_no() %>&num=<%=loginUser.getU_code() %>');
+	   $("#frm").submit();
+    }
+</script>
 </head>
 <body>
 
@@ -244,69 +233,54 @@ margin-right : auto;
 		</div>
 		
 		
- <script>
- 		
- 	
- $(document).ready(function() {
-	  	 $("#attachfile2").hide();
-	     $("#attachfile3").hide();
+<script>
+	$(document).ready(function() {
+	  	$("#attachfile2").hide();
+	    $("#attachfile3").hide();
 	     
-	  	 var fileExtension = ['.jpg', '.png', '.jpeg', '.gif',];
-    $('#summernote').summernote({ // summernote를 사용하기 위한 선언
-        height: 400,
-        lang: 'ko-KR',
-        toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontname', 'fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['insert', ['picture', 'link', 'video', 'table', 'hr']]
-          ],
-    callbacks: { // 콜백을 사용
-            // 이미지를 업로드할 경우 이벤트를 발생
-       onImageUpload: function(files, editor, welEditable) {
-           console.log(files);
+	  	var fileExtension = ['.jpg', '.png', '.jpeg', '.gif',];
+    	$('#summernote').summernote({ // summernote를 사용하기 위한 선언
+        	height: 400,
+        	lang: 'ko-KR',
+        	toolbar: [
+            	['style', ['bold', 'italic', 'underline', 'clear']],
+            	['font', ['strikethrough', 'superscript', 'subscript']],
+            	['fontsize', ['fontname', 'fontsize']],
+            	['color', ['color']],
+            	['para', ['ul', 'ol', 'paragraph']],
+            	['height', ['height']],
+            	['insert', ['picture', 'link', 'video', 'table', 'hr']]
+          	],
+    		callbacks: { // 콜백을 사용
+            	// 이미지를 업로드할 경우 이벤트를 발생
+       			onImageUpload: function(files, editor, welEditable) {
+           			console.log(files);
              
-             for (var i = files.length - 1; i >= 0; i--) {
-            	 //확장자 검사
-             	for(var j = 0; j < fileExtension.length; j++){
-             		var extleng = files[i].name.length;
-             		var extdot = files[i].name.lastIndexOf('.');
-             		var ext = files[i].name.substring(extdot, extleng).toLowerCase();
+             		for (var i = files.length - 1; i >= 0; i--) {
+            			//확장자 검사
+             			for(var j = 0; j < fileExtension.length; j++){
+             				var extleng = files[i].name.length;
+             				var extdot = files[i].name.lastIndexOf('.');
+             				var ext = files[i].name.substring(extdot, extleng).toLowerCase();
 
-            		 console.log(ext + ' / ' + fileExtension[j]) 
-            		 //다중 파일 처리
-            	 if(ext == fileExtension[j]){
-         		  sendFile(files[i], this); 
-             	}
-                }
-             }
-      },
-      //사진 삭제시
-      onMediaDelete : function(target) {
-          deleteFile(target[0].src);
-          console.log(target[0].src)
-   }
-    
-    
-}});
-}); 
-
-
-      </script>
-
-
+            		 		//다중 파일 처리
+            	 			if(ext == fileExtension[j]){
+         		  				sendFile(files[i], this); 
+             				}
+                		}
+             		}
+      			},
+      			//사진 삭제시
+      			onMediaDelete : function(target) {
+          			deleteFile(target[0].src);
+          			console.log(target[0].src)
+   				}
+      		}
+    	});
+	}); 
+</script>
 		<!-- 게시글 작성 끝 -->
-
-
 	</div>
-	<%-- <div id="mainBottom">
-	<%@include file = "../../common/footer.jsp" %>
-	</div> --%>
-	
 	<%}else{ 
 		request.setAttribute("msg", "잘못된 경로");
 		request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);

@@ -242,7 +242,7 @@ public class ReviewDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, r.getU_code());
 			pstmt.setString(2, r.getRe_content());
-			pstmt.setInt(3, r.getBoard_id());
+			pstmt.setString(3, r.getBoard_id());
 			
 			result = pstmt.executeUpdate();
 			
@@ -255,7 +255,7 @@ public class ReviewDao {
 		return result;
 	}
 
-	public ArrayList<Reply> selectReplyList(Connection con, int board_id) {
+	public ArrayList<Reply> selectReplyList(Connection con, String board_id) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Reply r = null;
@@ -267,7 +267,7 @@ public class ReviewDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, board_id);
+			pstmt.setString(1, board_id);
 			
 			System.out.println("boardId Dao:"+ board_id);
 			
@@ -278,7 +278,7 @@ public class ReviewDao {
 				r.setBoard_sort(rset.getString("board_sort"));
 				r.setRe_content(rset.getString("re_content"));
 				r.setU_code(rset.getString("u_name"));
-				r.setBoard_id(rset.getInt("board_id"));
+				r.setBoard_id(rset.getString("board_id"));
 				r.setRe_date(rset.getDate("re_date"));
 				
 				
@@ -344,7 +344,7 @@ public class ReviewDao {
 		Board b = null;
 		BoardFile bf = null;
 		
-		String query = prop.getProperty("updateReview");
+		String query = prop.getProperty("selectReviewUpdateForm");
 		
 		try {
 			System.out.println("BoardDao num : " + num);
@@ -391,6 +391,8 @@ public class ReviewDao {
 			hmap = new HashMap<String, Object>();
 			hmap.put("board", b);
 			hmap.put("boardFile", list);
+			
+			System.out.println("boardFile size : " + list.size());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -401,6 +403,65 @@ public class ReviewDao {
 		return hmap;
 	}
 
-	
+	public int updateReviewList(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateReview");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getTitle());
+			pstmt.setString(2, b.getContent());
+			pstmt.setInt(3, b.getBoardId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+		}
+		
+		return result;
+	}
+
+	public int updateBoardFile(Connection con, ArrayList<BoardFile> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		System.out.println("updateBoardFile fileList : " + fileList);
+		
+		String query = prop.getProperty("updateBoardFile");
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++) {
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, fileList.get(i).getOrigin_name());
+				pstmt.setString(2, fileList.get(i).getEdit_name());
+				pstmt.setString(3, fileList.get(i).getFile_src());
+				pstmt.setInt(4, fileList.get(i).getBoard_id());
+				pstmt.setInt(5, fileList.get(i).getU_code());
+				
+						
+				int level = 0;
+				if(i == 0) level = 0;
+				else level = 1;
+				
+				pstmt.setInt(6, level);
+				pstmt.setInt(7, fileList.get(i).getBoard_id());
+				
+				result += pstmt.executeUpdate();
+				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 }
