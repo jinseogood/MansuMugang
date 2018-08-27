@@ -627,6 +627,61 @@ public class QnaDao {
 		
 		return result;
 	}
+
+	public int countUserQna(Connection conn, int ucode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("countUserQna");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, String.valueOf(ucode));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int countAdminQna(Connection conn, int ucode, int adminCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("countAdminQna");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, String.valueOf(adminCode));
+			pstmt.setString(2, String.valueOf(ucode));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 
 }

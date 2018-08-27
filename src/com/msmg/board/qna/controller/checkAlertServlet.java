@@ -1,28 +1,26 @@
 package com.msmg.board.qna.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.msmg.board.qna.model.service.QnaService;
-import com.msmg.member.model.vo.Member;
 
 /**
- * Servlet implementation class writeReQnaServlet
+ * Servlet implementation class checkAlertServlet
  */
-@WebServlet("/writeRe.qna")
-public class writeReQnaServlet extends HttpServlet {
+@WebServlet("/checkAlert.qna")
+public class checkAlertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public writeReQnaServlet() {
+    public checkAlertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +29,25 @@ public class writeReQnaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ucode = ((Member)request.getSession().getAttribute("loginUser")).getU_code();
-		int bid = Integer.parseInt(request.getParameter("num"));
-		int ref_ucode = Integer.parseInt(request.getParameter("ref_ucode"));
+		int ucode = Integer.parseInt(request.getParameter("ucode"));
+		System.out.println("ajax 서블릿 : " + ucode);
 		
-		System.out.println("답글할 글 id " + bid);
-		int result = new QnaService().insertReQna(ucode, bid);
-		
-		String page = "";
-		
-		if(result > 0){
-		page = "/views/board/qna/writeReQna.jsp";
-		request.setAttribute("bid", result);
-		request.setAttribute("ucode", ucode);
-		request.setAttribute("num", bid);
-		request.setAttribute("ref_ucode", ref_ucode);
+		int result = new QnaService().checkQnaCount(ucode);
+		System.out.println("result = " + result);
+		if(result == 1){
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			System.out.println("result = " + result);
+			new Gson().toJson(result, response.getWriter());
 		}else{
-			page = "../../common/errorPage.jsp";
-			request.setAttribute("msg", "글쓰기 에러");
+			int reNum = 0;
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+
+			new Gson().toJson(reNum, response.getWriter());
 		}
-		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+
 	}
 
 	/**

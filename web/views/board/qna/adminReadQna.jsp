@@ -168,7 +168,7 @@ table{
 		<div class="btnlist">
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
-			<%if(user.getU_code() == qna.getRef_ucode()) %>
+			<%if(user.getU_code() == qna.getRef_ucode()){ %>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"
@@ -176,7 +176,7 @@ table{
 			<%} %>
 			<% if(user.getU_id().equals("admin") && qna.getBoard_id() == qna.getRef_bno()){%>
 			<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>'">답글하기</button>
+				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>?ref_ucode=<%=qna.getRef_ucode()%>'">답글하기</button>
 			<%} %>
 		</div>
 

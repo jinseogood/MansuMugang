@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import = "java.util.*"%>
+	pageEncoding="UTF-8" import = "java.util.*, com.msmg.member.model.vo.*"%>
 <%
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	
 	int bid = (int)request.getAttribute("bid");
 	int ucode = (int)request.getAttribute("ucode");
 	int num = (int)request.getAttribute("num");
+	int ref_uc = (int)request.getAttribute("ref_ucode");
 %>
 <!DOCTYPE html>
 <html>
@@ -130,8 +133,13 @@ border : 1px solid tomato;
     	   
     	   alert("작성완료");
     	   $("#frm").attr("action", '<%=request.getContextPath()%>/updateReQna.qna?bid=<%= bid %>&ucode=<%=ucode%>&num=<%=num%>');
+    	   send();
    	   		$("#frm").submit();
        }
+       
+       function send(){
+			webSocket.send(<%= ref_uc%>+'|'+'1');
+		};
    </script>
 
 
@@ -143,7 +151,7 @@ border : 1px solid tomato;
 <!-- 게시판 쓰기 -->
 	
 	<!-- 접근 범위 지정 -->
-<%if(loginUser != null){ %>
+<%if(loginUser != null && loginUser.getU_id().equals("admin1")){ %>
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
@@ -230,7 +238,41 @@ border : 1px solid tomato;
           			console.log(target[0].src)
    				}
 			}});
-		}); 
+		
+ 	  webSocket = new WebSocket('ws://localhost:8001'+ '<%=request.getContextPath()%>/unicast');
+		
+		// 웹 소켓을 통해 연결이 이루어 질 때 동작할 메소드
+		webSocket.onopen = function(event){
+			console.log("웹소켓 연결");
+			
+		};
+		
+		// 서버로부터 메시지를 전달 받을 때 동작하는 메소드
+		webSocket.onmessage = function(event){
+			console.log("메세지 받다");
+		};
+		
+		// 서버에서 에러가 발생할 경우 동작할 메소드
+		webSocket.onerror = function(event){
+			onError(event);
+		};
+		
+		// 서버와의 연결이 종료될 경우 동작하는 메소드
+		webSocket.onclose = function(event){
+			onClose(event);
+		};
+	    
+		
+		function onError(event) {
+			alert(event.data);
+		}
+		
+		function onClose(event) {
+			alert(event);
+		}
+ 	   
+ 		
+ 	}); 
 
       </script>
 
