@@ -32,7 +32,6 @@ public class MenuListD extends HttpServlet {
 			request.setAttribute("list", list);
 			request.setAttribute("msg", "메뉴 리스트");
 		}else{
-			System.out.println("오긴오냐");
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "해당하는 메뉴가 없습니다.");
 		}

@@ -4,14 +4,16 @@ public class MenuList implements java.io.Serializable{
 	private String img_name;
 	private String menu_info;
 	private String menu_name;
+	private String menu_code;
 	
 	public MenuList(){}
 
-	public MenuList(String img_name, String menu_info, String menu_name) {
+	public MenuList(String img_name, String menu_info, String menu_name,String menu_code) {
 		super();
 		this.img_name = img_name;
 		this.menu_info = menu_info;
 		this.menu_name = menu_name;
+		this.menu_code = menu_code;
 	}
 
 	public String getMenu_name() {
@@ -40,7 +42,16 @@ public class MenuList implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "MenuList [img_name=" + img_name + ", menu_info=" + menu_info + ", menu_name=" + menu_name + "]";
+		return "MenuList [img_name=" + img_name + ", menu_info=" + menu_info + ", menu_name=" + menu_name
+				+ ", menu_code=" + menu_code + "]";
+	}
+
+	public String getMenu_code() {
+		return menu_code;
+	}
+
+	public void setMenu_code(String menu_code) {
+		this.menu_code = menu_code;
 	}
 	
 }
