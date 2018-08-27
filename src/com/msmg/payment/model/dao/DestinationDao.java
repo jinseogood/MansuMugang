@@ -27,7 +27,7 @@ public class DestinationDao {
 	}
 
 	public int insertDestination(Connection con, Destination d) {
-		Destination destination = null;
+		
 		PreparedStatement pstmt = null;
 
 		int result = 0;
