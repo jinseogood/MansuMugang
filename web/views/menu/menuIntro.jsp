@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*, java.util.*"%>
 <%
 	ArrayList<MenuList> list = (ArrayList<MenuList>) request.getAttribute("list");
+	ArrayList<Like> MenuList = (ArrayList<Like>) request.getAttribute("MenuList");
 	int count = 0;
 %>
 <!DOCTYPE>
@@ -164,12 +165,22 @@ td .like {
 				</div>
 			</div>
 			<div id="btn" class="btn-group-vertical">
-				<button type="button" class="btn btn-primary"
+				<% if(loginUser != null){ %>
+					<button type="button" class="btn btn-primary"
+					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo?user='+<%= loginUser.getU_code() %>">고혈압</button>
+					<button type="button" class="btn btn-primary"
+					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo?user='+<%= loginUser.getU_code() %>">당뇨병</button>
+					<button type="button" class="btn btn-primary"
+					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo?user='+<%= loginUser.getU_code() %>">뇌질환</button>
+				 <% }else{ %>
+				 	<button type="button" class="btn btn-primary"
 					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo'">고혈압</button>
-				<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-primary"
 					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo'">당뇨병</button>
-				<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-primary"
 					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo'">뇌질환</button>
+				 <% } %>
+				
 			</div>
 			<div class="images">
 				<table align="center" text-align="center">
@@ -190,10 +201,29 @@ td .like {
 									</div>
 									<div class="info"><%=list.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
-										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">
+										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">			
+										<% if(loginUser != null){
 										
+											for(int l = 0 ; l < MenuList.size() ; l++){ 
+												if(MenuList.get(l).getM_code() == Integer.parseInt(list.get(i).getMenu_code())){
+										%>
+											
+													<i class="fa fa-star" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
+											
+										<% 
+													break;
+												}else{
+													if(l == MenuList.size()-1){
+										%>
+													<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
+										<%
+													}
+												}
+											}	
 										
-										<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
+										   }else{ %>
+											<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>			
+										<% } %>
 									</div>
 								</div>
 							</div>

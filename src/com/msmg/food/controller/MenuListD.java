@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.food.model.service.FoodService;
+import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.MenuList;
 
 @WebServlet("/MenuListD.fo")
@@ -22,12 +23,20 @@ public class MenuListD extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<MenuList> list = new ArrayList<MenuList>();
-		
+		ArrayList<Like> MenuList = new ArrayList<Like>();
 		list = new FoodService().menuListD();
+		int u_code = 0;
+		
+		if(request.getParameter("user") != null){
+			u_code = Integer.parseInt(request.getParameter("user"));
+		}
 		//System.out.println(list);
 		String page = "";
-		
 		if(list != null){
+			if(MenuList != null){
+				MenuList = new FoodService().likeCheck(u_code);
+				request.setAttribute("MenuList", MenuList);
+			}	
 			page = "/views/menu/menuIntro2.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("msg", "메뉴 리스트");
