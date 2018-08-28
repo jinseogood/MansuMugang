@@ -405,4 +405,50 @@ public class BoardDao {
 		return b;
 	}
 
+	public int insertBoardFile(Connection con, BoardFile bf, int ucode) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertBoardFile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, bf.getOrigin_name());
+			pstmt.setString(2, bf.getEdit_name());
+			pstmt.setString(3, bf.getFile_src());
+			pstmt.setInt(4, bf.getBoard_id());
+			pstmt.setInt(5,  ucode);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		// TODO Auto-generated method stub
+		return result;
+	}
+
+	public int deleteBoardFile(Connection con, String fileName) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteBoardFile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, fileName);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

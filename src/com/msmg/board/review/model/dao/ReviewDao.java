@@ -429,11 +429,13 @@ public class ReviewDao {
 		
 		System.out.println("updateBoardFile fileList : " + fileList);
 		
-		String query = prop.getProperty("updateBoardFile");
+		String query = prop.getProperty("insertBoardFile");
 		
 		
 		try {
 			for(int i = 0; i < fileList.size(); i++) {
+				System.out.println("dao board_no : " + fileList.get(i).getBoard_id());
+				
 				
 				pstmt = con.prepareStatement(query);
 				pstmt.setString(1, fileList.get(i).getOrigin_name());
@@ -449,15 +451,13 @@ public class ReviewDao {
 				pstmt.setInt(6, level);
 				
 				result += pstmt.executeUpdate();
-				
 			}
-			
-			System.out.println("reviewDao result : " + result);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}
+		
 		
 		return result;
 	}
@@ -512,6 +512,49 @@ public class ReviewDao {
 			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	public int deleteBoardFile(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteBoardFile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, b.getBoardId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertPoint(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		System.out.println("insertPoint 들어옴");
+		
+		String query = prop.getProperty("insertPoint");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,  b.getuCode());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("insertPoint result : " + result);
 		return result;
 	}
 

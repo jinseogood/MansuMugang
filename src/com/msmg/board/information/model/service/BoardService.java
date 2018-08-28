@@ -12,6 +12,7 @@ import java.util.HashMap;
 import com.msmg.board.information.model.dao.BoardDao;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.information.model.vo.Reply;
+import com.msmg.board.review.model.vo.BoardFile;
 
 public class BoardService {
 
@@ -172,6 +173,37 @@ public class BoardService {
 		close(con);
 		
 		return nextB;
+	}
+
+	public int insertBoardFile(BoardFile bf, int ucode) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().insertBoardFile(con, bf, ucode);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteBoardFile(String fileName) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().deleteBoardFile(con, fileName);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
 	}
 
 	

@@ -17,16 +17,16 @@ import com.msmg.board.review.model.service.ReviewService;
 import com.msmg.board.review.model.vo.BoardFile;
 
 /**
- * Servlet implementation class SelectOneReviewServlet
+ * Servlet implementation class AdminReviewServlet
  */
-@WebServlet("/selectOne.rev")
-public class SelectOneReviewServlet extends HttpServlet {
+@WebServlet("/adminReview")
+public class AdminReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectOneReviewServlet() {
+    public AdminReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,21 +35,18 @@ public class SelectOneReviewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("selectOne 넘어옴");
 		
 		String num = request.getParameter("num");
 		
 		System.out.println(num);
 		
 		HashMap<String, Object> hmap = new ReviewService().selectOneReview(num);
-		System.out.println("selectOne hmap : " + hmap);
 		ArrayList<Reply> replyList = new ReviewService().selectReply(num);
-		System.out.println("selectOne replyList : " + hmap);
 		
 		String page = "";
 		 
 		if(hmap != null) {
-			page = "views/board/review/reviewThumbnailDetail.jsp";
+			page = "views/board/review/adminReviewDetail.jsp";
 			
 			request.setAttribute("b", (Board)hmap.get("board"));
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
@@ -63,10 +60,7 @@ public class SelectOneReviewServlet extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
-	
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
