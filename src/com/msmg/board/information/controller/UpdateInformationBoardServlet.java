@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import com.msmg.board.information.model.service.BoardService;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.member.model.vo.Member;
-
+ 
 /**
  * Servlet implementation class UpdateInformationBoardServlet
  */

@@ -286,7 +286,7 @@ public class BoardDao {
 		int result = 0;
 		
 		String query = prop.getProperty("deleteBoard");
-		
+		 
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, bid);

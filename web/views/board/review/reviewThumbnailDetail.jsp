@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8" import="com.msmg.board.review.model.vo.*, java.util.*
 	, com.msmg.board.information.model.vo.*"%>
 <%
+	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist");
+	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
+
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
 %>
@@ -163,6 +166,33 @@ div[id=date-writer-hit2] {
 	background:tomato;
 }
 
+#replyContent {
+	width:600px;
+	height:50px;
+}
+
+#replyAddBtn {
+	color:white;
+}
+
+#replyAddBtn:hover {
+	cursor:pointer;
+}
+
+#replyAddTable tr td {
+	border-top:1px solid tomato;
+	border-bottom:1px solid tomato;
+}
+
+#replyAddTable td {
+	height:30px;
+	border-left:1px solid tomato;
+	border-right:1px solid tomato;
+}
+
+#date {
+	font-size:12px;
+}
 
 
 </style>
@@ -209,9 +239,85 @@ div[id=date-writer-hit2] {
 					</tr>
 				</table>
 			</div>
-	
-
 	</div>
+	
+	<div id="replyArea" style="margin-top:10px; text-align:center">
+		<div id="replyWriteArea">
+			<table border="1" bordercolor="tomato" height="50px">
+				<tr bgcolor="tomato">
+					<form id="writeCommentForm">
+						<td width="100"></td>
+						<td width="600">
+							<input type ="text" id="replyContent" name="replyContent">
+						</td>
+						<td width="100">
+							<div id="replyAddBtn">댓글 등록</div>
+						</td>
+					</form> 
+				</tr>
+			</table>
+		</div>
+		<br>
+		<div id="replyAddArea">
+			<table id="replyAddTable">
+				<%for (int i=0; i < list2.size(); i++) {%>
+					<tr>
+					<td width="100"><%= list2.get(i).getU_code() %>
+									<br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
+					<td width="600"><%= list2.get(i).getRe_content() %></td>
+					<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
+						<td width="100"><a href='#'>수정</a> | <a href='#'>삭제</a></td>
+					<%} else{%>
+						<td width="100"></td>
+					<%} %>
+					</tr>
+				<%} %>
+			</table>
+		</div>
+		<script>
+		$(function(){
+			$("#replyAddBtn").click(function(){
+				var writter = <%= loginUser.getU_code()%>
+				var bid = <%= b.getBoardId()%>
+				var content = $("#replyContent").val();
+				
+				console.log(writter);
+				console.log(bid);
+				console.log(content);
+				
+				$.ajax({
+					url:"/msmg/insertReviewReply.rev",
+					data:{writter:writter,
+						  content:content,
+						  bid:bid},
+					type:"post",
+					success:function(data){
+						$("#replyAddTable").html("");
+						for(var i = 0; i < data.length; i++){
+							$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
+									+ "<td width='100px'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
+						}
+					},
+					error:function(data){
+						console.log("실패");
+					}
+				});
+			});
+		});
+		</script>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<div id='whiptable'>
 		<table id='whip'>
 			<tr style="border-top: 1px solid #e83f26;">

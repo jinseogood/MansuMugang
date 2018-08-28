@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.information.model.service.BoardService;
 import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.information.model.vo.Reply;
 import com.msmg.board.review.model.service.ReviewService;
 import com.msmg.board.review.model.vo.BoardFile;
 
@@ -42,16 +42,17 @@ public class SelectOneReviewServlet extends HttpServlet {
 		System.out.println(num);
 		
 		HashMap<String, Object> hmap = new ReviewService().selectOneReview(num);
+		ArrayList<Reply> replyList = new ReviewService().selectReply(num);
 		
 		String page = "";
-		
+		 
 		if(hmap != null) {
 			page = "views/board/review/reviewThumbnailDetail.jsp";
 			
 			request.setAttribute("b", (Board)hmap.get("board"));
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
+			request.setAttribute("r", replyList);
 			
-			System.out.println("fileList : " + (ArrayList<BoardFile>)hmap.get("boardFile"));
 			
 		} else {
 			page = "views/common/errorPage.jsp";

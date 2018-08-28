@@ -25,7 +25,7 @@ public class InsertReplyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String writter = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
 		String content = request.getParameter("content");
-		int bid = Integer.parseInt(request.getParameter("bid"));
+		String bid = request.getParameter("bid");
 		
 		System.out.println(writter);
 		System.out.println(content);
@@ -37,9 +37,8 @@ public class InsertReplyServlet extends HttpServlet {
 		r.setRe_content(content);
 		r.setU_code(writter);
 		
-		
+		 
 		ArrayList<Reply> replyList = new BoardService().insertReply(r);
-		System.out.println(replyList);
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

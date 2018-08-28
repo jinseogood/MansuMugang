@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class BoardFile implements java.io.Serializable{
 	private int file_no;
-	private String origin_name;
+	private String origin_name; 
 	private String edit_name;
 	private String file_src;
 	private Date file_date;

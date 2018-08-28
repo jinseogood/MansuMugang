@@ -95,7 +95,7 @@ public class BoardService {
 	public ArrayList<Reply> selectReply(String num) {
 		Connection con = getConnection();
 		ArrayList<Reply> replyList = null;
-		
+		 
 		replyList = new BoardDao().selectReplyList(con, num);
 		System.out.println("serviceReply:"+replyList);
 		

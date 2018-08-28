@@ -58,7 +58,7 @@ public class Reply implements java.io.Serializable{
 
 	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
-	}
+	} 
 
 	@Override
 	public String toString() {

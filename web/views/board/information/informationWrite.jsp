@@ -178,7 +178,7 @@ hr {
 					<td><input type="hidden" name="num" value="<%=num %>"></td>
 				</tr>
 			</table>
-			
+			 
 			<br>
 			<div>
 				<form name="writeForm" action="./summernote_insert.jsp" method="post">
