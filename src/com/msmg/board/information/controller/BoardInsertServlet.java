@@ -47,7 +47,6 @@ public class BoardInsertServlet extends HttpServlet {
 		
 		if(result > 0) {
 			response.sendRedirect(request.getContextPath() + "/selectList.bo");
-			
 		}else {
 			request.setAttribute("msg", "게시판 작성 실패!");
 			request.getRequestDispatcher("views/common/errorPage.js").forward(request, response);

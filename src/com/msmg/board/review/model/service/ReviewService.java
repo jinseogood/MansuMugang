@@ -37,7 +37,11 @@ public class ReviewService {
 		int result2 = new ReviewDao().insertBoardFile(con, fileList);
 		System.out.println("result2 : " + result2);
 		
-		if(result1 > 0 && result2 > 0) {
+		
+		
+		int result3 = new ReviewDao().insertPoint(con, b);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(con);
 			result = 1;
 		}else {
@@ -129,9 +133,7 @@ public class ReviewService {
 		
 		int result1 = new ReviewDao().updateReviewList(con,b);
 		
-		System.out.println("update fileList : " + fileList);
-		int result2 = new ReviewDao().updateBoardFile(con, fileList);
-		System.out.println("result2 : " + result2);
+		int result2 = new ReviewDao().deleteBoardFile(con, b);
 		
 		if(result1 > 0) {
 			int bid = new ReviewDao().selectCurrval2(con);
@@ -142,7 +144,11 @@ public class ReviewService {
 			}
 		}
 		
-		if(result1 > 0 && result2 > 0) {
+		System.out.println("update fileList : " + fileList);
+		int result3 = new ReviewDao().updateBoardFile(con, fileList);
+		System.out.println("result3 : " + result3);
+		
+		if((result1 > 0 && result2 > 0 && result3 > 0) || (result1 > 0 & result3 > 0) || (result1 > 0 && result2 > 0) || (result1 > 0) ) {
 			commit(con);
 			result = 1;
 		}else {
@@ -177,6 +183,7 @@ public class ReviewService {
 		
 		return replyList;
 	}
+
 
 
 

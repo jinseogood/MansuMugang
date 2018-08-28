@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*"%>
-<% int num = (int)request.getAttribute("random"); %>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.member.model.vo.*"%>
+<% int num = (int)request.getAttribute("random");
+
+   Member loginUser2=(Member)session.getAttribute("loginUser");
+%>
 
 
 <!DOCTYPE>
@@ -27,7 +30,7 @@
            $.ajax({ // ajax를 통해 파일 업로드 처리
                data : data,
                type : "POST",
-               url : "<%= request.getContextPath() %>/SelectBoardImg",
+               url : "<%= request.getContextPath() %>/selectBoardImg?bno=<%=num%>&num=<%=loginUser2.getU_code()%>",
                cache : false,
                contentType : false,
                processData : false,
@@ -50,7 +53,7 @@
     	    $.ajax({
     	        data: {src : src},
     	        type: "POST",
-    	        url: "<%= request.getContextPath() %>/deleteimg", // replace with your url
+    	        url: "<%= request.getContextPath() %>/deleteImg.bo", // replace with your url
     	        cache: false,
     	        success: function(data) {
     	            console.log(data);
@@ -237,7 +240,7 @@ hr {
 		<hr>
 		<br>
 		<div id="writeBtn">
-			<button  type="reset" class="btn btn-primary" value="취소" onclick = 'history.go(-1)'>취소</button>
+			<button  type="reset" class="btn btn-primary" value="취소" onclick = 'location.href="/selectList.bo"'>취소</button>
 			&nbsp;
 			<input type="button" class="btn btn-primary" value="등록 완료" OnClick="javascript:writeCheck();">
 		</div>
