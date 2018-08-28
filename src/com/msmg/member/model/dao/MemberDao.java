@@ -218,8 +218,8 @@ public class MemberDao {
 
 	}
 
-	public ArrayList<UserAllergy> selectAlList(Connection con, UserAllergy al) {
-		ArrayList<UserAllergy> alList = new ArrayList<UserAllergy>();
+	public ArrayList<String> selectAlList(Connection con, UserAllergy al) {
+		ArrayList<String> alList = new ArrayList<String>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		System.out.println("userAllergy Dao");
@@ -234,13 +234,9 @@ public class MemberDao {
 			
 			while(rset.next()){
 				/*alList = new ArrayList<UserAllergy>();*/
-				UserAllergy a = new UserAllergy();
 				
-				a.setAl_code(rset.getString("al_code"));
-				a.setU_code(rset.getString("u_code"));
-				a.setUser_al_no(rset.getString("user_al_no"));
 				
-				alList.add(a);
+				alList.add(rset.getString("al_code"));
 				
 				System.out.println("dao에서 " + alList);
 				
@@ -451,6 +447,40 @@ public class MemberDao {
 		}
 		
 		return mSearchList;
+	}
+
+	public Member updateMember(Connection con, Member m) {
+		Member member = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, m.getU_pwd());
+			pstmt.setString(2, m.getU_id());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return member;
 	}
 
 }

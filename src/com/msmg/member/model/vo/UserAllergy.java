@@ -42,7 +42,7 @@ public class UserAllergy implements java.io.Serializable{
 	
 	@Override
 	public String toString() {
-		return "UserAllergy [user_al_no=" + user_al_no + ", al_code=" + al_code + ", u_code=" + u_code + "]";
+		return "{user_al_no=" + user_al_no + "|al_code=" + al_code + "|u_code=" + u_code + "}";
 	}
 
 }

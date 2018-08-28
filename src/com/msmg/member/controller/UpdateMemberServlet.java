@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.msmg.member.model.service.MemberService;
+import com.msmg.member.model.vo.Member;
+
 /**
  * Servlet implementation class UpdateMemberServlet
  */
@@ -26,8 +29,19 @@ public class UpdateMemberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String uid = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+		String userName = request.getParameter("userName");
+		String[] alCode = request.getParameterValues("allergy");
+		
+		Member m = new Member();
+		m.setU_id(uid);
+		m.setU_pwd(userPwd);
+		m.setU_name(userName);
+		
+		Member member = new MemberService().updateMember(m);
+		
+		
 	}
 
 	/**
