@@ -142,7 +142,7 @@ table{
 </script>
 </head>
 <body>
-	<% if(user != null && (user.getU_name() == qna.getU_name() || user.getU_code() == qna.getRef_ucode() || user.getU_name().equals("admin"))){ %>
+	<% if(user != null && user.getU_name().equals("admin")){ %>
 	
 	
 	<div id="main">

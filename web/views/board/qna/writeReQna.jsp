@@ -151,7 +151,7 @@ border : 1px solid tomato;
 <!-- 게시판 쓰기 -->
 	
 	<!-- 접근 범위 지정 -->
-<%if(loginUser != null && loginUser.getU_id().equals("admin1")){ %>
+<%if(loginUser != null && loginUser.getU_id().equals("admin")){ %>
 	<div id='wrap' align = 'left'>
 	
 		<!-- 구분 -->
