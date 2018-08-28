@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -63,11 +64,12 @@
 	.topMenuArea{
 		width:80%;
 		height:400px;
-		margin-top:30px;
+		margin-top:20px;
+		font-family: 'Nanum Gothic', sans-serif;
 	}
 	.topMenu{
 		display:inline-block;
-		width:20%;
+		width:23%;
 		height:80%;
 		border:1px solid lightgray;
 		border-radius:3px;
@@ -119,6 +121,13 @@
 			height:400px;
 		} 
 	} 
+	#menutitle{
+		font-size : 18pt;
+	}
+	
+	#menuinfo{
+		float : left;
+	}
 </style>
 <script>
 </script>
@@ -167,13 +176,14 @@
 	<div id="mainContent" align="center">
 		<div id="g" class="topMenuArea">
 			<br>
-			<h4 align="left">고혈압 인기메뉴 >></h4>
+			<h4 align="left">고혈압 인기메뉴 >></h4><br>
 			<%if(goList != null){
 			for(int i = 0; i < goList.size(); i++){ %>
 			<div id="g1" class="topMenu">
 				<div id="g1-img" class="topMenuImg">
 					<img src="/msmg/images/food/<%= goList.get(i).getMenu_img_ename() %>">
-					<span><%= goList.get(i).getMenu_name() %></span>
+					<span id = 'menutitle'><%= goList.get(i).getMenu_name() %></span><br>
+					<span id = 'menuinfo'><%= goList.get(i).getMenu_info() %></span>
 				</div>
 			</div>
 			<%}} %>
@@ -192,13 +202,14 @@
 		</div>
 		<div id="d" class="topMenuArea">
 			<br>
-			<h4 align="left">당뇨병 인기메뉴 >></h4>
+			<h4 align="left">당뇨병 인기메뉴 >></h4><br>
 			<%if(dangList != null){
 			for(int i = 0; i < dangList.size(); i++){ %>
 			<div id="g1" class="topMenu">
 				<div id="g1-img" class="topMenuImg">
 					<img src="/msmg/images/food/<%= dangList.get(i).getMenu_img_ename() %>">
-					<span><%= dangList.get(i).getMenu_name() %></span>
+					<span id = 'menutitle'><%= dangList.get(i).getMenu_name() %></span><br>
+					<span id = 'menuinfo'><%= dangList.get(i).getMenu_info() %></span>
 				</div>
 			</div>
 			<%}} %>
@@ -220,13 +231,14 @@
 		</div>
 		<div id="b" class="topMenuArea">
 			<br>
-			<h4 align="left">뇌질환 인기메뉴 >></h4>
+			<h4 align="left">뇌질환 인기메뉴 >></h4><br>
 			<%if(headList != null){
 			for(int i = 0; i < headList.size(); i++){ %>
 			<div id="g1" class="topMenu">
 				<div id="g1-img" class="topMenuImg">
 					<img src="/msmg/images/food/<%= headList.get(i).getMenu_img_ename() %>">
-					<span><%= headList.get(i).getMenu_name() %></span>
+					<span id = 'menutitle'><%= headList.get(i).getMenu_name() %></span><br>
+					<span id = 'menuinfo'><%= headList.get(i).getMenu_info() %></span>
 				</div>
 			</div>
 			<%}} %>
