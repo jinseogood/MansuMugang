@@ -492,7 +492,82 @@
 		}
 		//후기 조회
 		else if(type == 5){
-			
+			$.ajax({
+				url:"/msmg/selectReviewList",
+				type:"get",
+				data:{currentPage:currentPage},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#reviewTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#reviewpageArea");
+					$pageBody.html('');
+					
+					var i=0;
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "infoList"){
+							var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
+							var $noTd=$("<td>").text(data[key][i].boardNo);
+							var $titleTd=$("<td>").text(data[key][i].title);
+							var $writerTd=$("<td>").text(data[key][i].uCode);
+							var $dateTd=$("<td>").text(data[key][i].boardDate);
+							var $countTd=$("<td>").text(data[key][i].bCount);
+							
+							$tr.append($noTd);
+							$tr.append($titleTd);
+							$tr.append($writerTd);
+							$tr.append($dateTd);
+							$tr.append($countTd);
+							$tableBody.append($tr);
+							
+							i++;
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstPage("+currentPage+", 5);'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevPage("+currentPage+", 5);'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goPage("+p+", 5);'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextPage("+currentPage+", 5);'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastPage("+maxPage+", 5);'>>></button>");
+						}
+					}
+				},
+				error:function(data){
+					console.log(data);
+					console.log("error");
+				}
+			});
 		}
 		//회원 조회
 		else if(type == 6){

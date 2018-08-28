@@ -144,7 +144,7 @@ div a {
 	</div>
 	<div id="main" align="center">
 		<section>
-			<form name="f"<%--  action="<%= request.getContextPath() %>/insertMember.me"  --%>method="post">
+			<form id="f"<%--  action="<%= request.getContextPath() %>/insertMember.me"  --%>method="post">
 			<div class="tbl-content table1" align="center">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
@@ -387,7 +387,7 @@ div a {
 						<div class="clear"></div>
 							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성하기">
 							<!-- <input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기" onclick="validation();"> -->
-							<button onclick="return validation();" class="w3-button w3-ripple w3-yellow" onclick="">가입하기</button>
+							<button onclick="return validation();" class="w3-button w3-ripple w3-yellow">가입하기</button>
 
 						</td>
 					</tr>
