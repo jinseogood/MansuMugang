@@ -318,4 +318,74 @@ public class MenuDao {
 		return menuSearchList;
 	}
 
+
+	public Menu selectOneMenu(int mCode, Connection con) {
+		Menu m=new Menu();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectOneMenu");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setInt(1, mCode);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				
+				m.setMenuCode(Integer.parseInt(rset.getString("menu_code")));
+				m.setMenuName(rset.getString("menu_name"));
+				m.setMainMat(rset.getString("menu_main"));
+				m.setSubMat(rset.getString("menu_sub"));
+				m.setPrice(rset.getInt("price"));
+				m.setMenuInfo(rset.getString("menu_info"));
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return m;
+	}
+
+
+	public int deleteMenu(int mCode, Connection con) {
+		int result=0;
+		int result2=0;
+		int result3=0;
+		PreparedStatement pst=null;
+		PreparedStatement pst2=null;
+		PreparedStatement pst3=null;
+		
+		String query=prop.getProperty("deleteMenu");
+		String query2=prop.getProperty("deleteMenuInfo");
+		String query3=prop.getProperty("deleteGradMenu");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setInt(1, mCode);
+			
+			pst2=con.prepareStatement(query2);
+			pst2.setInt(1, mCode);
+			
+			pst3=con.prepareStatement(query3);
+			pst3.setInt(1, mCode);
+			
+			result=pst.executeUpdate();
+			result2=pst2.executeUpdate();
+			result3=pst3.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pst);
+		}
+		
+		return result;
+	}
+
 }

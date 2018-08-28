@@ -273,7 +273,7 @@
 					
 					$.each(data, function(index, value){
 						if(decodeURIComponent(value.menuName)!="undefined"){
-							var $tr=$("<tr>");
+							var $tr=$("<tr onclick='openMDetail("+value.menuCode+")'>");
 							var $codeTd=$("<td>").text(value.menuCode);
 							var $nameTd=$("<td>").text(decodeURIComponent(value.menuName));
 							var $mMatTd=$("<td>").text(decodeURIComponent(value.mainMat));
@@ -815,7 +815,7 @@
 					
 					$.each(data, function(index, value){
 						if(decodeURIComponent(value.menuName)!="undefined"){
-							var $tr=$("<tr>");
+							var $tr=$("<tr onclick='openMDetail("+value.menuCode+")'>");
 							var $codeTd=$("<td>").text(value.menuCode);
 							var $nameTd=$("<td>").text(decodeURIComponent(value.menuName));
 							var $mMatTd=$("<td>").text(decodeURIComponent(value.mainMat));
@@ -1312,6 +1312,11 @@
 		searchPagingAJAX(maxPage, type, sType, sContent);
 	}
 	
+	//메뉴 상세보기 메소드
+	function openMDetail(menuCode){
+		window.open("<%= request.getContextPath() %>/selectOneMenu?menuCode="+menuCode+"", "메뉴 상세보기", "width=340, height=280, top=20, left=20, scrollbars=no");
+	}
+	
 	//공지사항 상세보기 메소드
 	function openNotice(boardNo){
 		console.log(boardNo);
@@ -1319,18 +1324,16 @@
 	}
 	
 	//정보게시판 상세보기 메소드
-	function openInfo(boardNo){
-		var num=String(boardNo);
-		console.log("num : " + num);
-		console.log("num type : " + typeof(num));
-		window.open("<%= request.getContextPath() %>/selectOne.bo?num="+num+"", "정보게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	function openInfo(boardId){
+		var num=String(boardId);
+		window.open("<%= request.getContextPath() %>/adminInfor?num="+num+"", "정보게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
 	//후기게시판 상세보기 메소드
-	<%-- function openReview(boardNo){
-		console.log(boardNo);
-		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardNo+"", "후기게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
-	} --%>
+	function openReview(boardId){
+		var num=String(boardId);
+		window.open("<%= request.getContextPath() %>/adminReview?num="+num+"", "후기게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	}
 	
 	//문의내역 상세보기 메소드
 	function openQnA(boardId){
