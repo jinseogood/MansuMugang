@@ -110,7 +110,7 @@
 		color:gray;
 	}
 	#adminAlert{
-		width:10%;
+		width:100%;
 		height:100%;
 	}
 	#noticeAlert {
@@ -124,7 +124,7 @@
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
 			<div id = 'noticeAlert'><a onclick = 'moveQna();'>
-	  				<img src="/msmg/images/common/notification.png" id="adminAlert">
+	  				<img src="/msmg/images/common/notifications.png" id="adminAlert">
   			</a></div>
 			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
 	<% 
@@ -202,10 +202,10 @@
 					type : "get",
 					success:function(data){
 						console.log(localStorage.getItem("checkVal"));
-						if(localStorage.getItem("checkVal") == 0 && data == 0){
-							$("#noticeAlert").css('display', 'none');
-						}else{
-							$("#noticeAlert").css('display', 'inline-block');
+						if(data == 1){
+							if(localStorage.getItem("checkVal") != 1){
+								$("#noticeAlert").css('display', 'inline-block');
+							}
 						}
 					},
 					error:function(data, status, msg){
@@ -251,7 +251,7 @@
 				if(content == "" || !sender.match(<%=loginUser.getU_code() %>)){
 					
 				} else {
-					localStorage.setItem("checkVal", 1);
+					console.log("메세지 도착");
 					$("#noticeAlert").css('display', 'inline-block');
 				}
 			}
@@ -276,7 +276,7 @@
 		}
 		
 		function moveQna(){
-			localStorage.setItem("checkVal", 0);
+			localStorage.setItem("checkVal", 1);
 			location.href="<%= request.getContextPath() %>/qnaList.qna"
 		}
 	</script>
