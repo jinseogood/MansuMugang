@@ -103,42 +103,25 @@ public class CommonServlet extends HttpServlet {
 		
 		
 		
+		
 /*		//결제 상태 변경 서블릿
-		int buy_no = request.getParameter("buy_no");
-		String u_code = request.getParameter("u_code");
-		String menu_code = request.getParameter("menu_code");
-		Date buy_date = request.getParameter("buy_date");
 		String status = request.getParameter("status");
+		String diet_no = request.getParameter("diet_no");
 		
 		Payment p = new Payment();
-		p.setBuy_no(buy_no);
-		p.setU_code(u_code);
-		p.setMenu_code(menu_code);
-		p.setBuy_date(buy_date);
+
 		p.setStatus(status);
 		
 		int result3 = new PaymentService().updateOrder(p);*/
 		
 		
-		
-		
-		
-		
 /*		// 상세 결제 정보 입력 서블릿
-		String sort = request.getParameter("sort");
-		int buy_no = request.getParameter("buy_no");
-		int amount = request.getParameter("amount");
-		String buy_sort = request.getParameter("buy_sort");
-	
-		PaymentInfo pi = new PaymentInfo();
-		pi.setSort(sort);
-		pi.setBuy_sort(buy_sort);
-		pi.getAmount(amount);
-		pi.setBuy_no(buy_no);
-		
-		int result = new PaymentInfoService().insertPaymentInfo(pi);*/
-		
-		
+		int buy_info_no =
+		String sort = 
+		int buy_no =
+		int quantity = 
+		String buy_sort = */
+
 		
 		
 		
