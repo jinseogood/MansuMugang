@@ -52,14 +52,14 @@ public class SearchReviewList extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<Review> infoList=new ReviewService().searchReviewList(currentPage, limit, type, content);
+		ArrayList<Review> rList=new ReviewService().searchReviewList(currentPage, limit, type, content);
 		
 		System.out.println("servlet pi : " + pi);
-		System.out.println("servlet infoList : " + infoList);
+		System.out.println("servlet rList : " + rList);
 		
 		HashMap<String, Object> hmap=new HashMap<String, Object>();
 		hmap.put("pi", pi);
-		hmap.put("infoList", infoList);
+		hmap.put("rList", rList);
 					
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

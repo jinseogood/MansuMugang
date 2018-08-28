@@ -108,4 +108,31 @@ public class MenuService {
 		return result;
 	}
 
+	public String selectMenuFileName(int mCode) {
+		Connection con=getConnection();
+		
+		String fileEditName=new MenuDao().selectMenuFileName(mCode, con);
+		
+		close(con);
+		
+		return fileEditName;
+	}
+
+	public int updateMenu(Menu menu, ArrayList<MenuInfo> fileList) {
+		Connection con=getConnection();
+		
+		int result=new MenuDao().updateMenu(menu, fileList, con);
+		
+		if(result>0){
+			commit(con);
+		}
+		else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 }

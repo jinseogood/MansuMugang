@@ -1,6 +1,8 @@
 package com.msmg.admin.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,16 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.msmg.admin.model.service.ReviewService;
-import com.msmg.admin.model.vo.PageInfo;
-import com.msmg.admin.model.vo.Review;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-@WebServlet("/selectReviewList")
-public class SelectReviewList extends HttpServlet {
+import com.google.gson.Gson;
+import com.msmg.admin.model.service.NoticeService;
+import com.msmg.admin.model.vo.Notice;
+import com.msmg.admin.model.vo.PageInfo;
+
+@WebServlet("/selectNoticeList")
+public class SelectNoticeList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectReviewList() {}
+    public SelectNoticeList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage;
@@ -34,7 +39,7 @@ public class SelectReviewList extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = new ReviewService().getListCount();
+		int listCount = new NoticeService().getListCount();
 		
 		limit = 10;
 		
@@ -49,20 +54,18 @@ public class SelectReviewList extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<Review> rList=new ReviewService().selectReviewList(currentPage, limit);
+		ArrayList<Notice> nList=new NoticeService().selectNoticeList(currentPage, limit);
 		
-		System.out.println("servlet pi : " + pi);
-		System.out.println("servlet rList : " + rList);
+		System.out.println("servlet : " + nList);
 		
-		HashMap<String, Object> hmap=new HashMap<String, Object>();
-		hmap.put("pi", pi);
-		hmap.put("rList", rList);
-					
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		Gson gson=new Gson();
-		gson.toJson(hmap, response.getWriter());
+		HashMap<String, Object> hmap=new HashMap<String, Object>();
+		hmap.put("pi", pi);
+		hmap.put("nList", nList);
+		
+		new Gson().toJson(hmap, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

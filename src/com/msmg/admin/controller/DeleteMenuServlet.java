@@ -1,5 +1,6 @@
 package com.msmg.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +19,22 @@ public class DeleteMenuServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mCode=Integer.parseInt(request.getParameter("menuCode"));
 		
+		String root = request.getSession().getServletContext().getRealPath("/");
+		
+		System.out.println("root : " + root);
+		
+		String filePath=root + "images/food/";
+		
+		String fileEditName=new MenuService().selectMenuFileName(mCode);
+		
 		int result=new MenuService().deleteMenu(mCode);
+		
+		System.out.println("fileEName : " + fileEditName);
 		
 		if(result>0){
 			System.out.println("삭제 성공");
+			File file=new File(filePath + fileEditName);
+			file.delete();
 		}
 		else{
 			System.out.println("삭제 실패");
