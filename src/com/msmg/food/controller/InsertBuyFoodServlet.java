@@ -1,6 +1,8 @@
 package com.msmg.food.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -25,6 +27,8 @@ public class InsertBuyFoodServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
 		int go = Integer.parseInt(request.getParameter("go"));
 		int dang = Integer.parseInt(request.getParameter("dang"));
@@ -51,8 +55,15 @@ public class InsertBuyFoodServlet extends HttpServlet {
 			}
 		}
 		
-		int result = new FoodService().insertMenuBuy(list);
+		long time = System.currentTimeMillis();
+		 
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMddhhmmss");
+		 
+		String nowTime = dayTime.format(new Date(time));
 		
+		String user_date = nowTime+ucode;
+		
+		int result = new FoodService().insertMenuBuy(list, user_date);
 
 		String page = "";
 		
@@ -64,6 +75,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 			request.setAttribute("side", side);
 			request.setAttribute("buyList", list);
 			request.setAttribute("desList", desList);
+			request.setAttribute("diet_no", user_date);
 			request.setAttribute("msg", "결제페이지로 이동");
 		}else{
 			page = "/views/common/errorPage.jsp";

@@ -96,18 +96,18 @@ public class SelectFoodDao {
 		return list;
 	}
 
-	public int insertMenuBuy(Connection con, ArrayList<Buy> list) {
+	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("insertMenuBuy");
 		
-		long time = System.currentTimeMillis();
+		/*long time = System.currentTimeMillis();
 		 
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyyMMddhhmmss");
 		 
 		String nowTime = dayTime.format(new Date(time));
 		
-		String user_date = nowTime+list.get(0).getUcode();
+		String user_date = nowTime+list.get(0).getUcode();*/
 		
 		for(int i = 0 ; i < list.size() ; i++){
 			try {

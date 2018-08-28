@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*,com.msmg.food.model.vo.*"%>
-<% ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("desList"); 
+<%  ArrayList<Destination> list = (ArrayList<Destination>)request.getAttribute("desList"); 
+	ArrayList<Buy> menulist = (ArrayList<Buy>)request.getAttribute("buyList");
 	int totalprice = (int)request.getAttribute("totalprice");
   	int day = (int)request.getAttribute("day");
 	int ggi = (int)request.getAttribute("ggi");
 	/* String banchan = String.valueOf(request.getAttribute("side")); */
 	int banchan = (int)request.getAttribute("side");
+	String diet_no = String.valueOf(request.getAttribute("diet_no"));
+	
+	
 	String side = "";
 	
 	if(banchan == 0){
@@ -667,8 +671,6 @@ $("#buyer_addr3").attr("value", addr3);
 					var postcode = pst;
 					
 					
-					
-					/* console.log(postcode); */
 
 					if (sender == "") {
 						alert("보내는 분의 성함을 입력해주세요.");
@@ -790,7 +792,7 @@ $("#buyer_addr3").attr("value", addr3);
 <input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2">
 <input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3">
 <input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>> --%>
-
+	
 	
 
 </script>
