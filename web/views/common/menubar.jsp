@@ -252,6 +252,7 @@
 					
 				} else {
 					console.log("메세지 도착");
+					localStorage.setItem("checkVal", 0);
 					$("#noticeAlert").css('display', 'inline-block');
 				}
 			}
@@ -271,6 +272,7 @@
 			var check = window.confirm("로그아웃 하시겠습니까?");
 			
 			if(check == true){
+				localStorage.setItem("checkVal", 0);
 				location.href = "<%= request.getContextPath() %>/logout.me";
 			}
 		}
