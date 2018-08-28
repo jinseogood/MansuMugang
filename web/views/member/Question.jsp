@@ -133,12 +133,14 @@ div #offi {
   		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
   		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
-  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/qnaList.qna">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
 	</div>
 
+
+<!-- 
    <div id = "botitle">
    <h3 >1:1 문의 내역</h3>
    <p>1:1로 문의하신 글을 조회하실 수 있습니다.</p>
@@ -146,7 +148,7 @@ div #offi {
    <div id = 'wrap'>
    <table align='center' cellpadding="0" cellspacing="0" border="0">
 
-      <!-- s : 게시판 타이틀 -->
+      s : 게시판 타이틀
       <tr
          style="background: url('image/table_mid.gif') /* #E8E8E8 */ repeat-x;">
          <td width="5"><img src="image/table_left.gif" width="5"
@@ -159,8 +161,8 @@ div #offi {
          <td width="7"><img src="image/table_right.gif" width="5"
             height="30" /></td>
       </tr>
-      <!-- e : 게시판 타이틀 -->
-      <!-- s: 게시글 테스트 영역 -->
+      e : 게시판 타이틀
+      s: 게시글 테스트 영역
       
       <tr id='content'>
          <td></td>
@@ -177,16 +179,16 @@ div #offi {
       <tr id='content'>
          <td colspan='7'>등록된 글이 없습니다.</td>
       </tr>
-      <!-- e: 게시글 테스트 영역 끝 -->
+      e: 게시글 테스트 영역 끝
 
-      <!-- 게시판 끝 -->
+      게시판 끝
       <tr bgcolor="#82B5DF" style="height: 1px;">
          <td colspan="6"></td>
       </tr>
-      <!-- 게시판 끝 -->
+      게시판 끝
    </table>
    <div id = 'btnlist' align = "right">
-   <!-- <button id = 'insert' class="btn btn-success btn-sm" onclick = 'location.href = "views/boradWrite.jsp"'>수정</button> -->
+   <button id = 'insert' class="btn btn-success btn-sm" onclick = 'location.href = "views/boradWrite.jsp"'>수정</button>
    </div>
    <div id="container">
       <ul class="pagination">
@@ -200,6 +202,8 @@ div #offi {
       </ul>
    </div>
    </div>
+    -->
+   
    <script>
       $(function(){
          $("#container ul li").click(function(event){

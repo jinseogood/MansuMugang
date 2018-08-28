@@ -69,10 +69,10 @@ public class MemberService {
 
 	}
 
-	public ArrayList<UserAllergy> selectAlList(UserAllergy al) {
+	public ArrayList<String> selectAlList(UserAllergy al) {
 		Connection con = getConnection();
 		
-		ArrayList<UserAllergy> alList = new MemberDao().selectAlList(con, al);
+		ArrayList<String> alList = new MemberDao().selectAlList(con, al);
 		
 		close(con);
 		
@@ -142,6 +142,19 @@ public class MemberService {
 		close(con);
 		
 		return mSearchList;
+	}
+
+	public Member updateMember(Member m) {
+		Connection con = getConnection();
+		
+		Member member = new MemberDao().updateMember(con, m);
+		
+		if(member != null) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return member;
 	}
 
 	

@@ -39,6 +39,10 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		Member member = new MemberService().insertMember(m);
 		
+		
+		
+		
+		
 		ArrayList<UserAllergy> list = new ArrayList<UserAllergy>();
 		if(alCode != null){
 			for(int i = 0; i < alCode.length; i++){

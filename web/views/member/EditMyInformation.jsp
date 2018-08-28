@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.member.*" %>
-<% ArrayList<UserAllergy> alList = (ArrayList<UserAllergy>)request.getAttribute("alList");
+<% ArrayList<String> alList = (ArrayList<String>)request.getAttribute("alList");
+	String arr[] = new String[alList.size()];
+	for(int i = 0; i < arr.length; i++){
+		arr[i] = alList.get(i);
+		System.out.println("arr[" + i +"] : " + arr[i]);
+	}
 	System.out.println("alList" + alList);
 	int size = alList.size();
 	System.out.println(size);
@@ -8,29 +13,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- <script>
-	
-	$(function() {
-
-	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),
-	        offset     = $sidebar.offset(),
-	        topPadding = 15;
-
-	    $window.scroll(function() {
-	        if ($window.scrollTop() > offset.top) {
-	            $sidebar.stop().animate({
-	                marginTop: $window.scrollTop() - offset.top + topPadding
-	            });
-	        } else {
-	            $sidebar.stop().animate({
-	                marginTop: 0
-	            });
-	        }
-	    });
-	    
-	});
-</script> -->
 <meta charset="UTF-8">
 <title>내 정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -184,25 +166,25 @@ text-decoration:none;
 			<h1>회원정보수정</h1>
 
 			<div class="tbl-content table1" align="center">
-			<form name="form" action="<%= request.getContextPath() %>/updateMember.me" method="post">
+			<form name="f" id="f" action="" method="post">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
 						
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" name="userId" value="<%= loginUser.getU_id()%>" readonly></td>
+							<td><input type="text" name="userId" id="userId" value="<%= loginUser.getU_id()%>" readonly></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
-							<td><input type="password" name="userPwd"></td>
+							<td><input type="password" name="userPwd" id="userPwd"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호 확인<span class="red">*</span></th>
-							<td><input type="password" name="userId1"></td>
+							<td><input type="password" name="userPwd2" id="userPwd2"></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>이름</th>
-							<td><input type="text" name="userName" value="<%= loginUser.getU_name()%>" readonly></td>
+							<td><input type="text" name="userName" id="userName" value="<%= loginUser.getU_name()%>" readonly></td>
 						</tr>
 						<br>
 						<tr>
@@ -213,85 +195,85 @@ text-decoration:none;
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A1" id="eggs">
+										<input type="checkbox" name="allergy" value="A1" id="A1">
 										<label for="eggs">난류(계란)</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A2" id="milk">
+										<input type="checkbox" name="allergy" value="A2" id="A2">
 										<label for="milk">우유</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A3" id="memil">
+										<input type="checkbox" name="allergy" value="A3" id="A3">
 										<label for="memil">메밀</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A4" id="peanut">
+										<input type="checkbox" name="allergy" value="A4" id="A4">
 										<label for="peanut">땅콩</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A5" id="bean">
+										<input type="checkbox" name="allergy" value="A5" id="A5">
 										<label for="bean">대두</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A6" id="wheat">
+										<input type="checkbox" name="allergy" value="A6" id="A6">
 										<label for="wheat">밀</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A7" id="mackerel">
+										<input type="checkbox" name="allergy" value="A7" id="A7">
 										<label for="mackerel">고등어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A8" id="crab">
+										<input type="checkbox" name="allergy" value="A8" id="A8">
 										<label for="crab">게</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A9" id="pork">
+										<input type="checkbox" name="allergy" value="A9" id="A9">
 										<label for="pork">돼지고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A10" id="peach">
+										<input type="checkbox" name="allergy" value="A10" id="A10">
 										<label for="peach">복숭아</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A11" id="tomato">
+										<input type="checkbox" name="allergy" value="A11" id="A11">
 										<label for="tomato">토마토</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A12" id="shrimp">
+										<input type="checkbox" name="allergy" value="A12" id="A12">
 										<label for="shrimp">새우</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A13" id="walnut">
+										<input type="checkbox" name="allergy" value="A13" id="A13">
 										<label for="walnut">호두</label>
 									</td>
 									<td> 
-										<input type="checkbox" name="allergy" value="A14" id="chicken">
+										<input type="checkbox" name="allergy" value="A14" id="A14">
 										<label for="chicken">닭고기</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A15" id="beef">
+										<input type="checkbox" name="allergy" value="A15" id="A15">
 										<label for="beef">쇠고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="checkbox" name="allergy" value="A16" id="squid">
+										<input type="checkbox" name="allergy" value="A16" id="A16">
 										<label for="squid">오징어</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A17" id="clam">
+										<input type="checkbox" name="allergy" value="A17" id="A17">
 										<label for="clam">조개류</label>
 									</td>
 									<td>
-										<input type="checkbox" name="allergy" value="A18" id="acid">
+										<input type="checkbox" name="allergy" value="A18" id="A18">
 										<label for="acid">아황산류</label>
 									</td>
 								</tr>
@@ -303,7 +285,7 @@ text-decoration:none;
 						<td colspan="2">
 						<div class="clear"></div>
 							<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/index.jsp">취소하기</a></div>
-							<div class="w3-button w3-ripple w3-yellow" onclick=""><a href="#">수정하기</a></div>
+							<div class="w3-button w3-ripple w3-yellow" onclick="edit">수정하기</div>
 						</td>
 					</tr>
 					</tbody>
@@ -314,24 +296,75 @@ text-decoration:none;
 		<%@ include file="../common/footer.jsp" %>
 	</div>
 	<script>
+	
 		$(function(){
-		var alList = [];
+			
 		
-		for(var i = 0; i < <%=alList.size()%>; i++){
-			<% int index = 0;%>
-		
-			var alCode = '<%= alList.get(index).getAl_code()%>';
-			
-			<%index++;%>
-			
-			alList.push(alCode);
-			
-			for(var j = 0; j < alList.length; j++){ 
-				console.log(alList[j]);
+			for(var i = 0; i < <%=alList.size()%>; i++){
+				<% for(int i=0;i<alList.size();i++){%>
+					var al = <%=arr[i]%>;
+					if($('#A1').val() == $(al).val()){
+						$("#A1").attr("checked","checked");
+					}
+					if($('#A2').val() == $(al).val()){
+						$("#A2").attr("checked","checked");
+					}
+					if($('#A3').val() == $(al).val()){
+						$("#A3").attr("checked","checked");
+					}
+					if($('#A4').val() == $(al).val()){
+						$("#A4").attr("checked","checked");
+					}
+					if($('#A5').val() == $(al).val()){
+						$("#A5").attr("checked","checked");
+					}
+					if($('#A6').val() == $(al).val()){
+						$("#A6").attr("checked","checked");
+					}
+					if($('#A7').val() == $(al).val()){
+						$("#A7").attr("checked","checked");
+					}
+					if($('#A8').val() == $(al).val()){
+						$("#A8").attr("checked","checked");
+					}
+					if($('#A9').val() == $(al).val()){
+						$("#A9").attr("checked","checked");
+					}
+					if($('#A10').val() == $(al).val()){
+						$("#A10").attr("checked","checked");
+					}
+					if($('#A11').val() == $(al).val()){
+						$("#A11").attr("checked","checked");
+					}
+					if($('#A12').val() == $(al).val()){
+						$("#A12").attr("checked","checked");
+					}
+					if($('#A13').val() == $(al).val()){
+						$("#A13").attr("checked","checked");
+					}
+					if($('#A14').val() == $(al).val()){
+						$("#A14").attr("checked","checked");
+					}
+					if($('#A15').val() == $(al).val()){
+						$("#A15").attr("checked","checked");
+					}
+					if($('#A16').val() == $(al).val()){
+						$("#A16").attr("checked","checked");
+					}
+					if($('#A17').val() == $(al).val()){
+						$("#A17").attr("checked","checked");
+					}
+					if($('#A18').val() == $(al).val()){
+						$("#A18").attr("checked","checked");
+					}
+				<%}%>
 			}
-		}
-			
 		});
+		
+		function edit(){
+			$("#f").attr("action", '<%=request.getContextPath()%>/updateMember.me');
+   	   		$("#f").submit();
+		}
 	</script>
 </body>
 </html>
