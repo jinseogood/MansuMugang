@@ -255,21 +255,19 @@ public class ReviewDao {
 		return result;
 	}
 
-	public ArrayList<Reply> selectReplyList(Connection con, String board_id) {
+	public ArrayList<Reply> selectReplyList(Connection con, String num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Reply r = null;
 		ArrayList<Reply> list = new ArrayList<Reply>();
 		
-		System.out.println("ReviewDao board_id : " + board_id);
 		
 		String query = prop.getProperty("selectReplyList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, board_id);
+			pstmt.setString(1, num);
 			
-			System.out.println("boardId Dao:"+ board_id);
 			
 			rset = pstmt.executeQuery();
 			

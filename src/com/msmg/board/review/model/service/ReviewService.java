@@ -167,6 +167,17 @@ public class ReviewService {
 		return result;
 	}
 
+	public ArrayList<Reply> selectReply(String num) {
+		Connection con = getConnection();
+		ArrayList<Reply> replyList = null;
+		
+		replyList = new ReviewDao().selectReplyList(con, num);
+	
+		close(con);
+		
+		return replyList;
+	}
+
 
 
 }

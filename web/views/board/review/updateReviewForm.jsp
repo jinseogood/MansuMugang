@@ -208,10 +208,10 @@ div[id=date-writer-hit2] {
 							<div class="con" id="contentImgArea1">
 								<img id="contentImg1" width="120px" height="100px">
 							</div>
-							<div class="con" id="contentImgArea2" style="display:none;">
+							<div class="con" id="contentImgArea2">
 								<img id="contentImg2" width="120px" height="100px">
 							</div>
-							<div class="con" id="contentImgArea3" style="display:none;">
+							<div class="con" id="contentImgArea3">
 								<img id="contentImg3" width="120px" height="100px">
 							</div>
 							<div class="con" id="contentImgArea4" style="display:none;">
@@ -232,34 +232,16 @@ div[id=date-writer-hit2] {
 				<p>이미지 추가 (최대 5개)</p>
 				<div id="AddBtn" onclick="AddButton();"><i class="far fa-plus-square fa-lg"></i></div>
 				<div id="AddBtn2" onclick="AddButton2();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
-				<div id="AddBtn3" onclick="AddButton3();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
-				<div id="AddBtn4" onclick="AddButton4();" style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
-				<div id="AddBtnF"style="display:none;"><i class="far fa-plus-square fa-lg"></i></div>
 				<script>
 					function AddButton(){
-		        		$("#contentImgArea2").show();
-		        		$("#AddBtn").hide();
-		        		$("#AddBtn2").show();
+		        			$("#contentImgArea4").show();
+		        			$("#AddBtn").hide();
+		        			$("#AddBtn2").show();
 		       		}
 					
 					function AddButton2(){
-	        			$("#contentImgArea3").show();
-	        			$("#AddBtn2").hide();
-	        			$("#AddBtn3").show();
-	       			}
-					
-					function AddButton3(){
-	        			$("#contentImgArea4").show();
-	        			$("#AddBtn3").hide();
-	        			$("#AddBtn4").show();
-	       			}
-					
-					function AddButton4(){
-	        			$("#contentImgArea5").show();
-	        			$("#AddBtn4").hide();
-	        			$("#AddBtnF").show();
-	       			}
-					
+							$("#contentImgArea5").show();
+					}
 				</script> 
 				
 			</table>

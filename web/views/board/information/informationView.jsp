@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*" %>
 <% 
-	/* ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist"); */
+	ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("replylist");
 	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
 	
 	Board b = (Board)request.getAttribute("b");
@@ -215,7 +215,7 @@ input[type=text]{
 		
 	
 	<div id="replyArea" style="margin-top:10px; text-align:center">
-	<div id="replayWriteArea">
+	<div id="replyWriteArea">
 		<table border="1" bordercolor="tomato" height="50px">
 			<tr bgcolor="tomato">
 			<form id="writeCommentForm">
