@@ -80,49 +80,30 @@ public class CommonServlet extends HttpServlet {
 		int result2 = new PhoneService().insertPhone(ph);
 
 		
-		
-		
-		
-		
-		//배송지 뿌리는 서블릿
-		/*ArrayList<Destination> list = new DestinationService().selectList(u_code);
-		System.out.println(list);
-		String page = "";
-
-		page = "views/payment/paymentPage.jsp";
-		request.setAttribute("list", list);
-		
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);*/
-		
-		
-		
-		if(result > 0 || result2 > 0) {
-			response.sendRedirect("views/payment/paymentConfirm.jsp");
-		}
-		
-		
-		
-		
-/*		//결제 상태 변경 서블릿
-		String status = request.getParameter("status");
+		//결제 상태 변경 서블릿
 		String diet_no = request.getParameter("diet_no");
 		
 		Payment p = new Payment();
-
-		p.setStatus(status);
+		p.setDiet_no(diet_no);
 		
-		int result3 = new PaymentService().updateOrder(p);*/
+		int result3 = new PaymentService().updateOrder(p);
 		
 		
-/*		// 상세 결제 정보 입력 서블릿
-		int buy_info_no =
-		String sort = 
-		int buy_no =
-		int quantity = 
-		String buy_sort = */
+		// 상세 결제 정보 입력 서블릿
+		
 
 		
+/*		
+		BUY_INFO_NO	NUMBER
+		SORT	VARCHAR2(10 BYTE)
+		AMOUNT	NUMBER
+		BUY_SORT	VARCHAR2(20 BYTE)
+		DIET_NO	VARCHAR2(50 BYTE)
+		MENU_CODE	VARCHAR2(50 BYTE)*/
+		
+		if(result > 0 || result2 > 0 || result3 > 0) {
+			response.sendRedirect("views/payment/paymentConfirm.jsp");
+		}
 		
 		
 	}

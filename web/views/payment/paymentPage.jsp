@@ -23,17 +23,7 @@
 	String[][] add = new String[3][4];
 %>
 
-<%-- <% 
-	Payment p = (Payment)session.getAttribute("u_code");
-	/* p.getMenu_code();
-	p.getBuy_date();
-	p.getBuy_no();
-	p.getStatus(); */
-%>
 
-<% 
-	PaymentInfo pi = (PaymentInfo)session.getAttribute("buy_no");
-%> --%>
  
 <% 
 	if(list != null){
@@ -384,6 +374,8 @@ section {
 										<input type="text" name="addr2" class="postcodify_details" placeholder="상세주소" size="42" maxlength="50" id="buyer_addr2"> 
 										<input type="text" name="addr3" readonly class="postcodify_extra_info" id="buyer_addr3"> 
 										<input type="hidden" name="u_code" value=<%= loginUser.getU_code() %>>
+										<input type="hidden" name="diet_no" value=<%=  diet_no%>>
+										<input type="hidden" name="menu_code" value=<%= menulist%>>
 									</div>
 								
 								
@@ -712,11 +704,11 @@ $("#buyer_addr3").attr("value", addr3);
 																				pg : "inicis",
 																				pay_method : "card",
 																				merchant_uid : 'merchant_'+ new Date().getTime(),
-																				name : "ㅠㅠ",
+																				name : "만수무강 식단",
 																				amount : <%= totalprice%>,
 																				buyer_email : $('#buyer_email').val(),
 																				buyer_name : $('#receiver').val(),
-																				buyer_tel : $('#buyer_tel').val(),
+																				
 																				buyer_addr,
 																				buyer_postcode : $('#postcode').val(),
 																			},
