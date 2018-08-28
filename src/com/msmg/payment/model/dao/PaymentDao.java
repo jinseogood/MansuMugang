@@ -1,5 +1,8 @@
 package com.msmg.payment.model.dao;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,6 +15,18 @@ import static com.msmg.common.JDBCTemplate.*;
 public class PaymentDao {
 	
 	private Properties prop = new Properties();
+	
+	   public PaymentDao(){
+		      String fileName = PhoneDao.class.getResource("/sql/payment/payment-query.properties").getPath();
+		      
+		      try {
+		         prop.load(new FileReader(fileName));
+		      } catch (FileNotFoundException e) {
+		         e.printStackTrace();
+		      } catch (IOException e) {
+		         e.printStackTrace();
+		      }
+		   }
 
 	public int updateOrder(Connection con, Payment p) {
 		PreparedStatement pstmt = null;
@@ -22,8 +37,7 @@ public class PaymentDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setString(1, p.getStatus());
-			pstmt.setInt(2, p.getBuy_no());
+			pstmt.setString(1, p.getDiet_no());
 			
 			result = pstmt.executeUpdate();
 			
@@ -34,6 +48,7 @@ public class PaymentDao {
 			close(pstmt);
 		}
 		
+		System.out.println(result);
 		return result;
 		
 	} 
