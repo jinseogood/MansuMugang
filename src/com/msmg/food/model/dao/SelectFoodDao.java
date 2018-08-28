@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.MenuList;
 import com.msmg.food.model.vo.SelectFood;
@@ -278,6 +279,41 @@ public class SelectFoodDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Like> likeCheck(Connection con, int i) {
+		ArrayList<Like> MenuList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("likeCheck");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, i);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset != null){
+				MenuList = new ArrayList<Like>();
+				while(rset.next()){
+					Like l = new Like();
+					l.setU_code(rset.getInt("u_code"));
+					l.setM_code(rset.getInt("menu_code"));
+					
+					MenuList.add(l);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return MenuList;
 	}
 
 }

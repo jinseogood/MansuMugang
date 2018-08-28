@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "com.msmg.member.model.vo.*" %>
+    pageEncoding="UTF-8" import = "com.msmg.member.model.vo.*, com.msmg.food.model.vo.*, java.util.*" %>
 <% 
 	Member loginUser = (Member)session.getAttribute("loginUser");  
 	
@@ -163,7 +163,11 @@
 				<a href="/msmg/views/intro/guide.jsp">이용가이드</a>
 			</div>
 			<div id="submenuTitle">
-				<a href="<%= request.getContextPath()%>/MenuListG.fo">메뉴소개</a>
+				 <% if(loginUser != null){ %>
+					<a href="<%= request.getContextPath()%>/MenuListG.fo?user=<%= loginUser.getU_code() %>">메뉴소개</a>
+				 <% }else{ %>
+				 	<a href="<%= request.getContextPath()%>/MenuListG.fo">메뉴소개</a>
+				 <% } %>
 				<br><br><br>
 				<a href="/msmg/views/foodPlan/menu_plan.jsp">식단짜기</a>
 			</div>

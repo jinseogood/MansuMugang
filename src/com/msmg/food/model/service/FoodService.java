@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.msmg.food.controller.MenuListG;
 import com.msmg.food.model.dao.SelectFoodDao;
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.MenuList;
 import com.msmg.food.model.vo.SelectFood;
@@ -77,6 +78,15 @@ public class FoodService {
 		
 		close(con);
 		return result;
+	}
+
+	public ArrayList<Like> likeCheck(int i) {
+		Connection con = getConnection();
+		
+		ArrayList<Like> MenuList = new SelectFoodDao().likeCheck(con, i);
+		
+		close(con);
+		return MenuList;
 	}
 
 }
