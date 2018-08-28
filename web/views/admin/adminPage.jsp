@@ -347,27 +347,25 @@
 					$pageBody = $("#noticepageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						
 						if(key == "nList"){
-							var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
-							var $noTd=$("<td>").text(data[key][i].board_no);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].u_name);
-							var $dateTd=$("<td>").text(data[key][i].board_date);
-							var $countTd=$("<td>").text(data[key][i].b_count);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tr.append($countTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
+								var $noTd=$("<td>").text(data[key][i].board_no);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].board_date);
+								var $countTd=$("<td>").text(data[key][i].b_count);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -426,26 +424,24 @@
 					$pageBody = $("#infopageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						if(key == "infoList"){
-							var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
-							var $noTd=$("<td>").text(data[key][i].boardNo);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].uCode);
-							var $dateTd=$("<td>").text(data[key][i].boardDate);
-							var $countTd=$("<td>").text(data[key][i].bCount);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tr.append($countTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
+								var $noTd=$("<td>").text(data[key][i].boardNo);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].uCode);
+								var $dateTd=$("<td>").text(data[key][i].boardDate);
+								var $countTd=$("<td>").text(data[key][i].bCount);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -505,26 +501,24 @@
 					$pageBody = $("#reviewpageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						if(key == "infoList"){
-							var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
-							var $noTd=$("<td>").text(data[key][i].boardNo);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].uCode);
-							var $dateTd=$("<td>").text(data[key][i].boardDate);
-							var $countTd=$("<td>").text(data[key][i].bCount);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tr.append($countTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openReview("+data[key][i].boardId+");'>");
+								var $noTd=$("<td>").text(data[key][i].boardNo);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].uCode);
+								var $dateTd=$("<td>").text(data[key][i].boardDate);
+								var $countTd=$("<td>").text(data[key][i].bCount);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -665,24 +659,22 @@
 					$pageBody = $("#qnapageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						if(key == "qList"){
-							var $tr=$("<tr onclick='openQnA("+data[key][i].board_no+");'>");
-							var $noTd=$("<td>").text(data[key][i].board_no);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].u_name);
-							var $dateTd=$("<td>").text(data[key][i].board_date);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openQnA("+data[key][i].board_id+");'>");
+								var $noTd=$("<td>").text(i+1);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].board_date);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tableBody.append($tr);
+							}							
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -897,27 +889,25 @@
 					$pageBody = $("#noticepageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						
 						if(key == "nList"){
-							var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
-							var $noTd=$("<td>").text(data[key][i].board_no);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].u_name);
-							var $dateTd=$("<td>").text(data[key][i].board_date);
-							var $countTd=$("<td>").text(data[key][i].b_count);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tr.append($countTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openNotice("+data[key][i].board_no+");'>");
+								var $noTd=$("<td>").text(data[key][i].board_no);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].board_date);
+								var $countTd=$("<td>").text(data[key][i].b_count);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -976,26 +966,24 @@
 					$pageBody = $("#infopageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						if(key == "infoList"){
-							var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
-							var $noTd=$("<td>").text(data[key][i].boardNo);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].uCode);
-							var $dateTd=$("<td>").text(data[key][i].boardDate);
-							var $countTd=$("<td>").text(data[key][i].bCount);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tr.append($countTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openInfo("+data[key][i].boardId+");'>");
+								var $noTd=$("<td>").text(data[key][i].boardNo);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].uCode);
+								var $dateTd=$("<td>").text(data[key][i].boardDate);
+								var $countTd=$("<td>").text(data[key][i].bCount);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}							
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -1042,7 +1030,80 @@
 		}
 		//후기검색
 		else if(type == 5){
-			
+			$.ajax({
+				url:"/msmg/searchReviewList",
+				type:"get",
+				data:{currentPage:currentPage, sType:sType, sContent:sContent},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#reviewTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#reviewpageArea");
+					$pageBody.html('');
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "infoList"){
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openReview("+data[key][i].boardId+");'>");
+								var $noTd=$("<td>").text(data[key][i].boardNo);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].uCode);
+								var $dateTd=$("<td>").text(data[key][i].boardDate);
+								var $countTd=$("<td>").text(data[key][i].bCount);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tr.append($countTd);
+								$tableBody.append($tr);
+							}
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 5, '"+sType+"', '"+sContent+"');\"><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 5, '"+sType+"', '"+sContent+"');\"><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 5, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 5, '"+sType+"', '"+sContent+"');\">></button");
+							}
+							
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 5, '"+sType+"', '"+sContent+"');\">>></button>");
+						}
+					}
+				},
+				error:function(data){
+					console.log(data);
+					console.log("error");
+				}
+			});
 		}
 		//회원검색
 		else if(type == 6){
@@ -1140,24 +1201,22 @@
 					$pageBody = $("#qnapageArea");
 					$pageBody.html('');
 					
-					var i=0;
-					
 					for(var key in data){
 						console.log(key);
 						if(key == "qList"){
-							var $tr=$("<tr onclick='openQnA("+data[key][i].board_no+");'>");
-							var $noTd=$("<td>").text(data[key][i].board_no);
-							var $titleTd=$("<td>").text(data[key][i].title);
-							var $writerTd=$("<td>").text(data[key][i].u_name);
-							var $dateTd=$("<td>").text(data[key][i].board_date);
-							
-							$tr.append($noTd);
-							$tr.append($titleTd);
-							$tr.append($writerTd);
-							$tr.append($dateTd);
-							$tableBody.append($tr);
-							
-							i++;
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openQnA("+data[key][i].board_id+");'>");
+								var $noTd=$("<td>").text(i+1);
+								var $titleTd=$("<td>").text(data[key][i].title);
+								var $writerTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].board_date);
+								
+								$tr.append($noTd);
+								$tr.append($titleTd);
+								$tr.append($writerTd);
+								$tr.append($dateTd);
+								$tableBody.append($tr);
+							}
 						}
 						else{
 							var startPage=data[key].startPage;
@@ -1267,6 +1326,12 @@
 		window.open("<%= request.getContextPath() %>/selectOne.bo?num="+num+"", "정보게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
+	//후기게시판 상세보기 메소드
+	<%-- function openReview(boardNo){
+		console.log(boardNo);
+		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardNo+"", "후기게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
+	} --%>
+	
 	//문의내역 상세보기 메소드
 	function openQnA(boardId){
 		console.log(boardId);
@@ -1359,32 +1424,7 @@
 		$("#rSearch").click(function(){
 			var currentPage=1;
 			
-			$.ajax({
-				url:"/msmg/selectReviewList",
-				type:"get",
-				data:{currentPage:currentPage},
-				success:function(data){
-					/* console.log(data);
-					
-					$tableBody = $("#userInfoTable tbody");
-					$tableBody.html('');
-					
-					$.each(data, function(index, value){
-						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(value.userNo);
-						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
-						var $nationTd=$("<td>").text(decodeURIComponent(value.userNation));
-						
-						$tr.append($noTd);
-						$tr.append($nameTd);
-						$tr.append($nationTd);
-						$tableBody.append($tr);
-					}); */
-				},
-				error:function(){
-					console.log("error");
-				}
-			});
+			pagingAJAX(currentPage, 5);
 		});
 		
 		//후기게시판 검색
@@ -1475,6 +1515,7 @@
 </script>
 </head>
 <body>
+<% if(!loginUser.getU_name().equals("admin")){ %>
 	<div class="container">
   		<div id="info">
   			<div id="infoAlert" align="right">
@@ -1793,5 +1834,6 @@
 			</div>
 		</div>
 	</div>
+<% } else { System.out.println("관리자아님"); } %>
 </body>
 </html>
