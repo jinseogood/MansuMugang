@@ -4,6 +4,17 @@
 	int totalprice = (int)request.getAttribute("totalprice");
   	int day = (int)request.getAttribute("day");
 	int ggi = (int)request.getAttribute("ggi");
+	/* String banchan = String.valueOf(request.getAttribute("side")); */
+	int banchan = (int)request.getAttribute("side");
+	String side = "";
+	
+	if(banchan == 0){
+		side = "반찬 미포함";
+	} else {
+		side = "반찬 포함";
+	}
+	
+	
 
 	String[][] add = new String[3][4];
 %>
@@ -48,6 +59,19 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <head>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 	$(window).on(
 			"load resize ",
@@ -257,7 +281,7 @@ section {
 					<table cellpadding="0" cellspacing="0" border="0">
 						<tbody>
 							<tr>  
-								<td><%=day%>일 <%=ggi%>끼</td>
+								<td><%=day%>일 <%=ggi%>끼 <%=side%></td>
 								<!-- <td>(수량)</td> -->
 								<!-- <td>(예정일)</td> -->
 								<td><%=totalprice %>원</td>
@@ -359,10 +383,10 @@ section {
 									</div>
 								
 								
-									<div style="padding: 5px 0;" class="checks">
+<!-- 									<div style="padding: 5px 0;" class="checks">
 										<input type="checkbox" name="AddrSaveCheck" id="AddrSaveCheck">
 										<label for="AddrSaveCheck">회원정보의 기존배송주소로 저장 (체크하지 않을 시 최근 배송지로 저장되지 않습니다.) </label>
-									</div>
+									</div> -->
 								</td>
 							</tr>
 
@@ -431,7 +455,6 @@ section {
 									for(int i=0; i < add.length; i++) { %>
 									<tbody>
 										<tr>
-										
 											<td><%= add[i][0] %></td>
 											<td><%= add[i][1] %></td>
 											<td><%= add[i][2] %></td>
@@ -442,8 +465,8 @@ section {
 									<% }} %>
 									
 								</table>
-<!-- 								<div class="col-lg-12" id="ex1_Result1"></div>
-								<div class="col-lg-12" id="ex1_Result2"></div> -->
+ 								<div class="col-lg-12" id="ex1_Result1"></div>
+								<div class="col-lg-12" id="ex1_Result2"></div>
 							</div>
 							
 						</div>
@@ -453,6 +476,55 @@ section {
 					</div>
 				</div>
 			</div>
+			
+<script>
+
+	$("#listArea tr").click(function(){
+		var str = "";
+		var tdArr = new Array();
+		var postcode = "";
+		var addr1 = "";
+		var addr2 = "";
+		var addr3 = "";
+		
+		var tr = $(this);
+		var td = tr.children();
+		
+		console.log("클릭한 row의 모든 데이터: "+ tr.text());
+		
+		td.each(function(i){
+			tdArr.push(td.eq(i).text());
+		});
+		
+		console.log("배열에 담긴 값: " + tdArr);
+		
+		var 우편번호 = td.eq(0).text();
+		var 주소 = td.eq(1).text();
+		var 상세주소 = td.eq(2).text();
+		var 보조주소 = td.eq(3).text();
+		
+		str +=    " * 클릭된 Row의 td값 = No. : <font color='red'>" + 우편번호 + "</font>" +
+        ", 아이디 : <font color='red'>" + 주소 + "</font>" +
+        ", 이름 : <font color='red'>" + 상세주소 + "</font>" +
+        ", 이메일 : <font color='red'>" + 보조주소 + "</font>"; 
+        
+        postcode += 우편번호;
+        addr1 += 주소;
+        addr2 += 상세주소;
+        addr3 += 보조주소;
+        
+
+$("#postcode").attr("value", postcode);
+$("#buyer_addr1").attr("value", addr1);
+$("#buyer_addr2").attr("value", addr2);
+$("#buyer_addr3").attr("value", addr3);
+
+})
+
+
+
+</script>
+			
 		
 
 		<section>
@@ -561,6 +633,17 @@ section {
 			
 </form> 
 
+
+
+
+
+
+
+
+
+
+
+
 			<script>
 				
 
@@ -658,19 +741,10 @@ section {
 																									<%= pi.setBuy_sort("카드결제") %> --%>
 																									
 																									function(data) {
-																							
-																										/* if($("#AddrSaveCheck").is(":checked")){ */
 																											
 																											$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
 																											$("#com").submit();
-																											
-																											location.href = "<%=request.getContextPath()%>/updateOrder.pm?s=";
-																											
-																										/* } else { */
-																											
-																											/* location.href = "paymentConfirm.jsp"; */
-																										/* } */
-	
+																										
 																									}
 																									
 																							
