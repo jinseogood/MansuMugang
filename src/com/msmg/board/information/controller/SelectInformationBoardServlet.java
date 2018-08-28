@@ -1,5 +1,5 @@
 package com.msmg.board.information.controller;
-
+ 
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;

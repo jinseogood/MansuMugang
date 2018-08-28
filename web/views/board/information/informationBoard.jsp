@@ -3,7 +3,7 @@
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 
-	
+	 
  	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();

@@ -253,7 +253,7 @@ div[id=date-writer-hit2] {
 						<td width="100">
 							<div id="replyAddBtn">댓글 등록</div>
 						</td>
-					</form>
+					</form> 
 				</tr>
 			</table>
 		</div>

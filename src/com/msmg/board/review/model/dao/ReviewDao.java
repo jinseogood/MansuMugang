@@ -261,7 +261,7 @@ public class ReviewDao {
 		Reply r = null;
 		ArrayList<Reply> list = new ArrayList<Reply>();
 		
-		
+		 
 		String query = prop.getProperty("selectReplyList");
 		
 		try {

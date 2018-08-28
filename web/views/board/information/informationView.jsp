@@ -154,7 +154,7 @@ div[id=date-writer-hit2] {
 	width:600px;
 	height:50px;
 }
-
+ 
 #date {
 	font-size:12px;
 }

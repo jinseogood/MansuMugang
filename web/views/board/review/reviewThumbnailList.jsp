@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*"%>
 <% ArrayList<HashMap<String, Object>> list
-	= (ArrayList<HashMap<String, Object>>)request.getAttribute("list");%>
+	= (ArrayList<HashMap<String, Object>>)request.getAttribute("list");%> 
 <!DOCTYPE>
 <html>
 <head>

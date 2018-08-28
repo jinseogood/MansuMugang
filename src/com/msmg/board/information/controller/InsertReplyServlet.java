@@ -37,7 +37,7 @@ public class InsertReplyServlet extends HttpServlet {
 		r.setRe_content(content);
 		r.setU_code(writter);
 		
-		
+		 
 		ArrayList<Reply> replyList = new BoardService().insertReply(r);
 		
 		response.setContentType("application/json");

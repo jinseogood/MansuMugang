@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.msmg.board.review.model.vo.*, java.util.*
 	, com.msmg.board.information.model.vo.*"%>
-<%
+<% 
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> bf = (ArrayList<BoardFile>)request.getAttribute("fileList");
 %>

@@ -29,7 +29,7 @@ public class SelectOneBoardServlet extends HttpServlet {
 		String num = request.getParameter("num");
 		System.out.println("num : " + num);
 		
-		
+		 
 		Board b = new BoardService().selectOne(num);
 		
 		Board preB = new BoardService().selectPreB(num);

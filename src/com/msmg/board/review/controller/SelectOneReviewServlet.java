@@ -45,7 +45,7 @@ public class SelectOneReviewServlet extends HttpServlet {
 		ArrayList<Reply> replyList = new ReviewService().selectReply(num);
 		
 		String page = "";
-		
+		 
 		if(hmap != null) {
 			page = "views/board/review/reviewThumbnailDetail.jsp";
 			
