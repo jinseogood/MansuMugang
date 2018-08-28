@@ -81,4 +81,31 @@ public class MenuService {
 		return menuSearchList;
 	}
 
+	public Menu selectOneMenu(int mCode) {
+		Connection con=getConnection();
+		
+		Menu m=new MenuDao().selectOneMenu(mCode, con);
+		
+		close(con);
+		
+		return m;
+	}
+
+	public int deleteMenu(int mCode) {
+		Connection con=getConnection();
+		
+		int result=new MenuDao().deleteMenu(mCode, con);
+		
+		if(result>0){
+			commit(con);
+		}
+		else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 }
