@@ -142,7 +142,7 @@ table{
 </script>
 </head>
 <body>
-	<% if(user != null && user.getU_name().equals("admin")){ %>
+	<% if(user != null && user.getU_id().equals("admin")){ %>
 	
 	
 	<div id="main">
@@ -176,7 +176,7 @@ table{
 			<%} %>
 			<% if(user.getU_id().equals("admin") && qna.getBoard_id() == qna.getRef_bno()){%>
 			<button class="btn btn-primary befo btn-sm"
-				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>?ref_ucode=<%=qna.getRef_ucode()%>'">답글하기</button>
+				onclick = "location.href = '<%=request.getContextPath() %>/writeRe.qna?num=<%= qna.getBoard_id() %>&ref_ucode=<%=qna.getRef_ucode()%>'">답글하기</button>
 			<%} %>
 		</div>
 
