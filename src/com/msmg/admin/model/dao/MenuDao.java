@@ -74,6 +74,7 @@ public class MenuDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
+			close(pst2);
 			close(pst);
 		}
 		
@@ -382,6 +383,84 @@ public class MenuDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
+			close(pst3);
+			close(pst2);
+			close(pst);
+		}
+		
+		return result;
+	}
+
+
+	public String selectMenuFileName(int mCode, Connection con) {
+		String fileEditName="";
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectMenuFileName");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setInt(1, mCode);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				fileEditName=rset.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return fileEditName;
+	}
+
+
+	public int updateMenu(Menu menu, ArrayList<MenuInfo> fileList, Connection con) {
+		int result=0;
+		int result2=0;
+		PreparedStatement pst=null;
+		PreparedStatement pst2=null;
+		
+		String query=prop.getProperty("updateMenu");
+		String query2=prop.getProperty("updateMenuInfo");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, menu.getMenuName());
+			pst.setString(2, menu.getMainMat());
+			pst.setString(3, menu.getSubMat());
+			pst.setInt(4, menu.getPrice());
+			pst.setInt(5, menu.getMenuCode());
+			
+			for(int i=0;i<fileList.size();i++){
+				pst2=con.prepareStatement(query2);
+				pst2.setString(1, fileList.get(i).getOriginName());
+				pst2.setString(2, fileList.get(i).getFilePath());
+				pst2.setString(3, fileList.get(i).getInfo());
+				pst2.setString(4, fileList.get(i).getEditName());
+				pst2.setInt(5, fileList.get(i).getMenuCode());
+				
+				result2+=pst2.executeUpdate();
+			}
+			
+			result=pst.executeUpdate();
+			
+			if(result > 0 && result2 > 0){
+				result=1;
+			}
+			else{
+				result=0;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pst2);
 			close(pst);
 		}
 		

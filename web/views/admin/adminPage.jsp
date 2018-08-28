@@ -503,7 +503,7 @@
 					
 					for(var key in data){
 						console.log(key);
-						if(key == "infoList"){
+						if(key == "rList"){
 							for(i=0;i<data[key].length;i++){
 								var $tr=$("<tr onclick='openReview("+data[key][i].boardId+");'>");
 								var $noTd=$("<td>").text(data[key][i].boardNo);
@@ -642,7 +642,79 @@
 		}
 		//주문 조회
 		else if(type == 7){
-			
+			$.ajax({
+				url:"/msmg/selectOrderList",
+				type:"get",
+				data:{currentPage:currentPage},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#orderTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#orderpageArea");
+					$pageBody.html('');
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "oList"){
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openOrder("+data[key][i].diet_no+");'>");
+								var $noTd=$("<td>").text(data[key][i].buy_no);
+								var $dietTd=$("<td>").text(data[key][i].diet_no);
+								var $userTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].buy_date);
+								var $statusTd=$("<td>").text(data[key][i].status);
+								
+								$tr.append($noTd);
+								$tr.append($dietTd);
+								$tr.append($userTd);
+								$tr.append($dateTd);
+								$tr.append($statusTd);
+								$tableBody.append($tr);
+							}
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick='goFirstPage("+currentPage+", 7);'><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goPrevPage("+currentPage+", 7);'><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick='goPage("+p+", 7);'>"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick='goNextPage("+currentPage+", 7);'>></button");
+							}
+							
+							$pageBody.append("<button onclick='goLastPage("+maxPage+", 7);'>>></button>");
+						}
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
 		}
 		//문의 조회
 		else if(type == 8){
@@ -1045,7 +1117,7 @@
 					
 					for(var key in data){
 						console.log(key);
-						if(key == "infoList"){
+						if(key == "rList"){
 							for(i=0;i<data[key].length;i++){
 								var $tr=$("<tr onclick='openReview("+data[key][i].boardId+");'>");
 								var $noTd=$("<td>").text(data[key][i].boardNo);
@@ -1184,7 +1256,79 @@
 		}
 		//주문검색
 		else if(type == 7){
-			
+			$.ajax({
+				url:"/msmg/searchOrderList",
+				type:"get",
+				data:{currentPage:currentPage, sType:sType, sContent:sContent},
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#orderTable tbody");
+					$tableBody.html('');
+					
+					$pageBody = $("#orderpageArea");
+					$pageBody.html('');
+					
+					for(var key in data){
+						console.log(key);
+						if(key == "oList"){
+							for(i=0;i<data[key].length;i++){
+								var $tr=$("<tr onclick='openOrder("+data[key][i].diet_no+");'>");
+								var $noTd=$("<td>").text(data[key][i].buy_no);
+								var $dietTd=$("<td>").text(data[key][i].diet_no);
+								var $userTd=$("<td>").text(data[key][i].u_name);
+								var $dateTd=$("<td>").text(data[key][i].buy_date);
+								var $statusTd=$("<td>").text(data[key][i].status);
+								
+								$tr.append($noTd);
+								$tr.append($dietTd);
+								$tr.append($userTd);
+								$tr.append($dateTd);
+								$tr.append($statusTd);
+								$tableBody.append($tr);
+							}
+						}
+						else{
+							var startPage=data[key].startPage;
+							var endPage=data[key].endPage;
+							var maxPage=data[key].maxPage;
+							var currentPage=data[key].currentPage;
+							var limit=data[key].limit;
+							var listCount=data[key].listCount;
+							
+							$pageBody.append("<button onclick=\"goFirstSearchPage("+currentPage+", 7, '"+sType+"', '"+sContent+"');\"><<</button>");
+							
+							if(currentPage <= 1){
+								$pageBody.append("<button disabled><</button>");
+							}
+							else{
+								$pageBody.append("<button onclick=\"goPrevSearchPage("+currentPage+", 7, '"+sType+"', '"+sContent+"');\"><</button>");
+							}
+							
+							for(var p=startPage;p<=endPage;p++){
+								if(p == currentPage){
+									$pageBody.append("<button disabled>"+p+"</button>");
+								}
+								else{
+									$pageBody.append("<button onclick=\"goSearchPage("+p+", 7, '"+sType+"', '"+sContent+"');\">"+p+"</button>");
+								}
+							}
+							
+							if(currentPage >= maxPage){
+								$pageBody.append("<button disabled>></button>");
+							}
+							else{
+								$pageBody.append("<button onclick=\"goNextSearchPage("+currentPage+", 7, '"+sType+"', '"+sContent+"');\">></button");
+							}
+							
+							$pageBody.append("<button onclick=\"goLastSearchPage("+maxPage+", 7, '"+sType+"', '"+sContent+"');\">>></button>");
+						}
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
 		}
 		//문의검색
 		else if(type == 8){
@@ -1335,6 +1479,13 @@
 		window.open("<%= request.getContextPath() %>/adminReview?num="+num+"", "후기게시판 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
+	//주문내역 상세보기 메소드
+	function openOrder(dietNo){
+		console.log(dietNo);
+		<%-- window.open("<%= request.getContextPath() %>/selectOneBuy?dietNo="+dietNo+"", "주문내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no"); --%>
+		window.open("/msmg/views/admin/detailOrder.jsp", "주문내역 상세보기", "width=530, height=480, top=20, left=20, scrollbars=no");
+	}
+	
 	//문의내역 상세보기 메소드
 	function openQnA(boardId){
 		console.log(boardId);
@@ -1452,9 +1603,6 @@
 			var stype=$("#memberSType").val();
 			var sContent=$("#memberSText").val();
 			
-			console.log("type : " + stype);
-			console.log("sContent : " + sContent);
-			
 			searchPagingAJAX(currentPage, 6, stype, sContent);
 		});
 		
@@ -1462,32 +1610,7 @@
 		$("#oSearch").click(function(){
 			var currentPage=1;
 			
-			$.ajax({
-				url:"/msmg/selectOrderList",
-				type:"get",
-				data:{currentPage:currentPage},
-				success:function(data){
-					/* console.log(data);
-					
-					$tableBody = $("#userInfoTable tbody");
-					$tableBody.html('');
-					
-					$.each(data, function(index, value){
-						var $tr=$("<tr>");
-						var $noTd=$("<td>").text(value.userNo);
-						var $nameTd=$("<td>").text(decodeURIComponent(value.userName));
-						var $nationTd=$("<td>").text(decodeURIComponent(value.userNation));
-						
-						$tr.append($noTd);
-						$tr.append($nameTd);
-						$tr.append($nationTd);
-						$tableBody.append($tr);
-					}); */
-				},
-				error:function(){
-					console.log("error");
-				}
-			});
+			pagingAJAX(currentPage, 7);
 		});
 		
 		//주문내역 검색
@@ -1773,12 +1896,13 @@
 				<table id="orderTable" border="1">
 					<thead>
 						<tr height="20px">
-							<td colspan="4" style="text-align:right;">
+							<td colspan="5" style="text-align:right;">
 								<select name="orderSType" id="orderSType">
-									<option value="menu_code">메뉴코드</option>
-									<option value="menu_name">메뉴명</option>
-									<option value="price">가격</option>
-									<option value="menu_info">메뉴정보</option>
+									<option value="buy_no">구매번호</option>
+									<option value="diet_no">식단번호</option>
+									<option value="u_name">주문자</option>
+									<option value="buy_date">주문일</option>
+									<option value="status">싱픔상태</option>
 								</select>
 								<input type="text" name="orderSText" id="orderSText" size="20">
 								<button id="orderDSearch">검색</button>&nbsp;
@@ -1786,10 +1910,11 @@
 							</td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="15%"><b>메뉴코드</b></td>
-							<td width="30%"><b>메뉴명</b></td>
-							<td width="10%"><b>가격</b></td>
-							<td width="45%"><b>메뉴정보</b></td>
+							<td width="10%"><b>구매번호</b></td>
+							<td width="30%"><b>식단번호</b></td>
+							<td width="20%"><b>주문자</b></td>
+							<td width="20%"><b>주문일</b></td>
+							<td width="10%"><b>상품상태</b></td>
 						</tr>
 					</thead>
 					<tbody>

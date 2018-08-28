@@ -19,10 +19,10 @@ import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 
 @WebServlet("/selectMemberList")
-public class SelectMemberServlet extends HttpServlet {
+public class SelectMemberList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectMemberServlet() {}
+    public SelectMemberList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage;

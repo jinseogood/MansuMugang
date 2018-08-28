@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,17 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.msmg.admin.model.service.NoticeService;
-import com.msmg.admin.model.service.QnAService;
+import com.msmg.admin.model.service.InfoService;
+import com.msmg.admin.model.vo.Info;
 import com.msmg.admin.model.vo.PageInfo;
-import com.msmg.admin.model.vo.QnA;
-import com.msmg.member.model.vo.Member;
 
-@WebServlet("/selectQnAList")
-public class SelectQnAServlet extends HttpServlet {
+@WebServlet("/selectInfoList")
+public class SelectInfoList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectQnAServlet() {}
+    public SelectInfoList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage;
@@ -37,7 +34,7 @@ public class SelectQnAServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = new QnAService().getListCount();
+		int listCount = new InfoService().getListCount();
 		
 		limit = 10;
 		
@@ -52,18 +49,20 @@ public class SelectQnAServlet extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		ArrayList<QnA> qList=new QnAService().selectQnAList(currentPage, limit);
-			
+		ArrayList<Info> infoList=new InfoService().selectInfoList(currentPage, limit);
+		
+		System.out.println("servlet pi : " + pi);
+		System.out.println("servlet infoList : " + infoList);
+		
 		HashMap<String, Object> hmap=new HashMap<String, Object>();
 		hmap.put("pi", pi);
-		hmap.put("qList", qList);
-			
-		System.out.println("servlet : " + qList);
-			
+		hmap.put("infoList", infoList);
+					
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-			
-		new Gson().toJson(hmap, response.getWriter());
+		
+		Gson gson=new Gson();
+		gson.toJson(hmap, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

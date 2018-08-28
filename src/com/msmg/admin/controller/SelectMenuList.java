@@ -19,10 +19,10 @@ import com.msmg.admin.model.vo.Menu;
 import com.msmg.admin.model.vo.PageInfo;
 
 @WebServlet("/selectMenuList")
-public class SelectMenuServlet extends HttpServlet {
+public class SelectMenuList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectMenuServlet() {}
+    public SelectMenuList() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage;
