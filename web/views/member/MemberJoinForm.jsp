@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% String authenticationNum = (String)request.getAttribute("authenticationNum"); 
-System.out.println(authenticationNum);%>
+System.out.println("syso : " + authenticationNum);%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,11 +152,14 @@ div a {
 					<tbody>
 						<tr>
 							<th bgcolor=tomato>아이디(이메일)<span class="red">*</span></th>
-							<td><input type="text" id="userId" name="userId"> <div class="w3-button w3-ripple w3-yellow" id="idCheck" onclick="return idCheck();">중복확인</div> <div class="w3-button w3-ripple w3-yellow" id="emailCheck" onclick="return emailCheck();">인증번호 발송</div></td>
+							<td><input type="text" id="userId" name="userId"> 
+								<div class="w3-button w3-ripple w3-yellow" id="idCheck" onclick="return idCheck();">중복확인</div> 
+								<div class="w3-button w3-ripple w3-yellow" id="emailCheck" onclick="return emailCheck();">인증번호 발송</div>
+							</td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
-							<td><input type="text" name="cerNum" id="cerNum"> <div class="w3-button w3-ripple w3-yellow" id="cerNum" onclick="return cerNum();">확인</div></td>
+							<td><input type="text" name="cerNum" id="cerNum"> <div class="w3-button w3-ripple w3-yellow" onclick="return cerNum();">확인</div></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
@@ -170,6 +173,14 @@ div a {
 							<th bgcolor=tomato>이름</th>
 							<td><input type="text" name="userName" id="userName"></td>
 						</tr>
+						<tr>
+							<th bgcolor=tomato>질문</th>
+							<td><input type="text" name="userName" id="userName"></td>
+						</tr>
+						<tr>
+							<th bgcolor=tomato>답</th>
+							<td><input type="text" name="userName" id="userName"></td>
+						</tr>
 						<br>
 						<tr>
 							<table align="center">
@@ -179,85 +190,85 @@ div a {
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A1" id="A1">
-										<label for="eggs">난류(계란)</label>
+										<label for="A1">난류(계란)</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A2" id="A2">
-										<label for="milk">우유</label>
+										<label for="A2">우유</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A3" id="A3">
-										<label for="memil">메밀</label>
+										<label for="A3">메밀</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A4" id="A4">
-										<label for="peanut">땅콩</label>
+										<label for="A4">땅콩</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A5" id="A5">
-										<label for="bean">대두</label>
+										<label for="A5">대두</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A6" id="A6">
-										<label for="wheat">밀</label><br>
+										<label for="A6">밀</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A7" id="A7">
-										<label for="mackerel">고등어</label>
+										<label for="A7">고등어</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A8" id="A8">
-										<label for="crab">게</label>
+										<label for="A8">게</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A9" id="A9">
-										<label for="pork">돼지고기</label>
+										<label for="A9">돼지고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A10" id="A10">
-										<label for="peach">복숭아</label>
+										<label for="A10">복숭아</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A11" id="A11">
-										<label for="tomato">토마토</label>
+										<label for="A11">토마토</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A12" id="A12">
-										<label for="shrimp">새우</label><br>
+										<label for="A12">새우</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A13" id="A13">
-										<label for="walnut">호두</label>
+										<label for="A13">호두</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A14" id="A14">
-										<label for="chicken">닭고기</label>
+										<label for="A14">닭고기</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A15" id="A15">
-										<label for="beef">쇠고기</label>
+										<label for="A15">쇠고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A16" id="A16">
-										<label for="squid">오징어</label>
+										<label for="A16">오징어</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A17" id="A17">
-										<label for="clam">조개류</label>
+										<label for="A17">조개류</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A18" id="A18">
-										<label for="acid">아황산류</label>
+										<label for="A18">아황산류</label>
 									</td>	
 								</tr>
 							</table>
@@ -456,8 +467,13 @@ div a {
 	
 	function cerNum(){
 		console.log("function cerNum");
+		var authenticationNum = "<%= authenticationNum %>";
+		console.log("authenticationNum : " + authenticationNum);
+		var trimmed_authenticationNum = jQuery.trim(authenticationNum);
+		console.log("trimmed_authenticationNum : " + trimmed_authenticationNum);
 		var cerNum = $('#cerNum').val();
-		if(cerNum == authenticationNum){
+		var trimmed_cerNum = jQuery.trim(cerNum);
+		if(trimmed_cerNum == trimmed_authenticationNum){
 			alert("이메일 인증이 완료되었습니다."); return true;
 		}else{
 			alert("이메일 인증에 실패하셨습니다. 인증번호를 확인해주세요."); return false;

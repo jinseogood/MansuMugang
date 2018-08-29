@@ -156,7 +156,7 @@ text-decoration:none;
   		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
   		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
-  		  <li><a href="/msmg/views/member/Question.jsp">1:1 문의내역</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/qnaList.qna">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
@@ -196,85 +196,85 @@ text-decoration:none;
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A1" id="A1">
-										<label for="eggs">난류(계란)</label>
+										<label for="A1">난류(계란)</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A2" id="A2">
-										<label for="milk">우유</label>
+										<label for="A2">우유</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A3" id="A3">
-										<label for="memil">메밀</label>
+										<label for="A3">메밀</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A4" id="A4">
-										<label for="peanut">땅콩</label>
+										<label for="A4">땅콩</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A5" id="A5">
-										<label for="bean">대두</label>
+										<label for="A5">대두</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A6" id="A6">
-										<label for="wheat">밀</label><br>
+										<label for="A6">밀</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A7" id="A7">
-										<label for="mackerel">고등어</label>
+										<label for="A7">고등어</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A8" id="A8">
-										<label for="crab">게</label>
+										<label for="A8">게</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A9" id="A9">
-										<label for="pork">돼지고기</label>
+										<label for="A9">돼지고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A10" id="A10">
-										<label for="peach">복숭아</label>
+										<label for="A10">복숭아</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A11" id="A11">
-										<label for="tomato">토마토</label>
+										<label for="A11">토마토</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A12" id="A12">
-										<label for="shrimp">새우</label><br>
+										<label for="A12">새우</label><br>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A13" id="A13">
-										<label for="walnut">호두</label>
+										<label for="A13">호두</label>
 									</td>
 									<td> 
 										<input type="checkbox" name="allergy" value="A14" id="A14">
-										<label for="chicken">닭고기</label>
+										<label for="A14">닭고기</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A15" id="A15">
-										<label for="beef">쇠고기</label>
+										<label for="A15">쇠고기</label>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<input type="checkbox" name="allergy" value="A16" id="A16">
-										<label for="squid">오징어</label>
+										<label for="A16">오징어</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A17" id="A17">
-										<label for="clam">조개류</label>
+										<label for="A17">조개류</label>
 									</td>
 									<td>
 										<input type="checkbox" name="allergy" value="A18" id="A18">
-										<label for="acid">아황산류</label>
+										<label for="A18">아황산류</label>
 									</td>
 								</tr>
 							</table>
@@ -285,7 +285,7 @@ text-decoration:none;
 						<td colspan="2">
 						<div class="clear"></div>
 							<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/index.jsp">취소하기</a></div>
-							<div class="w3-button w3-ripple w3-yellow" onclick="edit">수정하기</div>
+							<div class="w3-button w3-ripple w3-yellow" onclick="edit();">수정하기</div>
 						</td>
 					</tr>
 					</tbody>

@@ -30,7 +30,7 @@ public class InsertMemberServlet extends HttpServlet {
 		System.out.println(uid);  
 		System.out.println(userPwd);
 		System.out.println(userName);
-		System.out.println(alCode);
+		System.out.println("인써트 멤버 써블릿 알코드 : " + alCode);
 		System.out.println("비밀번호 틀렷는데 서블릿에 왓다");
 		Member m = new Member();
 		m.setU_id(uid);

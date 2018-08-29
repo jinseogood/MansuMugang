@@ -144,17 +144,28 @@ public class MemberService {
 		return mSearchList;
 	}
 
-	public Member updateMember(Member m) {
+	public int updateMember(Member m) {
 		Connection con = getConnection();
 		
-		Member member = new MemberDao().updateMember(con, m);
+		int result = new MemberDao().updateMember(con, m);
 		
-		if(member != null) commit(con);
+		if(result != 0) commit(con);
 		else rollback(con);
 		
 		close(con);
 		
-		return member;
+		return result;
+	}
+
+	public int updateAllergy(ArrayList<UserAllergy> alList, Member m) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().updateAllergy(con, alList, m);
+		
+		close(con);
+		
+		
+		return result;
 	}
 
 	
