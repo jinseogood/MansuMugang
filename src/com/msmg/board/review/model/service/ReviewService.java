@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.msmg.board.information.model.dao.BoardDao;
 import com.msmg.board.information.model.vo.Board;
 import com.msmg.board.information.model.vo.Reply;
 import com.msmg.board.review.model.dao.ReviewDao;
@@ -182,6 +181,26 @@ public class ReviewService {
 		close(con);
 		
 		return replyList;
+	}
+
+	public HashMap<String, Object> selectPreR(String num) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> preR = new ReviewDao().selectPreR(con, num);
+		
+		close(con);
+		
+		return preR;
+	}
+
+	public HashMap<String, Object> selectNextR(String num) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> nextR = new ReviewDao().selectNextR(con, num);
+		
+		close(con);
+		
+		return nextR;
 	}
 
 

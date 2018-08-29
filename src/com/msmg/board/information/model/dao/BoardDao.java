@@ -242,7 +242,7 @@ public class BoardDao {
 				r.setU_code(rset.getString("u_name"));
 				r.setBoard_id(rset.getString("board_id"));
 				r.setRe_date(rset.getDate("re_date"));
-				
+				r.setReply_no(rset.getInt("reply_no"));
 				
 				list.add(r);
 			}

@@ -7,6 +7,9 @@
 
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
+	
+	HashMap<String, Object> preR = (HashMap<String, Object>)request.getAttribute("preR");
+	HashMap<String, Object> nextR = (HashMap<String, Object>)request.getAttribute("nextR");
 %>
 <!DOCTYPE html>
 <html>
@@ -320,19 +323,29 @@ div[id=date-writer-hit2] {
 	
 	<div id='whiptable'>
 		<table id='whip'>
+		<% if(preR != null) {
+			for(int i = 0; i < preR.size(); i++) {
+				HashMap<String, Object> preR = preR.get(i);
+			%>
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					이전글</td>
-				<td align="center" width='700'><a href="#">이전글 입니다</a></td>
-				<td width="100">2018-08-07</td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preR.get("board_no")%>"><%=preR.get("title") %></a></td>
+				<td width="100"><%=preR.get("board_date")%></td>
 			</tr>
+			<%} %>
+			
+		<%if(nextR != null) {
+			for(int i = 0; i < nextR.size(); i++) {
+				HashMap<String, Object> nextR = nextR.get(i);
+		 %>
 			<tr>
 				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 					다음글</td>
-				<td align="center"><a href="#">다음글 입니다</a></td>
-				<td>2018-08-07</td>
+				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextR.get("boardNo")%>"><%=nextR.get("title") %></a></td>
+				<td width="100"><%=nextR.get("board_date") %></td>
 			</tr>
-
+			<%} %>
 		</table>
 	</div>
 	<br>
