@@ -42,11 +42,45 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		String ucode = request.getParameter("user");
 		String[] price = m_resultlist.split(", ");
 		String[] mcode = resultlist.split(", ");
+		String diet_name = "";
 		
 		ArrayList<Destination> desList = new DestinationService().selectList(ucode);
 		
 		ArrayList<Buy> list = new ArrayList<Buy>();
 		
+		if(side == 1){
+			if(go == 1){
+				diet_name = "고혈압 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(go == 1 && dang == 1){
+				diet_name = "고혈압, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(go == 1 && head == 1){
+				diet_name = "고혈압, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(head == 1 && dang == 1){
+				diet_name = "당뇨, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(dang == 1){
+				diet_name = "당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(head == 1){
+				diet_name = "뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else{
+				diet_name = "고혈압, 뇌질환, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}
+		}else{
+			if(go == 1){
+				diet_name = "고혈압 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(go == 1 && dang == 1){
+				diet_name = "고혈압, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(go == 1 && head == 1){
+				diet_name = "고혈압, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(head == 1 && dang == 1){
+				diet_name = "당뇨, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(dang == 1){
+				diet_name = "당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else if(head == 1){
+				diet_name = "뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}else{
+				diet_name = "고혈압, 뇌질환, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+			}
+		}
 		if(mcode != null && price != null){
 			for(int i = 0 ; i < mcode.length; i++){
 				Buy b = new Buy();
@@ -66,7 +100,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		String user_date = nowTime+ucode;
 		
-		int result = new FoodService().insertMenuBuy(list, user_date);
+		int result = new FoodService().insertMenuBuy(list, user_date, diet_name);
 
 		String page = "";
 		

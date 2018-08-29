@@ -96,7 +96,7 @@ public class SelectFoodDao {
 		return list;
 	}
 
-	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date) {
+	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date, String diet_name) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String query = prop.getProperty("insertMenuBuy");
@@ -117,6 +117,7 @@ public class SelectFoodDao {
 				pstmt.setString(2, list.get(i).getMcode());
 				pstmt.setString(3, user_date);
 				pstmt.setInt(4, list.get(i).getPrice());
+				pstmt.setString(5, diet_name);
 			
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {

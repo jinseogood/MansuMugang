@@ -25,10 +25,10 @@ public class FoodService {
 		return list;
 	}
 
-	public int insertMenuBuy(ArrayList<Buy> list, String user_date) {
+	public int insertMenuBuy(ArrayList<Buy> list, String user_date, String diet_name) {
 		Connection con = getConnection();
 		
-		int result = new SelectFoodDao().insertMenuBuy(con, list, user_date);
+		int result = new SelectFoodDao().insertMenuBuy(con, list, user_date, diet_name);
 		
 		close(con);
 		return result;
