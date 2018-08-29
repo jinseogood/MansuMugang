@@ -38,7 +38,7 @@ public class EmailCheckServlet extends HttpServlet {
       //기존 회원 여부 확인
       String page = "";
       if(result > 0){
-         response.getWriter().println(1);
+         response.getWriter().println("test");
     	  /*request.setAttribute("msg", "중복된 아이디");
     	  request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);*/
      
@@ -94,18 +94,18 @@ public class EmailCheckServlet extends HttpServlet {
               } catch(Exception e){
                   e.printStackTrace();
               }
-              
+         System.out.println("인증번호 : " + authenticationNum);
          response.getWriter().println(authenticationNum);
          
       }
       
 		
-		page = "views/member/MemberJoinForm.jsp";
+		/*page = "views/member/MemberJoinForm.jsp";
 		request.setAttribute("authenticationNum", authenticationNum);
 		
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		view.forward(request, response);*/
       
    }
    

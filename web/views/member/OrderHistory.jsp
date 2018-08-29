@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.mypage.model.vo.*" %>
 <% 
-	ArrayList<BuyAll> list = (ArrayList<BuyAll>)request.getAttribute("list");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<BuyAll> bList = (ArrayList<BuyAll>)request.getAttribute("bList");
+	System.out.println("주문내역에서 bList : " + bList);
+	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();  
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
-	
-
+	int endPage = pi.getEndPage(); */
 %>
 <!DOCTYPE html>
 <html>
@@ -28,30 +27,6 @@
 					'padding-right' : scrollWidth
 				});
 			}).resize();
-</script>
-
-<script>
-	
-	$(function() {
-
-	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),
-	        offset     = $sidebar.offset(),
-	        topPadding = 15;
-
-	    $window.scroll(function() {
-	        if ($window.scrollTop() > offset.top) {
-	            $sidebar.stop().animate({
-	                marginTop: $window.scrollTop() - offset.top + topPadding
-	            });
-	        } else {
-	            $sidebar.stop().animate({
-	                marginTop: 0
-	            });
-	        }
-	    });
-	    
-	});
 </script>
 
 <style>
@@ -211,8 +186,7 @@ body {
 							<th>상품명</th>
 							<th>결제금액</th>
 							<th>결제방법</th>
-							<th>결제상태</th>
-							<th>배송상태</th>
+							<th>주문상태</th>
 						</tr>
 					</thead>
 				</table>
@@ -220,18 +194,18 @@ body {
 			<div class="tbl-content table1">
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tbody>
-			<% if(list == null){ %>
+			<% if(bList == null){ %>
 						<tr>
 							<td colspan="6"><div align="center">주문하신 내역이 없습니다.</div></td>
 						</tr>
 			<% }else{ %>
-				<% for(BuyAll b : list){ %>
+				<% for(BuyAll b : bList){ %>
 						<tr>
 							<td><%= b.getBuy_date() %></td>
 							<td>고혈압 7일 3끼</td>
-							<td>330,000원</td>
+							<td><%= b.getPrice() %></td>
 							<td><%= b.getBuy_sort() %></td>
-							<td><%= b.getSort() %></td>
+							<td><%= b.getStatus() %></td>
 							<%-- <% if() %> --%>
 							<td><div class="w3-button w3-ripple w3-yellow">주문취소</div></td>
 						</tr>

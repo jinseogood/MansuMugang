@@ -12,11 +12,12 @@ public class BuyAll implements java.io.Serializable{
 	private String sort;
 	private int amount;
 	private String buy_sort;
+	private int price;
 	
 	public BuyAll(){}
 
 	public BuyAll(int buy_no, String u_code, String menu_code, Date buy_date, String status, int buy_info_no,
-			String sort, int amount, String buy_sort) {
+			String sort, int amount, String buy_sort, int price) {
 		super();
 		this.buy_no = buy_no;
 		this.u_code = u_code;
@@ -27,6 +28,7 @@ public class BuyAll implements java.io.Serializable{
 		this.sort = sort;
 		this.amount = amount;
 		this.buy_sort = buy_sort;
+		this.price = price;
 	}
 
 	public int getBuy_no() {
@@ -65,6 +67,10 @@ public class BuyAll implements java.io.Serializable{
 		return buy_sort;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
 	public void setBuy_no(int buy_no) {
 		this.buy_no = buy_no;
 	}
@@ -101,13 +107,17 @@ public class BuyAll implements java.io.Serializable{
 		this.buy_sort = buy_sort;
 	}
 
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	@Override
 	public String toString() {
 		return "BuyAll [buy_no=" + buy_no + ", u_code=" + u_code + ", menu_code=" + menu_code + ", buy_date=" + buy_date
 				+ ", status=" + status + ", buy_info_no=" + buy_info_no + ", sort=" + sort + ", amount=" + amount
-				+ ", buy_sort=" + buy_sort + "]";
+				+ ", buy_sort=" + buy_sort + ", price=" + price + "]";
 	}
-	
+
 	
 	
 }
