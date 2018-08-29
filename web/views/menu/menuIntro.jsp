@@ -100,10 +100,10 @@
 
 table td {
 	height: 200px;
-	width: 30%;
+	width: 30% px;
 }
 
-td .info {
+td .in {
 	height: 70px;
 }
 
@@ -199,13 +199,16 @@ td .like {
 										<img
 											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
 									</div>
-									<div class="info"><%=list.get(i).getMenu_info()%></div>
+									<div class="in"><%=list.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
 										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">			
 										<% if(loginUser != null){
-										
+											if(MenuList.size() != 0){
 											for(int l = 0 ; l < MenuList.size() ; l++){ 
-												if(MenuList.get(l).getM_code() == Integer.parseInt(list.get(i).getMenu_code())){
+												System.out.print("안오니");
+												System.out.print(MenuList.get(l).getM_code() + "과" + list.get(i).getMenu_code());
+												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
+													
 										%>
 											
 													<i class="fa fa-star" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
@@ -213,6 +216,7 @@ td .like {
 										<% 
 													break;
 												}else{
+													System.out.print("여긴오니");
 													if(l == MenuList.size()-1){
 										%>
 													<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
@@ -221,7 +225,11 @@ td .like {
 												}
 											}	
 										
-										   }else{ %>
+										   }else{%>
+											   <i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
+										   
+										<% }
+										}else{ %>
 											<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>			
 										<% } %>
 									</div>

@@ -31,7 +31,6 @@ public class MenuListG extends HttpServlet {
 		if(request.getParameter("user") != null){
 			u_code = Integer.parseInt(request.getParameter("user"));
 		}
-		//System.out.println(list);
 		String page = "";
 		if(list != null){
 			if(MenuList != null){

@@ -149,7 +149,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
-					ml.setMenu_code(rset.getString("menu_code"));
+					ml.setMenu_code(rset.getInt("menu_code"));
 					
 					list.add(ml);
 				}
@@ -186,7 +186,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
-					ml.setMenu_code(rset.getString("menu_code"));
+					ml.setMenu_code(rset.getInt("menu_code"));
 					
 					list.add(ml);
 				}
@@ -223,7 +223,7 @@ public class SelectFoodDao {
 					ml.setMenu_info(rset.getString("menu_info"));
 					ml.setImg_name(rset.getString("menu_img_ename"));
 					ml.setMenu_name(rset.getString("menu_name"));
-					ml.setMenu_code(rset.getString("menu_code"));
+					ml.setMenu_code(rset.getInt("menu_code"));
 					
 					list.add(ml);
 				}

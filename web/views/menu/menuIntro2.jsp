@@ -202,7 +202,7 @@ td .like {
 										<% if(loginUser != null){
 										
 											for(int l = 0 ; l < MenuList.size() ; l++){ 
-												if(MenuList.get(l).getM_code() == Integer.parseInt(list.get(i).getMenu_code())){
+												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
 										%>
 											
 													<i class="fa fa-star" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
