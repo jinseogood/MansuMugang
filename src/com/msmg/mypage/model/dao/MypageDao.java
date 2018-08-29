@@ -70,6 +70,8 @@ public class MypageDao {
 			
 		}
 		
+		System.out.println("마이페이지다오에서 bList(리턴전) : " + bList);
+		
 		return bList;
 	}
 

@@ -15,19 +15,8 @@
 <head>
 <meta charset="UTF-8">
 <title>주문내역</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<script> 
-	$(window).on(
-			"load resize ",
-			function() {
-				var scrollWidth = $('.tbl-content').width()
-						- $('.tbl-content table').width();
-				$('.tbl-header').css({
-					'padding-right' : scrollWidth
-				});
-			}).resize();
-</script>
 
 <style>
 /* @font-face {
