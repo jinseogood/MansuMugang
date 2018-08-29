@@ -91,8 +91,7 @@ public class CommonServlet extends HttpServlet {
 		
 		// 상세 결제 정보 입력 서블릿
 		
-
-		
+		  
 /*		
 		BUY_INFO_NO	NUMBER
 		SORT	VARCHAR2(10 BYTE)
