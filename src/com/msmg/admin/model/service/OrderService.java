@@ -50,4 +50,24 @@ public class OrderService {
 		return oSearchList;
 	}
 
+	public int getSelectOneListCount(String dietNo) {
+		Connection con=getConnection();
+		
+		int listCount=new OrderDao().getSelectOneListCount(dietNo, con);
+		
+		close(con);
+		
+		return listCount;
+	}
+	
+	public ArrayList<Order> selectOneOrderList(int currentPage, int limit, String dietNo) {
+		Connection con=getConnection();
+		
+		ArrayList<Order> oSelectOneList=new OrderDao().selectOneOrderList(currentPage, limit, dietNo, con);
+		
+		close(con);
+		
+		return oSelectOneList;
+	}
+
 }

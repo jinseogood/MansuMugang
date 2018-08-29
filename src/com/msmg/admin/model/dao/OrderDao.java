@@ -194,5 +194,73 @@ public class OrderDao {
 		
 		return oSearchList;
 	}
+	
+	public int getSelectOneListCount(String dietNo, Connection con) {
+		int listCount=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("oSelectListCount");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, dietNo);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				listCount=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Order> selectOneOrderList(int currentPage, int limit, String dietNo, Connection con) {
+		ArrayList<Order> oSelectOneList=new ArrayList<Order>();
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("selectOneOrderPaging");
+		
+		try {
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			pst=con.prepareStatement(query);
+			pst.setString(1, dietNo);
+			pst.setInt(2, startRow);
+			pst.setInt(3, endRow);
+			
+			rset=pst.executeQuery();
+			
+			while(rset.next()){
+				Order o=new Order();
+				
+				o.setBuy_no(rset.getInt("buy_no"));
+				o.setU_name(rset.getString("u_name"));
+				o.setMenu_code(rset.getInt("menu_code"));
+				o.setBuy_date(rset.getDate("buy_date"));
+				o.setStatus(rset.getString("status"));
+				o.setDiet_no(rset.getString("diet_no"));
+				o.setPrice(rset.getInt("price"));
+				o.setAmount(rset.getInt("amount"));
+				
+				oSelectOneList.add(o);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return oSelectOneList;
+	}
 
 }
