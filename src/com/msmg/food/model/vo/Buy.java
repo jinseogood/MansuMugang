@@ -3,6 +3,7 @@ package com.msmg.food.model.vo;
 public class Buy implements java.io.Serializable{
 	private String ucode;
 	private String mcode;
+	private int price;
 	
 	public Buy(){}
 
@@ -10,6 +11,15 @@ public class Buy implements java.io.Serializable{
 		super();
 		this.ucode = ucode;
 		this.mcode = mcode;
+		this.price = price;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public String getUcode() {
@@ -30,7 +40,7 @@ public class Buy implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Buy [ucode=" + ucode + ", mcode=" + mcode + "]";
+		return "Buy [ucode=" + ucode + ", mcode=" + mcode + ", price=" + price + "]";
 	}
 	
 }

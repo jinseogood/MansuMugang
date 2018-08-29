@@ -116,6 +116,7 @@ public class SelectFoodDao {
 				pstmt.setString(1, list.get(i).getUcode());
 				pstmt.setString(2, list.get(i).getMcode());
 				pstmt.setString(3, user_date);
+				pstmt.setInt(4, list.get(i).getPrice());
 			
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
