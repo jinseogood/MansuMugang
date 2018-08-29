@@ -75,12 +75,11 @@ public class OrderDao {
 			while(rset.next()){
 				Order o=new Order();
 				
-				o.setBuy_no(rset.getInt("buy_no"));
-				o.setU_name(rset.getString("u_name"));
-				o.setMenu_code(rset.getInt("menu_code"));
-				o.setBuy_date(rset.getDate("buy_date"));
-				o.setStatus(rset.getString("status"));
 				o.setDiet_no(rset.getString("diet_no"));
+				o.setDiet_name(rset.getString("user_menu_name"));
+				o.setU_name(rset.getString("u_name"));
+				o.setBuy_date(rset.getDate("buy_date"));
+				o.setStatus(rset.getString("buy_status"));
 				
 				oList.add(o);
 			}
@@ -102,11 +101,11 @@ public class OrderDao {
 		
 		String query="";
 		
-		if(type.equals("buy_no")){
-			query=prop.getProperty("oBuyNoListCount");
-		}
-		else if(type.equals("diet_no")){
+		if(type.equals("diet_no")){
 			query=prop.getProperty("oDietNoListCount");
+		}
+		else if(type.equals("diet_name")){
+			query=prop.getProperty("oDietNameListCount");
 		}
 		else if(type.equals("u_name")){
 			query=prop.getProperty("oUNameListCount");
@@ -145,11 +144,11 @@ public class OrderDao {
 		
 		String query="";
 		
-		if(type.equals("buy_no")){
-			query=prop.getProperty("searchOBuyNoListPaging");
-		}
-		else if(type.equals("diet_no")){
+		if(type.equals("diet_no")){
 			query=prop.getProperty("searchODietNoListPaging");
+		}
+		else if(type.equals("diet_name")){
+			query=prop.getProperty("searchODietNameListPaging");
 		}
 		else if(type.equals("u_name")){
 			query=prop.getProperty("searchOUNameListPaging");
@@ -175,12 +174,11 @@ public class OrderDao {
 			while(rset.next()){
 				Order o=new Order();
 				
-				o.setBuy_no(rset.getInt("buy_no"));
-				o.setU_name(rset.getString("u_name"));
-				o.setMenu_code(rset.getInt("menu_code"));
-				o.setBuy_date(rset.getDate("buy_date"));
-				o.setStatus(rset.getString("status"));
 				o.setDiet_no(rset.getString("diet_no"));
+				o.setDiet_name(rset.getString("user_menu_name"));
+				o.setU_name(rset.getString("u_name"));
+				o.setBuy_date(rset.getDate("buy_date"));
+				o.setStatus(rset.getString("buy_status"));
 				
 				oSearchList.add(o);
 			}
@@ -248,7 +246,7 @@ public class OrderDao {
 				o.setMenu_code(rset.getInt("menu_code"));
 				o.setMenu_name(rset.getString("menu_name"));
 				o.setBuy_date(rset.getDate("buy_date"));
-				o.setStatus(rset.getString("status"));
+				o.setStatus(rset.getString("buy_status"));
 				o.setDiet_no(rset.getString("diet_no"));
 				o.setPrice(rset.getInt("price"));
 				o.setAmount(rset.getInt("amount"));
