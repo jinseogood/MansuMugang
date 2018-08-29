@@ -21,6 +21,12 @@
 	
 
 	String[][] add = new String[3][4];
+	
+	PaymentInfo pi = new PaymentInfo();
+	
+	String sort = "";
+	String buy_sort = "";
+	
 %>
 
 
@@ -535,6 +541,7 @@ $("#buyer_addr3").attr("value", addr3);
 								<td colspan="4">
 									<div id="cardPayCd">
 										<input type="radio" name="radio2" id="creditCard"><label>신용카드</label>
+										<input type="hidden" name="creditCard" value="신용카드">
 									</div>
 									<div id="bankTransfer">
 										<input type="radio" name="radio2" id="bankAccount"><label>무통장입금</label>
@@ -662,8 +669,6 @@ $("#buyer_addr3").attr("value", addr3);
 					
 					var postcode = pst;
 					
-					
-
 					if (sender == "") {
 						alert("보내는 분의 성함을 입력해주세요.");
 					} else {
@@ -695,8 +700,7 @@ $("#buyer_addr3").attr("value", addr3);
 														if (radioVal1 == 'on') {
 															// IMP.request_pay(param, callback) 호출
 															
-															<%-- <%= pi.setSort("구매완료")%>
-															<%= pi.setBuy_sort("카드구매")%> --%>
+													
 															
 															IMP.init("imp86047661");
 															IMP.request_pay(
@@ -731,15 +735,16 @@ $("#buyer_addr3").attr("value", addr3);
 																									})
 																							.done(
 																									
-																									<%-- <%= pi.setSort("구매완료")%>
-																									<%= pi.setBuy_sort("카드결제") %> --%>
+																									
 																									
 																									function(data) {
+																										
+																										var buy_sort = "카드결제";
 																											
-																											$("#com").attr("action", '<%=request.getContextPath()%>/common.pm');
+																											$("#com").attr("action", '<%=request.getContextPath()%>/common.pm?buy_sort='+buy_sort);
 																											$("#com").submit();
 																										
-																									}
+																									}  
 																									
 																							
 																								 )
@@ -750,8 +755,7 @@ $("#buyer_addr3").attr("value", addr3);
 
 														} else if (radioVal2 == 'on') {
 															
-															<%-- <%= pi.setSort("결제대기")%>
-															<%= pi.setBuy_sort("무통장결제") %> --%>
+															
 															
 															alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
 															location.href = "/msmg/views/member/OrderHistory.jsp";
