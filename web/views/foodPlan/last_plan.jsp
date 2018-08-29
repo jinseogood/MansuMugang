@@ -89,7 +89,7 @@
 	} */
 	#Img{
 		width:100%;
-		height:50%;
+		height:100%;
 	}
 	.btns{
 		background:#FAFAFA;
@@ -198,7 +198,7 @@
 							
 								<table align = "center" id = "menu_table<%= j %><%= i %>">
 									<tr>
-										<td colspan = "3" width = "200px">
+										<td colspan = "3" width = "200px" height = "100px">
 											<img id="Img" 
 											src="<%=request.getContextPath() %>/images/food/<%=list.get(rand).getImg_name()%>">
 										</td>
@@ -366,6 +366,7 @@
 			var total_price = first_price;
 			console.log(total_price);
 			var result = "";
+			var menu_price_list = "";
 			//var num = $("#test").children().eq(0).children().eq(3).children().eq(0).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(3).val();
 			                                                    /*1, 3, 5       0, 1, 2*/
 			/* for(var i = 1 ; i < (day*2); i+=2){
@@ -385,19 +386,23 @@
 			
 			for(var i = 1 ; i < (day*2); i+=2){
 				for(var j = 0 ; j < ggi; j++){
-					var mcode = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(4).val();							
+					var mcode = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(4).val();
+					var menu_price = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(2).text();
+					
 					if(i==day*2-1 && j == ggi-1){
 						
 						result += mcode;
+						menu_price_list += menu_price;
 					}else{
 						result += mcode + ", ";
+						menu_price_list += menu_price + ", ";
 					}													
 					//console.log(result);
 				}
 			}
 			console.log(result); 
 			var user = "<%= loginUser.getU_code() %>";
-			location.href="<%= request.getContextPath()%>/insertBuy.fo?result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price + "&user=" + user;
+			location.href="<%= request.getContextPath()%>/insertBuy.fo?menu_result=" + menu_price_list + "&result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price + "&user=" + user;
 		});
 	});
 

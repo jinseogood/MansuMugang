@@ -37,19 +37,22 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		int ggi = Integer.parseInt(request.getParameter("ggi"));
 		int side = Integer.parseInt(request.getParameter("side"));
 		String resultlist = request.getParameter("result");
+		String m_resultlist = request.getParameter("menu_result");
 		int total_price = Integer.parseInt(request.getParameter("total_price"));
 		String ucode = request.getParameter("user");
+		String[] price = m_resultlist.split(", ");
 		String[] mcode = resultlist.split(", ");
 		
 		ArrayList<Destination> desList = new DestinationService().selectList(ucode);
 		
 		ArrayList<Buy> list = new ArrayList<Buy>();
 		
-		if(mcode != null){
+		if(mcode != null && price != null){
 			for(int i = 0 ; i < mcode.length; i++){
 				Buy b = new Buy();
 				b.setUcode(ucode);
 				b.setMcode(mcode[i]);
+				b.setPrice(Integer.parseInt(price[i]));
 				
 				list.add(b);
 			}
