@@ -241,7 +241,6 @@ public class OrderDao {
 			while(rset.next()){
 				Order o=new Order();
 				
-				o.setBuy_no(rset.getInt("buy_no"));
 				o.setU_name(rset.getString("u_name"));
 				o.setMenu_code(rset.getInt("menu_code"));
 				o.setMenu_name(rset.getString("menu_name"));
@@ -262,6 +261,55 @@ public class OrderDao {
 		}
 		
 		return oSelectOneList;
+	}
+
+	public int selectOneOrderPriceList(String dietNo, Connection con) {
+		int totalPrice=0;
+		PreparedStatement pst=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("oneOrderPrice");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, dietNo);
+			
+			rset=pst.executeQuery();
+			
+			if(rset.next()){
+				totalPrice=rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
+		}
+		
+		return totalPrice;
+	}
+
+	public int updateStatus(String dietNo, String status, Connection con) {
+		int result=0;
+		PreparedStatement pst=null;
+		
+		String query=prop.getProperty("updateStatus");
+		
+		try {
+			pst=con.prepareStatement(query);
+			pst.setString(1, status);
+			pst.setString(2, dietNo);
+			
+			result=pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pst);
+		}
+		
+		return result;
 	}
 
 }

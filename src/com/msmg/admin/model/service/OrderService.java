@@ -70,4 +70,31 @@ public class OrderService {
 		return oSelectOneList;
 	}
 
+	public int selectOneOrderPriceList(String dietNo) {
+		Connection con=getConnection();
+		
+		int totalPrice=new OrderDao().selectOneOrderPriceList(dietNo, con);
+		
+		close(con);
+		
+		return totalPrice;
+	}
+
+	public int updateStatus(String dietNo, String status) {
+		Connection con=getConnection();
+		
+		int result=new OrderDao().updateStatus(dietNo, status, con);
+		
+		if(result>0){
+			commit(con);
+		}
+		else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 }
