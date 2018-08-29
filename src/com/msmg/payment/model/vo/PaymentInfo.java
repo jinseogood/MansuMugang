@@ -4,23 +4,19 @@ public class PaymentInfo implements java.io.Serializable{
 	
 	private int buy_info_no;
 	private String sort;
-	private int amount;
 	private String buy_sort;
 	private String diet_no;
-	private String menu_code;
 	
 	
 	public PaymentInfo(){}
 	
 
-	public PaymentInfo(int buy_info_no, String sort, int amount, String buy_sort, String diet_no, String menu_code) {
+	public PaymentInfo(int buy_info_no, String sort, String buy_sort, String diet_no) {
 		super();
 		this.buy_info_no = buy_info_no;
 		this.sort = sort;
-		this.amount = amount;
 		this.buy_sort = buy_sort;
 		this.diet_no = diet_no;
-		this.menu_code = menu_code;
 	}
 
 
@@ -51,23 +47,6 @@ public class PaymentInfo implements java.io.Serializable{
 		this.sort = sort;
 	}
 
-
-
-
-	public int getAmount() {
-		return amount;
-	}
-
-
-
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-
-
-
 	public String getBuy_sort() {
 		return buy_sort;
 	}
@@ -94,24 +73,6 @@ public class PaymentInfo implements java.io.Serializable{
 	}
 
 
-
-
-	public String getMenu_code() {
-		return menu_code;
-	}
-
-
-
-
-	public void setMenu_code(String menu_code) {
-		this.menu_code = menu_code;
-	}
-
-
-
-
-
-	
 
 	
 	

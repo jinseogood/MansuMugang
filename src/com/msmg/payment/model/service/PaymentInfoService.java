@@ -15,8 +15,8 @@ public class PaymentInfoService {
 		int result = new PaymentInfoDao().insertPaymentInfo(con, pi);
 		
 		if(result > 0) {
-			commit(con);
-		} else {
+			commit(con); 
+		} else {  
 			rollback(con);
 		}
 		

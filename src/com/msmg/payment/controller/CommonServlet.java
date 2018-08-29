@@ -90,17 +90,19 @@ public class CommonServlet extends HttpServlet {
 		
 		
 		// 상세 결제 정보 입력 서블릿
+		String sort = request.getParameter("sort");
+		String buy_sort = request.getParameter("buy_sort");
 		
-		  
-/*		
-		BUY_INFO_NO	NUMBER
-		SORT	VARCHAR2(10 BYTE)
-		AMOUNT	NUMBER
-		BUY_SORT	VARCHAR2(20 BYTE)
-		DIET_NO	VARCHAR2(50 BYTE)
-		MENU_CODE	VARCHAR2(50 BYTE)*/
+		PaymentInfo pi = new PaymentInfo();
+		pi.setSort(sort);
+		pi.setBuy_sort(buy_sort);
+		pi.setDiet_no(diet_no);
 		
-		if(result > 0 || result2 > 0 || result3 > 0) {
+		
+		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
+
+		
+		if(result > 0 || result2 > 0 || result3 > 0 || result4 > 0) {
 			response.sendRedirect("views/payment/paymentConfirm.jsp");
 		}
 		
