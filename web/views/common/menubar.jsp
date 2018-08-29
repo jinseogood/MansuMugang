@@ -197,7 +197,7 @@
 		   <% if(loginUser != null){ %>
 		    
 		    	$.ajax({
-		    		url : "checkAlert.qna",
+		    		url : "<%= request.getContextPath()%>/checkAlert.qna",
 					data : {ucode:<%= loginUser.getU_code() %>},
 					type : "get",
 					success:function(data){
