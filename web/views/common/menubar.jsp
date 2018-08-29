@@ -47,7 +47,7 @@
 		height:100%;
 	}
 	#menubarLogo > a > img{
-		width:25%;
+		width:35%;
 		height:100%;
 	}
 	#menuContent{

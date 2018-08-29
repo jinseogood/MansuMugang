@@ -211,8 +211,9 @@ div #offi {
 	
 </div>
 <%}else{
-	request.setAttribute("msg", "잘못된 경로");
-	request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	//request.setAttribute("msg", "잘못된 경로");
+	//request.getRequestDispatcher("../../member/LoginForm.jsp").forward(request, response);
+	response.sendRedirect("../../member/LoginForm.jsp");
 }%>
 <div id="mainBottom">
 <%@include file = "../../common/footer.jsp" %>

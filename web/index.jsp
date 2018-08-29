@@ -79,6 +79,7 @@
 	}
 	.topMenu:hover{
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		cursor : pointer;
 	}
 	.topMenuImg{
 		width:90%;
@@ -149,15 +150,15 @@
 				<!-- Wrapper for slides -->
 				<div id="myCarouselPhoto" class="carousel-inner">
 					<div class="item active">
-						<img src="images/main/food4.png" alt="Los Angeles">
+						<img src="images/main/food7.jpg" alt="Los Angeles">
 					</div>
 
 					<div class="item">
-						<img src="images/main/food5.jpg" alt="Chicago">
+						<img src="images/main/food8.jpg" alt="Chicago">
 					</div>
 
 					<div class="item">
-						<img src="images/main/food6.jpg" alt="New york">
+						<img src="images/main/food9.jpg" alt="New york">
 					</div>
 				</div>
 
@@ -180,7 +181,7 @@
 			<%if(goList != null){
 			for(int i = 0; i < goList.size(); i++){ %>
 			<div id="g1" class="topMenu">
-				<div id="g1-img" class="topMenuImg">
+				<div id="g1-img" class="topMenuImg" onclick = "location.href = '<%= request.getContextPath() %>/MenuListG.fo'">
 					<img src="/msmg/images/food/<%= goList.get(i).getMenu_img_ename() %>">
 					<span id = 'menutitle'><%= goList.get(i).getMenu_name() %></span><br>
 					<span id = 'menuinfo'><%= goList.get(i).getMenu_info() %></span>
@@ -206,7 +207,7 @@
 			<%if(dangList != null){
 			for(int i = 0; i < dangList.size(); i++){ %>
 			<div id="g1" class="topMenu">
-				<div id="g1-img" class="topMenuImg">
+				<div id="g1-img" class="topMenuImg" onclick = "location.href = '<%= request.getContextPath() %>/MenuListD.fo'">
 					<img src="/msmg/images/food/<%= dangList.get(i).getMenu_img_ename() %>">
 					<span id = 'menutitle'><%= dangList.get(i).getMenu_name() %></span><br>
 					<span id = 'menuinfo'><%= dangList.get(i).getMenu_info() %></span>
@@ -235,7 +236,7 @@
 			<%if(headList != null){
 			for(int i = 0; i < headList.size(); i++){ %>
 			<div id="g1" class="topMenu">
-				<div id="g1-img" class="topMenuImg">
+				<div id="g1-img" class="topMenuImg" onclick = "location.href = '<%= request.getContextPath() %>/MenuListH.fo'">
 					<img src="/msmg/images/food/<%= headList.get(i).getMenu_img_ename() %>">
 					<span id = 'menutitle'><%= headList.get(i).getMenu_name() %></span><br>
 					<span id = 'menuinfo'><%= headList.get(i).getMenu_info() %></span>
