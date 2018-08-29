@@ -246,6 +246,7 @@ public class OrderDao {
 				o.setBuy_no(rset.getInt("buy_no"));
 				o.setU_name(rset.getString("u_name"));
 				o.setMenu_code(rset.getInt("menu_code"));
+				o.setMenu_name(rset.getString("menu_name"));
 				o.setBuy_date(rset.getDate("buy_date"));
 				o.setStatus(rset.getString("status"));
 				o.setDiet_no(rset.getString("diet_no"));
@@ -257,8 +258,10 @@ public class OrderDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pst);
 		}
-		
 		
 		return oSelectOneList;
 	}
