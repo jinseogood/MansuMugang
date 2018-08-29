@@ -340,7 +340,6 @@ public class BoardDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, num);
-			pstmt.setString(2, num);
 			
 			rset = pstmt.executeQuery();
 			
@@ -377,7 +376,6 @@ public class BoardDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, num);
-			pstmt.setString(2, num);
 			
 			rset = pstmt.executeQuery();
 			

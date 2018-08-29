@@ -203,7 +203,7 @@ div #offi {
 				
 				for(Board b : list) {%>
 				<tr id="listArea">
-					<input type="hidden" value="<%=b.getBoardId()%>">
+					<input type="hidden" value="<%=b.getBoardNo()%>">
 					<td></td>
 					<td><%= b.getBoardNo() %></td>
 					<td><%= b.getTitle() %></td>

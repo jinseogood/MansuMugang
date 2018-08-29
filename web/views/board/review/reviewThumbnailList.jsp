@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*"%>
+	pageEncoding="UTF-8" import="java.util.*, com.msmg.board.information.model.vo.*"%>
 <% ArrayList<HashMap<String, Object>> list
-	= (ArrayList<HashMap<String, Object>>)request.getAttribute("list");%>
+	= (ArrayList<HashMap<String, Object>>)request.getAttribute("list");
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	
+%>
 <!DOCTYPE>
 <html>
 <head>
@@ -63,6 +72,13 @@
 	height:200px;
 }
 
+#container button {
+	background:tomato;
+	border:none;
+	color:white;
+	 border-radius:12px;
+}
+
 </style>
 </head>
 <body>
@@ -73,13 +89,13 @@
 		<br>
 
 		<div class="thumbnailArea">
-			<% 
+			<%
 			for(int i = 0; i < list.size(); i++) {
 				HashMap<String, Object> hmap = list.get(i);
 			%>
 			<div class="thumb-list" align="Center">
 				<div>
-				<input type="hidden" value="<%= hmap.get("boardId")%>">
+				<input type="hidden" value="<%= hmap.get("boardNo")%>">
 					<img
 						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
 						width="220px" height="200px">
@@ -90,7 +106,30 @@
 			</div>
 			<%} %>
 		</div>
-			
+		<br><br>
+		<div id="container" align="center">
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.rev?currentPage=1'"><<</button>
+				<% if(currentPage <= 1) {%>
+				<button disabled><</button>
+				<%} else {%>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.rev?currentPage=<%=currentPage - 1%>'"><</button>
+				<%} %>
+				<% for(int p = startPage; p <= endPage; p++) {
+					if(p == currentPage) {
+				%>
+						<button disabled><%= p %></button>
+				<% } else { %>
+					<button onclick ="location.href='<%=request.getContextPath()%>/selectList.rev?currentPage=<%= p %>'"><%= p %></button>
+				<%		   } %>
+				<%} %>
+				
+				<% if(currentPage >= maxPage) {%>
+					<button disabled>></button>
+				<%}else{ %>
+					<button onclick="location.href='<%= request.getContextPath() %>/selectList.rev?/currentPage=<%= currentPage + 1 %>'">></button>
+				<%} %>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.rev?currentPage=<%= maxPage %>'">>></button>
+			</div>
 			<script>
 					$(".thumb-list").click(function(){
 						var num = $(this).children().children().eq(0).val();

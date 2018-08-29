@@ -52,10 +52,10 @@ public class ReviewService {
 		return result;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectReviewList() {
+	public ArrayList<HashMap<String, Object>> selectReviewList(int currentPage, int limit) {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String, Object>> list = new ReviewDao().selectReviewList(con);
+		ArrayList<HashMap<String, Object>> list = new ReviewDao().selectReviewList(con, currentPage, limit);
 		
 		close(con);
 		
@@ -183,7 +183,17 @@ public class ReviewService {
 		return replyList;
 	}
 
-	public HashMap<String, Object> selectPreR(String num) {
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new ReviewDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	/*public HashMap<String, Object> selectPreR(String num) {
 		Connection con = getConnection();
 		
 		HashMap<String, Object> preR = new ReviewDao().selectPreR(con, num);
@@ -191,9 +201,9 @@ public class ReviewService {
 		close(con);
 		
 		return preR;
-	}
+	}*/
 
-	public HashMap<String, Object> selectNextR(String num) {
+	/*public HashMap<String, Object> selectNextR(String num) {
 		Connection con = getConnection();
 		
 		HashMap<String, Object> nextR = new ReviewDao().selectNextR(con, num);
@@ -201,7 +211,7 @@ public class ReviewService {
 		close(con);
 		
 		return nextR;
-	}
+	}*/
 
 
 

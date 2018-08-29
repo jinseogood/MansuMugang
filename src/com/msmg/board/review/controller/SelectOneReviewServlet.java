@@ -42,8 +42,10 @@ public class SelectOneReviewServlet extends HttpServlet {
 		System.out.println(num);
 		
 		HashMap<String, Object> hmap = new ReviewService().selectOneReview(num);
-		HashMap<String, Object> preR = new ReviewService().selectPreR(num);
-		HashMap<String, Object> nextR = new ReviewService().selectNextR(num);
+		
+		
+		/*후기게시판 이전 글 : HashMap<String, Object> preR = new ReviewService().selectPreR(num);*/
+		/*후기게시판 다음 글 : HashMap<String, Object> nextR = new ReviewService().selectNextR(num);*/
 		
 		
 		
@@ -58,8 +60,8 @@ public class SelectOneReviewServlet extends HttpServlet {
 			
 			request.setAttribute("b", (Board)hmap.get("board"));
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
-			request.setAttribute("preR", preR);
-			request.setAttribute("nextR", nextR);
+			/*request.setAttribute("preR", preR);
+			request.setAttribute("nextR", nextR);*/
 			request.setAttribute("r", replyList);
 			
 			

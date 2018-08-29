@@ -8,8 +8,6 @@
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
 	
-	HashMap<String, Object> preR = (HashMap<String, Object>)request.getAttribute("preR");
-	HashMap<String, Object> nextR = (HashMap<String, Object>)request.getAttribute("nextR");
 %>
 <!DOCTYPE html>
 <html>
@@ -321,7 +319,7 @@ div[id=date-writer-hit2] {
 	
 	
 	
-	<div id='whiptable'>
+	<%-- <div id='whiptable'>
 		<table id='whip'>
 		<% if(preR != null) {
 			for(int i = 0; i < preR.size(); i++) {
@@ -347,7 +345,7 @@ div[id=date-writer-hit2] {
 			</tr>
 			<%} %>
 		</table>
-	</div>
+	</div> --%>
 	<br>
 
 
