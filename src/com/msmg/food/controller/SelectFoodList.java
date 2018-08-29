@@ -59,7 +59,7 @@ public class SelectFoodList extends HttpServlet {
 		
 		list = new FoodService().selectFood(sf, user);
 		
-		System.out.println(list);
+		System.out.println(list+"다");
 
 				String page = "";
 				
