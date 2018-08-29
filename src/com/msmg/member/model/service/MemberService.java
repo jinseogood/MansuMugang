@@ -1,7 +1,9 @@
 package com.msmg.member.model.service;
 
 import com.msmg.member.model.dao.MemberDao;
+import com.msmg.member.model.vo.FindId;
 import com.msmg.member.model.vo.Member;
+import com.msmg.member.model.vo.SNSMember;
 import com.msmg.member.model.vo.UserAllergy;
 
 import static com.msmg.common.JDBCTemplate.close;
@@ -164,6 +166,35 @@ public class MemberService {
 		
 		close(con);
 		
+		
+		return result;
+	}
+
+	public FindId selectId(FindId f) {
+		Connection con = getConnection();
+		
+		FindId fi = new MemberDao().selectId(con, f);
+		
+		close(con);
+		
+		
+		
+		return fi;
+	}
+
+	public int SNSloginMember(SNSMember sm) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().SNSLoginMember(con, sm);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+
 		
 		return result;
 	}

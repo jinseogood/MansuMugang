@@ -1,6 +1,5 @@
 package com.msmg.mypage.model.dao;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,8 +21,6 @@ public class MypageDao {
 		
 		try {
 			prop.load(new FileReader(fileName));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -31,36 +28,54 @@ public class MypageDao {
 	}
 
 	public ArrayList<BuyAll> selectBuyAll(Connection con, BuyAll ba) {
-		ArrayList<BuyAll> bList = new ArrayList<BuyAll>();
+		System.out.println("마페 다오에 옴 ");
+		ArrayList<BuyAll> bList = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		BuyAll b = null;
 		
+		System.out.println("마페다오에 바이올 ba 잘왔나 확인 : " + ba);
 		
 		String query = prop.getProperty("selectBuyAll");
+		System.out.println(query);
 		
 		try {
+			System.out.println("트라이캐치 안들어오지!!!!");
 			pstmt = con.prepareStatement(query);
+			
+			System.out.println("pstmt uCode 담기 전 까진ㄴ????");
 			pstmt.setString(1, ba.getU_code());
-			
+		
+			System.out.println("알셋에 올리기 전 까진 오냐???????????????????");
 			rset = pstmt.executeQuery();
+		
+			bList = new ArrayList<BuyAll>();
+			System.out.println("여기까지라도 오냐고");
 			
-			while(rset.next()){  
+			if(rset.next()){
 				b = new BuyAll();
+				
 				b.setBuy_no(rset.getInt("buy_no"));
 				b.setU_code(rset.getString("u_code"));
 				b.setMenu_code(rset.getString("menu_code"));
 				b.setBuy_date(rset.getDate("buy_date"));
 				b.setStatus(rset.getString("status"));
+				b.setDiet_no(rset.getString("diet_no"));
+				b.setPrice(rset.getInt("price"));
+				b.setUser_menu_name(rset.getString("user_menu_name"));
 				b.setBuy_info_no(rset.getInt("buy_info_no"));
 				b.setSort(rset.getString("sort"));
-				b.setAmount(rset.getInt("amount"));
 				b.setBuy_sort(rset.getString("buy_sort"));
-				b.setPrice(rset.getInt("price"));
+				b.setBuy_status(rset.getString("buy_status"));
 				
+				System.out.println("와일문 안에 객체 b : " + b);
 				bList.add(b);
 				
+				System.out.println("bList 에드한담에 : " + bList);
 			}
+			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

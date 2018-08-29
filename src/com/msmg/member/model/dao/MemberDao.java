@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.msmg.member.model.vo.FindId;
 import com.msmg.member.model.vo.Member;
+import com.msmg.member.model.vo.SNSMember;
 import com.msmg.member.model.vo.UserAllergy;
 
 import static com.msmg.common.JDBCTemplate.*;
@@ -95,6 +97,8 @@ public class MemberDao {
 			pstmt.setString(2, userPwd);
 			
 			rset = pstmt.executeQuery();
+			
+			System.out.println("이주가 찍으라는 알셋 : " + rset);
 			
 			if(rset.next()){
 				loginUser = new Member();
@@ -521,6 +525,114 @@ public class MemberDao {
 		System.out.println(result2);
 		
 		return result2;
+	}
+
+	public FindId selectId(Connection con, FindId f) {
+		FindId fi = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectId");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, f.getUserName());
+			pstmt.setString(2, f.getJoinQ());
+			pstmt.setString(3, f.getJoinA());
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				fi.setUserName(rset.getString("u_name"));
+				fi.setJoinQ(rset.getString("u_question"));
+				fi.setJoinA(rset.getString("u_answer"));
+				fi.setUserId(rset.getString("u_id"));
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		System.out.println("다오에서 파인드아이디 : " + fi);
+		
+		return fi;
+	}
+
+	public int SNSLoginMember(Connection con, SNSMember sm) {
+		int result = 0;
+		int sw = 0;
+		SNSMember m = null;
+		ArrayList<SNSMember> list = new ArrayList<SNSMember>();
+		Statement stmt = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String checkQuery = prop.getProperty("checkMember");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(checkQuery);
+			
+			while(rset.next()){
+				m = new SNSMember();
+				m.setmId(rset.getString("u_id"));
+				
+				list.add(m);
+			}
+			
+			for(int i = 0; i < list.size(); i++){
+				if(list.get(i).getmId().equals(sm.getmId())){
+					sw=1;
+					break;
+				}
+			}
+			
+			String query = "";
+			
+			if(sw == 1){
+				query = prop.getProperty("loginMember");
+				
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, sm.getmId());
+				
+				result = pstmt.executeUpdate();
+				
+				if(result > 0){
+					result = 99;
+				}else{
+					result = 0;
+				}
+			}else{
+					query = prop.getProperty("insertSNSMember");
+					
+					pstmt = con.prepareStatement(query);
+					pstmt.setString(1, sm.getmId());
+					pstmt.setString(2, sm.getmName());
+					pstmt.setString(3, sm.getmToken());
+					
+					result = pstmt.executeUpdate();
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		
+		
+		return result;
 	}
 
 }

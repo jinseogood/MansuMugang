@@ -137,7 +137,9 @@ body {
 </style>
 </head>
 <body>
-
+<script>
+	$(function(){})
+</script>
 
 
 <div id="top">
@@ -151,10 +153,8 @@ body {
 		<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
-  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
+  		  <li><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
@@ -191,7 +191,7 @@ body {
 				<% for(BuyAll b : bList){ %>
 						<tr>
 							<td><%= b.getBuy_date() %></td>
-							<td>고혈압 7일 3끼</td>
+							<td><%= b.getUser_menu_name() %></td>
 							<td><%= b.getPrice() %></td>
 							<td><%= b.getBuy_sort() %></td>
 							<td><%= b.getStatus() %></td>
