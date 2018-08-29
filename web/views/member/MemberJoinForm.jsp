@@ -450,11 +450,14 @@ div a {
 				type:"post",
 				data:{userId:userId},
 				success:function(data){
-					console.log(data);
+					console.log("성공시 : " + data);
 					if(data == "fail"){
 						alert("아이디가 중복됩니다. 다른 아이디로 변경해주세요."); return false;
 					}else{
 						alert("인증번호를 입력해주세요.");
+						
+						authenticationNum = data;
+						
 						return true;
 					}
 				},
@@ -467,7 +470,7 @@ div a {
 	
 	function cerNum(){
 		console.log("function cerNum");
-		var authenticationNum = "<%= authenticationNum %>";
+		var authenticationNum = this.authenticationNum;
 		console.log("authenticationNum : " + authenticationNum);
 		var trimmed_authenticationNum = jQuery.trim(authenticationNum);
 		console.log("trimmed_authenticationNum : " + trimmed_authenticationNum);

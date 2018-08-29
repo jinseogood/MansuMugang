@@ -56,6 +56,7 @@ public class MypageDao {
 				b.setSort(rset.getString("sort"));
 				b.setAmount(rset.getInt("amount"));
 				b.setBuy_sort(rset.getString("buy_sort"));
+				b.setPrice(rset.getInt("price"));
 				
 				bList.add(b);
 				
