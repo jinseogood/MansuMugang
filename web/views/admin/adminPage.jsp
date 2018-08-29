@@ -1482,8 +1482,7 @@
 	//주문내역 상세보기 메소드
 	function openOrder(dietNo){
 		console.log(dietNo);
-		<%-- window.open("<%= request.getContextPath() %>/selectOneBuy?dietNo="+dietNo+"", "주문내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no"); --%>
-		window.open("/msmg/views/admin/detailOrder.jsp", "주문내역 상세보기", "width=530, height=480, top=20, left=20, scrollbars=no");
+		window.open("<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"", "주문내역 상세보기", "width=530, height=480, top=20, left=20, scrollbars=no");
 	}
 	
 	//문의내역 상세보기 메소드
