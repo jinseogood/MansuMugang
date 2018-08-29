@@ -124,7 +124,7 @@
 		if(loginUser != null && !(loginUser.getU_id().equals("admin"))){ 
 	%>
 			<div id = 'noticeAlert'><a onclick = 'moveQna();'>
-	  				<img src="/msmg/images/common/notifications.png" id="adminAlert">
+	  				<img src="/msmg/images/common/notification.png" id="adminAlert">
   			</a></div>
 			<label><%= loginUser.getU_name() %>님 만수무강하세요!</label>&nbsp; | &nbsp; <a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'"><label>마이페이지</label></a> | <a onclick = "logout();"><label>로그아웃</label></a>
 	<% 
@@ -197,7 +197,7 @@
 		   <% if(loginUser != null){ %>
 		    
 		    	$.ajax({
-		    		url : "checkAlert.qna",
+		    		url : "<%= request.getContextPath()%>/checkAlert.qna",
 					data : {ucode:<%= loginUser.getU_code() %>},
 					type : "get",
 					success:function(data){
