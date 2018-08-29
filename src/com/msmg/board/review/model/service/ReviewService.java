@@ -193,25 +193,25 @@ public class ReviewService {
 		return listCount;
 	}
 
-	/*public HashMap<String, Object> selectPreR(String num) {
+	public Board selectPreR(String num) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> preR = new ReviewDao().selectPreR(con, num);
+		Board preR = new ReviewDao().selectPreR(con, num);
 		
 		close(con);
 		
 		return preR;
-	}*/
+	}
 
-	/*public HashMap<String, Object> selectNextR(String num) {
+	public Board selectNextR(String num) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> nextR = new ReviewDao().selectNextR(con, num);
+		Board nextR = new ReviewDao().selectNextR(con, num);
 		
 		close(con);
 		
 		return nextR;
-	}*/
+	}
 
 
 

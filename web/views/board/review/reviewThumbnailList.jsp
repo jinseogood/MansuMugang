@@ -95,7 +95,7 @@
 			%>
 			<div class="thumb-list" align="Center">
 				<div>
-				<input type="hidden" value="<%= hmap.get("boardNo")%>">
+				<input id="bno" type="hidden" value="<%= hmap.get("boardNo")%>">
 					<img
 						src="/msmg/thumbnail_uploadFiles/<%=hmap.get("editName")%>"
 						width="220px" height="200px">
@@ -132,7 +132,7 @@
 			</div>
 			<script>
 					$(".thumb-list").click(function(){
-						var num = $(this).children().children().eq(0).val();
+						var num = $("#bno").val();
 						
 						console.log(num);
 						

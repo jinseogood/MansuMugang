@@ -8,6 +8,9 @@
 	Board b = (Board)request.getAttribute("b");
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
 	
+	Board preR = (Board)request.getAttribute("preR");
+	Board nextR = (Board)request.getAttribute("nextR");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -319,33 +322,27 @@ div[id=date-writer-hit2] {
 	
 	
 	
-	<%-- <div id='whiptable'>
+	<div id='whiptable'>
 		<table id='whip'>
-		<% if(preR != null) {
-			for(int i = 0; i < preR.size(); i++) {
-				HashMap<String, Object> preR = preR.get(i);
-			%>
+		<% if(preR != null) {%>
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					이전글</td>
-				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preR.get("board_no")%>"><%=preR.get("title") %></a></td>
-				<td width="100"><%=preR.get("board_date")%></td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preR.getBoardNo()%>"><%=preR.getTitle() %></a></td>
+				<td width="100"><%=preR.getBoardDate()%></td>
 			</tr>
 			<%} %>
 			
-		<%if(nextR != null) {
-			for(int i = 0; i < nextR.size(); i++) {
-				HashMap<String, Object> nextR = nextR.get(i);
-		 %>
+		<%if(nextR != null) {%>
 			<tr>
 				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 					다음글</td>
-				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextR.get("boardNo")%>"><%=nextR.get("title") %></a></td>
-				<td width="100"><%=nextR.get("board_date") %></td>
+				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextR.getBoardNo()%>"><%=nextR.getTitle() %></a></td>
+				<td width="100"><%=nextR.getBoardDate() %></td>
 			</tr>
 			<%} %>
 		</table>
-	</div> --%>
+	</div>
 	<br>
 
 
