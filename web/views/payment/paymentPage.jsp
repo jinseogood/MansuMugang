@@ -552,31 +552,7 @@ $("#buyer_addr3").attr("value", addr3);
 						</tbody>
 					</table>
 				</div>
-			</section>
-
-
-			<section>
-				<h1>적립금</h1>
-
-				<div class="tbl-content table1">
-					<table cellpadding="0" cellspacing="0" border="0">
-						<tbody>
-							<tr>
-								<th>적립금</th>
-								<td id="savedpoint">(사용 가능한 금액 표시)</td>
-								<td><input type="text"></td>
-								<td><button type="button" class="w3-button w3-ripple w3-yellow" id="lilpoint">사용</button>
-								<td><button type="button" class="w3-button w3-ripple w3-yellow" id="fullpoint">전부 사용</button>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-			
-			<!-- 사용이나 전부 사용 누르면 그만큼 금액 깎여서 총 금액에 뜨게 하기 -->
-			
-
-			
+			</section>		
 
 			<section>
 				<h1>결제금액</h1>
@@ -587,7 +563,6 @@ $("#buyer_addr3").attr("value", addr3);
 								<th>정상가</th>
 								<th>주문금액</th>
 								<th>배송비</th>
-								<th>적립금</th>
 							</tr>
 						</thead>
 					</table>
@@ -597,16 +572,15 @@ $("#buyer_addr3").attr("value", addr3);
 						<tbody>
 							<tr>
 								<td>정상가격</td>
-								<td>주문금액</td>
-								<td>배송비</td>
-								<td>적립금</td>
+								<td><%= totalprice%></td>
+								<td>3500원</td>
 							</tr>
 						</tbody>
 					</table>
 					<table class="basket_list_tbl2">
 						<tbody>
 							<tr class=total>
-								<td>최종 결제 금액 <span class="red">(총가격)</span>원<input type="text" style="display: none;"></td>
+								<td>최종 결제 금액 <span class="red"><%=totalprice + 3500 %></span>원<input type="text" style="display: none;"></td>
 						</tbody>
 					</table>
 				</div>
@@ -709,12 +683,12 @@ $("#buyer_addr3").attr("value", addr3);
 																				pay_method : "card",
 																				merchant_uid : 'merchant_'+ new Date().getTime(),
 																				name : "만수무강 식단",
-																				amount : <%= totalprice%>,
+																				amount : <%=totalprice + 3500 %>,
 																				buyer_email : $('#buyer_email').val(),
 																				buyer_name : $('#receiver').val(),
 																				
 																				buyer_addr,
-																				buyer_postcode : $('#postcode').val(),
+																				buyer_postcode : $('#postcode').val()
 																			},
 																			function(rsp) { // callback\
 																				if (rsp.success) {
@@ -742,7 +716,7 @@ $("#buyer_addr3").attr("value", addr3);
 																										var buy_sort = "카드결제";
 																										var sort = "결제";
 																											
-																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort);
+																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&rsp.merchant_uid"+rsp.merchant_uid);
 																											$("#com").submit();
 																										
 																									}  

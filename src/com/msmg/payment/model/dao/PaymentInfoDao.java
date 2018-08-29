@@ -40,7 +40,7 @@ public class PaymentInfoDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setString(1, pi.getSort());
-			pstmt.setString(4,  pi.getBuy_sort());
+			pstmt.setString(2,  pi.getBuy_sort());
 			pstmt.setString(3, pi.getDiet_no());
 			
 			result = pstmt.executeUpdate();
@@ -53,8 +53,9 @@ public class PaymentInfoDao {
 		} finally{
 			close(pstmt);
 		}
-		
+			
 		return result;
+
 		
 		
 		
