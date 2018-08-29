@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.admin.model.vo.*"%>
 <%
-	ArrayList<Order> oSelectList=(ArrayList<Order>)request.getAttribute("oSearchList");
+	ArrayList<Order> oSelectList=(ArrayList<Order>)request.getAttribute("oSelectList");
+
+	System.out.println("selectList : " + oSelectList);
 
 	int totalPrice=0;
 	for(int i=0;i<oSelectList.size();i++){
 		totalPrice+=oSelectList.get(i).getPrice();
 	}
+	
+	System.out.println("totalPrice : " + totalPrice);
 
 	PageInfo pi=(PageInfo)request.getAttribute("pi");
 	int listCount=pi.getListCount();
@@ -45,7 +49,7 @@
 <body>
 	<form id="detailForm" action="" method="post">
 		<div id="content-1" align="center">
-			<h3>님 주문내역 상세</h3>
+			<h3><%= oSelectList.get(0).getU_name() %>님 주문내역 상세</h3>
 			<table id="orderMTable">
 				<thead>
 					<tr>
@@ -62,9 +66,12 @@
 							<tr>
 								<td><%= o.getMenu_code() %></td>
 								<td><%= o.getMenu_name() %></td>
-								<td><%= o.getMenu_code() %></td>
-								<td><%= o.getMenu_code() %></td>
+								<td><%= o.getBuy_date() %></td>
+								<td><%= o.getAmount() %></td>
 							</tr>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 		</div>

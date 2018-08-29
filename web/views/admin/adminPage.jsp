@@ -660,8 +660,8 @@
 						if(key == "oList"){
 							for(i=0;i<data[key].length;i++){
 								var $tr=$("<tr onclick='openOrder("+data[key][i].diet_no+");'>");
-								var $noTd=$("<td>").text(data[key][i].buy_no);
-								var $dietTd=$("<td>").text(data[key][i].diet_no);
+								var $noTd=$("<td>").text(data[key][i].diet_no);
+								var $dietTd=$("<td>").text(data[key][i].diet_name);
 								var $userTd=$("<td>").text(data[key][i].u_name);
 								var $dateTd=$("<td>").text(data[key][i].buy_date);
 								var $statusTd=$("<td>").text(data[key][i].status);
@@ -1274,8 +1274,8 @@
 						if(key == "oList"){
 							for(i=0;i<data[key].length;i++){
 								var $tr=$("<tr onclick='openOrder("+data[key][i].diet_no+");'>");
-								var $noTd=$("<td>").text(data[key][i].buy_no);
-								var $dietTd=$("<td>").text(data[key][i].diet_no);
+								var $noTd=$("<td>").text(data[key][i].diet_no);
+								var $dietTd=$("<td>").text(data[key][i].diet_name);
 								var $userTd=$("<td>").text(data[key][i].u_name);
 								var $dateTd=$("<td>").text(data[key][i].buy_date);
 								var $statusTd=$("<td>").text(data[key][i].status);
@@ -1482,7 +1482,7 @@
 	//주문내역 상세보기 메소드
 	function openOrder(dietNo){
 		console.log(dietNo);
-		window.open("<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"", "주문내역 상세보기", "width=530, height=480, top=20, left=20, scrollbars=no");
+		window.open("<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage=1", "주문내역 상세보기", "width=530, height=480, top=20, left=20, scrollbars=no");
 	}
 	
 	//문의내역 상세보기 메소드
@@ -1897,8 +1897,8 @@
 						<tr height="20px">
 							<td colspan="5" style="text-align:right;">
 								<select name="orderSType" id="orderSType">
-									<option value="buy_no">구매번호</option>
 									<option value="diet_no">식단번호</option>
+									<option value="diet_name">식단명</option>
 									<option value="u_name">주문자</option>
 									<option value="buy_date">주문일</option>
 									<option value="status">싱픔상태</option>
@@ -1909,8 +1909,8 @@
 							</td>
 						</tr>
 						<tr height="45px" style="background:#D1D1D1;">
-							<td width="10%"><b>구매번호</b></td>
-							<td width="30%"><b>식단번호</b></td>
+							<td width="10%"><b>식단번호</b></td>
+							<td width="30%"><b>식단명</b></td>
 							<td width="20%"><b>주문자</b></td>
 							<td width="20%"><b>주문일</b></td>
 							<td width="10%"><b>상품상태</b></td>

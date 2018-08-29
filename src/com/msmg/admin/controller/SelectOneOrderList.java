@@ -3,6 +3,7 @@ package com.msmg.admin.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,6 +52,8 @@ public class SelectOneOrderList extends HttpServlet {
 		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		ArrayList<Order> oSelectList=new OrderService().selectOneOrderList(currentPage, limit, dietNo);
 		
+		System.out.println("selectOneOrder Servlet : " + oSelectList);
+		
 		String page="";
 		
 		if(oSelectList != null){
@@ -62,6 +65,9 @@ public class SelectOneOrderList extends HttpServlet {
 			page="views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패!!");
 		}
+		
+		RequestDispatcher view=request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
