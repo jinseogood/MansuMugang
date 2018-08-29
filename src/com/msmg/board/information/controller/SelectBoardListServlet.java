@@ -41,6 +41,8 @@ public class SelectBoardListServlet extends HttpServlet {
 		
 		maxPage = (int)((double)listCount / limit + 0.9);
 		
+		System.out.println("maxPage : " + maxPage);
+		
 		startPage = (((int)((double)currentPage / limit + 0.9)) -1) * limit + 1;
 		
 		endPage = startPage + limit - 1;
