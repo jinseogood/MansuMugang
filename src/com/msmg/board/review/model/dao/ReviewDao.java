@@ -125,18 +125,28 @@ public class ReviewDao {
 		return result;
 	}
 
-	public ArrayList<HashMap<String, Object>> selectReviewList(Connection con) {
+	public ArrayList<HashMap<String, Object>> selectReviewList(Connection con, int currentPage, int limit) {
 		ArrayList<HashMap<String, Object>> list = null;
 		HashMap<String, Object> hmap = null;
-		
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("selectReviewMap");
 		
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
+			
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			System.out.println("reviewDao startRow : " + startRow);
+			System.out.println("reviewDao endRow : " + endRow);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
 			
 			list = new ArrayList<HashMap<String, Object>>();
 			
@@ -161,7 +171,6 @@ public class ReviewDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt);
 			close(rset);
 		}
 		return list;
@@ -559,7 +568,31 @@ public class ReviewDao {
 		return result;
 	}
 
-	public HashMap<String, Object> selectPreR(Connection con, String num) {
+	public int getListCount(Connection con) {
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+	/*public HashMap<String, Object> selectPreR(Connection con, String num) {
 		PreparedStatement pstmt = null;
 		ArrayList<BoardFile> list = null;
 		HashMap<String, Object> preR = null;
@@ -619,9 +652,9 @@ public class ReviewDao {
 		
 		
 		return preR;
-	}
+	}*/
 
-	public HashMap<String, Object> selectNextR(Connection con, String num) {
+	/*public HashMap<String, Object> selectNextR(Connection con, String num) {
 		PreparedStatement pstmt = null;
 		ArrayList<BoardFile> list = null;
 		HashMap<String, Object> nextR = null;
@@ -680,6 +713,6 @@ public class ReviewDao {
 		}
 		
 		return nextR;
-	}
+	}*/
 
 }

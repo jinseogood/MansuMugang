@@ -212,7 +212,7 @@ input[type=text]{
 			</div>
 			<div id="content" readonly><%= b.getContent() %>
 				<input type="hidden" id="content2" value="<%=b.getContent()%>" >
-				<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardId()%>">
+				<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardNo()%>">
 			</div>
 		
 		
