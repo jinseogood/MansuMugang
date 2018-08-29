@@ -449,11 +449,8 @@ public class MemberDao {
 		return mSearchList;
 	}
 
-	public Member updateMember(Connection con, Member m) {
-		Member member = null;
+	public int updateMember(Connection con, Member m) {
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
-		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("updateMember");
@@ -469,18 +466,57 @@ public class MemberDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			close(pstmt);
 		}
 		
+		return result;
+	}
+
+	public int updateAllergy(Connection con, ArrayList<UserAllergy> alList, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		int result2 = 0;
+		PreparedStatement pstmt2 = null;
 		
+		String query = prop.getProperty("deleteAllergy");
+		String query2 = prop.getProperty("insertAllergy");
 		
+			try {
+				//기존 알러지 delete
+				for(int i = 0; i < alList.size(); i++){
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, alList.get(i).getU_code());
+				
+				result = pstmt.executeUpdate();
+				}
+				
+				for(int i = 0; i < alList.size(); i++){
+				
+				//수정 알러지 insert
+				pstmt2 = con.prepareStatement(query2);
+				
+				pstmt2.setString(1, alList.get(i).getAl_code());
+				System.out.println(alList.get(i).getAl_code());
+				pstmt2.setString(2, alList.get(i).getU_code());
+				System.out.println(alList.get(i).getU_code());
+				
+				result2 = pstmt2.executeUpdate();
+				
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(pstmt2);
+			}
+			
 		
+		System.out.println(result2);
 		
-		
-		
-		
-		
-		
-		return member;
+		return result2;
 	}
 
 }
