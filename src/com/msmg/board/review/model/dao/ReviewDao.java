@@ -278,6 +278,7 @@ public class ReviewDao {
 				r.setU_code(rset.getString("u_name"));
 				r.setBoard_id(rset.getString("board_id"));
 				r.setRe_date(rset.getDate("re_date"));
+				r.setReply_no(rset.getInt("reply_no"));
 				
 				
 				list.add(r);
@@ -556,6 +557,129 @@ public class ReviewDao {
 		}
 		System.out.println("insertPoint result : " + result);
 		return result;
+	}
+
+	public HashMap<String, Object> selectPreR(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ArrayList<BoardFile> list = null;
+		HashMap<String, Object> preR = null;
+		Board b = null;
+		BoardFile bf = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectPreReview");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			pstmt.setString(2, num);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<BoardFile>();
+			System.out.println("list : " + list);
+			
+			while(rset.next()) {
+				b = new Board();
+				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardSort(rset.getString("board_sort"));
+				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setuCode(rset.getString("u_name"));
+				b.setbCount(rset.getInt("b_count"));
+				b.setWriteYn(rset.getString("write_yn"));
+				
+				System.out.println("b : " + b);
+				
+				bf = new BoardFile();
+				bf.setBoard_id(rset.getInt("board_id"));
+				bf.setOrigin_name(rset.getString("origin_name"));
+				bf.setEdit_name(rset.getString("edit_name"));
+				bf.setFile_src(rset.getString("file_src"));
+				bf.setFile_date(rset.getDate("file_date"));
+				bf.setFile_no(rset.getInt("file_no"));
+				bf.setBoard_sort(rset.getString("board_sort"));
+				bf.setFile_level(rset.getInt("file_level"));
+				
+				
+				System.out.println("bf : " + bf);
+				
+				list.add(bf);
+			}
+			
+			preR = new HashMap<String, Object>();
+			preR.put("board", b);
+			preR.put("boardFile", list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return preR;
+	}
+
+	public HashMap<String, Object> selectNextR(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ArrayList<BoardFile> list = null;
+		HashMap<String, Object> nextR = null;
+		Board b = null;
+		BoardFile bf = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectNextReview");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			pstmt.setString(2, num);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<BoardFile>();
+			System.out.println("list : " + list);
+			
+			while(rset.next()) {
+				b = new Board();
+				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardSort(rset.getString("board_sort"));
+				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setuCode(rset.getString("u_name"));
+				b.setbCount(rset.getInt("b_count"));
+				b.setWriteYn(rset.getString("write_yn"));
+				
+				System.out.println("b : " + b);
+				
+				bf = new BoardFile();
+				bf.setBoard_id(rset.getInt("board_id"));
+				bf.setOrigin_name(rset.getString("origin_name"));
+				bf.setEdit_name(rset.getString("edit_name"));
+				bf.setFile_src(rset.getString("file_src"));
+				bf.setFile_date(rset.getDate("file_date"));
+				bf.setFile_no(rset.getInt("file_no"));
+				bf.setBoard_sort(rset.getString("board_sort"));
+				bf.setFile_level(rset.getInt("file_level"));
+				
+				
+				System.out.println("bf : " + bf);
+				
+				list.add(bf);
+			}
+			
+			nextR = new HashMap<String, Object>();
+			nextR.put("board", b);
+			nextR.put("boardFile", list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nextR;
 	}
 
 }

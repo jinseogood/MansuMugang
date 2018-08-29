@@ -8,16 +8,19 @@ public class Reply implements java.io.Serializable{
 	private String re_content;
 	private Date re_date;
 	private String board_id;
+	private int reply_no;
 	
 	public Reply() {}
 	
-	public Reply(String board_sort, String u_code, String re_content, Date re_date, String board_id) {
+	public Reply(String board_sort, String u_code, String re_content, Date re_date, String board_id,
+				 int reply_no) {
 		super();
 		this.board_sort = board_sort;
 		this.u_code = u_code;
 		this.re_content = re_content;
 		this.re_date = re_date;
 		this.board_id = board_id;
+		this.reply_no = reply_no;
 	}
 
 	public String getBoard_sort() {
@@ -39,6 +42,10 @@ public class Reply implements java.io.Serializable{
 	public String getBoard_id() {
 		return board_id;
 	}
+	
+	public int getReply_no() {
+		return reply_no;
+	}
 
 	public void setBoard_sort(String board_sort) {
 		this.board_sort = board_sort;
@@ -58,12 +65,16 @@ public class Reply implements java.io.Serializable{
 
 	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
-	} 
+	}
+	
+	public void setReply_no(int reply_no) {
+		this.reply_no = reply_no;
+	}
 
 	@Override
 	public String toString() {
 		return "Reply [board_sort=" + board_sort + ", u_code=" + u_code + ", re_content=" + re_content + ", re_date="
-				+ re_date + ", board_id=" + board_id + "]";
+				+ re_date + ", board_id=" + board_id + ", reply_no=" + reply_no + "]";
 	}
 	
 	

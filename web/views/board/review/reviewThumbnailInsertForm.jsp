@@ -215,7 +215,7 @@ hr {
 		<div id="writeBtn">
 			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
 			&nbsp;
-			<button type="submit" class="btn btn-primary" value="등록 완료">등록 완료</button>
+			<button type="submit" class="btn btn-primary" value="등록 완료" onclick="alert('등록 완료!')">등록 완료</button>
 		</div>
 		</form>
 	</div>

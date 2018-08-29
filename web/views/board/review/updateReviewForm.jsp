@@ -258,7 +258,7 @@ div[id=date-writer-hit2] {
 		<div id="writeBtn">
 			<button type="button" class="btn" value="취소" OnClick="window.location='reviewThumbnailList.jsp'">취소</button>
 			&nbsp;
-			<button id="updateBtn" type="submit" class="btn" >수정 완료</button>
+			<button id="updateBtn" type="submit" class="btn" onclick="alert('수정 완료!')">수정 완료</button>
 		</div>
 		</form>
 	</div>
