@@ -200,9 +200,10 @@ td .like {
 									<div class="like" text-align="right">
 										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">			
 										<% if(loginUser != null){
-										
+											if(MenuList.size() != 0){
 											for(int l = 0 ; l < MenuList.size() ; l++){ 
 												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
+													
 										%>
 											
 													<i class="fa fa-star" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
@@ -218,7 +219,11 @@ td .like {
 												}
 											}	
 										
-										   }else{ %>
+										   }else{%>
+											   <i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
+										   
+										<% }
+										}else{ %>
 											<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>			
 										<% } %>
 									</div>
