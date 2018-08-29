@@ -113,6 +113,20 @@ div #offi {
     border-radius:12px;
     border : 1px solid tomato;
 }
+
+	#sidebar { 
+  width: 190px; 
+  position: fixed; 
+  margin-left: 0%;
+  /* margin-top: 10%;  */
+  background: #ffb1a3;
+  border-radius:10px;
+}
+
+#sidebar a{
+	text-decoration:none;
+}
+.ui-widget-header { padding: 0.3em; }
 </style>
 </head>
 <body>
@@ -120,6 +134,20 @@ div #offi {
 <div id = "jjff">
 	<%@ include file = "../common/menubar.jsp" %>
 </div>
+
+<div id="sidebar">
+        <ul>
+          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
+  		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
+  		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
+  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+  		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
+      	</ul>
+	</div>
+
 	<!-- <div id = "botitle">
 		<label id = "offi">공지사항</label><br>
 		<label style = "margin-left : 18%; font-size:17px;"><p>게시된 의견은 회신되지 않으며, 게시판의 효과적인 운영을 위하여 비방 · 욕설, 음란한 표현, 상업적인 광고, 동일한 내용 반복게시, 특정인의
@@ -211,8 +239,9 @@ div #offi {
 	
 </div>
 <%}else{
-	request.setAttribute("msg", "잘못된 경로");
-	request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	//request.setAttribute("msg", "잘못된 경로");
+	//request.getRequestDispatcher("../../common/errorPage.jsp").forward(request, response);
+	response.sendRedirect("../../member/LoginForm.jsp");
 }%>
 <div id="mainBottom">
 <%@include file = "../common/footer.jsp" %>

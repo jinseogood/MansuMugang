@@ -26,17 +26,22 @@ public class InsertMemberServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		String[] alCode = request.getParameterValues("allergy");
+		String joinQ = request.getParameter("joinQ");
+		String joinA = request.getParameter("joinA");
 		
 		System.out.println(uid);  
 		System.out.println(userPwd);
 		System.out.println(userName);
+		System.out.println(joinQ);
+		System.out.println(joinA);
 		System.out.println("인써트 멤버 써블릿 알코드 : " + alCode);
 		System.out.println("비밀번호 틀렷는데 서블릿에 왓다");
 		Member m = new Member();
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
 		m.setU_name(userName);
-		
+		m.setU_question(joinQ);
+		m.setU_answer(joinA);
 		Member member = new MemberService().insertMember(m);
 		
 		

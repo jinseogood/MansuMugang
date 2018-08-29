@@ -44,6 +44,8 @@ public class MemberDao {
 			pstmt.setString(1, m.getU_id());
 			pstmt.setString(2, m.getU_pwd());
 			pstmt.setString(3, m.getU_name());
+			pstmt.setString(4, m.getU_question());
+			pstmt.setString(5, m.getU_answer());
 			
 			result = pstmt.executeUpdate();
 			
@@ -64,6 +66,8 @@ public class MemberDao {
 				member.setDrop_yn(rset.getString("drop_yn"));
 				member.setU_type(rset.getString("token"));
 				member.setU_type(rset.getString("type"));
+				member.setU_question(rset.getString("u_question"));
+				member.setU_answer(rset.getString("u_answer"));
 				
 			}
 			
