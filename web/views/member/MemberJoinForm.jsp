@@ -175,11 +175,20 @@ div a {
 						</tr>
 						<tr>
 							<th bgcolor=tomato>질문</th>
-							<td><input type="text" name="userName" id="userName"></td>
+							<td>
+							<select name="joinQ">
+								<option value="Q0">@질문을 선택해주세요@</option>
+								<option value="Q1">보물 1호는?</option>
+								<option value="Q2">세상에서 가장 좋아하는 장소는?</option>
+								<option value="Q3">반려동물의 이름은?</option>
+								<option value="Q4">가장 좋아하는 노래는?</option>
+								<option value="Q5">첫사랑의 이름은?</option>
+							</select>
+							</td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>답</th>
-							<td><input type="text" name="userName" id="userName"></td>
+							<td><input type="text" name="joinA" id="joinA"></td>
 						</tr>
 						<br>
 						<tr>
