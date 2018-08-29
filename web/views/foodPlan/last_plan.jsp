@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*"%>
 <%
-	ArrayList<Menu> list = (ArrayList<Menu>)request.getAttribute("list");
+	ArrayList<Menu> lists = (ArrayList<Menu>)request.getAttribute("list");
 	SelectFood sf = (SelectFood)request.getAttribute("sf");
 	int total_price = 0;
 	int side_price = sf.getDay()*sf.getGgi()*500;
@@ -187,20 +187,20 @@
 				<tr>
 					<% for(int i = 0 ; i < sf.getGgi() ; i++){
 						Random r = new Random();
-						rand = r.nextInt(list.size());
+						rand = r.nextInt(lists.size());
 					%>
 					
 					    
 						<%-- <td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" onclick="show('<%= list.get(rand).getName() %>')"> --%>
 						<td id = "menu_chan<%= j %><%= i %>" class = "menu_info" height = "25px" width = "130px">
-							<div id = "mc" value = ""><%= list.get(rand).getName() %></div>		
+							<div id = "mc" value = ""><%= lists.get(rand).getName() %></div>		
 							<div class="menu_text">
 							
 								<table align = "center" id = "menu_table<%= j %><%= i %>">
 									<tr>
 										<td colspan = "3" width = "200px" height = "100px">
 											<img id="Img" 
-											src="<%=request.getContextPath() %>/images/food/<%=list.get(rand).getImg_name()%>">
+											src="<%=request.getContextPath() %>/images/food/<%=lists.get(rand).getImg_name()%>">
 										</td>
 									</tr>
 									<tr>
@@ -209,15 +209,15 @@
 										<td>가격</td>
 									</tr>
 									<tr>
-										<td><%= list.get(rand).getMain_grad()%></td>
-										<td><%= list.get(rand).getSub_grad()%></td>
-										<td><%= list.get(rand).getPrice()%></td>
+										<td><%= lists.get(rand).getMain_grad()%></td>
+										<td><%= lists.get(rand).getSub_grad()%></td>
+										<td><%= lists.get(rand).getPrice()%></td>
 										<input type = "hidden" name="" value = "<%= rand %>">
-										<input type = "hidden" name="" value = "<%= list.get(rand).getMenu_code() %>">
-										<% total_price += list.get(rand).getPrice();%>
+										<input type = "hidden" name="" value = "<%= lists.get(rand).getMenu_code() %>">
+										<% total_price += lists.get(rand).getPrice();%>
 									</tr>
 									<tr>
-										<td colspan = "3"><%= list.get(rand).getInfo()%></td>
+										<td colspan = "3"><%= lists.get(rand).getInfo()%></td>
 									</tr>
 									
 								</table>
@@ -274,18 +274,18 @@
           <h4 class="modal-title">메뉴 리스트</h4>
         </div>
         <div class="modal-body">
-          <% for(int b = 0 ; b < list.size() ; b++){ 
+          <% for(int b = 0 ; b < lists.size() ; b++){ 
           %>
           		<div>
-				<input type="radio" name="menu_change" value="<%= list.get(b).getName() %>" id="l<%= b %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getImg_name() %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getMain_grad() %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getSub_grad() %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getPrice() %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getInfo() %>">
+				<input type="radio" name="menu_change" value="<%= lists.get(b).getName() %>" id="l<%= b %>">
+				<input type = "hidden" name="" value = "<%= lists.get(b).getImg_name() %>">
+				<input type = "hidden" name="" value = "<%= lists.get(b).getMain_grad() %>">
+				<input type = "hidden" name="" value = "<%= lists.get(b).getSub_grad() %>">
+				<input type = "hidden" name="" value = "<%= lists.get(b).getPrice() %>">
+				<input type = "hidden" name="" value = "<%= lists.get(b).getInfo() %>">
 				<input type = "hidden" name="" value = "<%= b %>">
-				<input type = "hidden" name="" value = "<%= list.get(b).getMenu_code() %>">
-				<label for="l<%= b %>"><%= list.get(b).getName() %></label>	
+				<input type = "hidden" name="" value = "<%= lists.get(b).getMenu_code() %>">
+				<label for="l<%= b %>"><%= lists.get(b).getName() %></label>	
 				</div>
 		  <% } %>
         </div>

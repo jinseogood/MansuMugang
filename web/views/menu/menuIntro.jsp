@@ -205,8 +205,6 @@ td .like {
 										<% if(loginUser != null){
 											if(MenuList.size() != 0){
 											for(int l = 0 ; l < MenuList.size() ; l++){ 
-												System.out.print("안오니");
-												System.out.print(MenuList.get(l).getM_code() + "과" + list.get(i).getMenu_code());
 												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
 													
 										%>
@@ -216,7 +214,6 @@ td .like {
 										<% 
 													break;
 												}else{
-													System.out.print("여긴오니");
 													if(l == MenuList.size()-1){
 										%>
 													<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
