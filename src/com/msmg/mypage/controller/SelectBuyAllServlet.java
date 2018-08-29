@@ -20,13 +20,13 @@ import com.msmg.payment.model.vo.PaymentInfo;
  * Servlet implementation class SelectBuyInfo
  */
 @WebServlet("/selectBuyAll.mp")
-public class SelectBuyAll extends HttpServlet {
+public class SelectBuyAllServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectBuyAll() {
+    public SelectBuyAllServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,6 +35,7 @@ public class SelectBuyAll extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("오더히스토리에서 셀렉트바이올서블릿 옴");
 		String ucode = String.valueOf((int)((Member)request.getSession().getAttribute("loginUser")).getU_code());
 		
 		BuyAll ba = new BuyAll();  
@@ -42,6 +43,7 @@ public class SelectBuyAll extends HttpServlet {
 
 		ArrayList<BuyAll> bList = new MypageService().selectBuyAll(ba);
 		
+		System.out.println("selectBuyAllservlet에서 bList(서비스 다오 갓다옴) : " + bList);
 		String page = "";
 		
 		page = "views/member/OrderHistory.jsp";
