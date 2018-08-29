@@ -6,6 +6,7 @@ public class Order implements java.io.Serializable{
 	private int buy_no;
 	private String u_name;
 	private int menu_code;
+	private String menu_name;
 	private Date buy_date;
 	private String status;
 	private String diet_no;
@@ -14,11 +15,12 @@ public class Order implements java.io.Serializable{
 	
 	public Order(){}
 
-	public Order(int buy_no, String u_name, int menu_code, Date buy_date, String status, String diet_no, int price, int amount) {
+	public Order(int buy_no, String u_name, int menu_code, String menu_name, Date buy_date, String status, String diet_no, int price, int amount) {
 		super();
 		this.buy_no = buy_no;
 		this.u_name = u_name;
 		this.menu_code = menu_code;
+		this.menu_name = menu_name;
 		this.buy_date = buy_date;
 		this.status = status;
 		this.diet_no = diet_no;
@@ -36,6 +38,10 @@ public class Order implements java.io.Serializable{
 
 	public int getMenu_code() {
 		return menu_code;
+	}
+	
+	public String getMenu_name() {
+		return menu_name;
 	}
 
 	public Date getBuy_date() {
@@ -69,6 +75,10 @@ public class Order implements java.io.Serializable{
 	public void setMenu_code(int menu_code) {
 		this.menu_code = menu_code;
 	}
+	
+	public void setMenu_name(String menu_name) {
+		this.menu_name = menu_name;
+	}
 
 	public void setBuy_date(Date buy_date) {
 		this.buy_date = buy_date;
@@ -92,7 +102,7 @@ public class Order implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "Order [buy_no=" + buy_no + ", u_name=" + u_name + ", menu_code=" + menu_code + ", buy_date=" + buy_date
+		return "Order [buy_no=" + buy_no + ", u_name=" + u_name + ", menu_code=" + menu_code + ", menu_name=" + menu_name + ", buy_date=" + buy_date
 				+ ", status=" + status + ", diet_no=" + diet_no + ", price=" + price + ", amount=" + amount + "]";
 	}
 	
