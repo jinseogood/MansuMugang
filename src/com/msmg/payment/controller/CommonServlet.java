@@ -100,6 +100,11 @@ public class CommonServlet extends HttpServlet {
 		
 		
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
+		
+		
+		String imp = request.getParameter("rsp.merchant_uid");
+		System.out.println("rsp.merchant_uid입니다" + imp);
+		
 
 		
 		if(result > 0 || result2 > 0 || result3 > 0 || result4 > 0) {
