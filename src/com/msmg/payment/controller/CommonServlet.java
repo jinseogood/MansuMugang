@@ -100,15 +100,6 @@ public class CommonServlet extends HttpServlet {
 				
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
 
-		
-		//환불용 서블릿
-		String m_uid = request.getParameter("m_uid");
-		
-		System.out.println("꺄아아악       " + m_uid);
-		
-		/*String imp = request.getParameter("merchant_uid");
-		System.out.println("merchant_uid입니다" + imp);*/
-		
 
 		
 		if(result > 0 || result2 > 0 || result3 > 0 || result4 > 0) {
