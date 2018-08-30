@@ -3,7 +3,7 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Qna> list = (ArrayList<Qna>)request.getAttribute("list");
-	
+	   
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();

@@ -1,5 +1,5 @@
 package com.msmg.member.model.vo;
-
+  
 public class UserAllergy implements java.io.Serializable{
 	private String user_al_no;
 	private String al_code;

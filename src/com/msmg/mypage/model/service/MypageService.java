@@ -7,7 +7,7 @@ import com.msmg.mypage.model.dao.MypageDao;
 import com.msmg.mypage.model.vo.BuyAll;
 
 import static com.msmg.common.JDBCTemplate.*;
-
+   
 public class MypageService {
 
 	public ArrayList<BuyAll> selectBuyAll(BuyAll ba) {

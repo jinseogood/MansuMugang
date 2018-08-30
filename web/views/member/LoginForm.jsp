@@ -145,52 +145,12 @@ a{
 							$("#loginForm").submit();
 						}
 						</script>
-	<div class="kakao">
-	<br>
-		<a id="kakao-login-btn"></a>
-   		<a href="http://developers.kakao.com/logout"></a>
-    <script type='text/javascript'>
-      //<![CDATA[
-        // 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('a8a8876302c686022ec2d4b41d5fa662');
-        // 카카오 로그인 버튼을 생성합니다.
-        Kakao.Auth.createLoginButton({
-          container: '#kakao-login-btn',
-          success: function(authObj) {
-            /* alert(JSON.stringify(authObj)); */
-        	  var accessToken=Kakao.Auth.getAccessToken();
-				var refreshToken=authObj.refresh_token;
-				
-				if(accessToken){
-					// 로그인 성공시, API를 호출합니다.
-					Kakao.API.request({
-						url : "insertkakaologin.me",
-						success : function(res) {
-							/* $("#id").val(res.id);
-							$("#nickname").val(res.properties.nickname);
-							$("#refreshToken").val(refreshToken);
-							$("#login").submit(); */
-							
-							console.log(res.id);
-							$("#id").val(res.id);
-						},
-						fail : function(error) {
-							alert(JSON.stringify(error));
-						}
-					});
-				}
-          },
-          fail: function(err) {
-             alert(JSON.stringify(err));
-          }
-        });
-      //]]>
-    </script>
-    </div>
+						<div id="kakaoBtn" class="kakaoBtn" onclick="kakao();"><img src="/msmg/images/member/kakaoLogin.png"></div>
+	
 						<div class="form6">
-						<br><br>
+						
 							<label class="line"><a href="/msmg/views/member/FindIdPassword.jsp">아이디 | 비밀번호 찾기</a></label>
-						<br><hr>
+						<hr>
 						<div align="center" class="join">
 							<label for="userId">만수무강 회원이 아니신가요?</label>
 							<div class="clear"></div>
@@ -216,6 +176,49 @@ a{
 	<%@ include file="../common/footer.jsp" %>
 </div>
 <script>
+
+function kakao(){
+	Kakao.init('a67d7a24973de2d69475ad4ef1972dda');
+	
+	Kakao.Auth.loginForm({
+		success : function(authObj) {
+			var accessToken=Kakao.Auth.getAccessToken();
+			var refreshToken=authObj.refresh_token;
+			    
+			if(accessToken){
+				// 로그인 성공시, API를 호출합니다.
+				Kakao.API.request({
+					url : '/v1/user/me',
+					success : function(res) {
+						/* $("#id").val(res.id);
+						$("#nickname").val(res.properties.nickname);
+						$("#refreshToken").val(refreshToken);
+						$("#login").submit(); */
+						
+						console.log(res.id);
+						$("#id").val(res.id);
+					},
+					fail : function(error) {
+						alert(JSON.stringify(error));
+					}
+				});
+			}
+		},
+		fail : function(err) {
+			alert(JSON.stringify(err));
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function(){
     // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
     var userId = getCookie("userId");
