@@ -1,5 +1,5 @@
 package com.msmg.member.model.vo;
-
+  
 import java.sql.Date;
 
 public class Member implements java.io.Serializable{

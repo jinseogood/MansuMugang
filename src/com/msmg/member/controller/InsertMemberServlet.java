@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 import com.msmg.member.model.vo.UserAllergy;
-
+  
 @WebServlet("/insertMember.me")
 public class InsertMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

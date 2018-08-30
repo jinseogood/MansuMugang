@@ -189,7 +189,7 @@ body {
 						</tr>
 			<% }else{ %>
 				<% for(BuyAll b : bList){ %>
-						<tr>
+						<tr>  
 							<td><div align="center"><%= b.getBuy_date() %></div></td>
 							<td><div align="center"><%= b.getUser_menu_name() %></div></td>
 							<td><div align="center"><%= b.getPrice() %>원</div></td>

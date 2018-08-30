@@ -1,5 +1,5 @@
 package com.msmg.member.model.vo;
-
+  
 public class SNSMember {
 	private int mNo;
 	private String mId;

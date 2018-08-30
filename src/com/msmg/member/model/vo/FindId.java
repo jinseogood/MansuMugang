@@ -1,5 +1,5 @@
 package com.msmg.member.model.vo;
-
+   
 public class FindId implements java.io.Serializable{
 	private String userName;
 	private String joinQ;

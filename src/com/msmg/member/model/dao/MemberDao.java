@@ -16,7 +16,7 @@ import com.msmg.member.model.vo.SNSMember;
 import com.msmg.member.model.vo.UserAllergy;
 
 import static com.msmg.common.JDBCTemplate.*;
-
+   
 public class MemberDao {
 	private Properties prop = new Properties();
 	

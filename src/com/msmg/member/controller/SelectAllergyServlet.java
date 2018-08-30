@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
 import com.msmg.member.model.vo.UserAllergy;
-
+   
 /**
  * Servlet implementation class SelectAllergyServlet
  */
