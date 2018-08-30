@@ -195,19 +195,19 @@ body {
 							<td><div align="center"><%= b.getPrice() %>원</div></td>
 							<td><div align="center"><%= b.getBuy_sort() %></div></td>
 							<td>
-								<% if(b.getStatus() == "2") {%>
-									<div align="center"><%= b.getBuy_status() %></div> 
+								<%if(b.getStatus().equals("2")) {%>
+									<div align="center"><%= b.getBuy_status() %></div>
 									<div class="w3-button w3-ripple w3-yellow">주문취소</div>
-								<% }else if(b.getStatus() == "5") {%>
+								<% }else if(b.getStatus().equals("5")) {%>
 									<div align="center"><%= b.getBuy_status() %></div> 
-									<div class="w3-button w3-ripple w3-yellow">후기작성</div>
-									<div class="w3-button w3-ripple w3-yellow">교환문의</div>
-									<div class="w3-button w3-ripple w3-yellow">환불문의</div>
+									<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/views/board/review/reviewThumbnailInsertForm.jsp">후기작성</a></div> 
+									<div class="w3-button w3-ripple w3-yellow">교환문의</div> 
+									<div class="w3-button w3-ripple w3-yellow">환불문의</div> 
 								<% } else { %>
 									<div align="center"><%= b.getBuy_status() %></div> 
 								<% } %>
-								
 							</td>
+							
 							 <!-- <div class="w3-button w3-ripple w3-yellow">주문취소</div> -->
 						</tr>
 				<% } %>
@@ -228,6 +228,15 @@ body {
 <div class="footer">
 <%@ include file="../common/footer.jsp" %>
 </div>
+
+<script>
+	
+	
+	
+	
+	
+	
+</script>
 		
 		
 </body>

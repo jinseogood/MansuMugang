@@ -120,7 +120,7 @@ a{
 <div id="top">
 		<%@ include file="../common/menubar.jsp"%>
 </div>
-	<form id="loginForm" name="loginFrom" action="" method="post">
+	<form id="loginForm" name="loginFrom" method="post">
 		<div id="wrap">
 			<h1 class="member" align="center">만수무강에 오신 것을 환영합니다.</h1>
 			<h4 class="member" align="center">건강한 식단을 간편하게 집에서 받아보세요!</h3>
@@ -165,11 +165,9 @@ a{
 					</div>
 				</div>
 		</div>
-		<div id="kakaoform">
-			<input type="hidden" name="id">
-			<input type="hidden" name="nickname">
-			<input type="hidden" name="refreshToken">
-		</div>
+		<input type="hidden" name="id" id="id">
+		<input type="hidden" name="nickname" id="nickname">
+		<input type="hidden" name="refreshToken" id="refreshToken">
 	</form>
 
 <div id="mainBottom">
@@ -178,40 +176,42 @@ a{
 <script>
 
 function kakao(){
-	Kakao.init('a67d7a24973de2d69475ad4ef1972dda');
+	Kakao.init('56d0c8722ca6581d915c2b04a5a0810f');
 	
 	Kakao.Auth.loginForm({
 		success : function(authObj) {
 			var accessToken=Kakao.Auth.getAccessToken();
 			var refreshToken=authObj.refresh_token;
-			    
+			
+			alert(JSON.stringify(authObj));
+			console.log(accessToken);
+			console.log(refreshToken);
+			
 			if(accessToken){
 				// 로그인 성공시, API를 호출합니다.
 				Kakao.API.request({
 					url : '/v1/user/me',
 					success : function(res) {
-						/* $("#id").val(res.id);
+						alert("테스트");
+						$("#id").val(res.id);
 						$("#nickname").val(res.properties.nickname);
 						$("#refreshToken").val(refreshToken);
-						$("#login").submit(); */
-						
+						$("#loginForm").attr("action", "<%=request.getContextPath()%>/snsLogin.me");
+						$("#loginForm").submit();
 						console.log(res.id);
-						$("#id").val(res.id);
+						//$("#id").val(res.id);
 					},
 					fail : function(error) {
 						alert(JSON.stringify(error));
 					}
 				});
-			}
+			} 
 		},
 		fail : function(err) {
 			alert(JSON.stringify(err));
 		}
 	});
 }
-
-
-
 
 
 
@@ -273,5 +273,10 @@ function getCookie(cookieName) {
     return unescape(cookieValue);
 }
 </script>
+<%-- <form id="login" method="post" action="<%=request.getContextPath()%>/snsLogin.me">
+		<input type="hidden" name="id" id="id">
+		<input type="hidden" name="nickname" id="nickname">
+		<input type="hidden" name="refreshToken" id="refreshToken">
+	</form> --%>
 </body>
 </html>

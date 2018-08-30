@@ -82,9 +82,36 @@
 				<td><input type="text" name="joinA" id="joinA"></td>
 			</tr>
 			<tr>
-				<td colspan="2"><button class="w3-button w3-ripple w3-yellow" onclick="findId();">아이디 찾기</button></td>
+				<td colspan="2"><button class="w3-button w3-ripple w3-yellow" name="findId" id="findId" onclick="findId();">아이디 찾기</button></td>
 			</tr>
 		</table>
+	<script>
+		$(function(){
+			$("#findId").click(function(){
+				var userName = $("#userName").val();
+				var joinQ = $("#joinQ").val();
+				var joinA = $("#joinA").val();
+				$.ajax({
+				url:"/msmg/selectId.me",
+				data:{userName:userName,joinQ:joinQ,joinA:joinA},
+				success:function(value){
+					
+					console.log(value)
+		   	   		<%-- if('<%= fi.getUserId() %>' != null){
+		   	   			alert(<%= fi.getUserName() %> + "님의 이메일은 " + <%= fi.getUserId() %> + "입니다.");
+		   	   		}/* else{
+		   	   			alert("일치하는 이메일이 없습니다.");
+		   	   		} */ --%>
+				},
+				error:function(){
+					alert("일치하는 이메일이 없습니다.");
+				}
+			});
+		
+		});
+		
+		});
+	</script>
 	</div>
 	</td>
 	</div>
@@ -124,19 +151,5 @@
 		<div id="bottom">
 		<%@ include file="../common/footer.jsp" %>
 	</div>
-	<script>
-		function findId(){
-			$("#f").attr("action", '<%=request.getContextPath()%>/selectId.me');
-   	   		$("#f").submit();
-   	   		
-   	   		
-   	   		
-   	   		if('<%= fi.getUserId() %>' != null){
-   	   			alert(<%= fi.getUserName() %> + "님의 이메일은 " + <%= fi.getUserId() %> + "입니다.");
-   	   		}else{
-   	   			alert("일치하는 이메일이 없습니다.");
-   	   		}
-		}
-	</script>
 </body>
 </html>
