@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.msmg.food.model.vo.*, java.util.*"%>
+	pageEncoding="UTF-8"
+	import="java.util.*, com.msmg.food.model.vo.*, java.util.*"%>
 <%
 	ArrayList<MenuList> list = (ArrayList<MenuList>) request.getAttribute("list");
 	ArrayList<Like> MenuList = (ArrayList<Like>) request.getAttribute("MenuList");
@@ -9,9 +10,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-<link ="stylesheet" type="text/css" href="/msmg/web/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
+<link ="stylesheet" type="text/css"
+	href="/msmg/web/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -78,11 +84,6 @@
 	margin-right: 50px;
 	position: relative;
 }
-.btn-warning{
-	
-	width:80px;
-	height:40px;
-}
 
 .topMenu:hover {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
@@ -104,11 +105,16 @@
 }
 
 table td {
-	height: 200px;
+	height: 250px;
 	width: 330px;
 }
+.btn-warning{
+	
+	width:80px;
+	height:40px;
+}
 
-td .info {
+td .in {
 	height: 70px;
 }
 
@@ -120,15 +126,17 @@ td .like {
 .like>a {
 	text-decoration: none;
 }
+
 .fa {
-    font-size: 25px;
-    cursor: pointer;
-    user-select: none;
+	font-size: 25px;
+	cursor: pointer;
+	user-select: none;
 }
 
 .fa:hover {
-  color: darkblue;
+	color: darkblue;
 }
+
 @media ( max-width : 1023px ) {
 	.images {
 		float: none;
@@ -162,30 +170,30 @@ td .like {
 			<div>
 				<div id="menupan" class="panel panel-default">
 					<div class="panel-body">
-						<b>뇌증(腦症, encephalopathy)</b>은 뇌의 질병을 의미한다. 뇌병증(腦病症), 뇌병(腦病), 뇌질환(腦疾患) 등으로도 부른다.
+						<b>당뇨병(糖尿病, diabetes mellitus, DM, diabetes)</b>은 높은 혈당 수치가 오랜 기간 지속되는 대사 질환군을 말한다.혈당이 높을 때의 증상으로는 소변이 잦아지고, 갈증과 배고픔이 심해진다. 이를 치료하지 않으면 다른 합병증을 유발할 수 있다. 급성의 합병증으로는 당뇨병케톤산증, 고혈당성 고삼투성 비케톤성 혼수 등이 포함된다 심각한 장기간 합병증으로는 심혈관질환, 뇌졸중, 만성신부전, 당뇨병성 궤양, 당뇨망막병 등이 포함된다.
 					</div>
 				</div>
 			</div>
 			<div id="btn" class="btn-group-vertical">
 				<% if(loginUser != null){ %>
-					<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo?user='+<%= loginUser.getU_code() %>">고혈압</button>
-					<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo?user='+<%= loginUser.getU_code() %>">당뇨병</button>
-					<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo?user='+<%= loginUser.getU_code() %>">뇌질환</button>
-				 <% }else{ %>
-				 	<button type="button" class="btn btn-warning"
+				<% }else{ %>
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo'">고혈압</button>
-					<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo'">당뇨병</button>
-					<button type="button" class="btn btn-warning"
+				<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo'">뇌질환</button>
-				 <% } %>
-				
+				<% } %>
+
 			</div>
 			<div class="images">
-			
+				
 				<table align="center" text-align="center">
 					<%
 						for (int j = 0; j <= list.size() / 3; j++) {
@@ -195,6 +203,14 @@ td .like {
 						<%
 							for (int i = count; i < list.size();) {
 						%>
+
+						<% if(loginUser != null){
+											if(MenuList.size() != 0){
+											for(int l = 0 ; l < MenuList.size() ; l++){ 
+												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
+													
+										%>
+
 						<td align="center">
 							<div id="g1" class="topMenu">
 								<div id="g1-img" class="topMenuImg">
@@ -202,40 +218,23 @@ td .like {
 										<img
 											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
 									</div>
-									<div class="info"><%=list.get(i).getMenu_info()%></div>
+									<div class="in"><%=list.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
-										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">			
-										<% if(loginUser != null){
-											if(MenuList.size() != 0){
-											for(int l = 0 ; l < MenuList.size() ; l++){ 
-												if(MenuList.get(l).getM_code() == list.get(i).getMenu_code()){
-													
-										%>
-											
-													<i class="fa fa-star" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
-											
-										<% 
-													break;
-												}else{
-													if(l == MenuList.size()-1){
-										%>
-													<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
-										<%
-													}
-												}
-											}	
-										
-										   }else{%>
-											   <i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>
-										   
-										<% }
-										}else{ %>
-											<i class="fa fa-star-o" onclick = "like(<%= list.get(i).getMenu_code() %>, this)"></i>			
-										<% } %>
+										<input type="hidden" value="<%=list.get(i).getMenu_code()%>">
 									</div>
 								</div>
 							</div>
 						</td>
+						<%
+							break;
+												} 
+											}
+											}
+						}
+											
+						%>
+
+
 						<%
 							i++;
 									count = i;
@@ -243,8 +242,7 @@ td .like {
 										break;
 
 									}
-						%>
-						<%
+						
 							}
 						%>
 					</tr>
@@ -260,9 +258,9 @@ td .like {
 					if (loginUser != null) {
 				%>
 				<button type="button" class="btn btn-warning"
-					OnClick="location='<%=request.getContextPath()%>/MenuListHLike.fo?user='+<%=loginUser.getU_code()%>">찜목록</button>
+					OnClick="location='<%=request.getContextPath()%>/MenuListDLike.fo?user='+<%=loginUser.getU_code()%>">찜목록</button>
 				<button type="button" class="btn btn-warning"
-					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo?user='+<%=loginUser.getU_code()%>">전체목록</button>
+					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo?user='+<%=loginUser.getU_code()%>">전체목록</button>
 				<%
 					}
 				%>
@@ -271,56 +269,6 @@ td .like {
 	<div id="mainBottom">
 		<%@include file="../common/footer.jsp"%>
 	</div>
-	<script>
-	function like(num, click){
-		console.log(click);
-	
-        if($(click).attr('class') == 'fa fa-star-o'){
-           <%if(loginUser != null){%>
-           $(click).attr('class', 'fa fa-star');
-              
-              $.ajax({
-                 url:'InsertLike.fo',
-                 data:{
-                    num : num,
-                    user_no : <%=loginUser.getU_code()%>
-                 },
-                 success:function(data){
-                    if(data != 0){
-                       alert('해당 상품을 (좋아요) 하셨습니다!');
-                    }else{
-                       alert('이미 해당 상품을 (좋아요) 하셨습니다!');
-                    }
-                 }
-              });
-              
-           <%}else{%>
-              alert('로그인이 필요한 기능입니다.');
-           <%}%>
-        }else{
-           <%if(loginUser != null){%>
-           $(click).attr('class', 'fa fa-star-o');
-           
-           $.ajax({
-              url:'DeleteLike.fo',
-              data:{
-                 num : num,
-                 user_no : <%=loginUser.getU_code()%>
-              },
-              success:function(data){
-                 if(data != 0){
-                    alert('해당 상품을 (좋아요)에서 제거하셨습니다!');
-                 }else{
-                    alert('(좋아요)제거에 실패하셨습니다.');
-                 }
-              }
-           });
-           
-        <%}else{%>
-           alert('로그인 하셔야지 찜을 하실수 있습니다.');
-        <%}%>
-        }
-     }
-	</script>
+
 </body>
 </html>
