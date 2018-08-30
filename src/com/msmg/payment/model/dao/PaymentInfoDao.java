@@ -31,10 +31,12 @@ public class PaymentInfoDao {
 	public int insertPaymentInfo(Connection con, PaymentInfo pi) {
 		
 		PreparedStatement pstmt = null;
+/*		PreparedStatement pstmt2 = null;*/
 		
 		int result = 0;
 		
 		String query = prop.getProperty("insertPaymentInfo");
+/*		String query2 = prop.getProperty("updateMenuCount");*/
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -44,9 +46,7 @@ public class PaymentInfoDao {
 			pstmt.setString(3, pi.getDiet_no());
 			
 			result = pstmt.executeUpdate();
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
