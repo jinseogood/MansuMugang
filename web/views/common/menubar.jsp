@@ -103,6 +103,7 @@
 	#submenuTitle > a:hover{
 		text-decoration:underline;
 		color:darkgray;
+		cursor:pointer;
 	}
 	
 	#informationB:hover {
@@ -169,7 +170,12 @@
 				 	<a href="<%= request.getContextPath()%>/MenuListG.fo">메뉴소개</a>
 				 <% } %>
 				<br><br><br>
-				<a href="/msmg/views/foodPlan/menu_plan.jsp">식단짜기</a>
+				 <% if(loginUser != null){ %>
+					<a href="/msmg/views/foodPlan/menu_plan.jsp">식단짜기</a>
+				 <% }else{ %>
+				 	<a onclick = "goFood();">식단짜기</a>
+				 <% } %>
+				
 			</div>
 			<div id="submenuTitle">
 				<div id="informationB" onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">정보게시판</div>
@@ -267,6 +273,9 @@
 			
 		<%} %> 
 		});
+		function goFood(){
+			alert("로그인이 필요한 서비스입니다.");
+		}
 		
 		function logout(){
 			var check = window.confirm("로그아웃 하시겠습니까?");
