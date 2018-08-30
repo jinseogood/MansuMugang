@@ -100,7 +100,7 @@
 
 table td {
 	height: 200px;
-	width: 30% px;
+	width: 30%;
 }
 
 td .in {
