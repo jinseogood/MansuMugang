@@ -1,12 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*,com.msmg.food.model.vo.*"%>
+<%
+	ArrayList<Buy> list = (ArrayList<Buy>)request.getAttribute("list");
+	System.out.println("sdasdsad" + list);
+%>
+
 <!DOCTYPE html>
 <html>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	
+
 <head>
 <meta charset="UTF-8">
 <title>장바구니</title>
-</head>
- 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <script>
    $(window).on(
          "load resize ",
@@ -19,7 +28,12 @@
          }).resize();
 </script>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+ 
+
+
+
 <style>
 
 table tr{
@@ -132,7 +146,7 @@ section {
    height: auto;
 } 
 </style>
-
+</head>
 <body>
 <div class="mainmenu">
    <%@ include file="../common/menubar.jsp"%>
@@ -145,7 +159,7 @@ section {
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
   		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a href="<%= request.getContextPath() %>/selectCart.fo">장바구니</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
   		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
@@ -156,43 +170,40 @@ section {
 	
 	
 	
-	
-		<form>
+                                                                                                                                                                                                                                                                                                                	
+	<form>
+		<input type="hidden" name="ucode" value=<%= loginUser.getU_code() %>>
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
 					<td bgcolor=tomato><input type="checkbox" class="w3-button w3-ripple w3-yellow"><label>전체 선택</label></td>
 					<td bgcolor=tomato>상품</td>
-					<td bgcolor=tomato>수량</td>
-					<td bgcolor=tomato>도착예정일</td>
+					<td bgcolor=tomato>담은 날짜</td>
 					<td bgcolor=tomato>금액</td>
 					<td bgcolor=tomato><button class="w3-button w3-ripple w3-yellow">전체삭제</button></td>
 				</tr>
 				<tr>
 					<td><input type="checkbox"></td>
-					<td>고혈압 7일 3끼</td>
-					<td>1개</td>
-					<td>2018년 10월 23일</td>
-					<td>330,000원</td>
+					<td>상품명</td>
+					<td>날짜</td>
+					<td>원</td>
 					<td><button class="w3-button w3-ripple w3-yellow">삭제</button></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
+					<td>배송비 </td>
+					<td>3500원<input type="text" readonly style="display: none;"></td>
 					<td></td>
-					<td>배송비</td>
-					<td><input type="text" readonly style="display: none;"></td>
-					<td>원</td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
+					<td>합계 </td>
+					<td>원<input type="text" readonly style="display: none;"></td>
 					<td></td>
-					<td>합계</td>
-					<td><input type="text" readonly style="display: none;"></td>
-					<td>원</td>
 				</tr>
 				<tr align="center">
-					<td colspan="6" bgcolor=tomato>
+					<td colspan="5" bgcolor=tomato>
 						<input type="button" value="쇼핑계속하기" href="#" class="w3-button w3-ripple w3-yellow">
 						<input type="button" value="주문하기" href="#" class="w3-button w3-ripple w3-yellow">
 					</td>

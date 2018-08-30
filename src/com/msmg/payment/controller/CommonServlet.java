@@ -89,7 +89,7 @@ public class CommonServlet extends HttpServlet {
 		int result3 = new PaymentService().updateOrder(p);
 		
 		
-		// 상세 결제 정보 입력 서블릿
+		// 카드결제 상세 결제 정보 입력 서블릿
 		String sort = request.getParameter("sort");
 		String buy_sort = request.getParameter("buy_sort");
 		
@@ -97,13 +97,17 @@ public class CommonServlet extends HttpServlet {
 		pi.setSort(sort);
 		pi.setBuy_sort(buy_sort);
 		pi.setDiet_no(diet_no);
-		
-		
+				
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
+
 		
+		//환불용 서블릿
+		String m_uid = request.getParameter("m_uid");
 		
-		String imp = request.getParameter("rsp.merchant_uid");
-		System.out.println("rsp.merchant_uid입니다" + imp);
+		System.out.println("꺄아아악       " + m_uid);
+		
+		/*String imp = request.getParameter("merchant_uid");
+		System.out.println("merchant_uid입니다" + imp);*/
 		
 
 		
