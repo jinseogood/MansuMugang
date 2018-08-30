@@ -58,9 +58,12 @@ public class SelectFoodDao {
 			}else if(sf.getGo() == 1 && sf.getDang() == 0 && sf.getHead() == 1){
 				query = prop.getProperty("selectFoodGoHead");
 			}else if(sf.getGo() == 0 && sf.getDang() == 1 && sf.getHead() == 1){
+				System.out.println("여기로오니");
 				query = prop.getProperty("selectFoodDangHead");
-			}else{
+			}else if(sf.getGo() == 1 && sf.getDang() == 1 && sf.getHead() == 1){
 				query = prop.getProperty("selectFoodGoDangHead");
+			}else{
+				System.out.println("에러");
 			}
 			
 			pstmt = con.prepareStatement(query);

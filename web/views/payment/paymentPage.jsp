@@ -685,7 +685,7 @@ $("#buyer_addr3").attr("value", addr3);
 																					
 																					jQuery .ajax(
 																									{
-																										url : "http://localhost:8001/msmg/views/member/OrderHistory.jsp", // 가맹점 서버
+																										//url : "http://localhost:8001/msmg/views/member/OrderHistory.jsp", // 가맹점 서버
 																										method : "POST",
 																										headers : {
 																											"Content-Type" : "application/json"

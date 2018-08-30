@@ -189,14 +189,26 @@ body {
 						</tr>
 			<% }else{ %>
 				<% for(BuyAll b : bList){ %>
-						<tr>
-							<td><%= b.getBuy_date() %></td>
-							<td><%= b.getUser_menu_name() %></td>
-							<td><%= b.getPrice() %></td>
-							<td><%= b.getBuy_sort() %></td>
-							<td><%= b.getStatus() %></td>
-							<%-- <% if() %> --%>
-							<td><div class="w3-button w3-ripple w3-yellow">주문취소</div></td>
+						<tr>  
+							<td><div align="center"><%= b.getBuy_date() %></div></td>
+							<td><div align="center"><%= b.getUser_menu_name() %></div></td>
+							<td><div align="center"><%= b.getPrice() %>원</div></td>
+							<td><div align="center"><%= b.getBuy_sort() %></div></td>
+							<td>
+								<% if(b.getStatus() == "2") {%>
+									<div align="center"><%= b.getBuy_status() %></div> 
+									<div class="w3-button w3-ripple w3-yellow">주문취소</div>
+								<% }else if(b.getStatus() == "5") {%>
+									<div align="center"><%= b.getBuy_status() %></div> 
+									<div class="w3-button w3-ripple w3-yellow">후기작성</div>
+									<div class="w3-button w3-ripple w3-yellow">교환문의</div>
+									<div class="w3-button w3-ripple w3-yellow">환불문의</div>
+								<% } else { %>
+									<div align="center"><%= b.getBuy_status() %></div> 
+								<% } %>
+								
+							</td>
+							 <!-- <div class="w3-button w3-ripple w3-yellow">주문취소</div> -->
 						</tr>
 				<% } %>
 			<% } %> 

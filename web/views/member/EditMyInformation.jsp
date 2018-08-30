@@ -10,7 +10,7 @@
 	int size = alList.size();
 	System.out.println(size);
 	int a = 0;%>
-<!DOCTYPE html>
+<!DOCTYPE html>   
 <html>
 <head>
 <meta charset="UTF-8">

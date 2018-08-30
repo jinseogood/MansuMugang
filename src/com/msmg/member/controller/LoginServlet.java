@@ -14,7 +14,7 @@ import com.msmg.food.model.service.FoodService;
 import com.msmg.food.model.vo.Like;
 import com.msmg.member.model.service.MemberService;
 import com.msmg.member.model.vo.Member;
-
+   
 @WebServlet("/login.me")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

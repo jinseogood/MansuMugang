@@ -3,7 +3,7 @@
 <% String authenticationNum = (String)request.getAttribute("authenticationNum"); 
 System.out.println("syso : " + authenticationNum);%>
 <!DOCTYPE html>
-<html>
+<html>   
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>

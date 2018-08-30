@@ -13,7 +13,7 @@ import static com.msmg.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-
+   
 public class MemberService {
 
 	public Member insertMember(Member m) {

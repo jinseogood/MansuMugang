@@ -66,19 +66,19 @@ public class InsertBuyFoodServlet extends HttpServlet {
 			}
 		}else{
 			if(go == 1){
-				diet_name = "고혈압 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "고혈압 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else if(go == 1 && dang == 1){
-				diet_name = "고혈압, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "고혈압, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else if(go == 1 && head == 1){
-				diet_name = "고혈압, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "고혈압, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else if(head == 1 && dang == 1){
-				diet_name = "당뇨, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "당뇨, 뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else if(dang == 1){
-				diet_name = "당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else if(head == 1){
-				diet_name = "뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "뇌질환 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}else{
-				diet_name = "고혈압, 뇌질환, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 포함)";
+				diet_name = "고혈압, 뇌질환, 당뇨 "+ day + "일 " + ggi + "끼 식단(밑반찬 미포함)";
 			}
 		}
 		if(mcode != null && price != null){

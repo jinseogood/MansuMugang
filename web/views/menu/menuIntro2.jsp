@@ -29,7 +29,7 @@
 }
 
 .outer {
-	height: 1300px;
+	height: 1100px;
 }
 
 #intro {
@@ -40,7 +40,7 @@
 
 .images {
 	width: 94%;
-	height: 700px;
+	height: 900px;
 	overflow: scroll;
 	overflow-x: hidden;
 	text-align: center;
@@ -70,7 +70,7 @@
 
 .topMenu {
 	display: inline-block;
-	width: 60%;
+	width: 70%;
 	height: 90%;
 	border: 1px solid lightgray;
 	border-radius: 3px;
@@ -100,9 +100,13 @@
 
 table td {
 	height: 200px;
-	width: 30% px;
+	width: 330px;
 }
-
+.btn-warning{
+	
+	width:80px;
+	height:40px;
+}
 td .info {
 	height: 70px;
 }
@@ -163,23 +167,24 @@ td .like {
 			</div>
 			<div id="btn" class="btn-group-vertical">
 				<% if(loginUser != null){ %>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo?user='+<%= loginUser.getU_code() %>">고혈압</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo?user='+<%= loginUser.getU_code() %>">당뇨병</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo?user='+<%= loginUser.getU_code() %>">뇌질환</button>
 				 <% }else{ %>
-				 	<button type="button" class="btn btn-primary"
+				 	<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListG.fo'">고혈압</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo'">당뇨병</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 					OnClick="location='<%=request.getContextPath()%>/MenuListH.fo'">뇌질환</button>
 				 <% } %>
 				
 			</div>
 			<div class="images">
+			
 				<table align="center" text-align="center">
 					<%
 						for (int j = 0; j <= list.size() / 3; j++) {
@@ -249,6 +254,19 @@ td .like {
 			</div>
 		</div>
 	</div>
+	<div align="center">
+	<%
+					if (loginUser != null) {
+				%>
+				<button type="button" class="btn btn-warning"
+					OnClick="location='<%=request.getContextPath()%>/MenuListDLike.fo?user='+<%=loginUser.getU_code()%>">찜목록</button>
+				<button type="button" class="btn btn-warning"
+					OnClick="location='<%=request.getContextPath()%>/MenuListD.fo?user='+<%=loginUser.getU_code()%>">전체목록</button>
+				<%
+					}
+				%>
+	</div>	
+	<br><br>	
 	<div id="mainBottom">
 		<%@include file="../common/footer.jsp"%>
 	</div>
