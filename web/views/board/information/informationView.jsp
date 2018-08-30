@@ -243,7 +243,7 @@ input[type=text]{
 				                  <br><div id="date" ><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px"><%= list2.get(i).getRe_content() %></td>
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-					<td width='100px'><a href='#'>수정</a> | <a onclick='deleteReply();'>삭제</a></td>
+					<td width='100px'><a href='#'>수정</a> | <a onclick="deleteReply();">삭제</a></td>
 				<%} else {%>
 					<td width="100px"></td>
 				<%} %>
@@ -257,8 +257,9 @@ input[type=text]{
 	<script>
 	function deleteReply(){
 		self.window.alert("댓글을 삭제하시겠습니까?");
-		location.href="reviewBoard.jsp";
-		
+		var num = <%=b.getBoardId()%>
+		var bno = <%=b.getBoardNo()%>
+		location.href="/msmg/deleteReply.in?num=" + num + "&bno=" + bno;
 	}
 	
 	

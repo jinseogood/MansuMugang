@@ -36,11 +36,7 @@ public class ReviewService {
 		int result2 = new ReviewDao().insertBoardFile(con, fileList);
 		System.out.println("result2 : " + result2);
 		
-		
-		
-		int result3 = new ReviewDao().insertPoint(con, b);
-		
-		if(result1 > 0 && result2 > 0 && result3 > 0) {
+		if(result1 > 0 && result2 > 0) {
 			commit(con);
 			result = 1;
 		}else {
@@ -66,8 +62,9 @@ public class ReviewService {
 		Connection con = getConnection();
 		
 		HashMap<String, Object> hmap = null;
-		
+		System.out.println("updateCount 전");
 		int result = new ReviewDao().updateCount(con, num);
+		System.out.println("update result : " + result);
 		
 		if(result > 0) {
 			hmap = new ReviewDao().selectOneReviewMap(con, num);
@@ -212,6 +209,20 @@ public class ReviewService {
 		
 		return nextR;
 	}
+
+	public int updateAdmin(String bid) {
+		Connection con = getConnection();
+		
+		int result = new ReviewDao().updateAdmin(con, bid);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		close(con);
+		
+		return result;
+	}
+
+	
 
 
 

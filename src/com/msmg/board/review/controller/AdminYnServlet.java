@@ -1,32 +1,46 @@
 package com.msmg.board.review.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.msmg.board.information.model.vo.Board;
+import com.msmg.board.review.model.service.ReviewService;
+
 /**
- * Servlet implementation class InsertReviewFormServlet
+ * Servlet implementation class AdminYnServlet
  */
-@WebServlet("/insertReviewF")
-public class InsertReviewFormServlet extends HttpServlet {
+@WebServlet("/adminYn.rev")
+public class AdminYnServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertReviewFormServlet() {
+    public AdminYnServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//사용안함
+		System.out.println("관리자 승인 서블릿 들어옴");
+		String bid = request.getParameter("bid");
+		
+		int result = new ReviewService().updateAdmin(bid);
+		
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		new Gson().toJson(result, response.getWriter());
+		
+		
 	
 	
 	}
