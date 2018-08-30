@@ -114,6 +114,10 @@
 		width:100%;
 		height:100%;
 	}
+	
+	#adminAlert:hover{
+		cursor : pointer;
+	}
 	#noticeAlert {
 		display : none;
 	}
