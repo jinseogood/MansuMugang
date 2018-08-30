@@ -39,7 +39,7 @@ public class SelectOneReviewServlet extends HttpServlet {
 		
 		String num = request.getParameter("num");
 		
-		System.out.println(num);
+		System.out.println("num : " + num);
 		
 		HashMap<String, Object> hmap = new ReviewService().selectOneReview(num);
 		
@@ -62,8 +62,9 @@ public class SelectOneReviewServlet extends HttpServlet {
 			request.setAttribute("fileList", (ArrayList<BoardFile>)hmap.get("boardFile"));
 			request.setAttribute("preR", preR);
 			request.setAttribute("nextR", nextR);
-			request.setAttribute("r", replyList);
-			
+			if(replyList != null) {
+				request.setAttribute("r", replyList);
+			}
 			
 		} else {
 			page = "views/common/errorPage.jsp";

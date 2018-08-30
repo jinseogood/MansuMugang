@@ -166,9 +166,13 @@ public class ReviewDao {
 				hmap.put("content", rset.getString("content"));
 				hmap.put("bcount", rset.getInt("b_count"));
 				hmap.put("boardNo", rset.getInt("board_no"));
+				hmap.put("adminYn", rset.getString("admin_Yn"));
 				
 				list.add(hmap);
 			}
+			
+			System.out.println("review Dao list admin_Yn 확인 : " + list);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -211,6 +215,7 @@ public class ReviewDao {
 				b.setuCode(rset.getString("u_name"));
 				b.setbCount(rset.getInt("b_count"));
 				b.setWriteYn(rset.getString("write_yn"));
+				b.setAdminYn(rset.getString("admin_yn"));
 				
 				System.out.println("b : " + b);
 				
@@ -312,14 +317,18 @@ public class ReviewDao {
 		
 		System.out.println("updateCount num : " + num);
 		String query = prop.getProperty("updateCount");
-		
+		System.out.println("query : " + query);
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, num);
-			pstmt.setString(2, num);
+			
+			pstmt.setInt(1, Integer.parseInt(num));
+			pstmt.setInt(2, Integer.parseInt(num));
+			
+			System.out.println("updateCount 쿼리 나옴");
 			
 			result = pstmt.executeUpdate();
 			
+			System.out.println("updateCount result : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -551,27 +560,6 @@ public class ReviewDao {
 		return result;
 	}
 
-	public int insertPoint(Connection con, Board b) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		System.out.println("insertPoint 들어옴");
-		
-		String query = prop.getProperty("insertPoint");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1,  b.getuCode());
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		System.out.println("insertPoint result : " + result);
-		return result;
-	}
 
 	public int getListCount(Connection con) {
 		int listCount = 0;
@@ -671,5 +659,29 @@ public class ReviewDao {
 		
 		return b;
 	}
+
+	public int updateAdmin(Connection con, String bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		System.out.println("reviewDao bid : " + bid);
+		
+		String query = prop.getProperty("updateAdminYn");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, bid);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
 
 }

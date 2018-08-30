@@ -6,6 +6,10 @@
 	ArrayList<Reply> list2 = (ArrayList<Reply>)request.getAttribute("r");
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	Board b = (Board)request.getAttribute("b");
+	
+	String admin = b.getAdminYn();
+	System.out.println(admin);
+	
 	ArrayList<BoardFile> fileList = (ArrayList<BoardFile>)request.getAttribute("fileList");
 %>
 <!DOCTYPE html>
@@ -211,7 +215,8 @@ div[id=date-writer-hit2] {
 					조회수 : <%= b.getbCount() %>
 				</span> <span id="date-writer-hit">작성자 : <%=b.getuCode() %></span>
 			</div>
-			<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardId()%>">
+			<input type="hidden" id="bid2" name="bid2" value="<%=b.getBoardNo()%>">
+			<input type="hidden" id="bid3" name="bid3" value="<%=b.getBoardId()%>">
 			<div id="article-content" align="center">
 				<table>
 					<tr>
@@ -316,7 +321,7 @@ div[id=date-writer-hit2] {
 	
 	
 	
-	<div id='whiptable'>
+	<!-- <div id='whiptable'>
 		<table id='whip'>
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
@@ -332,7 +337,7 @@ div[id=date-writer-hit2] {
 			</tr>
 
 		</table>
-	</div>
+	</div> -->
 	<br>
 
 
@@ -345,6 +350,14 @@ div[id=date-writer-hit2] {
 				onclick="location.href='<%=request.getContextPath()%>/update.rev?num=<%=b.getBoardId()%>'">수정</button>
 			<button id="deleteBtn" type="button" class="btn btn-success">삭제</button>
 			</div>
+		<%} %>
+		<!-- <button id="adminYn" type="button" class="btn btn-success">관리자 승인</button>
+		<p style="display:none;" id="adminYn_ok" type="button" class="btn btn-success" disabled>승인 완료</p> -->
+		<%if(admin.equals("N")) {%>
+			<button id="adminYn" type="button" class="btn btn-success">관리자 승인</button>
+			<p style="display:none;" id="adminYn_ok" type="button" class="btn btn-success" disabled>승인 완료</p>
+		<%} else{%>
+			<p id="adminYn_ok" type="button" class="btn btn-success" disabled>승인 완료</p>
 		<%} %>
 	</div>
 	<script>
@@ -359,6 +372,37 @@ div[id=date-writer-hit2] {
 				success:function(data){
 					alert("게시글을 삭제하시겠습니까?");
 					location.href = "/msmg/selectList.rev";
+				},
+				error:function(data){
+					console.log("실패");
+				}
+			});
+		});
+		
+		
+		$("#adminYn").click(function(){
+			var bid = $("#bid3").val();
+			var test='<%=admin%>';
+			console.log("test : " + test);
+			
+			
+			$.ajax({
+				url:"/msmg/adminYn.rev",
+				data:{bid:bid,
+					  test:test},
+				type:"post",
+				success:function(data){
+					console.log("성공");
+					
+					 if(test == 'Y'){
+						console.log("aaa");
+						$("#adminYn").hide();
+						$("#adminYn_ok").show();
+					}else{
+						$("#adminYn").show();
+						$("#adminYn_ok").hide();
+					}
+					
 				},
 				error:function(data){
 					console.log("실패");
