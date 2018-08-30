@@ -6,7 +6,7 @@
 	System.out.println("selectList : " + oSelectList);
 
 	int totalPrice=(int)request.getAttribute("totalPrice");
-	
+
 	System.out.println("totalPrice : " + totalPrice);
 
 	PageInfo pi=(PageInfo)request.getAttribute("pi");

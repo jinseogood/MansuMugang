@@ -79,7 +79,7 @@
 		height:33%;
 	}
 	#stat-1, #stat-2{
-		height:45%;
+		height:60%;
 	}
 	#baseTable{
 		border:1px solid lightgray;
@@ -1622,10 +1622,27 @@
 	google.charts.setOnLoadCallback(drawPayType);
 	
 	function drawPayType(){
+		var jsonData=$.ajax({
+			url:"/msmg/statPayType",
+			dataType:"json",
+			async:false
+		}).responseText;
+		
+		console.log(jsonData);
+		
+		/* var data=new google.visualization.DataTable(jsonData); */
+		
+		var obj = JSON.parse(jsonData, function (key, value) {
+    	if (key == "money") {
+        	return value;
+    	} else {
+        	return value;
+    	}});
+		
 		var data=new google.visualization.arrayToDataTable([
-			['Task', 'Percent'],
-			['신용카드', 70],
-			['무통장입금', 30]
+			['Type', '건 수'],
+			['신용카드', obj.card],
+			['무통장입금', obj.money]
 		]);
 		
 		
