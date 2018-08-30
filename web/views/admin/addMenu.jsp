@@ -35,7 +35,7 @@
 						<%
 							for(int i=0;i<matList.size();i++){
 						%>
-								<option value="<%= matList.get(i).getM_code() %>"><%= matList.get(i).getM_name() %></option>
+								<option value="<%= matList.get(i).getM_name() %>"><%= matList.get(i).getM_name() %></option>
 						<%
 							}
 						%>
@@ -50,7 +50,7 @@
 						<%
 							for(int i=0;i<matList.size();i++){
 						%>
-								<option value="<%= matList.get(i).getM_code() %>"><%= matList.get(i).getM_name() %></option>
+								<option value="<%= matList.get(i).getM_name() %>"><%= matList.get(i).getM_name() %></option>
 						<%
 							}
 						%>
