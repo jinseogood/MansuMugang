@@ -53,18 +53,18 @@ public class MenuDao {
 				PreparedStatement pst2_sub=null;
 				
 				pst2=con.prepareStatement(query2);
-				pst2.setInt(1, Integer.parseInt(menu.getMainMat()));
+				pst2.setString(1, menu.getMainMat());
 				
 				int result2=pst2.executeUpdate();
 				
 				pst2_sub=con.prepareStatement(query2);
-				pst2_sub.setInt(1, Integer.parseInt(menu.getSubMat()));
+				pst2_sub.setString(1, menu.getSubMat());
 				
 				int result2_sub=pst2_sub.executeUpdate();
 			}
 			else{
 				pst2=con.prepareStatement(query2);
-				pst2.setInt(1, Integer.parseInt(menu.getMainMat()));
+				pst2.setString(1, menu.getMainMat());
 				
 				int result2=pst2.executeUpdate();
 			}
