@@ -120,7 +120,7 @@ a{
 <div id="top">
 		<%@ include file="../common/menubar.jsp"%>
 </div>
-	<form id="loginForm" name="loginFrom" action="<%=request.getContextPath()%>/login.me" method="post">
+	<form id="loginForm" name="loginFrom" action="" method="post">
 		<div id="wrap">
 			<h1 class="member" align="center">만수무강에 오신 것을 환영합니다.</h1>
 			<h4 class="member" align="center">건강한 식단을 간편하게 집에서 받아보세요!</h3>
@@ -141,6 +141,7 @@ a{
 						</div>
 						<script type="text/javascript">
 						function login(){
+							$("#loginForm").attr("action", '<%=request.getContextPath()%>/login.me');
 							$("#loginForm").submit();
 						}
 						</script>
@@ -156,7 +157,28 @@ a{
         Kakao.Auth.createLoginButton({
           container: '#kakao-login-btn',
           success: function(authObj) {
-            alert(JSON.stringify(authObj));
+            /* alert(JSON.stringify(authObj)); */
+        	  var accessToken=Kakao.Auth.getAccessToken();
+				var refreshToken=authObj.refresh_token;
+				
+				if(accessToken){
+					// 로그인 성공시, API를 호출합니다.
+					Kakao.API.request({
+						url : "insertkakaologin.me",
+						success : function(res) {
+							/* $("#id").val(res.id);
+							$("#nickname").val(res.properties.nickname);
+							$("#refreshToken").val(refreshToken);
+							$("#login").submit(); */
+							
+							console.log(res.id);
+							$("#id").val(res.id);
+						},
+						fail : function(error) {
+							alert(JSON.stringify(error));
+						}
+					});
+				}
           },
           fail: function(err) {
              alert(JSON.stringify(err));
@@ -182,6 +204,11 @@ a{
 						</div>
 					</div>
 				</div>
+		</div>
+		<div id="kakaoform">
+			<input type="hidden" name="id">
+			<input type="hidden" name="nickname">
+			<input type="hidden" name="refreshToken">
 		</div>
 	</form>
 

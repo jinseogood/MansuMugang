@@ -8,27 +8,31 @@ public class BuyAll implements java.io.Serializable{
 	private String menu_code;
 	private Date buy_date;
 	private String status;
+	private String diet_no;
+	private int price;
+	private String user_menu_name;
 	private int buy_info_no;
 	private String sort;
-	private int amount;
 	private String buy_sort;
-	private int price;
+	private String buy_status;
 	
 	public BuyAll(){}
 
-	public BuyAll(int buy_no, String u_code, String menu_code, Date buy_date, String status, int buy_info_no,
-			String sort, int amount, String buy_sort, int price) {
+	public BuyAll(int buy_no, String u_code, String menu_code, Date buy_date, String status, String diet_no, int price,
+			String user_menu_name, int buy_info_no, String sort, String buy_sort, String buy_status) {
 		super();
 		this.buy_no = buy_no;
 		this.u_code = u_code;
 		this.menu_code = menu_code;
 		this.buy_date = buy_date;
 		this.status = status;
+		this.diet_no = diet_no;
+		this.price = price;
+		this.user_menu_name = user_menu_name;
 		this.buy_info_no = buy_info_no;
 		this.sort = sort;
-		this.amount = amount;
 		this.buy_sort = buy_sort;
-		this.price = price;
+		this.buy_status = buy_status;
 	}
 
 	public int getBuy_no() {
@@ -51,6 +55,18 @@ public class BuyAll implements java.io.Serializable{
 		return status;
 	}
 
+	public String getDiet_no() {
+		return diet_no;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public String getUser_menu_name() {
+		return user_menu_name;
+	}
+
 	public int getBuy_info_no() {
 		return buy_info_no;
 	}
@@ -59,16 +75,12 @@ public class BuyAll implements java.io.Serializable{
 		return sort;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
 	public String getBuy_sort() {
 		return buy_sort;
 	}
 
-	public int getPrice() {
-		return price;
+	public String getBuy_status() {
+		return buy_status;
 	}
 
 	public void setBuy_no(int buy_no) {
@@ -91,6 +103,18 @@ public class BuyAll implements java.io.Serializable{
 		this.status = status;
 	}
 
+	public void setDiet_no(String diet_no) {
+		this.diet_no = diet_no;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public void setUser_menu_name(String user_menu_name) {
+		this.user_menu_name = user_menu_name;
+	}
+
 	public void setBuy_info_no(int buy_info_no) {
 		this.buy_info_no = buy_info_no;
 	}
@@ -99,25 +123,21 @@ public class BuyAll implements java.io.Serializable{
 		this.sort = sort;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
 	public void setBuy_sort(String buy_sort) {
 		this.buy_sort = buy_sort;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+	public void setBuy_status(String buy_status) {
+		this.buy_status = buy_status;
 	}
 
 	@Override
 	public String toString() {
 		return "BuyAll [buy_no=" + buy_no + ", u_code=" + u_code + ", menu_code=" + menu_code + ", buy_date=" + buy_date
-				+ ", status=" + status + ", buy_info_no=" + buy_info_no + ", sort=" + sort + ", amount=" + amount
-				+ ", buy_sort=" + buy_sort + ", price=" + price + "]";
+				+ ", status=" + status + ", diet_no=" + diet_no + ", price=" + price + ", user_menu_name="
+				+ user_menu_name + ", buy_info_no=" + buy_info_no + ", sort=" + sort + ", buy_sort=" + buy_sort
+				+ ", buy_status=" + buy_status + "]";
 	}
 
-	
 	
 }

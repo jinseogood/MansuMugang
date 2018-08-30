@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.msmg.member.model.vo.*" %>
+<% FindId fi = (FindId)request.getAttribute("fi");
+   System.out.println(fi); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>아이디/비밀번호 찾기</title>
- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   
 <style>
 	.clear{
@@ -45,6 +48,7 @@
 
 
 	<div align="center" id="main">
+	<form name="f" id="f" action="" method="post">
 		<table>
 		<tr>
 			<td>
@@ -58,14 +62,27 @@
 		<tr><td>　</td></tr>
 			<tr>
 				<td><label>이름 : </label></td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="userName" id="userName"></td>
 			</tr>
 			<tr>
-				<td><label>연락처 : </label></td>
-				<td><input type="text" name="phone"></td>
+				<td><label>질문 : </label></td>
+				<td>
+					<select name="joinQ">
+						<option value="Q0">질문을 선택해주세요.</option>
+						<option value="Q1">보물 1호는?</option>
+						<option value="Q2">세상에서 가장 좋아하는 장소는?</option>
+						<option value="Q3">반려동물의 이름은?</option>
+						<option value="Q4">가장 좋아하는 노래는?</option>
+						<option value="Q5">첫사랑의 이름은?</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><button>아이디 찾기</button></td>
+				<td><label>답 : </label></td>
+				<td><input type="text" name="joinA" id="joinA"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><button class="w3-button w3-ripple w3-yellow" onclick="findId();">아이디 찾기</button></td>
 			</tr>
 		</table>
 	</div>
@@ -102,9 +119,24 @@
 	</td>
 	</tr>
 	</table>
+	</form>
 	</div>
 		<div id="bottom">
 		<%@ include file="../common/footer.jsp" %>
 	</div>
+	<script>
+		function findId(){
+			$("#f").attr("action", '<%=request.getContextPath()%>/selectId.me');
+   	   		$("#f").submit();
+   	   		
+   	   		
+   	   		
+   	   		if('<%= fi.getUserId() %>' != null){
+   	   			alert(<%= fi.getUserName() %> + "님의 이메일은 " + <%= fi.getUserId() %> + "입니다.");
+   	   		}else{
+   	   			alert("일치하는 이메일이 없습니다.");
+   	   		}
+		}
+	</script>
 </body>
 </html>
