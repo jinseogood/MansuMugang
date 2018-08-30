@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.msmg.payment.model.vo.*, java.util.*,com.msmg.food.model.vo.*"%>
 <%
-	ArrayList<Buy> list = (ArrayList<Buy>)request.getAttribute("list");
-	System.out.println("sdasdsad" + list);
+	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
 %>
 
 <!DOCTYPE html>
@@ -158,9 +157,11 @@ section {
 	<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-
   		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
-  		  <li class="ui-widget-header"><a href="<%= request.getContextPath() %>/selectCart.fo">장바구니</a></li>
+  		  <li class="ui-widget-header">
+  		  <%-- <a href="<%= request.getContextPath() %>/selectCart.fo?ucode="<%=loginUser.getU_code() %>>장바구니</a> --%>
+  		  <a onclick="test();">장바구니</a>
+  		  </li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
   		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
@@ -168,12 +169,10 @@ section {
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
 	</div>
-	
-	
-	
                                                                                                                                                                                                                                                                                                                 	
 	<form>
 		<input type="hidden" name="ucode" value=<%= loginUser.getU_code() %>>
+
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
 					<td bgcolor=tomato><input type="checkbox" class="w3-button w3-ripple w3-yellow"><label>전체 선택</label></td>
@@ -182,13 +181,23 @@ section {
 					<td bgcolor=tomato>금액</td>
 					<td bgcolor=tomato><button class="w3-button w3-ripple w3-yellow">전체삭제</button></td>
 				</tr>
-				<tr>
-					<td><input type="checkbox"></td>
-					<td>상품명</td>
-					<td>날짜</td>
-					<td>원</td>
-					<td><button class="w3-button w3-ripple w3-yellow">삭제</button></td>
-				</tr>
+				
+				<% if(list == null){ %>
+					<tr>
+						<td colspan="5"><div align="center">장바구니 내역이 없습니다.</div></td>
+					</tr>
+				<% } else { %>
+					<% for(int i=0; i < list.size(); i++){ %>
+							<tr>
+								<td><input type="checkbox"></td>
+								<td><%= list.get(i).getUser_menu_name() %></td>
+								<td><%= list.get(i).getBuy_date() %></td>
+								<td><%= list.get(i).getPrice() %></td>
+								<td><button class="w3-button w3-ripple w3-yellow">삭제</button></td>
+							</tr>
+					<% } %>
+				<% } %>
+				
 				<tr>
 					<td></td>
 					<td></td>
@@ -212,7 +221,15 @@ section {
 			</table>
 		</form>
 	</div>
-	<div style="margin-bottom:400px"></div>
+	<div style="margin-bottom:400px"></div> 
+	<script>
+		function test(){
+			var a = "<%= loginUser.getU_code()%>";
+			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
+		}
+	
+	
+	</script>
 <%@ include file="../common/footer.jsp" %>
 
 </body>

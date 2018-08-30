@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.msmg.food.controller.MenuListG;
 import com.msmg.food.model.dao.SelectFoodDao;
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Cart;
 import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.MenuList;
@@ -25,10 +26,10 @@ public class FoodService {
 		return list;
 	}
 
-	public int insertMenuBuy(ArrayList<Buy> list, String user_date, String diet_name) {
+	public int insertMenuBuy(ArrayList<Buy> list, String user_date, String diet_name, int side) {
 		Connection con = getConnection();
 		
-		int result = new SelectFoodDao().insertMenuBuy(con, list, user_date, diet_name);
+		int result = new SelectFoodDao().insertMenuBuy(con, list, user_date, diet_name, side);
 		
 		close(con);
 		return result;
@@ -36,7 +37,7 @@ public class FoodService {
 
 	public ArrayList<MenuList> menuListG() {
 		
-		Connection con = getConnection();
+		Connection con = getConnection(); 
 		
 		ArrayList<MenuList> list = new SelectFoodDao().menuListG(con);
 		
@@ -89,14 +90,10 @@ public class FoodService {
 		return MenuList;
 	}
 
-	public ArrayList<Buy> selectList(String ucode) {
+	public ArrayList<Cart> selectList(String ucode) {
 		Connection con = getConnection();
 		
-		System.out.println("서비스에 ucode 전달" + ucode);
-		
-		ArrayList<Buy> list = new SelectFoodDao().selectList(con, ucode);
-		
-		System.out.println("서비스까지 왔나용?" + list);
+		ArrayList<Cart> list = new SelectFoodDao().selectList(con, ucode);
 		
 		close(con);
 		

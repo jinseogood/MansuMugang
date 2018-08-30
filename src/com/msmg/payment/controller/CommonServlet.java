@@ -84,7 +84,7 @@ public class CommonServlet extends HttpServlet {
 		String diet_no = request.getParameter("diet_no");
 		
 		Payment p = new Payment();
-		p.setDiet_no(diet_no);
+		p.setDiet_no(diet_no); 
 		
 		int result3 = new PaymentService().updateOrder(p);
 		
@@ -99,7 +99,12 @@ public class CommonServlet extends HttpServlet {
 		pi.setDiet_no(diet_no);
 				
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
-
+		
+		
+		//환불 테스트
+		String m_uid = request.getParameter("m_uid");
+		System.out.println("나와라라라라라라라" + m_uid);
+ 
 
 		
 		if(result > 0 || result2 > 0 || result3 > 0 || result4 > 0) {

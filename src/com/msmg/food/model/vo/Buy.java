@@ -7,7 +7,7 @@ public class Buy implements java.io.Serializable{
 	
 	public Buy(){}
 
-	public Buy(String ucode, String mcode) {
+	public Buy(String ucode, String mcode, int price) {
 		super();
 		this.ucode = ucode;
 		this.mcode = mcode;

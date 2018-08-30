@@ -153,7 +153,7 @@ body {
 		<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <li><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li><a onclick="test();">장바구니</a></li>
   		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
@@ -211,7 +211,7 @@ body {
 							 <!-- <div class="w3-button w3-ripple w3-yellow">주문취소</div> -->
 						</tr>
 				<% } %>
-			<% } %>
+			<% } %> 
 					</tbody>
 				</table>
 			</div>
@@ -224,7 +224,14 @@ body {
 		
 
 <!-- <div id="right"></div> -->
-
+	<script>
+		function test(){
+			var a = "<%= loginUser.getU_code()%>";
+			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
+		}
+	
+	
+	</script>
 <div class="footer">
 <%@ include file="../common/footer.jsp" %>
 </div>

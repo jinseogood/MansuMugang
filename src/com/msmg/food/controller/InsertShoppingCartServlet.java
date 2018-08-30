@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.food.model.service.FoodService;
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Cart;
 import com.msmg.payment.model.service.DestinationService;
 import com.msmg.payment.model.vo.Destination;
 
@@ -109,12 +110,13 @@ public class InsertShoppingCartServlet extends HttpServlet {
 		
 		String user_date = nowTime+ucode;
 		
-		int result = new FoodService().insertMenuBuy(list, user_date, diet_name);
+		int result = new FoodService().insertMenuBuy(list, user_date, diet_name, side);
 
+		ArrayList<Cart> list1 = new FoodService().selectList(ucode);
 		String page = "";
-		
+		 
 		if(result > 0){
-			page = "/views/member/ShoppingCart.jsp";
+			/*page = "/views/member/ShoppingCart.jsp";
 			request.setAttribute("totalprice", total_price);
 			request.setAttribute("day", day);
 			request.setAttribute("ggi", ggi);
@@ -123,7 +125,9 @@ public class InsertShoppingCartServlet extends HttpServlet {
 			request.setAttribute("desList", desList);
 			request.setAttribute("diet_no", user_date);
 			request.setAttribute("diet_name", diet_name);
-			request.setAttribute("msg", "장바구니로 이동");
+			request.setAttribute("msg", "장바구니로 이동");*/
+			page = "views/member/ShoppingCart.jsp";
+			request.setAttribute("list", list1);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "이동할 메뉴가 없습니다.");
