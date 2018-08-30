@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.msmg.food.model.service.FoodService;
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Cart;
 import com.msmg.member.model.vo.*;
 
 /**
@@ -37,19 +38,14 @@ public class SelectShoppingCartServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		String ucode = request.getParameter("user");
+		String ucode = request.getParameter("ucode");
 	
-		System.out.println("서블릿에서 유코드를 받아 올까용?" + ucode);
-		
-		ArrayList<Buy> list = new FoodService().selectList(ucode);
-		
-		System.out.println("서블릿에서 투어 끝낸 리스트를 담나용?" + list);
+		ArrayList<Cart> list = new FoodService().selectList(ucode);
 		
 		String page="";
 		
-
 			page = "views/member/ShoppingCart.jsp";
-			request.setAttribute("list", list);
+			request.setAttribute("list", list); 
 
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

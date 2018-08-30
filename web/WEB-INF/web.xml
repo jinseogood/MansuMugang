@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  <filter>
+  <filter> 
     <filter-name>cors</filter-name>
     <filter-class>com.msmg.project.util.domain.SimpleCORSFilter</filter-class>
 </filter>

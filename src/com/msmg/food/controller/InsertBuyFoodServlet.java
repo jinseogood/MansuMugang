@@ -100,7 +100,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		
 		String user_date = nowTime+ucode;
 		
-		int result = new FoodService().insertMenuBuy(list, user_date, diet_name);
+		int result = new FoodService().insertMenuBuy(list, user_date, diet_name, side);
 
 		String page = "";
 		
@@ -110,7 +110,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 			request.setAttribute("day", day);
 			request.setAttribute("ggi", ggi);
 			request.setAttribute("side", side);
-			request.setAttribute("buyList", list);
+			request.setAttribute("buyList", list); 
 			request.setAttribute("desList", desList);
 			request.setAttribute("diet_no", user_date);
 			request.setAttribute("msg", "결제페이지로 이동");

@@ -30,14 +30,14 @@ public class PaymentInfoDao {
 
 	public int insertPaymentInfo(Connection con, PaymentInfo pi) {
 		
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null; 
 /*		PreparedStatement pstmt2 = null;*/
 		
 		int result = 0;
 		
 		String query = prop.getProperty("insertPaymentInfo");
 /*		String query2 = prop.getProperty("updateMenuCount");*/
-		
+		 
 		try {
 			pstmt = con.prepareStatement(query);
 			

@@ -139,7 +139,7 @@ div a {
 </style>
 </head>
 <body>
-	<div id="outer">	
+	<div id="outer">	 
 		<%@ include file="../common/menubar.jsp"%>
 	</div>
 	<div id="main" align="center">

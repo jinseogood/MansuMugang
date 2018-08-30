@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.msmg.food.model.vo.Buy;
+import com.msmg.food.model.vo.Cart;
 import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.MenuList;
@@ -96,10 +97,11 @@ public class SelectFoodDao {
 		return list;
 	}
 
-	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date, String diet_name) {
+	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date, String diet_name, int side) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = prop.getProperty("insertCart");
+		String query = "";
+		
 		
 		/*long time = System.currentTimeMillis();
 		 
@@ -108,6 +110,16 @@ public class SelectFoodDao {
 		String nowTime = dayTime.format(new Date(time));
 		
 		String user_date = nowTime+list.get(0).getUcode();*/
+		
+		if(side == 1){
+		
+		query = prop.getProperty("insertCart1");
+		
+		} else {
+			
+			query = prop.getProperty("insertCart2");
+			
+		}
 		
 		for(int i = 0 ; i < list.size() ; i++){
 			try {
@@ -119,7 +131,7 @@ public class SelectFoodDao {
 				pstmt.setInt(4, list.get(i).getPrice());
 				pstmt.setString(5, diet_name);
 			
-				result = pstmt.executeUpdate();
+				result = pstmt.executeUpdate(); 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -127,6 +139,7 @@ public class SelectFoodDao {
 				close(pstmt);
 			}
 		}
+		
 		return result;
 	}
 
@@ -318,9 +331,9 @@ public class SelectFoodDao {
 		return MenuList;
 	}
 
-	public ArrayList<Buy> selectList(Connection con, String ucode) {
+	public ArrayList<Cart> selectList(Connection con, String ucode) {
 		
-		ArrayList<Buy> list = new ArrayList<Buy>();
+		ArrayList<Cart> list = new ArrayList<Cart>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -333,17 +346,17 @@ public class SelectFoodDao {
 			pstmt.setString(1, ucode);
 			
 			rset = pstmt.executeQuery();
-			System.out.println("와일문 들어가기 전");
 
 				while(rset.next()){
-					Buy b = new Buy();
-					System.out.println("다오에 와일문 안에 유코드는?" + ucode);
+					Cart c = new Cart();
 					
-					b.setUcode(rset.getString("u_code"));
+					c.setUcode(rset.getString("u_code"));
+					c.setBuy_date(rset.getDate("buy_date"));
+					c.setUser_menu_name(rset.getString("user_menu_name"));
+					c.setDiet_no(rset.getString("diet_no"));
+					c.setPrice(rset.getInt("price2"));
 					
-					System.out.println("통과각?");
-					list.add(b);
-					System.out.println("왜 안들어가..?" + list);
+					list.add(c);
 				}
 			
 			
@@ -355,10 +368,9 @@ public class SelectFoodDao {
 			close(pstmt);
 		}
 		
-		System.out.println("다오까지 왔나용?" + list);
-		
 		return list;
 	}
+
 
 }
 

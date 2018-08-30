@@ -362,7 +362,7 @@ section {
 												<input type="text" readonly name="postcode1" class="postcodify_postcode5" id="postcode">
 											
 											<!-- </form> -->
-											
+											 
 											<!-- <br> -->
 											<button id="postcodify_search_button" class="w3-button w3-ripple w3-yellow" type="button" >검색</button>
 											
@@ -704,10 +704,10 @@ $("#buyer_addr3").attr("value", addr3);
 																										var buy_sort = "카드결제";
 																										var sort = "결제";
 																										
-																										/* alert(m_uid);
-																										console.log(m_uid); */
+																										
+																										console.log(m_uid); 
 																											
-																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort);
+																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&m_uid="+m_uid);
 																											$("#com").submit();
 																										
 																									}  

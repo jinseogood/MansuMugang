@@ -130,7 +130,7 @@ a{
 							<label for="userId">아이디</label><input type="text" id="userId" name="userId">
 							<div class="clear"></div>
 							<label for="password" >비밀번호</label><input type="password" id="userPwd" name="userPwd">
-						</div>
+						</div> 
 						<div class="w3-button w3-ripple w3-yellow" onclick="login();">로그인</div>
 						<!-- <input type="submit" value="로그인" href="index.jsp" onclick="login();"> -->
 						<div class="clear"></div>

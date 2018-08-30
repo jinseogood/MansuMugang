@@ -79,7 +79,7 @@
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
   		  <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li class="ui-widget-header"><a onclick="test();">장바구니</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
   		  <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/qnaList.qna">1:1 문의내역</a></li>
@@ -133,6 +133,15 @@
 				</table>
 				</div>
 		</div>	
+		
+			<script>
+		function test(){
+			var a = "<%= loginUser.getU_code()%>";
+			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
+		}
+	
+	
+	</script>
 		<div class="footer">
 <%@ include file="../common/footer.jsp" %>
 </div>

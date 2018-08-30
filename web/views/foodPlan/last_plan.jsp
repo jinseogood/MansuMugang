@@ -433,12 +433,12 @@
 						result += mcode + ", ";
 						menu_price_list += menu_price + ", ";
 					}													
-					//console.log(result);
+					//console.log(result); 
 				}
 			}
 			console.log(result); 
 			var user = "<%= loginUser.getU_code() %>";
-			location.href="<%= request.getContextPath()%>/selectCart.fo?&user="+ user;
+			location.href="<%= request.getContextPath()%>/insertCart.fo?menu_result=" + menu_price_list + "&result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price + "&user=" + user;
 		});
 	});
 
