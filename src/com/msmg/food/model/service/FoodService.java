@@ -89,4 +89,19 @@ public class FoodService {
 		return MenuList;
 	}
 
+	public ArrayList<Buy> selectList(String ucode) {
+		Connection con = getConnection();
+		
+		System.out.println("서비스에 ucode 전달" + ucode);
+		
+		ArrayList<Buy> list = new SelectFoodDao().selectList(con, ucode);
+		
+		System.out.println("서비스까지 왔나용?" + list);
+		
+		close(con);
+		
+		return list;
+	}
+
+
 }

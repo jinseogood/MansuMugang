@@ -255,7 +255,7 @@
 			<div class = "btn2"><a href = "/msmg/index.jsp">
 				<img src = "/msmg/images/button/cancelbutton.png">
 			</a></div>
-			<div class = "btn2"><a href = "#">
+			<div class = "btn2 throw2"><a href = "#">
 				<img src = "/msmg/images/button/basketbutton.png">
 			</a></div>
 			<div class = "btn2 throw"><a href="#">
@@ -403,6 +403,42 @@
 			console.log(result); 
 			var user = "<%= loginUser.getU_code() %>";
 			location.href="<%= request.getContextPath()%>/insertBuy.fo?menu_result=" + menu_price_list + "&result=" + result + "&day=" + day + "&ggi=" + ggi + "&side=" + side + "&go=" + go + "&dang=" + dang + "&head=" + head + "&total_price=" + total_price + "&user=" + user;
+		});
+	});
+	
+	$(function(){
+		$(".throw2").click(function(){ 
+
+			var day = <%= sf.getDay() %>;
+			var ggi = <%= sf.getGgi() %>;
+			var side = <%= sf.getSide() %>;
+			var go = <%= sf.getGo() %>;
+			var dang = <%= sf.getDang() %>;
+			var head = <%= sf.getHead() %>;
+			var total_price = first_price;
+			console.log(total_price);
+			var result = "";
+			var menu_price_list = "";
+
+			for(var i = 1 ; i < (day*2); i+=2){
+				for(var j = 0 ; j < ggi; j++){
+					var mcode = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(4).val();
+					var menu_price = $("#test").children().eq(0).children().eq(i).children().eq(j).children().eq(1).children().eq(0).children().eq(0).children().eq(2).children().eq(2).text();
+					
+					if(i==day*2-1 && j == ggi-1){
+						
+						result += mcode;
+						menu_price_list += menu_price;
+					}else{
+						result += mcode + ", ";
+						menu_price_list += menu_price + ", ";
+					}													
+					//console.log(result);
+				}
+			}
+			console.log(result); 
+			var user = "<%= loginUser.getU_code() %>";
+			location.href="<%= request.getContextPath()%>/selectCart.fo?&user="+ user;
 		});
 	});
 

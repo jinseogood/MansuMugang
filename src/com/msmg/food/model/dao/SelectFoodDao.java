@@ -99,7 +99,7 @@ public class SelectFoodDao {
 	public int insertMenuBuy(Connection con, ArrayList<Buy> list, String user_date, String diet_name) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = prop.getProperty("insertMenuBuy");
+		String query = prop.getProperty("insertCart");
 		
 		/*long time = System.currentTimeMillis();
 		 
@@ -316,6 +316,48 @@ public class SelectFoodDao {
 		}
 		
 		return MenuList;
+	}
+
+	public ArrayList<Buy> selectList(Connection con, String ucode) {
+		
+		ArrayList<Buy> list = new ArrayList<Buy>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			System.out.println(query);
+			pstmt.setString(1, ucode);
+			
+			rset = pstmt.executeQuery();
+			System.out.println("와일문 들어가기 전");
+
+				while(rset.next()){
+					Buy b = new Buy();
+					System.out.println("다오에 와일문 안에 유코드는?" + ucode);
+					
+					b.setUcode(rset.getString("u_code"));
+					
+					System.out.println("통과각?");
+					list.add(b);
+					System.out.println("왜 안들어가..?" + list);
+				}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		System.out.println("다오까지 왔나용?" + list);
+		
+		return list;
 	}
 
 }

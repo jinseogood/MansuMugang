@@ -335,7 +335,7 @@ section {
 									<button class="w3-button w3-ripple w3-yellow"
 										data-toggle="modal" data-book-id="my_id_value"
 										class="identifyingClass" data-target="#myModal"
-										type="button" onclick="test();">목록</button> 
+										type="button">목록</button> 
 										<span>※기존에 보낸 주소 목록에서 선택하거나 직접 새로운 주소를 입력하세요.</span>
 								</td>
 							</tr>
@@ -610,17 +610,6 @@ $("#buyer_addr3").attr("value", addr3);
 			
 </form> 
 
-
-
-
-
-
-
-
-
-
-
-
 			<script>
 				
 
@@ -684,20 +673,19 @@ $("#buyer_addr3").attr("value", addr3);
 																				merchant_uid : 'merchant_'+ new Date().getTime(),
 																				name : "만수무강 식단",
 																				amount : <%=totalprice + 3500 %>,
-																				buyer_email : $('#buyer_email').val(),
 																				buyer_name : $('#receiver').val(),
-																				
 																				buyer_addr,
 																				buyer_postcode : $('#postcode').val()
 																			},
-																			function(rsp) { // callback\
+																			function(rsp) { // callback
+																				
 																				if (rsp.success) {
 																					
-																					
+																					var m_uid = rsp.merchant_uid;
 																					
 																					jQuery .ajax(
 																									{
-																										url : "http://localhost:8001/msmg/views/payment/paymentConfirm.jsp", // 가맹점 서버
+																										url : "http://localhost:8001/msmg/views/member/OrderHistory.jsp", // 가맹점 서버
 																										method : "POST",
 																										headers : {
 																											"Content-Type" : "application/json"
@@ -715,14 +703,17 @@ $("#buyer_addr3").attr("value", addr3);
 																										
 																										var buy_sort = "카드결제";
 																										var sort = "결제";
+																										
+																										/* alert(m_uid);
+																										console.log(m_uid); */
 																											
-																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&rsp.merchant_uid"+rsp.merchant_uid);
+																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort);
 																											$("#com").submit();
 																										
 																									}  
 																									
 																							
-																								 )
+																								 );
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 																				}
