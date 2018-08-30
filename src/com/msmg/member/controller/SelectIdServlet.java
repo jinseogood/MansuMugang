@@ -46,12 +46,12 @@ public class SelectIdServlet extends HttpServlet {
 		String page = "";
 		
 		
-		page = "views/member/FindIdPassword.jsp";
+		/*page = "views/member/FindIdPassword.jsp";
 		request.setAttribute("fi", fi);
 		
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		view.forward(request, response);*/
 		
 	}
 

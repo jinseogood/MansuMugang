@@ -99,8 +99,8 @@ public class BuyAll implements java.io.Serializable{
 		this.buy_date = buy_date;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatus(String string) {
+		this.status = string;
 	}
 
 	public void setDiet_no(String diet_no) {

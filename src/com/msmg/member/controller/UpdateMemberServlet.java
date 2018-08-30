@@ -37,6 +37,8 @@ public class UpdateMemberServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");
 		String userName = request.getParameter("userName");
 		String[] alCode = request.getParameterValues("allergy");
+		String joinQ = request.getParameter("joinQ");
+		String joinA = request.getParameter("joinA");
 		System.out.println("userPwd");
 		System.out.println("servlet alCode : " + alCode);
 		
@@ -44,6 +46,8 @@ public class UpdateMemberServlet extends HttpServlet {
 		m.setU_id(uid);
 		m.setU_pwd(userPwd);
 		m.setU_name(userName);
+		m.setU_question(joinQ);
+		m.setU_answer(joinA);
 		System.out.println("멤버서비스로 멤버m 보내기 전 " + m);
 		int result = new MemberService().updateMember(m);
 		

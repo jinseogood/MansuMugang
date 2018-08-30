@@ -44,7 +44,8 @@ public class MypageDao {
 			pstmt = con.prepareStatement(query);
 			
 			System.out.println("pstmt uCode 담기 전 까진ㄴ????");
-			pstmt.setString(1, ba.getU_code());
+			pstmt.setString(1, ba.getDiet_no());
+			pstmt.setString(2, ba.getU_code());
 		
 			System.out.println("알셋에 올리기 전 까진 오냐???????????????????");
 			rset = pstmt.executeQuery();

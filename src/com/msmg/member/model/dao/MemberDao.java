@@ -467,7 +467,9 @@ public class MemberDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setString(1, m.getU_pwd());
-			pstmt.setString(2, m.getU_id());
+			pstmt.setString(2, m.getU_question());
+			pstmt.setString(3, m.getU_answer());
+			pstmt.setString(4, m.getU_id());
 			
 			result = pstmt.executeUpdate();
 			
