@@ -51,7 +51,13 @@ public class SelectOneOrderList extends HttpServlet {
 				
 		PageInfo pi=new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		ArrayList<Order> oSelectList=new OrderService().selectOneOrderList(currentPage, limit, dietNo);
+		int totalPrice=new OrderService().selectOneOrderPriceList(dietNo);
 		
+		System.out.println("servlet dietNo : " + dietNo);
+		System.out.println("servlet currentPage : " + currentPage);
+		
+		System.out.println("listCount : " + listCount);
+		System.out.println("sPage : " + startPage + "/ ePage : " + endPage);
 		System.out.println("selectOneOrder Servlet : " + oSelectList);
 		
 		String page="";
@@ -60,6 +66,7 @@ public class SelectOneOrderList extends HttpServlet {
 			page="views/admin/detailOrder.jsp";
 			request.setAttribute("oSelectList", oSelectList);
 			request.setAttribute("pi", pi);
+			request.setAttribute("totalPrice", totalPrice);
 		}
 		else{
 			page="views/common/errorPage.jsp";

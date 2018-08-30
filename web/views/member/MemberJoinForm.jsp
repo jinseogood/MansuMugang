@@ -177,7 +177,7 @@ div a {
 							<th bgcolor=tomato>질문</th>
 							<td>
 							<select name="joinQ">
-								<option value="Q0">@질문을 선택해주세요@</option>
+								<option value="Q0">질문을 선택해주세요.</option>
 								<option value="Q1">보물 1호는?</option>
 								<option value="Q2">세상에서 가장 좋아하는 장소는?</option>
 								<option value="Q3">반려동물의 이름은?</option>
@@ -410,7 +410,7 @@ div a {
 							<input class="w3-button w3-ripple w3-yellow" type="reset" value="다시작성하기">
 							<!-- <input class="w3-button w3-ripple w3-yellow" type="submit" value="가입하기" onclick="validation();"> -->
 
-							<button  class="w3-button w3-ripple w3-yellow" onclick="join();">가입하기</button>
+							<button class="w3-button w3-ripple w3-yellow" onclick="join();">가입하기</button>
 	<!-- onclick="return validation();" -->
 
 						</td>
@@ -532,6 +532,7 @@ div a {
 							if (terms1 != '1' || terms2 != '2' || terms3 != '3') {
 								alert("필수약관에 동의해주세요."); return false;
 							} else {
+								
 								return true;
 							}
 						}

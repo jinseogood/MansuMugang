@@ -7,31 +7,10 @@
 <title>회원탈퇴</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script> 
-	$(function() {
 
-	    var $sidebar   = $("#sidebar"), 
-	        $window    = $(window),ㅇ
-	        offset     = $sidebar.offset(),
-	        topPadding = 15;
-
-	    $window.scroll(function() {
-	        if ($window.scrollTop() > offset.top) {
-	            $sidebar.stop().animate({
-	                marginTop: $window.scrollTop() - offset.top + topPadding
-	            });
-	        } else {
-	            $sidebar.stop().animate({
-	                marginTop: 0
-	            });
-	        }
-	    });
-	    
-	});
-</script>
 <style>
 .te {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 }
 
 .clear {
@@ -83,10 +62,8 @@ body {
 	<div id="sidebar">
         <ul>
           <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
-  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
+  		  <li><a href="/msmg/views/member/ShoppingCart.jsp">장바구니</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
@@ -94,6 +71,8 @@ body {
 	</div>
 
 	<div class="te" align="center" height="350px" width="450px">
+		<h1>회원탈퇴</h1>
+		<br>
 		<p>회원탈퇴시 같은 아이디로 재가입하실 수 없습니다.<br>
 		만수무강에서는 정산 등 확인사항이 있는 경우에는 바로 회원탈퇴가 진행되지 않습니다.<br><br>
 		1. 자동주문 종료가 되지 않는 경우<br>

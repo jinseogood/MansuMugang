@@ -5,10 +5,7 @@
 
 	System.out.println("selectList : " + oSelectList);
 
-	int totalPrice=0;
-	for(int i=0;i<oSelectList.size();i++){
-		totalPrice+=oSelectList.get(i).getPrice();
-	}
+	int totalPrice=(int)request.getAttribute("totalPrice");
 	
 	System.out.println("totalPrice : " + totalPrice);
 
@@ -37,6 +34,9 @@
 	#content-2{
 		width:510px;
 		height:50px;
+	}
+	#orderMTable > tbody > tr > td{
+		border:1px solid lightgray;
 	}
 	#orderMTable > thead > tr > th{
 		background:lightgray;
@@ -76,7 +76,7 @@
 			</table>
 		</div>
 		<div class="pageArea" align="center">
-			<button onclick="location.href='<%= request.getContextPath() %>/selectOneOrderList?dietNo=<%= oSelectList.get(0).getDiet_no() %>&currentPage=1'"><<</button>
+			<button onclick="goFirstPage(<%= oSelectList.get(0).getDiet_no() %>, <%= currentPage %>);"><<</button>
 			<%
 				if(currentPage <= 1){
 			%>
@@ -85,7 +85,7 @@
 				}
 				else{
 			%>
-					<button onclick="location.href='<%= request.getContextPath() %>/selectOneOrderList?dietNo=<%= oSelectList.get(0).getDiet_no() %>&currentPage=<%= currentPage - 1 %>'"><</button>
+					<button onclick="goPrevPage(<%= oSelectList.get(0).getDiet_no() %>, <%= currentPage %>);"><</button>
 			<%
 				}
 			%>
@@ -99,7 +99,7 @@
 					}
 					else{
 			%>
-						<button onclick="location.href='<%= request.getContextPath() %>/selectOneOrderList?dietNo=<%= oSelectList.get(0).getDiet_no() %>&currentPage=<%= p %>'"><%= p %></button>
+						<button onclick="goPage(<%= oSelectList.get(0).getDiet_no() %>, <%= p %>);"><%= p %></button>
 			<%		
 					}
 				}
@@ -113,11 +113,11 @@
 				}
 				else{
 			%>
-					<button onclick="location.href='<%= request.getContextPath() %>/selectOneOrderList?dietNo=<%= oSelectList.get(0).getDiet_no() %>&currentPage=<%= currentPage + 1 %>'">></button>
+					<button onclick="goNextPage(<%= oSelectList.get(0).getDiet_no() %>, <%= currentPage %>);">></button>
 			<%
 				}
 			%>
-			<button onclick="location.href='<%= request.getContextPath() %>/selectOneOrderList?dietNo=<%= oSelectList.get(0).getDiet_no() %>&currentPage=<%= maxPage %>'">>></button>
+			<button onclick="goLastPage(<%= oSelectList.get(0).getDiet_no() %>, <%= maxPage %>);">>></button>
 		</div>
 		<div id="content-2" align="center">
 			<table id="orderDTable">
@@ -140,5 +140,30 @@
 			</table>
 		</div>
 	</form>
+	<script>
+		function goFirstPage(dietNo, currentPage){
+			currentPage=1;
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage="+currentPage+"");
+		}
+		function goPrevPage(dietNo, currentPage){
+			currentPage=currentPage - 1;
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage="+currentPage+"");
+		}
+		function goPage(dietNo, p){
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage="+p+"");
+		}
+		function goNextPage(dietNo, currentPage){
+			currentPage=currentPage + 1;
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage="+currentPage+"");
+		}
+		function goLastPage(dietNo, maxPage){
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/selectOneOrderList?dietNo="+dietNo+"&currentPage="+maxPage+"");
+		}
+		function updateOStatus(){
+			var status=$("#orderDTable td").children("select").val();
+			console.log("status : " + status);
+			$("#detailForm").attr("action", "<%= request.getContextPath() %>/updateOrderStatus?dietNo=<%= oSelectList.get(0).getDiet_no() %>&status="+status+"");
+		}
+	</script>
 </body>
 </html>

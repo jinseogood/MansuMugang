@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 <title>만수무강 관리자</title>
 <style>
 	html{
@@ -39,10 +40,6 @@
 		width:100%;
 		height:10%;
 	}
-	#adminAlert{
-		width:8%;
-		height:100%;
-	}
 	#infoIcon{
 		width:100%;
 		height:80%;
@@ -69,17 +66,20 @@
 		height:100%;
 		overflow:auto;
 	}
-	#food, #board, #member{
+	#food, #board, #member, #stat{
 		height:200%;
 	}
-	#food-1, #food-2, #food-3{
-		height:33%;
+	#food-1, #food-2{
+		height:40%;
 	}
 	#board-1, #board-2, #board-3{
 		height:33%;
 	}
-	#member-1, #member-2, #member-3, #member-4{
-		height:25%;
+	#member-1, #member-2, #member-3{
+		height:33%;
+	}
+	#stat-1, #stat-2{
+		height:45%;
 	}
 	#baseTable{
 		border:1px solid lightgray;
@@ -87,38 +87,6 @@
 		height:25%;
 		margin-left:5%;
 		text-align:center;
-	}
-	#matpageArea{
-		width:100%;
-		height:20px;
-	}
-	#menupageArea{
-		width:100%;
-		height:20px;
-	}
-	#noticepageArea{
-		width:100%;
-		height:20px;
-	}
-	#infopageArea{
-		width:100%;
-		height:20px;
-	}
-	#reviewpageArea{
-		width:100%;
-		height:20px;
-	}
-	#memberpageArea{
-		width:100%;
-		height:20px;
-	}
-	#orderpageArea{
-		width:100%;
-		height:20px;
-	}
-	#qnapageArea{
-		width:100%;
-		height:20px;
 	}
 	#menuTable{
 		border:1px solid lightgray;
@@ -168,6 +136,38 @@
 		height:25%;
 		margin-left:5%;
 		text-align:center;
+	}
+	#matpageArea{
+		width:100%;
+		height:20px;
+	}
+	#menupageArea{
+		width:100%;
+		height:20px;
+	}
+	#noticepageArea{
+		width:100%;
+		height:20px;
+	}
+	#infopageArea{
+		width:100%;
+		height:20px;
+	}
+	#reviewpageArea{
+		width:100%;
+		height:20px;
+	}
+	#memberpageArea{
+		width:100%;
+		height:20px;
+	}
+	#orderpageArea{
+		width:100%;
+		height:20px;
+	}
+	#qnapageArea{
+		width:100%;
+		height:20px;
 	}
 </style>
 <script>
@@ -1490,6 +1490,153 @@
 		console.log(boardId);
 		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardId+"", "문의내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
+	
+	//판매 통계(고혈압)
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawGoSales);
+	
+	function drawGoSales(){
+		var data=new google.visualization.DataTable();
+		data.addColumn('timeofday', 'Time Of Day');
+		data.addColumn('number', 'Motivation Level');
+		
+		data.addRows([
+			[{v: [8, 0, 0], f: '8 am'}, 1],
+			[{v: [9, 0, 0], f: '9 am'}, 2],
+			[{v: [10, 0, 0], f: '10 am'}, 3],
+			[{v: [11, 0, 0], f: '11 am'}, 4],
+			[{v: [12, 0, 0], f: '12 pm'}, 5],
+			[{v: [13, 0, 0], f: '1 pm'}, 6],
+			[{v: [14, 0, 0], f: '2 pm'}, 7],
+			[{v: [15, 0, 0], f: '3 pm'}, 8],
+			[{v: [16, 0, 0], f: '4 pm'}, 9],
+			[{v: [17, 0, 0], f: '5 pm'}, 10],
+		]);
+		
+		var options={
+				title: '고혈압 메뉴 판매량',
+				hAxis: {
+					title: 'Bottom Title',
+					format: 'h:mm a',
+					viewWindow: {
+						min: [7, 30, 0],
+						max: [17, 30, 0]
+					}
+				},
+				vAxis: {
+					title: 'Left Title'
+				}
+		};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+		
+		chart.draw(data, options);
+	}
+	
+	//판매 통계(당뇨병)
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawDangSales);
+	
+	function drawDangSales(){
+		var data=new google.visualization.DataTable();
+		data.addColumn('timeofday', 'Time Of Day');
+		data.addColumn('number', 'Motivation Level');
+		
+		data.addRows([
+			[{v: [8, 0, 0], f: '8 am'}, 1],
+			[{v: [9, 0, 0], f: '9 am'}, 2],
+			[{v: [10, 0, 0], f: '10 am'}, 3],
+			[{v: [11, 0, 0], f: '11 am'}, 4],
+			[{v: [12, 0, 0], f: '12 pm'}, 5],
+			[{v: [13, 0, 0], f: '1 pm'}, 6],
+			[{v: [14, 0, 0], f: '2 pm'}, 7],
+			[{v: [15, 0, 0], f: '3 pm'}, 8],
+			[{v: [16, 0, 0], f: '4 pm'}, 9],
+			[{v: [17, 0, 0], f: '5 pm'}, 10],
+		]);
+		
+		var options={
+				title: '당뇨병 메뉴 판매량',
+				hAxis: {
+					title: 'Bottom Title',
+					format: 'h:mm a',
+					viewWindow: {
+						min: [7, 30, 0],
+						max: [17, 30, 0]
+					}
+				},
+				vAxis: {
+					title: 'Left Title'
+				}
+		};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleDangStat'));
+		
+		chart.draw(data, options);
+	}
+	
+	//판매 통계(뇌질환)
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawHeadSales);
+	
+	function drawHeadSales(){
+		var data=new google.visualization.DataTable();
+		data.addColumn('timeofday', 'Time Of Day');
+		data.addColumn('number', 'Motivation Level');
+		
+		data.addRows([
+			[{v: [8, 0, 0], f: '8 am'}, 1],
+			[{v: [9, 0, 0], f: '9 am'}, 2],
+			[{v: [10, 0, 0], f: '10 am'}, 3],
+			[{v: [11, 0, 0], f: '11 am'}, 4],
+			[{v: [12, 0, 0], f: '12 pm'}, 5],
+			[{v: [13, 0, 0], f: '1 pm'}, 6],
+			[{v: [14, 0, 0], f: '2 pm'}, 7],
+			[{v: [15, 0, 0], f: '3 pm'}, 8],
+			[{v: [16, 0, 0], f: '4 pm'}, 9],
+			[{v: [17, 0, 0], f: '5 pm'}, 10],
+		]);
+		
+		var options={
+				title: '뇌질환 메뉴 판매량',
+				hAxis: {
+					title: 'Bottom Title',
+					format: 'h:mm a',
+					viewWindow: {
+						min: [7, 30, 0],
+						max: [17, 30, 0]
+					}
+				},
+				vAxis: {
+					title: 'Left Title'
+				}
+		};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleHeadStat'));
+		
+		chart.draw(data, options);
+	}
+	
+	//결제 수단 통계
+	google.charts.load('current', {packages: ['corechart']});
+	google.charts.setOnLoadCallback(drawPayType);
+	
+	function drawPayType(){
+		var data=new google.visualization.arrayToDataTable([
+			['Task', 'Percent'],
+			['신용카드', 70],
+			['무통장입금', 30]
+		]);
+		
+		
+		var options={
+				title: '결제 수단',
+		};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('payTypeStat'));
+		
+		chart.draw(data, options);
+	}
 
 	$(function(){
 		
@@ -1640,14 +1787,9 @@
 </script>
 </head>
 <body>
-<% if(!loginUser.getU_name().equals("admin")){ %>
+<%-- <% if(loginUser != null && loginUser.getU_name().equals("admin")){ %> --%>
 	<div class="container">
   		<div id="info">
-  			<div id="infoAlert" align="right">
-  				<a href="#">
-	  				<img src="/msmg/images/admin/adminAlertIcon.png" id="adminAlert">
-  				</a>
-  			</div>
   			<div id="infoIcon">
 	  			<img src="/msmg/images/admin/adminUserIcon.png" id="adminIcon">
 	  			<br>
@@ -1662,6 +1804,7 @@
     		<li><a href="#food">메뉴 관리</a></li>
     		<li><a href="#board">게시판 관리</a></li>
     		<li><a href="#member">회원 관리</a></li>
+    		<li><a href="#stat">통계</a></li>
   		</ul>
 	</div>
 	<div class="content">
@@ -1743,9 +1886,6 @@
 				<div id="menupageArea" align="center">
 					
 				</div>
-			</div>
-			<div id="food-3">
-				<h4 style="margin-left:5%;">판매 통계</h4>
 			</div>
 		</div>
 		<div id="board">
@@ -1956,11 +2096,26 @@
 					
 				</div>
 			</div>
-			<div id="member-4">
+		</div>
+		<div id="stat">
+			<h2 style="margin-left:1%;">통계</h2>
+			<hr>
+			<div id="stat-1">
+				<h4 style="margin-left:5%;">판매 통계</h4>
+				<br>
+				<div id="saleGoStat"></div>
+				<br>
+				<div id="saleDangStat"></div>
+				<br>
+				<div id="saleHeadStat"></div>
+			</div>
+			<div id="stat-2">
 				<h4 style="margin-left:5%;">결제수단 통계</h4>
+				<br>
+				<div id="payTypeStat"></div>
 			</div>
 		</div>
 	</div>
-<% } else { System.out.println("관리자아님"); } %>
+<%-- <% } else { System.out.println("관리자 아님"); } %> --%>
 </body>
 </html>
