@@ -18,7 +18,7 @@ public class PaymentDao {
 	
 	   public PaymentDao(){
 		      String fileName = PhoneDao.class.getResource("/sql/payment/payment-query.properties").getPath();
-		      
+		       
 		      try {
 		         prop.load(new FileReader(fileName));
 		      } catch (FileNotFoundException e) {
@@ -33,6 +33,7 @@ public class PaymentDao {
 		int result = 0;
 		
 		String query = prop.getProperty("updateOrder");
+		System.out.println("updateOrder Dao 실행");
 		
 		try {
 			pstmt = con.prepareStatement(query);

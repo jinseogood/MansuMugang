@@ -21,8 +21,8 @@ import com.msmg.payment.model.vo.Destination;
 @WebServlet("/insertBuy.fo")
 public class InsertBuyFoodServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public InsertBuyFoodServlet() {
+ 
+    public InsertBuyFoodServlet() { 
         super();
     }
 
@@ -101,6 +101,7 @@ public class InsertBuyFoodServlet extends HttpServlet {
 		String user_date = nowTime+ucode;
 		
 		int result = new FoodService().insertMenuBuy(list, user_date, diet_name, side);
+		System.out.println("insertMenuBuy servlet 실행");
 
 		String page = "";
 		

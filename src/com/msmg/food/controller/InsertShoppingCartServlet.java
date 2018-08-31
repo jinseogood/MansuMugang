@@ -25,7 +25,7 @@ import com.msmg.payment.model.vo.Destination;
 public class InsertShoppingCartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
+    /** 
      * @see HttpServlet#HttpServlet()
      */
     public InsertShoppingCartServlet() {
@@ -113,6 +113,8 @@ public class InsertShoppingCartServlet extends HttpServlet {
 		int result = new FoodService().insertMenuBuy(list, user_date, diet_name, side);
 
 		ArrayList<Cart> list1 = new FoodService().selectList(ucode);
+		System.out.println("InsertShoppingCartServlet 실행");
+		
 		String page = "";
 		 
 		if(result > 0){

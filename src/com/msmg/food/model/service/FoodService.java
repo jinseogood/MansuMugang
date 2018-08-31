@@ -21,7 +21,7 @@ public class FoodService {
 		Connection con = getConnection();
 		
 		ArrayList<Menu> list = new SelectFoodDao().selectFood(con, sf, user);
-		
+		 
 		close(con);
 		return list;
 	}
@@ -30,6 +30,7 @@ public class FoodService {
 		Connection con = getConnection();
 		
 		int result = new SelectFoodDao().insertMenuBuy(con, list, user_date, diet_name, side);
+		System.out.println("insertMenuBuy Service 실행");
 		
 		close(con);
 		return result;
@@ -94,6 +95,7 @@ public class FoodService {
 		Connection con = getConnection();
 		
 		ArrayList<Cart> list = new SelectFoodDao().selectList(con, ucode);
+		System.out.println("장바구니로 넣는 FoodService 실행");
 		
 		close(con);
 		
