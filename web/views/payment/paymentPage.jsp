@@ -683,6 +683,8 @@ $("#buyer_addr3").attr("value", addr3);
 																					
 																					var m_uid = rsp.merchant_uid;
 																					
+											 
+
 
 																										var buy_sort = "카드결제";
 																										var sort = "결제";
@@ -692,6 +694,7 @@ $("#buyer_addr3").attr("value", addr3);
 																											
 																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&m_uid="+m_uid);
 																											$("#com").submit();
+
 
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);

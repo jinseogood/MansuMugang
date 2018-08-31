@@ -44,8 +44,7 @@ public class MypageDao {
 			pstmt = con.prepareStatement(query);
 			
 			System.out.println("pstmt uCode 담기 전 까진ㄴ????");
-			pstmt.setString(1, ba.getDiet_no());
-			pstmt.setString(2, ba.getU_code());
+			pstmt.setString(1, ba.getU_code());
 		
 			System.out.println("알셋에 올리기 전 까진 오냐???????????????????");
 			rset = pstmt.executeQuery();
@@ -56,16 +55,12 @@ public class MypageDao {
 			if(rset.next()){
 				b = new BuyAll();
 				
-				b.setBuy_no(rset.getInt("buy_no"));
 				b.setU_code(rset.getString("u_code"));
-				b.setMenu_code(rset.getString("menu_code"));
 				b.setBuy_date(rset.getDate("buy_date"));
 				b.setStatus(rset.getString("status"));
 				b.setDiet_no(rset.getString("diet_no"));
-				b.setPrice(rset.getInt("price"));
+				b.setPrice(rset.getInt("price2"));
 				b.setUser_menu_name(rset.getString("user_menu_name"));
-				b.setBuy_info_no(rset.getInt("buy_info_no"));
-				b.setSort(rset.getString("sort"));
 				b.setBuy_sort(rset.getString("buy_sort"));
 				b.setBuy_status(rset.getString("buy_status"));
 				
