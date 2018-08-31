@@ -1,27 +1,23 @@
 package com.msmg.board.information.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.msmg.board.information.model.service.BoardService;
-
 /**
- * Servlet implementation class DeleteReplyServlet
+ * Servlet implementation class UpdateReplyFormServlet
  */
-@WebServlet("/deleteReply.in")
-public class DeleteReplyServlet extends HttpServlet {
+@WebServlet("/updateReplyForm.in")
+public class UpdateReplyFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteReplyServlet() {
+    public UpdateReplyFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +26,21 @@ public class DeleteReplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bid = request.getParameter("num");
+		System.out.println("댓글 수정 폼 서블릿");
+		
+		String num = request.getParameter("num");
+		String content = request.getParameter("content");
 		String bno = request.getParameter("bno");
-		System.out.println("댓글 삭제 : " + bid);
 		
-		int result = new BoardService().deleteReply(bid);
+		System.out.println("num : " + num);
+		System.out.println("content : " + content);
+		System.out.println("bno : " + bno);
 		
-		String page = "";
-		
-		if(result > 0) {
-			response.sendRedirect(request.getContextPath() + "/selectOne.bo?num=" + bno);
-		}else {
-			request.setAttribute("msg", "댓글 삭제 실패!");
-			request.getRequestDispatcher("views/common/errorPge.jsp").forward(request, response);
-		}
-	
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

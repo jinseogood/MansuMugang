@@ -246,7 +246,6 @@ public class BoardDao {
 				
 				list.add(r);
 			}
-			/*System.out.println(list);*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
