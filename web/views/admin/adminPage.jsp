@@ -78,8 +78,12 @@
 	#member-1, #member-2, #member-3{
 		height:33%;
 	}
-	#stat-1, #stat-2{
-		height:60%;
+	#stat-1, #stat-2, #stat-3{
+		height:33%;
+	}
+	#dietTypeStat, #payTypeStat{
+		width:900px;
+		height:500px;
 	}
 	#baseTable{
 		border:1px solid lightgray;
@@ -1491,128 +1495,118 @@
 		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardId+"", "문의내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
-	//판매 통계(고혈압)
+	//판매 통계
 	google.charts.load('current', {packages: ['corechart', 'bar']});
-	google.charts.setOnLoadCallback(drawGoSales);
+	google.charts.setOnLoadCallback(drawSales);
 	
-	function drawGoSales(){
-		var data=new google.visualization.DataTable();
-		data.addColumn('timeofday', 'Time Of Day');
-		data.addColumn('number', 'Motivation Level');
+	function drawSales(){
 		
-		data.addRows([
-			[{v: [8, 0, 0], f: '8 am'}, 1],
-			[{v: [9, 0, 0], f: '9 am'}, 2],
-			[{v: [10, 0, 0], f: '10 am'}, 3],
-			[{v: [11, 0, 0], f: '11 am'}, 4],
-			[{v: [12, 0, 0], f: '12 pm'}, 5],
-			[{v: [13, 0, 0], f: '1 pm'}, 6],
-			[{v: [14, 0, 0], f: '2 pm'}, 7],
-			[{v: [15, 0, 0], f: '3 pm'}, 8],
-			[{v: [16, 0, 0], f: '4 pm'}, 9],
-			[{v: [17, 0, 0], f: '5 pm'}, 10],
-		]);
+		var jsonData=$.ajax({
+			url:"/msmg/statMenuCount",
+			dataType:"json",
+			async:false
+		});
 		
-		var options={
-				title: '고혈압 메뉴 판매량',
-				hAxis: {
-					title: 'Bottom Title',
-					format: 'h:mm a',
-					viewWindow: {
-						min: [7, 30, 0],
-						max: [17, 30, 0]
-					}
-				},
-				vAxis: {
-					title: 'Left Title'
-				}
-		};
+		console.log("menu : " + jsonData);
+		console.log(jsonData);
 		
-		var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+		console.log("menu type : " + typeof(jsonData));
 		
-		chart.draw(data, options);
+		console.log("menu length : " + jsonData.length);
+		
+		/* var obj = JSON.parse(jsonData, function (key, value) {
+	    	if (key == "saleCount") {
+	        	return value;
+	    	} else {
+	        	return value;
+	    }});
+		
+		console.log(obj.menuName);
+		console.log(obj.saleCount); */
+		
+		for(var key in jsonData){
+			console.log(key);
+		}
+		
+		/* for(var i=0;i<4;i++){
+			console.log(obj.menuName);			
+			console.log(obj.saleCount);
+		} */
+		
+		/* $.each(jsonData, function(index, value){
+			console.log(value.saleCount);
+			console.log(value.menuName);
+		}); */
+		
+		/* var obj = JSON.parse(jsonData, function (key, value) {
+	    	if (key == "") {
+	        	return value;
+	    	} else {
+	        	return value;
+	    }});
+		
+		var data=new google.visualization.arrayToDataTable([
+			['메뉴명', '판매량'],
+			['신용카드', obj.card],
+			['무통장입금', obj.money]
+		]); */
+		
+		/* var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+		
+		chart.draw(data, options); */
 	}
 	
-	//판매 통계(당뇨병)
-	google.charts.load('current', {packages: ['corechart', 'bar']});
-	google.charts.setOnLoadCallback(drawDangSales);
+	//식단 통계
+	google.charts.load('current', {packages: ['corechart']});
+	google.charts.setOnLoadCallback(drawDietType);
 	
-	function drawDangSales(){
-		var data=new google.visualization.DataTable();
-		data.addColumn('timeofday', 'Time Of Day');
-		data.addColumn('number', 'Motivation Level');
+	function drawDietType(){
+		var jsonData=$.ajax({
+			url:"/msmg/statDietType",
+			dataType:"json",
+			async:false
+		}).responseText;
 		
-		data.addRows([
-			[{v: [8, 0, 0], f: '8 am'}, 1],
-			[{v: [9, 0, 0], f: '9 am'}, 2],
-			[{v: [10, 0, 0], f: '10 am'}, 3],
-			[{v: [11, 0, 0], f: '11 am'}, 4],
-			[{v: [12, 0, 0], f: '12 pm'}, 5],
-			[{v: [13, 0, 0], f: '1 pm'}, 6],
-			[{v: [14, 0, 0], f: '2 pm'}, 7],
-			[{v: [15, 0, 0], f: '3 pm'}, 8],
-			[{v: [16, 0, 0], f: '4 pm'}, 9],
-			[{v: [17, 0, 0], f: '5 pm'}, 10],
+		console.log(jsonData);
+		
+		console.log("diet type : " + typeof(jsonData));
+		
+		var obj = JSON.parse(jsonData, function (key, value) {
+    	if (key == "go") {
+        	return value;
+    	} else if(key == "dang"){
+        	return value;
+    	} else if(key == "head"){
+    		return value;
+    	} else if(key == "gd"){
+    		return value;
+    	} else if(key == "gh"){
+    		return value;
+    	} else if(key == "dh"){
+    		return value;
+    	} else{
+			return value;
+    	}
+    	
+    	});
+		
+		var data=new google.visualization.arrayToDataTable([
+			['식단명', '건 수'],
+			['고혈압 식단', obj.go],
+			['당뇨병 식단', obj.dang],
+			['뇌질환 식단', obj.head],
+			['고혈압, 당뇨병 식단', obj.gd],
+			['고혈압, 뇌질환 식단', obj.gh],
+			['당뇨병, 뇌질환 식단', obj.dh],
+			['고혈압, 당뇨병, 뇌질환 식단', obj.gdh]
 		]);
 		
-		var options={
-				title: '당뇨병 메뉴 판매량',
-				hAxis: {
-					title: 'Bottom Title',
-					format: 'h:mm a',
-					viewWindow: {
-						min: [7, 30, 0],
-						max: [17, 30, 0]
-					}
-				},
-				vAxis: {
-					title: 'Left Title'
-				}
-		};
-		
-		var chart=new google.visualization.ColumnChart(document.getElementById('saleDangStat'));
-		
-		chart.draw(data, options);
-	}
-	
-	//판매 통계(뇌질환)
-	google.charts.load('current', {packages: ['corechart', 'bar']});
-	google.charts.setOnLoadCallback(drawHeadSales);
-	
-	function drawHeadSales(){
-		var data=new google.visualization.DataTable();
-		data.addColumn('timeofday', 'Time Of Day');
-		data.addColumn('number', 'Motivation Level');
-		
-		data.addRows([
-			[{v: [8, 0, 0], f: '8 am'}, 1],
-			[{v: [9, 0, 0], f: '9 am'}, 2],
-			[{v: [10, 0, 0], f: '10 am'}, 3],
-			[{v: [11, 0, 0], f: '11 am'}, 4],
-			[{v: [12, 0, 0], f: '12 pm'}, 5],
-			[{v: [13, 0, 0], f: '1 pm'}, 6],
-			[{v: [14, 0, 0], f: '2 pm'}, 7],
-			[{v: [15, 0, 0], f: '3 pm'}, 8],
-			[{v: [16, 0, 0], f: '4 pm'}, 9],
-			[{v: [17, 0, 0], f: '5 pm'}, 10],
-		]);
 		
 		var options={
-				title: '뇌질환 메뉴 판매량',
-				hAxis: {
-					title: 'Bottom Title',
-					format: 'h:mm a',
-					viewWindow: {
-						min: [7, 30, 0],
-						max: [17, 30, 0]
-					}
-				},
-				vAxis: {
-					title: 'Left Title'
-				}
+				pieHole: 0.3,
 		};
 		
-		var chart=new google.visualization.ColumnChart(document.getElementById('saleHeadStat'));
+		var chart=new google.visualization.PieChart(document.getElementById('dietTypeStat'));
 		
 		chart.draw(data, options);
 	}
@@ -1630,8 +1624,6 @@
 		
 		console.log(jsonData);
 		
-		/* var data=new google.visualization.DataTable(jsonData); */
-		
 		var obj = JSON.parse(jsonData, function (key, value) {
     	if (key == "money") {
         	return value;
@@ -1640,17 +1632,17 @@
     	}});
 		
 		var data=new google.visualization.arrayToDataTable([
-			['Type', '건 수'],
+			['결제수단', '건 수'],
 			['신용카드', obj.card],
 			['무통장입금', obj.money]
 		]);
 		
 		
 		var options={
-				title: '결제 수단',
+				is3D: true
 		};
 		
-		var chart=new google.visualization.ColumnChart(document.getElementById('payTypeStat'));
+		var chart=new google.visualization.PieChart(document.getElementById('payTypeStat'));
 		
 		chart.draw(data, options);
 	}
@@ -2118,15 +2110,16 @@
 			<h2 style="margin-left:1%;">통계</h2>
 			<hr>
 			<div id="stat-1">
-				<h4 style="margin-left:5%;">판매 통계</h4>
+				<h4 style="margin-left:5%;">메뉴 판매 통계</h4>
 				<br>
 				<div id="saleGoStat"></div>
-				<br>
-				<div id="saleDangStat"></div>
-				<br>
-				<div id="saleHeadStat"></div>
 			</div>
 			<div id="stat-2">
+				<h4 style="margin-left:5%;">식단 통계</h4>
+				<br>
+				<div id="dietTypeStat"></div>
+			</div>
+			<div id="stat-3">
 				<h4 style="margin-left:5%;">결제수단 통계</h4>
 				<br>
 				<div id="payTypeStat"></div>
