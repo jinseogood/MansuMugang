@@ -171,11 +171,12 @@ body {
 				<table cellpadding="0" cellspacing="0" border="0">
 					<thead>
 						<tr>
-							<th>주문일자</th>
-							<th>상품명</th>
+							<th width="150px">주문일자</th>
+							<th width="220px">상품명</th>
 							<th>결제금액</th>
 							<th>결제방법</th>
 							<th>주문상태</th>
+							<th  width="300px"> </th>
 						</tr>
 					</thead>
 				</table>
@@ -188,23 +189,23 @@ body {
 							<td colspan="6"><div align="center">주문하신 내역이 없습니다.</div></td>
 						</tr>
 			<% }else{ %>
-				<% for(BuyAll b : bList){ %>
+				<% for(int i = 0; i < bList.size(); i++){ %>
 						<tr>  
-							<td><div align="center"><%= b.getBuy_date() %></div></td>
-							<td><div align="center"><%= b.getUser_menu_name() %></div></td>
-							<td><div align="center"><%= b.getPrice() %>원</div></td>
-							<td><div align="center"><%= b.getBuy_sort() %></div></td>
+							<td width="150px"><div align="center"><%= bList.get(i).getBuy_date() %></div></td>
+							<td width="220px"><div align="center"><%= bList.get(i).getUser_menu_name() %></div></td>
+							<td><div align="center"><%= bList.get(i).getPrice() + 3500 %>원</div></td>
+							<td><div align="center"><%= bList.get(i).getBuy_sort() %></div></td>
 							<td>
-								<%if(b.getStatus().equals("2")) {%>
-									<div align="center"><%= b.getBuy_status() %></div>
-									<div class="w3-button w3-ripple w3-yellow">주문취소</div>
-								<% }else if(b.getStatus().equals("5")) {%>
-									<div align="center"><%= b.getBuy_status() %></div> 
-									<div class="w3-button w3-ripple w3-yellow"><a href="/msmg/views/board/review/reviewThumbnailInsertForm.jsp">후기작성</a></div> 
+								<%if(bList.get(i).getStatus().equals("2")) {%>
+									<div align="center"><%= bList.get(i).getBuy_status() %></div></td>
+									<td width="300px"><div class="w3-button w3-ripple w3-yellow" align="center">주문취소</div>
+								<% }else if(bList.get(i).getStatus().equals("5")) {%>
+									<div align="center"><%= bList.get(i).getBuy_status() %></div></td>
+									<td width="300px"><div class="w3-button w3-ripple w3-yellow"><a href="/msmg/views/board/review/reviewThumbnailInsertForm.jsp">후기작성</a></div> 
 									<div class="w3-button w3-ripple w3-yellow">교환문의</div> 
 									<div class="w3-button w3-ripple w3-yellow">환불문의</div> 
 								<% } else { %>
-									<div align="center"><%= b.getBuy_status() %></div> 
+									<div align="center"><%= bList.get(i).getBuy_status() %></div> 
 								<% } %>
 							</td>
 							

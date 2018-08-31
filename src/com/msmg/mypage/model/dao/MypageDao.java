@@ -43,7 +43,7 @@ public class MypageDao {
 			System.out.println("트라이캐치 안들어오지!!!!");
 			pstmt = con.prepareStatement(query);
 			
-			System.out.println("pstmt uCode 담기 전 까진ㄴ????");
+			System.out.println("pstmt uCode 담기 전 까진ㄴ????" + ba.getU_code());
 			pstmt.setString(1, ba.getU_code());
 		
 			System.out.println("알셋에 올리기 전 까진 오냐???????????????????");
@@ -52,7 +52,7 @@ public class MypageDao {
 			bList = new ArrayList<BuyAll>();
 			System.out.println("여기까지라도 오냐고");
 			
-			if(rset.next()){
+			while(rset.next()){
 				b = new BuyAll();
 				
 				b.setU_code(rset.getString("u_code"));
