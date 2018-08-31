@@ -1505,7 +1505,7 @@
 			url:"/msmg/statMenuCount",
 			dataType:"json",
 			async:false
-		});
+		}).responseText;
 		
 		console.log("menu : " + jsonData);
 		console.log(jsonData);
@@ -1514,46 +1514,69 @@
 		
 		console.log("menu length : " + jsonData.length);
 		
-		/* var obj = JSON.parse(jsonData, function (key, value) {
-	    	if (key == "saleCount") {
-	        	return value;
-	    	} else {
-	        	return value;
-	    }});
+		var jsonSlice=jsonData.slice(1, jsonData.length-1);
 		
-		console.log(obj.menuName);
-		console.log(obj.saleCount); */
+		console.log(jsonSlice);
 		
-		for(var key in jsonData){
-			console.log(key);
+		var arr=jsonSlice.split("},{");
+		
+		var arrKey=[];
+		var arrValue=[];
+		
+		for(var i=0;i<arr.length;i++){
+			var arrSlice;
+			var arrParse;
+			var result;
+			if(i==0){
+				arrSlice=arr[i].slice(1, arr[i].length);
+				arrParse="{"+arrSlice+"}";
+				result=JSON.parse(arrParse);
+				
+			}
+			else if(i==arr.length-1){
+				arrSlice=arr[i].slice(0, arr[i].length);
+				arrParse="{"+arrSlice;
+				result=JSON.parse(arrParse);
+				
+			}
+			else{
+				arrParse="{"+arr[i]+"}";
+				result=JSON.parse(arrParse);
+				
+			}
+			
+			arrKey.push(result.menu_name);
+			arrValue.push(result.sale_count);
+			
+			console.log(result.menu_name);
+			console.log(result.sale_count);
 		}
 		
-		/* for(var i=0;i<4;i++){
-			console.log(obj.menuName);			
-			console.log(obj.saleCount);
-		} */
+		console.log("arrKey length : " + arrKey.length);
+		console.log("arrValue length : " + arrValue.length);
 		
-		/* $.each(jsonData, function(index, value){
-			console.log(value.saleCount);
-			console.log(value.menuName);
-		}); */
+		var totalArr=[['메뉴명', '판매량']];
+		console.log(totalArr[0][0]);
+		console.log(totalArr[0][1]);
+		for(var i=1;i<=arrKey.length;i++){
+			for(var k=0;k<2;k++){
+				totalArr[i]=[arrKey[i-1], arrValue[i-1]];
+				console.log("totalArr[" + i + "][" + k + "] : " + totalArr[i][k]);
+			}
+		}
 		
-		/* var obj = JSON.parse(jsonData, function (key, value) {
-	    	if (key == "") {
-	        	return value;
-	    	} else {
-	        	return value;
-	    }});
+		console.log(totalArr);
 		
-		var data=new google.visualization.arrayToDataTable([
-			['메뉴명', '판매량'],
-			['신용카드', obj.card],
-			['무통장입금', obj.money]
-		]); */
 		
-		/* var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+		var data=new google.visualization.arrayToDataTable(totalArr);
 		
-		chart.draw(data, options); */
+		console.log(data);
+		
+		var options={};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+		
+		chart.draw(data, options);
 	}
 	
 	//식단 통계
@@ -2111,6 +2134,7 @@
 			<hr>
 			<div id="stat-1">
 				<h4 style="margin-left:5%;">메뉴 판매 통계</h4>
+				<button onclick="drawSales();">갱신</button>
 				<br>
 				<div id="saleGoStat"></div>
 			</div>
