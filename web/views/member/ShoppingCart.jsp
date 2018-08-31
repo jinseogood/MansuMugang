@@ -162,7 +162,8 @@ section {
   		  <%-- <a href="<%= request.getContextPath() %>/selectCart.fo?ucode="<%=loginUser.getU_code() %>>장바구니</a> --%>
   		  <a onclick="test();">장바구니</a>
   		  </li>
-  		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
+  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
+  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
   		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
@@ -174,7 +175,7 @@ section {
 
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
-					<td bgcolor=tomato width=100px;><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"/><label>전체 선택</label></td>
+					<td bgcolor=tomato width=100px;><input type="checkbox"/>전체선택</td>
 					<td bgcolor=tomato>상품</td>
 					<td bgcolor=tomato>담은 날짜</td>
 					<td bgcolor=tomato>금액</td>
@@ -226,40 +227,6 @@ section {
 			var a = "<%= loginUser.getU_code()%>";
 			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
 		}
-		
-		function checkAll(){
-		      if( $("#th_checkAll").is(':checked') ){
-		        $("input[name=checkRow]").prop("checked", true);
-		      }else{
-		        $("input[name=checkRow]").prop("checked", false);
-		      }
-		}
-
-		function deleteAction(){
-			  var checkRow = "";
-			  $( "input[name='checkRow']:checked" ).each (function (){
-			    checkRow = checkRow + $(this).val()+"," ;
-			  });
-			  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
-			 
-			  if(checkRow == ''){
-			    alert("삭제할 대상을 선택하세요.");
-			    return false;
-			  }
-			  console.log("### checkRow => {}"+checkRow);
-			 
-			  if(confirm("정보를 삭제 하시겠습니까?")){
-			      
-/* 			      //삭제처리 후 다시 불러올 리스트 url      
-			      var url = document.location.href;
-			      var page = $("#page").val();
-			      var saleType = $("#saleType").val();
-			      var schtype = $("#schtype").val();
-			      var schval = $("#schval").val();
-			      location.href="${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url+"&page="+page+"&saleType="+saleType+"schtype="+schtype+"schval="+schval;  */     
-			  }
-			}
-	
 	</script>
 <%@ include file="../common/footer.jsp" %>
 
