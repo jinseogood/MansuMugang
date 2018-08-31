@@ -17,7 +17,7 @@ public class DestinationDao {
 	 
 	public DestinationDao(){
 		String fileName = DestinationDao.class.getResource("/sql/destination/destination-query.properties").getPath();
-		
+		 
 		try {
 			prop.load(new FileReader(fileName));
 		} catch (IOException e) {
@@ -28,11 +28,14 @@ public class DestinationDao {
 
 	public int insertDestination(Connection con, Destination d) {
 		
+		System.out.println("배송지 입력 실행");
+		
 		PreparedStatement pstmt = null;
 
 		int result = 0;
 		
 		String query = prop.getProperty("insertDestination");
+		System.out.println("insertDestination 실행");
 		
 		try {
 			pstmt = con.prepareStatement(query);

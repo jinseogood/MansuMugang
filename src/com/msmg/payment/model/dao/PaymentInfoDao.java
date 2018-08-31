@@ -17,7 +17,7 @@ public class PaymentInfoDao {
 	
 	public PaymentInfoDao(){
 	      String fileName = PaymentInfoDao.class.getResource("/sql/payment/paymentInfo-query.properties").getPath();
-	      
+	       
 	      try {
 	         prop.load(new FileReader(fileName));
 	      } catch (FileNotFoundException e) {
@@ -37,6 +37,7 @@ public class PaymentInfoDao {
 		
 		String query = prop.getProperty("insertPaymentInfo");
 /*		String query2 = prop.getProperty("updateMenuCount");*/
+		System.out.println("insertPaymentInfo Dao 실행");
 		 
 		try {
 			pstmt = con.prepareStatement(query);
@@ -59,6 +60,30 @@ public class PaymentInfoDao {
 		
 		
 		
+	}
+
+	public int updateMenuCount(Connection con) {
+		PreparedStatement pstmt = null; 
+
+		int result = 0;
+		
+		String query = prop.getProperty("updateMenuCount");
+		System.out.println("updateMenuCount Dao 실행");
+		 
+		try {
+			pstmt = con.prepareStatement(query);
+
+			
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+			
+		return result;
 	}
 
 }
