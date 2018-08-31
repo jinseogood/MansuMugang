@@ -27,7 +27,7 @@ public class SelectFoodDao {
 	public SelectFoodDao(){
 		String fileName = SelectFoodDao.class.getResource("/sql/food/food-query.properties").getPath();
 		
-		try {
+		try { 
 			prop.load(new FileReader(fileName));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -117,10 +117,12 @@ public class SelectFoodDao {
 		if(side == 1){
 		
 		query = prop.getProperty("insertCart1");
+		System.out.println("insertCart1 실행");
 		
 		} else {
 			
 			query = prop.getProperty("insertCart2");
+			System.out.println("insertCart2 실행");
 			
 		}
 		
@@ -341,6 +343,7 @@ public class SelectFoodDao {
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("selectList");
+		System.out.println("Cart selectList query selectList 실행");
 		
 		
 		try {

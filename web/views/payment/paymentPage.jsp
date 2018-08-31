@@ -9,7 +9,7 @@
 	int banchan = (int)request.getAttribute("side");
 	String diet_no = String.valueOf(request.getAttribute("diet_no"));
 	
-	
+	 
 	String side = "";
 	
 	if(banchan == 0){
@@ -676,22 +676,26 @@ $("#buyer_addr3").attr("value", addr3);
 																				buyer_name : $('#receiver').val(),
 																				buyer_addr,
 																				buyer_postcode : $('#postcode').val()
-																			},
+																			}, 
 																			function(rsp) { // callback
 																				
 																				if (rsp.success) {
 																					
 																					var m_uid = rsp.merchant_uid;
 																					
-																					var buy_sort = "카드결제";
-																					var sort = "결제";
-																					
-																					
-																					console.log(m_uid); 
-																						
-																						$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&m_uid="+m_uid);
-																						$("#com").submit();
-																								 
+											 
+
+
+																										var buy_sort = "카드결제";
+																										var sort = "결제";
+																										
+																										
+																										console.log(m_uid); 
+																											
+																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&m_uid="+m_uid);
+																											$("#com").submit();
+
+
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 																				}
