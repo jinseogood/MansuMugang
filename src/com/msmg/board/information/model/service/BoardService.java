@@ -219,7 +219,21 @@ public class BoardService {
 		return result;
 	}
 
-	
-	
+	public int updateReply(String bno, String num, String content) {
+		Connection con = getConnection();
+		
+		int result = new BoardDao().updateReply(con, bno, num, content);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 
 }

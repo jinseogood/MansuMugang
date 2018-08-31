@@ -469,4 +469,25 @@ public class BoardDao {
 		return result;
 	}
 
+	public int updateReply(Connection con, String bno, String num, String content) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateReply");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, content);
+			pstmt.setString(2, num);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }
