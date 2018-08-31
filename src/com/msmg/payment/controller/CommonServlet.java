@@ -78,20 +78,12 @@ public class CommonServlet extends HttpServlet {
 		ph.setTel(tel);
 		
 		int result2 = new PhoneService().insertPhone(ph);
-
-		
-		//결제 상태 변경 서블릿
-		String diet_no = request.getParameter("diet_no");
-		
-		Payment p = new Payment();
-		p.setDiet_no(diet_no); 
-		
-		int result3 = new PaymentService().updateOrder(p);
 		
 		
 		// 카드결제 상세 결제 정보 입력 서블릿
 		String sort = request.getParameter("sort");
 		String buy_sort = request.getParameter("buy_sort");
+		String diet_no = request.getParameter("diet_no");
 		
 		PaymentInfo pi = new PaymentInfo();
 		pi.setSort(sort);
@@ -100,16 +92,24 @@ public class CommonServlet extends HttpServlet {
 				
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
 		
+		//결제 상태 변경 서블릿
+		
+		if(buy_sort == "카드결제"){
+		
+		Payment p = new Payment();
+		p.setDiet_no(diet_no); 
+		
+		int result3 = new PaymentService().updateOrder(p);
+		}
 		
 		//환불 테스트
 		String m_uid = request.getParameter("m_uid");
 		System.out.println("나와라라라라라라라" + m_uid);
  
-
-		
-		if(result > 0 || result2 > 0 || result3 > 0 || result4 > 0) {
+		if(result > 0 || result2 > 0 || result4 > 0) {
 			response.sendRedirect("views/payment/paymentConfirm.jsp");
 		}
+
 		
 		
 	}

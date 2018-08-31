@@ -725,7 +725,13 @@ $("#buyer_addr3").attr("value", addr3);
 															var sort = "결제";
 															
 															alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
-															location.href = "/msmg/views/member/OrderHistory.jsp?buy_sort="+buy_sort+"&sort="+sort;
+															
+															$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort);
+															$("#com").submit();
+															//location.href = "/msmg/views/member/OrderHistory.jsp?buy_sort="+buy_sort+"&sort="+sort;
+															
+															/* alert("만수무강 계좌: KEB하나은행 12345-1234-123245로 입금해 주세요.");
+															location.href = "/msmg/views/member/OrderHistory.jsp?buy_sort="+buy_sort+"&sort="+sort; */
 														}
 													}
 												}
