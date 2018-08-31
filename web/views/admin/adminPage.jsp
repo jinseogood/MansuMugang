@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
 <title>만수무강 관리자</title>
 <style>
 	html{
@@ -1495,7 +1495,7 @@
 		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardId+"", "문의내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
-	//판매 통계
+	/* //판매 통계
 	google.charts.load('current', {packages: ['corechart', 'bar']});
 	google.charts.setOnLoadCallback(drawSales);
 	
@@ -1552,8 +1552,10 @@
 			console.log(result.sale_count);
 		}
 		
+
 		console.log("arrKey length : " + arrKey.length);
 		console.log("arrValue length : " + arrValue.length);
+
 		
 		var totalArr=[['메뉴명', '판매량']];
 		console.log(totalArr[0][0]);
@@ -1575,8 +1577,9 @@
 		var options={};
 		
 		var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
-		
+
 		chart.draw(data, options);
+
 	}
 	
 	//식단 통계
@@ -1668,7 +1671,7 @@
 		var chart=new google.visualization.PieChart(document.getElementById('payTypeStat'));
 		
 		chart.draw(data, options);
-	}
+	} */
 
 	$(function(){
 		

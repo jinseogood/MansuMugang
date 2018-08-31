@@ -23,7 +23,7 @@ import com.msmg.payment.model.vo.Phone;
 /**
  * Servlet implementation class CommonServlet
  */
-@WebServlet("/common.pm")
+@WebServlet("/common.pm") 
 public class CommonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -40,6 +40,10 @@ public class CommonServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("커먼 서블릿으로 넘어옴");
+		
+		int result3 = 0; 
+		int result5 = 0;
 		
 		//배송지 입력 서블릿
 		String postcode = request.getParameter("postcode");
@@ -93,14 +97,20 @@ public class CommonServlet extends HttpServlet {
 		int result4 = new PaymentInfoService().insertPaymentInfo(pi);
 		
 		//결제 상태 변경 서블릿
-		
-		if(buy_sort == "카드결제"){
-		
 		Payment p = new Payment();
 		p.setDiet_no(diet_no); 
 		
-		int result3 = new PaymentService().updateOrder(p);
+		result3 = new PaymentService().updateOrder(p);
+		
+		if(buy_sort.equals("카드결제")){
+		
+			if(result3 > 0){
+				result5 = new PaymentInfoService().updateMenuCount();
+			}
 		}
+		
+		
+
 		
 		//환불 테스트
 		String m_uid = request.getParameter("m_uid");

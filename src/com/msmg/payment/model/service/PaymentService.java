@@ -15,12 +15,12 @@ public class PaymentService {
 		
 		if(result > 0){
 			commit(con); 
-		} else {
+		} else { 
 			rollback(con);
 		}
 		
 		close(con);
-		
+		System.out.println("updateOrder Service 실행");
 		return result;
 		
 	}

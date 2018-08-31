@@ -11,7 +11,7 @@ $(window).on("load resize ", function() {
 	  $('.tbl-header').css({'padding-right':scrollWidth});
 	}).resize();
 
-
+ 
 
 </script>
 

@@ -190,6 +190,8 @@ input {
 input[type=text]{
 	width:100px;
 }
+
+
 </style>
 </head>
 <body>
@@ -236,16 +238,21 @@ input[type=text]{
 	</div>
 	<br>
 	<div id="replyAddArea">
-		<table id="replyAddTable">
+		<table id="replyAddTable" class="listBox">
 			<%for(int i=0; i < list2.size(); i++) {%>
-				<input type="hidden" id="replyNo" value="<%= list2.get(i).getReply_no()%>">
-				<input type="hidden" id="replyContent" value="<%= list2.get(i).getRe_content()%>">
-				<tr>
+			<tr>
+				<td style="display:none;"id="replyNo"><input type="hidden"value="<%= list2.get(i).getReply_no()%>"></td>
+				<td style="display:none;"id="replyContent"><input type="hidden" value="<%= list2.get(i).getRe_content()%>"></td>
+				
 				<td width="100px"><%= list2.get(i).getU_code() %>
 				                  <br><div id="date" ><%= list2.get(i).getRe_date() %></div></td>
-				<td width="600px"> <%= list2.get(i).getRe_content() %></td>
+				<td width="600px" id="content11"><%= list2.get(i).getRe_content() %></td>
+				<td width="600px" id="content22" style="display:none;"><input type="text" style="padding-left:10px; width:600px; height:30px; color:blue;" value="<%= list2.get(i).getRe_content() %>"></td>
+				
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-					<td width='100px'><a onclick="updateReply();">수정</a> | <a onclick="deleteReply();">삭제</a></td>
+					<td id="update" width='50px'><a>수정</a></td>
+					<td style="display:none;"id="update2" width='50px'><a>등록</a></td>
+					<td id="delete" width='50px'><a>삭제</a></td>
 				<%} else {%>
 					<td width="100px"></td>
 				<%} %>
@@ -257,21 +264,60 @@ input[type=text]{
 	</div>
 	
 	<script>
-	function deleteReply(){
-		self.window.alert("댓글을 삭제하시겠습니까?");
-		var num = $("#replyNo").val();
-		var bno = <%=b.getBoardNo()%>
-		location.href="/msmg/deleteReply.in?num=" + num + "&bno=" + bno;
-	}
-	function updateReply(){
+	$(function(){
+		$(".listBox #update").click(function(){
+			$(this).parent().children("#content11").hide();
+			$(this).parent().children("#content22").show();
+			$(this).parent().children("#update").hide();
+			$(this).parent().children("#update2").show();
+			
+			
+		});
+		
+		$(".listBox #update2").click(function(){
+			var num = $(this).parent().children("#replyNo").children("input").val();
+			var bno = <%=b.getBoardNo()%>
+			var bid = <%=b.getBoardId()%>
+			var content = $(this).parent().children("#content22").children("input").val();
+			
+			console.log(num);
+			console.log(content);
+			console.log(bno);
+			
+			location.href="<%= request.getContextPath() %>/updateReply.in?num=" + num + "&bno=" + bno + "&content=" + content + "&bid=" + bid;
+			
+		});
+		
+		
+		
+		
+		$(".listBox #delete").click(function(){
+			self.window.alert("댓글을 삭제하시겠습니까?");
+			var num = $(this).parent().children("#replyNo").children("input").val();
+			var bno = <%=b.getBoardNo()%>
+			
+			console.log(num);
+			console.log(bno);
+			
+			location.href="<%= request.getContextPath() %>/deleteReply.in?num=" + num + "&bno=" + bno;
+		});
+		
+	});
+	
+	
+	<%--function updateReply(){
 		var num = $("#replyNo").val();
 		var bno = <%=b.getBoardNo()%>
 		var content = $("#replyContent").val();
 		
-		window.open("updateReplyForm.in?num=" + num + "&bno=" + bno + "&content=" + content,
+		console.log(num);
+		console.log(content);
+		console.log(bno);
+		
+		window.open("updateReplyForm.in?num=" + num + "&content=" + content +"&bno=" + bno,
 				"updateForm","width=570, height=350, resizable=no, scrollbars=no");
 		
-	}
+	} --%>
 	
 	
 	
@@ -293,11 +339,13 @@ input[type=text]{
 				type:"post",
 				success:function(data){
 					console.log(data);
+					
 					$("#replyAddTable").html("");
 					for(var i = 0; i < data.length; i++){
 						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
-								+ "<td width='100px'><a>수정</a>" + " | " + "<a>삭제</a></td></tr>")
+								+ "<td width='100px'><a>수정</a>" + " | " + "<a onclick='deleteReply();'>삭제</a></td></tr>")
 					}
+					
 				},
 				error:function(data){
 					console.log("실패");

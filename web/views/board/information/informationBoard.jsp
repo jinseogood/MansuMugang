@@ -204,6 +204,7 @@ div #offi {
 				for(Board b : list) {%>
 				<tr id="listArea">
 					<input type="hidden" value="<%=b.getBoardNo()%>">
+					<input type="hidden" id="bid" value="<%=b.getBoardId() %>">
 					<td></td>
 					<td><%= b.getBoardNo() %></td>
 					<td><%= b.getTitle() %></td>
@@ -265,7 +266,8 @@ div #offi {
     		$(this).parent().css({"color":"black"});
     	 }).click(function(){
     		 var num = $(this).parent().children("input").val();
-    		 location.href="<%=request.getContextPath()%>/selectOne.bo?num=" + num;
+    		 var bid = $("#bid").val()
+    		 location.href="<%=request.getContextPath()%>/selectOne.bo?num=" + num + "&bid=" + bid;
     	 });
       });
    </script>

@@ -9,7 +9,7 @@
 	int banchan = (int)request.getAttribute("side");
 	String diet_no = String.valueOf(request.getAttribute("diet_no"));
 	
-	
+	 
 	String side = "";
 	
 	if(banchan == 0){
@@ -676,31 +676,16 @@ $("#buyer_addr3").attr("value", addr3);
 																				buyer_name : $('#receiver').val(),
 																				buyer_addr,
 																				buyer_postcode : $('#postcode').val()
-																			},
+																			}, 
 																			function(rsp) { // callback
 																				
 																				if (rsp.success) {
 																					
 																					var m_uid = rsp.merchant_uid;
 																					
-																					jQuery .ajax(
-																									{
-																										//url : "http://localhost:8001/msmg/views/member/OrderHistory.jsp", // 가맹점 서버
-																										method : "POST",
-																										headers : {
-																											"Content-Type" : "application/json"
-																										},
-																										data : {
-																											imp_uid : rsp.imp_uid,
-																											merchant_uid : rsp.merchant_uid
-																										}
-																									})
-																							.done(
-																									
-																									
-																									
-																									function(data) {
-																										
+											 
+
+
 																										var buy_sort = "카드결제";
 																										var sort = "결제";
 																										
@@ -709,11 +694,8 @@ $("#buyer_addr3").attr("value", addr3);
 																											
 																											$("#com").attr("action", "<%=request.getContextPath()%>/common.pm?buy_sort="+buy_sort+"&sort="+sort+"&m_uid="+m_uid);
 																											$("#com").submit();
-																										
-																									}  
-																									
-																							
-																								 );
+
+
 																				} else {
 																					alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 																				}

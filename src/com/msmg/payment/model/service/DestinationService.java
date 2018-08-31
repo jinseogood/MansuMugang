@@ -13,7 +13,10 @@ import static com.msmg.common.JDBCTemplate.*;
 public class DestinationService {
 
 	public int insertDestination(Destination d) {
-		Connection con = getConnection();
+		
+		System.out.println("배송지 입력 서비스 실행");
+		
+		Connection con = getConnection(); 
 		
 		int result = new DestinationDao().insertDestination(con, d);
 		 
@@ -30,6 +33,9 @@ public class DestinationService {
 	}
 
 	public ArrayList<Destination> selectList(String u_code) {
+		
+		System.out.println("배송지 설렉트 리스트 서비스 실행");
+		
 		Connection con = getConnection();
 		
 		ArrayList<Destination> list = new DestinationDao().selectList(con, u_code);
