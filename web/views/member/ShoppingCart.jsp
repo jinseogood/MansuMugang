@@ -175,7 +175,7 @@ section {
 
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
-					<td bgcolor=tomato><input type="checkbox" class="w3-button w3-ripple w3-yellow"><label>전체 선택</label></td>
+					<td bgcolor=tomato width=100px;><input type="checkbox" name="checkAll" id="th_checkAll" onclick="checkAll();"/><label>전체 선택</label></td>
 					<td bgcolor=tomato>상품</td>
 					<td bgcolor=tomato>담은 날짜</td>
 					<td bgcolor=tomato>금액</td>
@@ -189,7 +189,7 @@ section {
 				<% } else { %>
 					<% for(int i=0; i < list.size(); i++){ %>
 							<tr>
-								<td><input type="checkbox"></td>
+								<td width=100px;><input type="checkbox" name="checkRow"/></td>
 								<td><%= list.get(i).getUser_menu_name() %></td>
 								<td><%= list.get(i).getBuy_date() %></td>
 								<td><%= list.get(i).getPrice() %></td>
@@ -227,7 +227,39 @@ section {
 			var a = "<%= loginUser.getU_code()%>";
 			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
 		}
-	
+		
+		function checkAll(){
+		      if( $("#th_checkAll").is(':checked') ){
+		        $("input[name=checkRow]").prop("checked", true);
+		      }else{
+		        $("input[name=checkRow]").prop("checked", false);
+		      }
+		}
+
+		function deleteAction(){
+			  var checkRow = "";
+			  $( "input[name='checkRow']:checked" ).each (function (){
+			    checkRow = checkRow + $(this).val()+"," ;
+			  });
+			  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+			 
+			  if(checkRow == ''){
+			    alert("삭제할 대상을 선택하세요.");
+			    return false;
+			  }
+			  console.log("### checkRow => {}"+checkRow);
+			 
+			  if(confirm("정보를 삭제 하시겠습니까?")){
+			      
+/* 			      //삭제처리 후 다시 불러올 리스트 url      
+			      var url = document.location.href;
+			      var page = $("#page").val();
+			      var saleType = $("#saleType").val();
+			      var schtype = $("#schtype").val();
+			      var schval = $("#schval").val();
+			      location.href="${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url+"&page="+page+"&saleType="+saleType+"schtype="+schtype+"schval="+schval;  */     
+			  }
+			}
 	
 	</script>
 <%@ include file="../common/footer.jsp" %>
