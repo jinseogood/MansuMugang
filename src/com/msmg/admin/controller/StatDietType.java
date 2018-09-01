@@ -38,6 +38,8 @@ public class StatDietType extends HttpServlet {
 		result.put("dh", dietDHCount);
 		result.put("gdh", dietGDHCount);
 		
+		System.out.println("dietType servlet : " + result);
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		

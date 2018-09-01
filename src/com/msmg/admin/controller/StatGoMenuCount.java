@@ -17,47 +17,20 @@ import com.google.gson.Gson;
 import com.msmg.admin.model.service.StatService;
 import com.msmg.admin.model.vo.Stat;
 
-@WebServlet("/statMenuCount")
-public class StatMenuCount extends HttpServlet {
+@WebServlet("/statGoMenuCount")
+public class StatGoMenuCount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public StatMenuCount() {}
+    public StatGoMenuCount() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Stat> mStatList=new StatService().countMenu();
-		
-		/*JSONObject result=new JSONObject();
-		
-		for(int i=0;i<mStatList.size();i++){
-			String key=mStatList.get(i).getMenu_name();
-			
-			result.put(key, mStatList.get(i).getSale_count());
-		}*/
-		
-		/*JSONArray result=new JSONArray();
-		JSONObject mList=null;
-		for(Stat s : mStatList){
-			mList=new JSONObject();
-			
-			mList.put("menuName", s.getMenu_name());
-			mList.put("saleCount", s.getSale_count());
-			
-			result.add(mList);
-		}
-		
-		
-		System.out.println("servlet result : " + result);*/
+		ArrayList<Stat> mStatList=new StatService().countGoMenu();
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
 		new Gson().toJson(mStatList, response.getWriter());
 		
-		/*PrintWriter out=response.getWriter();
-		out.print(result.toJSONString());
-		
-		out.flush();
-		out.close();*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
