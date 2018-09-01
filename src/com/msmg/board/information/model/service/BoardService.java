@@ -235,5 +235,28 @@ public class BoardService {
 		return result;
 	}
 
+	public Board AselectOne(String num) {
+		Connection con = getConnection();
+		Board b = null;
+		int result = 0;
+		
+		result = new BoardDao().AdminUpdateCount(con, num);
+		
+		System.out.println(result);
+		
+		if(result > 0) {
+			b = new BoardDao().AselectOne(con, num);
+			
+			System.out.println("service:" + b);
+			
+			if(b != null) commit(con);
+			else rollback(con);
+		}
+		
+		close(con);
+		
+		return b;
+	}
+
 
 }

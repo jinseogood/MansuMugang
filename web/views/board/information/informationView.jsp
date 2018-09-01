@@ -242,6 +242,7 @@ input[type=text]{
 			<%for(int i=0; i < list2.size(); i++) {%>
 			<tr>
 				<td style="display:none;"id="replyNo"><input type="hidden"value="<%= list2.get(i).getReply_no()%>"></td>
+				<td style="display:none;"id="bid"><input type="hidden"value="<%= list2.get(i).getBoard_id()%>"></td>
 				<td style="display:none;"id="replyContent"><input type="hidden" value="<%= list2.get(i).getRe_content()%>"></td>
 				
 				<td width="100px"><%= list2.get(i).getU_code() %>
@@ -250,11 +251,11 @@ input[type=text]{
 				<td width="600px" id="content22" style="display:none;"><input type="text" style="padding-left:10px; width:600px; height:30px; color:blue;" value="<%= list2.get(i).getRe_content() %>"></td>
 				
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-					<td id="update" width='50px'><a>수정</a></td>
+					<td id="update" width="50px"><a>수정</a></td>
 					<td style="display:none;"id="update2" width='50px'><a>등록</a></td>
-					<td id="delete" width='50px'><a>삭제</a></td>
+					<td id="delete" width="50px"><a>삭제</a></td>
 				<%} else {%>
-					<td width="100px"></td>
+					<td width="100"></td>
 				<%} %>
 				</tr>
 			<%} %>
@@ -277,12 +278,9 @@ input[type=text]{
 		$(".listBox #update2").click(function(){
 			var num = $(this).parent().children("#replyNo").children("input").val();
 			var bno = <%=b.getBoardNo()%>
-			var bid = <%=b.getBoardId()%>
+			var bid = $(this).parent().children("#bid").children("input").val();
 			var content = $(this).parent().children("#content22").children("input").val();
 			
-			console.log(num);
-			console.log(content);
-			console.log(bno);
 			
 			location.href="<%= request.getContextPath() %>/updateReply.in?num=" + num + "&bno=" + bno + "&content=" + content + "&bid=" + bid;
 			
@@ -295,29 +293,15 @@ input[type=text]{
 			self.window.alert("댓글을 삭제하시겠습니까?");
 			var num = $(this).parent().children("#replyNo").children("input").val();
 			var bno = <%=b.getBoardNo()%>
+			var bid = <%=b.getBoardId()%>
 			
 			console.log(num);
 			console.log(bno);
 			
-			location.href="<%= request.getContextPath() %>/deleteReply.in?num=" + num + "&bno=" + bno;
+			location.href="<%= request.getContextPath() %>/deleteReply.in?num=" + num + "&bno=" + bno + "&bid=" + bid;
 		});
 		
 	});
-	
-	
-	<%--function updateReply(){
-		var num = $("#replyNo").val();
-		var bno = <%=b.getBoardNo()%>
-		var content = $("#replyContent").val();
-		
-		console.log(num);
-		console.log(content);
-		console.log(bno);
-		
-		window.open("updateReplyForm.in?num=" + num + "&content=" + content +"&bno=" + bno,
-				"updateForm","width=570, height=350, resizable=no, scrollbars=no");
-		
-	} --%>
 	
 	
 	
@@ -325,7 +309,9 @@ input[type=text]{
 		$("#replyAddBtn").click(function(){
 			var writter = <%= loginUser.getU_code() %>
 			var bid = <%= b.getBoardId()%>
+			var num = <%=b.getBoardNo()%>
 			var content = $("#replyContent").val();
+			
 			
 			console.log(writter)
 			console.log(bid)
@@ -335,16 +321,23 @@ input[type=text]{
 				url:"/msmg/insertReply.bo",
 				data:{writter:writter,
 					  content:content,
-					  bid:bid},
+					  bid:bid,
+					  num:num},
 				type:"post",
 				success:function(data){
 					console.log(data);
+					self.window.alert("댓글 등록 완료!");
 					
-					$("#replyAddTable").html("");
+					location.href="<%=request.getContextPath()%>/selectOne.bo?bid=" + bid + "&num=" + num;
+					
+					
+					/*$("#replyAddTable").html("");
 					for(var i = 0; i < data.length; i++){
 						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
 								+ "<td width='100px'><a>수정</a>" + " | " + "<a onclick='deleteReply();'>삭제</a></td></tr>")
-					}
+					} */
+					
+					
 					
 				},
 				error:function(data){
@@ -362,7 +355,7 @@ input[type=text]{
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					이전글</td>
-				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preB.getBoardNo()%>"><%=preB.getTitle() %></a></td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preB.getBoardNo()%>&bid=<%= preB.getBoardId()%>"><%=preB.getTitle() %></a></td>
 				<td width="100"><%=preB.getBoardDate() %></td>
 			</tr>
 			<%} %>
@@ -371,7 +364,7 @@ input[type=text]{
 			<tr>
 				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 					다음글</td>
-				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextB.getBoardNo()%>"><%=nextB.getTitle() %></a></td>
+				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextB.getBoardNo()%>&bid=<%= nextB.getBoardId()%>"><%=nextB.getTitle() %></a></td>
 				<td width="100"><%=nextB.getBoardDate() %></td>
 			</tr>
 			<%} %>
@@ -386,7 +379,7 @@ input[type=text]{
 		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
 			<div id="viewBtn" align="right">
 			<button id="updateBtn" type="button" class="btn btn-success" name="bid"
-				onclick="location.href='<%=request.getContextPath()%>/selectInfor.bo?num=<%=b.getBoardId()%>'">수정</button>
+				onclick="location.href='<%=request.getContextPath()%>/selectInfor.bo?num=<%=b.getBoardNo()%>'">수정</button>
 			<button id="deleteBtn" type="button" class="btn btn-success">삭제</button>
 			</div>
 		<%} %>

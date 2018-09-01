@@ -41,6 +41,7 @@ public class UpdateReplyServlet extends HttpServlet {
 		System.out.println("num : " + num);
 		System.out.println("content : " + content);
 		System.out.println("bno : " + bno);
+		System.out.println("reply bid : " + bid);
 		
 		/*num = 댓글 번호*/
 		

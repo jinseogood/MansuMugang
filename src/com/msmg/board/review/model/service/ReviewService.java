@@ -222,6 +222,35 @@ public class ReviewService {
 		return result;
 	}
 
+	public int updateReply(String num, String bid, String content) {
+		Connection con = getConnection();
+		
+		int result = new ReviewDao().updateReply(con, num, bid, content);
+		
+		if(result > 0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteReply(String num, String bid) {
+		Connection con = getConnection();
+		
+		int result = new ReviewDao().deleteReply(con, num, bid);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
 	
 
 

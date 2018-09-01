@@ -266,7 +266,7 @@ div #offi {
     		$(this).parent().css({"color":"black"});
     	 }).click(function(){
     		 var num = $(this).parent().children("input").val();
-    		 var bid = $("#bid").val()
+    		 var bid = $(this).parent().children("#bid").val();
     		 location.href="<%=request.getContextPath()%>/selectOne.bo?num=" + num + "&bid=" + bid;
     	 });
       });

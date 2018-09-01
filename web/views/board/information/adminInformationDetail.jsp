@@ -235,11 +235,7 @@ input[type=text]{
 				<td width="100px"><%= list2.get(i).getU_code() %>
 				                  <br><div id="date" ><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px"><%= list2.get(i).getRe_content() %></td>
-				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-					<td width='100px'><a href='#'>수정</a> | <a href='#'>삭제</a></td>
-				<%} else {%>
-					<td width="100px"></td>
-				<%} %>
+				<td width="100px"><a>삭제</a></td>
 				</tr>
 			<%} %>
 		</table>
@@ -281,7 +277,7 @@ input[type=text]{
 	</script>
 
 
-	<div id='whiptable'>
+	<!-- <div id='whiptable'>
 		<table id='whip'>
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
@@ -296,20 +292,20 @@ input[type=text]{
 				<td>2018-08-07</td>
 			</tr>
 		</table>
-	</div>
+	</div> -->
 	<br>
 
 
 	<div class="btnlist">
 		<button id="boardList" class="btn btn-success"
 			onclick="location.href='<%=request.getContextPath()%>/selectList.bo'">이전으로</button>
-		<%if(loginUser.getU_name().equals(b.getuCode())) {%>
+		<%-- <%if(loginUser.getU_name().equals(b.getuCode())) {%> --%>
 			<div id="viewBtn" align="right">
-			<button id="updateBtn" type="button" class="btn btn-success" name="bid"
-				onclick="location.href='<%=request.getContextPath()%>/selectInfor.bo?num=<%=b.getBoardId()%>'">수정</button>
+			<%-- <button id="updateBtn" type="button" class="btn btn-success" name="bid"
+				onclick="location.href='<%=request.getContextPath()%>/selectInfor.bo?num=<%=b.getBoardId()%>'">수정</button> --%>
 			<button id="deleteBtn" type="button" class="btn btn-success">삭제</button>
 			</div>
-		<%} %>
+		<%-- <%} %> --%>
 	</div>
 	<script>
 	$(function(){
