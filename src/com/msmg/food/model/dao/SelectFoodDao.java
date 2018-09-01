@@ -377,6 +377,25 @@ public class SelectFoodDao {
 		return list;
 	}
 
+	public int deleteCart(Cart c) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("deleteCart");
+		
+		try {
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
 
 }
 
