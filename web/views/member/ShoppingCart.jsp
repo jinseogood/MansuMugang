@@ -6,9 +6,9 @@
 
 <!DOCTYPE html>
 <html>
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+
 
 <head>
 <meta charset="UTF-8">
@@ -175,11 +175,11 @@ section {
 
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
-					<td bgcolor=tomato width=100px;><input type="checkbox"/>전체선택</td>
-					<td bgcolor=tomato>상품</td>
+					<td bgcolor=tomato width=100px;></td>
+					<td bgcolor=tomato width=500px>상품</td>
 					<td bgcolor=tomato>담은 날짜</td>
 					<td bgcolor=tomato>금액</td>
-					<td bgcolor=tomato><button class="w3-button w3-ripple w3-yellow">전체삭제</button></td>
+					<td bgcolor=tomato> </td>
 				</tr>
 				
 				<% if(list == null){ %>
@@ -188,34 +188,47 @@ section {
 					</tr>
 				<% } else { %>
 					<% for(int i=0; i < list.size(); i++){ %>
+					
 							<tr>
-								<td width=100px;><input type="checkbox" name="checkRow"/></td>
-								<td><%= list.get(i).getUser_menu_name() %></td>
+								<td width=100px;></td>
+								<td width=500px><%= list.get(i).getUser_menu_name() %></td>
 								<td><%= list.get(i).getBuy_date() %></td>
 								<td><%= list.get(i).getPrice() %></td>
-								<td><button class="w3-button w3-ripple w3-yellow">삭제</button></td>
+								<td><input type="hidden" name="diet_no" id="diet_no" value="<%= list.get(i).getDiet_no() %>"><button class="w3-button w3-ripple w3-yellow" onclick="delete();">삭제</button></td>
 							</tr>
+							
+								<script>
+									function delete(){
+										var diet_no = $("#diet_no").val();
+										location.href="<%=request.getContextPath()%>/deleteCart.fo?diet_no="+diet_no;
+										console.log(diet_no);
+									}
+								</script>
+							
 					<% } %>
 				<% } %>
+					
 				
-				<tr>
+<!--				<tr>
 					<td></td>
 					<td></td>
 					<td>배송비 </td>
 					<td>3500원<input type="text" readonly style="display: none;"></td>
 					<td></td>
 				</tr>
-				<tr>
+ 				<tr>
 					<td></td>
 					<td></td>
 					<td>합계 </td>
-					<td>원<input type="text" readonly style="display: none;"></td>
+					<td>6846845원<input type="text" readonly style="display: none;"></td>
 					<td></td>
-				</tr>
+				</tr> -->
+				
+
 				<tr align="center">
 					<td colspan="5" bgcolor=tomato>
-						<input type="button" value="쇼핑계속하기" href="#" class="w3-button w3-ripple w3-yellow">
-						<input type="button" value="주문하기" href="#" class="w3-button w3-ripple w3-yellow">
+						<button type="button" value="쇼핑계속하기" onclick="location.href='/msmg/views/foodPlan/menu_plan.jsp'" class="w3-button w3-ripple w3-yellow">쇼핑계속하기</button>
+						<button type="button" value="주문하기" onclick="location.href='/msmg/views/payment/paymentPage.jsp'" class="w3-button w3-ripple w3-yellow">주문하기</button>
 					</td>
 				</tr>
 			</table>
@@ -228,6 +241,10 @@ section {
 			location.href = "<%= request.getContextPath() %>/selectCart.fo?ucode="+a;
 		}
 	</script>
+	
+
+
+	
 <%@ include file="../common/footer.jsp" %>
 
 </body>

@@ -14,6 +14,7 @@ import com.msmg.food.model.vo.Like;
 import com.msmg.food.model.vo.Menu;
 import com.msmg.food.model.vo.MenuList;
 import com.msmg.food.model.vo.SelectFood;
+import com.msmg.member.model.dao.MemberDao;
 
 public class FoodService {
 
@@ -101,6 +102,19 @@ public class FoodService {
 		
 		return list;
 	}
+
+	public int deleteCart(Cart c) {
+		Connection con = getConnection();
+		
+		int result = new SelectFoodDao().deleteCart(c);
+		
+		close(con);
+		
+		
+		return result;
+	}
+
+
 
 
 }
