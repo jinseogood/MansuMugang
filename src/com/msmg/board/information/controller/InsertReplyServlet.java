@@ -3,6 +3,7 @@ package com.msmg.board.information.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,7 @@ public class InsertReplyServlet extends HttpServlet {
 		String writter = String.valueOf(((Member)(request.getSession().getAttribute("loginUser"))).getU_code());
 		String content = request.getParameter("content");
 		String bid = request.getParameter("bid");
+		String bno = request.getParameter("bno");
 		
 		System.out.println(writter);
 		System.out.println(content);
@@ -40,9 +42,10 @@ public class InsertReplyServlet extends HttpServlet {
 		 
 		ArrayList<Reply> replyList = new BoardService().insertReply(r);
 		
+		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		new Gson().toJson(replyList, response.getWriter()); 
+		new Gson().toJson(replyList, response.getWriter());
 		
 	
 	}

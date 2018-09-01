@@ -198,7 +198,13 @@ div[id=date-writer-hit2] {
 	font-size:12px;
 }
 
+#content22 {
+	color:blue;
+}
 
+a:hover {
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -263,14 +269,18 @@ div[id=date-writer-hit2] {
 		</div>
 		<br>
 		<div id="replyAddArea">
-			<table id="replyAddTable">
+			<table id="replyAddTable" class="listBox">
 				<%for (int i=0; i < list2.size(); i++) {%>
 					<tr>
+					<td style="display:none;" id="replyNo"><input type="hidden" value="<%=list2.get(i).getReply_no()%>"></td>
 					<td width="100"><%= list2.get(i).getU_code() %>
 									<br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
-					<td width="600"><%= list2.get(i).getRe_content() %></td>
+					<td width="600" id="content11"><%= list2.get(i).getRe_content() %></td>
+					<td width="600px" id="content22" style="display:none;"><input type="text" style="padding-left:10px; width:600px; height:30px; color:blue;" value="<%= list2.get(i).getRe_content() %>"></td>
 					<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-						<td width="100"><a href='#'>수정</a> | <a href='#'>삭제</a></td>
+						<td id="update" width="50"><a>수정</a></td>
+						<td style="display:none;"id="update2" width='50px'><a>등록</a></td>
+						<td id="delete" width="50"><a>삭제</a></td>
 					<%} else{%>
 						<td width="100"></td>
 					<%} %>
@@ -278,7 +288,42 @@ div[id=date-writer-hit2] {
 				<%} %>
 			</table>
 		</div>
+		
 		<script>
+		$(function(){
+			$(".listBox #update").click(function(){
+				$(this).parent().children("#content11").hide();
+				$(this).parent().children("#content22").show();
+				$(this).parent().children("#update").hide();
+				$(this).parent().children("#update2").show();
+			});
+			
+			$(".listBox #update2").click(function(){
+				var num = $(this).parent().children("#replyNo").children("input").val();
+				var bid = <%=b.getBoardId()%>;
+				var content = $(this).parent().children("#content22").children("input").val();
+				
+				location.href="<%=request.getContextPath()%>/updateReply.rev?num=" + num + "&bid=" + bid + "&content=" + content;
+			})
+			
+			$(".listBox #delete").click(function(){
+				self.window.alert("댓글을 삭제하시겠습니까?");
+				var num = $(this).parent().children("#replyNo").children("input").val();
+				var bid = <%=b.getBoardId()%>
+				
+				location.href="<%= request.getContextPath() %>/deleteReply.rev?num=" + num + "&bid=" + bid;
+			});
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		$(function(){
 			$("#replyAddBtn").click(function(){
 				var writter = <%= loginUser.getU_code()%>
@@ -296,11 +341,17 @@ div[id=date-writer-hit2] {
 						  bid:bid},
 					type:"post",
 					success:function(data){
-						$("#replyAddTable").html("");
+						
+						self.window.alert("댓글 등록 완료!");
+						
+						location.href="<%=request.getContextPath()%>/selectOne.rev?num=" + bid;
+						
+						
+						/* $("#replyAddTable").html("");
 						for(var i = 0; i < data.length; i++){
 							$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
 									+ "<td width='100px'><a href='#'>수정</a>" + " | " + "<a href='#'>삭제</a></td></tr>")
-						}
+						} */
 					},
 					error:function(data){
 						console.log("실패");
@@ -328,7 +379,7 @@ div[id=date-writer-hit2] {
 			<tr style="border-top: 1px solid #e83f26;">
 				<td width="100"><span class="glyphicon glyphicon-chevron-up"></span>
 					이전글</td>
-				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=preR.getBoardNo()%>"><%=preR.getTitle() %></a></td>
+				<td align="center" width='700'><a href="<%=request.getContextPath()%>/selectOne.rev?num=<%=preR.getBoardId()%>"><%=preR.getTitle() %></a></td>
 				<td width="100"><%=preR.getBoardDate()%></td>
 			</tr>
 			<%} %>
@@ -337,7 +388,7 @@ div[id=date-writer-hit2] {
 			<tr>
 				<td width="100"><span class="glyphicon glyphicon-chevron-down"></span>
 					다음글</td>
-				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.bo?num=<%=nextR.getBoardNo()%>"><%=nextR.getTitle() %></a></td>
+				<td align="center" width="700"><a href="<%=request.getContextPath()%>/selectOne.rev?num=<%=nextR.getBoardId()%>"><%=nextR.getTitle() %></a></td>
 				<td width="100"><%=nextR.getBoardDate() %></td>
 			</tr>
 			<%} %>

@@ -198,6 +198,10 @@ div[id=date-writer-hit2] {
 	font-size:12px;
 }
 
+a:hover {
+	cursor:pointer;
+}
+
 
 </style>
 </head>
@@ -268,11 +272,7 @@ div[id=date-writer-hit2] {
 					<td width="100"><%= list2.get(i).getU_code() %>
 									<br><div id="date"><%= list2.get(i).getRe_date() %></div></td>
 					<td width="600"><%= list2.get(i).getRe_content() %></td>
-					<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
-						<td width="100"><a href='#'>수정</a> | <a href='#'>삭제</a></td>
-					<%} else{%>
-						<td width="100"></td>
-					<%} %>
+						<td width="100"><a>삭제</a></td>
 					</tr>
 				<%} %>
 			</table>
@@ -393,16 +393,8 @@ div[id=date-writer-hit2] {
 				type:"post",
 				success:function(data){
 					console.log("성공");
-					
-					 if(test == 'Y'){
-						console.log("aaa");
 						$("#adminYn").hide();
 						$("#adminYn_ok").show();
-					}else{
-						$("#adminYn").show();
-						$("#adminYn_ok").hide();
-					}
-					
 				},
 				error:function(data){
 					console.log("실패");

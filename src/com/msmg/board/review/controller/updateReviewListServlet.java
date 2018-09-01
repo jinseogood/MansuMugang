@@ -72,6 +72,7 @@ public class updateReviewListServlet extends HttpServlet {
 			System.out.println("content : " + content);
 			System.out.println("date : " + date);
 			System.out.println("boardSort : " + boardSort);
+			System.out.println("fileNo : " + fileNo);
 			
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
 			//저장한 파일의 이름을 저장할 arrayList를 생성한다.

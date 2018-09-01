@@ -37,10 +37,10 @@ public class AdminInformationServlet extends HttpServlet {
 		System.out.println("num : " + num);
 		
 		 
-		Board b = new BoardService().selectOne(num);
+		Board b = new BoardService().AselectOne(num);
 		
-		Board preB = new BoardService().selectPreB(num);
-		Board nextB = new BoardService().selectNextB(num);
+		/*Board preB = new BoardService().AselectPreB(num);
+		Board nextB = new BoardService().AselectNextB(num);*/
 		ArrayList<Reply> replyList = new BoardService().selectReply(num);
 		
 		System.out.println("servlet:"+b);
@@ -51,8 +51,8 @@ public class AdminInformationServlet extends HttpServlet {
 		if(b != null) {
 			page = "views/board/information/adminInformationDetail.jsp";
 			request.setAttribute("b", b);
-			request.setAttribute("preB", preB);
-			request.setAttribute("nextB", nextB);
+			/*request.setAttribute("preB", preB);
+			request.setAttribute("nextB", nextB);*/
 			request.setAttribute("r", replyList);
 			
 		}else {

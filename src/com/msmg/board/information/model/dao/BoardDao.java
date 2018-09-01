@@ -338,7 +338,7 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, num);
+			pstmt.setInt(1, Integer.parseInt(num));
 			
 			rset = pstmt.executeQuery();
 			
@@ -374,7 +374,7 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, num);
+			pstmt.setInt(1, Integer.parseInt(num));
 			
 			rset = pstmt.executeQuery();
 			
@@ -488,6 +488,66 @@ public class BoardDao {
 		}
 		
 		return result;
+	}
+
+	public int AdminUpdateCount(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("AdminUpdateCount");
+		
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, num);
+			pstmt.setString(2, num);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Board AselectOne(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String query = prop.getProperty("AselectOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(num));
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board();
+				
+				b.setBoardSort(rset.getString("board_sort"));
+				b.setBoardId(rset.getInt("board_id"));
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setTitle(rset.getString("title"));
+				b.setContent(rset.getString("content"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setuCode(rset.getString("u_name"));
+				b.setbCount(rset.getInt("b_count"));
+				
+				System.out.println("dao:" + b);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return b;
 	}
 	
 }
