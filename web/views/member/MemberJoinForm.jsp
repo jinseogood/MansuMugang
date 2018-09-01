@@ -159,7 +159,7 @@ div a {
 						</tr>
 						<tr>
 							<th bgcolor=tomato>인증번호</th>
-							<td><input type="text" name="cerNum" id="cerNum"> <div class="w3-button w3-ripple w3-yellow" onclick="return cerNum();">확인</div></td>
+							<td><input type="text" name="cerNum" id="cerNum"> <div class="w3-button w3-ripple w3-yellow" id="cerNumBtn" onclick="return cerNum();">확인</div></td>
 						</tr>
 						<tr>
 							<th bgcolor=tomato>비밀번호<span class="red">*</span></th>
@@ -478,6 +478,9 @@ div a {
 	});
 	
 	function cerNum(){
+		var idCheck =$('#idcheck').val();
+		var emailCheck = $('#emailCheck').val();
+		var cerNumBtn = $('#cerNumBtn').val();
 		console.log("function cerNum");
 		var authenticationNum = this.authenticationNum;
 		console.log("authenticationNum : " + authenticationNum);
@@ -486,7 +489,13 @@ div a {
 		var cerNum = $('#cerNum').val();
 		var trimmed_cerNum = jQuery.trim(cerNum);
 		if(trimmed_cerNum == trimmed_authenticationNum){
-			alert("이메일 인증이 완료되었습니다."); return true;
+			alert("이메일 인증이 완료되었습니다.");
+			$("#userId").attr("readonly", 'true');
+			/* $("#idCheck").attr("disabled", 'disabled');
+			$("#emailCheck").attr("disabled", 'disabled');
+			$("#cerNumBtn").attr("disabled", 'disabled'); */
+					
+			return true;
 		}else{
 			alert("이메일 인증에 실패하셨습니다. 인증번호를 확인해주세요."); return false;
 		}

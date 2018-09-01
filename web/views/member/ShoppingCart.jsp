@@ -156,16 +156,11 @@ section {
 	
 	<div id="sidebar">
         <ul>
-          <li><a href="/msmg/views/member/EditMyInformation.jsp">회원정보 수정</a></li>
-  		  <!-- <li><a href="/msmg/views/member/ChangePassword.jsp">비밀번호 변경</a></li> -->
-  		  <li class="ui-widget-header">
-  		  <%-- <a href="<%= request.getContextPath() %>/selectCart.fo?ucode="<%=loginUser.getU_code() %>>장바구니</a> --%>
-  		  <a onclick="test();">장바구니</a>
-  		  </li>
-  		  <li class="ui-widget-header"><a href="/msmg/views/member/OrderHistory.jsp">주문내역</a></li>
-  		  <!-- <li class="ui-widget-header"><a href="/msmg/views/member/MyPosts.jsp">활동내역</a></li> -->
+          <li><a onclick="location.href='<%=request.getContextPath()%>/selectAllergy.me'">회원정보 수정</a></li>
+  		  <li><a onclick="test();">장바구니</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
-  		  <li><a href="/msmg/views/member/MyPosts.jsp">내가 쓴 글</a></li>
+  		  <li><a href="<%= request.getContextPath() %>/selectBoard.mp">내가 쓴 글</a></li>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
 	</div>
