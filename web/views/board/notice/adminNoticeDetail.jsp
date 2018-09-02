@@ -20,7 +20,7 @@
 <style>
 #detail {
 	display: block;
-}
+} 
 
 a {
 	text-decoration: none;
