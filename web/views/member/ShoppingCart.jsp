@@ -170,10 +170,10 @@ section {
 
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
 				<tr class="te">
-					<td bgcolor=tomato width=100px;></td>
 					<td bgcolor=tomato width=500px>상품</td>
 					<td bgcolor=tomato>담은 날짜</td>
 					<td bgcolor=tomato>금액</td>
+					<td bgcolor=tomato></td>
 					<td bgcolor=tomato> </td>
 				</tr>
 				
@@ -185,20 +185,13 @@ section {
 					<% for(int i=0; i < list.size(); i++){ %>
 					
 							<tr>
-								<td width=100px;></td>
-								<td width=500px><%= list.get(i).getUser_menu_name() %></td>
+								<td><%= list.get(i).getUser_menu_name() %></td>
 								<td><%= list.get(i).getBuy_date() %></td>
 								<td><%= list.get(i).getPrice() %></td>
 								<td><input type="hidden" name="diet_no" id="diet_no" value="<%= list.get(i).getDiet_no() %>"><button class="w3-button w3-ripple w3-yellow" onclick="delete();">삭제</button></td>
+								<td><button type="button" value="주문하기" onclick="location.href='/msmg/views/payment/paymentPage.jsp'" class="w3-button w3-ripple w3-yellow">주문</button></td>
 							</tr>
-							
-								<script>
-									function delete(){
-										var diet_no = $("#diet_no").val();
-										location.href="<%=request.getContextPath()%>/deleteCart.fo?diet_no="+diet_no;
-										console.log(diet_no);
-									}
-								</script>
+						
 							
 					<% } %>
 				<% } %>
