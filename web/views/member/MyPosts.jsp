@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import = "java.util.*, com.msmg.mypage.model.vo.*"%>
 <%
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	/* PageInfo pi = (PageInfo)request.getAttribute("pi"); */
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	   
-	int listCount = pi.getListCount();
+	/* int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+	
+	System.out.println(listCount);
+	System.out.println(currentPage);
+	System.out.println(maxPage);
+	System.out.println(startPage);
+	System.out.println(endPage); */
 	
 %>
 <!DOCTYPE>
@@ -207,7 +213,7 @@ div #offi {
 	<%-- <div id = 'btnlist' align = "right">
 	<button id = 'insert' class="btn btn-primary btn-sm" onclick = 'location.href = "<%= request.getContextPath() %>/insertQna.Qna"'>작성</button>
 	</div> --%>
-	<div id="container">
+	<%-- <div id="container">
 		<button onclick = 'location.href = "<%=request.getContextPath()%>/boardList.mp?currentPage=1"'><<</button>
 			<% if(currentPage <= 1){ %>
 				<button disabled><</button>
@@ -227,7 +233,7 @@ div #offi {
 				<button onclick = "location.href = '<%=request.getContextPath() %>/boardList.mp?currentPage=<%=currentPage + 1 %>'">></button>
 			<%} %>
 				<button onclick = "location.href = '<%=request.getContextPath() %>/boardList.mp?currentPage=<%=maxPage %>'">>></button>
-	</div>
+	</div> --%>
 	
 </div>
 <%}else{

@@ -168,8 +168,6 @@ hr {
       			<textarea id="summernote"><%=b.getContent() %></textarea>
       			</form>
        <script>
- 		
- 	
              $(document).ready(function() {
          	  	 var fileExtension = ['.jpg', '.png', '.jpeg', '.gif',];
                 $('#summernote').summernote({ // summernote를 사용하기 위한 선언
@@ -179,7 +177,7 @@ hr {
                         // [groupName, [list of button]]
                         ['style', ['bold', 'italic', 'underline', 'clear']],
                         ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['fontsize', ['fontname', 'fontsize']],
+                        ['fontsize', ['fontname', 'fontsize']],-
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['height', ['height']],
