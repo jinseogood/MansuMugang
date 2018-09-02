@@ -100,17 +100,15 @@ public class CommonServlet extends HttpServlet {
 		Payment p = new Payment();
 		p.setDiet_no(diet_no); 
 		
-		result3 = new PaymentService().updateOrder(p);
+		//메뉴 카운트
+		result5 = new PaymentInfoService().updateMenuCount();
 		
 		if(buy_sort.equals("카드결제")){
-		
-			if(result3 > 0){
-				result5 = new PaymentInfoService().updateMenuCount();
+			if(result5 > 0){
+				//status 1->2
+				result3 = new PaymentService().updateOrder(p);
 			}
 		}
-		
-		
-
 		
 		//환불 테스트
 		String m_uid = request.getParameter("m_uid");
