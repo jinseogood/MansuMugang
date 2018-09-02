@@ -56,8 +56,6 @@ public class SelectNoticeList extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		ArrayList<Notice> nList=new NoticeService().selectNoticeList(currentPage, limit);
 		
-		System.out.println("servlet : " + nList);
-		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		

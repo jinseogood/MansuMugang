@@ -259,8 +259,8 @@ public class StatDao {
 		try {
 			pst=con.prepareStatement(query);
 			pst.setString(1, "고");
-			pst.setString(2, "당");
-			pst.setString(3, "뇌");
+			pst.setString(2, "뇌");
+			pst.setString(3, "당");
 			
 			rset=pst.executeQuery();
 			
@@ -278,12 +278,72 @@ public class StatDao {
 		return dietGDHCount;
 	}
 
-	public ArrayList<Stat> countMenu(Connection con) {
+	public ArrayList<Stat> countGoMenu(Connection con) {
 		ArrayList<Stat> mStatList=new ArrayList<Stat>();
 		Statement st=null;
 		ResultSet rset=null;
 		
-		String query=prop.getProperty("countMenu");
+		String query=prop.getProperty("countGoMenu");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			while(rset.next()){
+				Stat s=new Stat();
+				
+				s.setMenu_name(rset.getString("menu_name"));
+				s.setSale_count(rset.getInt("sale_count"));
+				
+				mStatList.add(s);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return mStatList;
+	}
+	
+	public ArrayList<Stat> countDangMenu(Connection con) {
+		ArrayList<Stat> mStatList=new ArrayList<Stat>();
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("countDangMenu");
+		
+		try {
+			st=con.createStatement();
+			rset=st.executeQuery(query);
+			
+			while(rset.next()){
+				Stat s=new Stat();
+				
+				s.setMenu_name(rset.getString("menu_name"));
+				s.setSale_count(rset.getInt("sale_count"));
+				
+				mStatList.add(s);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(st);
+		}
+		
+		return mStatList;
+	}
+	
+	public ArrayList<Stat> countHeadMenu(Connection con) {
+		ArrayList<Stat> mStatList=new ArrayList<Stat>();
+		Statement st=null;
+		ResultSet rset=null;
+		
+		String query=prop.getProperty("countHeadMenu");
 		
 		try {
 			st=con.createStatement();

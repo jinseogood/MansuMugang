@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 <title>만수무강 관리자</title>
 <style>
 	html{
@@ -81,9 +81,24 @@
 	#stat-1, #stat-2, #stat-3{
 		height:33%;
 	}
+	#refreshArea{
+		height:30px;
+	}
+	#refreshArea > img{
+		width:30px;
+		height:30px;
+		margin-right:3%;
+	}
+	#refreshArea > img:hover{
+		cursor:pointer;
+	}
 	#dietTypeStat, #payTypeStat{
 		width:900px;
 		height:500px;
+	}
+	#saleGoStat, #saleDangStat, #saleHeadStat{
+		display:block;
+		height:130px;
 	}
 	#baseTable{
 		border:1px solid lightgray;
@@ -1495,88 +1510,220 @@
 		window.open("<%= request.getContextPath() %>/readQnaDetail.qna?board_id="+boardId+"", "문의내역 상세보기", "width=1100, height=815, top=20, left=20, scrollbars=no");
 	}
 	
-	/* //판매 통계
+	//고혈압 메뉴 판매 통계
 	google.charts.load('current', {packages: ['corechart', 'bar']});
-	google.charts.setOnLoadCallback(drawSales);
+	google.charts.setOnLoadCallback(drawGoSales);
 	
-	function drawSales(){
+	function drawGoSales(){
 		
 		var jsonData=$.ajax({
-			url:"/msmg/statMenuCount",
+			url:"/msmg/statGoMenuCount",
 			dataType:"json",
 			async:false
 		}).responseText;
 		
-		console.log("menu : " + jsonData);
-		console.log(jsonData);
-		
-		console.log("menu type : " + typeof(jsonData));
-		
-		console.log("menu length : " + jsonData.length);
-		
 		var jsonSlice=jsonData.slice(1, jsonData.length-1);
-		
-		console.log(jsonSlice);
 		
 		var arr=jsonSlice.split("},{");
 		
 		var arrKey=[];
 		var arrValue=[];
 		
-		for(var i=0;i<arr.length;i++){
-			var arrSlice;
-			var arrParse;
-			var result;
-			if(i==0){
-				arrSlice=arr[i].slice(1, arr[i].length);
-				arrParse="{"+arrSlice+"}";
-				result=JSON.parse(arrParse);
-				
-			}
-			else if(i==arr.length-1){
-				arrSlice=arr[i].slice(0, arr[i].length);
-				arrParse="{"+arrSlice;
-				result=JSON.parse(arrParse);
-				
-			}
-			else{
-				arrParse="{"+arr[i]+"}";
-				result=JSON.parse(arrParse);
-				
-			}
+		if(arr.length == 1){
+			var result=JSON.parse(arr[0]);
 			
 			arrKey.push(result.menu_name);
 			arrValue.push(result.sale_count);
-			
-			console.log(result.menu_name);
-			console.log(result.sale_count);
 		}
-		
-
-		console.log("arrKey length : " + arrKey.length);
-		console.log("arrValue length : " + arrValue.length);
-
-		
-		var totalArr=[['메뉴명', '판매량']];
-		console.log(totalArr[0][0]);
-		console.log(totalArr[0][1]);
-		for(var i=1;i<=arrKey.length;i++){
-			for(var k=0;k<2;k++){
-				totalArr[i]=[arrKey[i-1], arrValue[i-1]];
-				console.log("totalArr[" + i + "][" + k + "] : " + totalArr[i][k]);
+		else{
+			for(var i=0;i<arr.length;i++){
+				var arrSlice;
+				var arrParse;
+				var result;
+				if(i==0){
+					arrSlice=arr[i].slice(1, arr[i].length);
+					arrParse="{"+arrSlice+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				else if(i==arr.length-1){
+					arrSlice=arr[i].slice(0, arr[i].length);
+					arrParse="{"+arrSlice;
+					result=JSON.parse(arrParse);
+					
+				}
+				else{
+					arrParse="{"+arr[i]+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				
+				arrKey.push(result.menu_name);
+				arrValue.push(result.sale_count);
+				
 			}
 		}
 		
-		console.log(totalArr);
-		
+		var totalArr=[['메뉴명', '판매량']];
+		for(var i=1;i<=arrKey.length;i++){
+			for(var k=0;k<2;k++){
+				totalArr[i]=[arrKey[i-1], arrValue[i-1]];
+			}
+		}
 		
 		var data=new google.visualization.arrayToDataTable(totalArr);
 		
-		console.log(data);
-		
-		var options={};
+		var options={
+				title: "고혈압 식단"	
+			};
 		
 		var chart=new google.visualization.ColumnChart(document.getElementById('saleGoStat'));
+
+		chart.draw(data, options);
+
+	}
+		
+	//당뇨병 메뉴 판매 통계
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawDangSales);
+	
+	function drawDangSales(){
+		
+		var jsonData=$.ajax({
+			url:"/msmg/statDangMenuCount",
+			dataType:"json",
+			async:false
+		}).responseText;
+		
+		var jsonSlice=jsonData.slice(1, jsonData.length-1);
+		
+		var arr=jsonSlice.split("},{");
+		
+		var arrKey=[];
+		var arrValue=[];
+		
+		if(arr.length == 1){
+			var result=JSON.parse(arr[0]);
+			
+			arrKey.push(result.menu_name);
+			arrValue.push(result.sale_count);
+		}
+		else{
+			for(var i=0;i<arr.length;i++){
+				var arrSlice;
+				var arrParse;
+				var result;
+				if(i==0){
+					arrSlice=arr[i].slice(1, arr[i].length);
+					arrParse="{"+arrSlice+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				else if(i==arr.length-1){
+					arrSlice=arr[i].slice(0, arr[i].length);
+					arrParse="{"+arrSlice;
+					result=JSON.parse(arrParse);
+					
+				}
+				else{
+					arrParse="{"+arr[i]+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				
+				arrKey.push(result.menu_name);
+				arrValue.push(result.sale_count);
+				
+			}
+		}
+		
+		var totalArr=[['메뉴명', '판매량']];
+		for(var i=1;i<=arrKey.length;i++){
+			for(var k=0;k<2;k++){
+				totalArr[i]=[arrKey[i-1], arrValue[i-1]];
+			}
+		}
+		
+		var data=new google.visualization.arrayToDataTable(totalArr);
+		
+		var options={
+				title: "당뇨병 식단"	
+			};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleDangStat'));
+
+		chart.draw(data, options);
+
+	}
+		
+	//뇌질환 메뉴 판매 통계
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawHeadSales);
+	
+	function drawHeadSales(){
+		
+		var jsonData=$.ajax({
+			url:"/msmg/statHeadMenuCount",
+			dataType:"json",
+			async:false
+		}).responseText;
+		
+		var jsonSlice=jsonData.slice(1, jsonData.length-1);
+		
+		var arr=jsonSlice.split("},{");
+		
+		var arrKey=[];
+		var arrValue=[];
+		
+		if(arr.length == 1){
+			var result=JSON.parse(arr[0]);
+			
+			arrKey.push(result.menu_name);
+			arrValue.push(result.sale_count);
+		}
+		else{
+			for(var i=0;i<arr.length;i++){
+				var arrSlice;
+				var arrParse;
+				var result;
+				if(i==0){
+					arrSlice=arr[i].slice(1, arr[i].length);
+					arrParse="{"+arrSlice+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				else if(i==arr.length-1){
+					arrSlice=arr[i].slice(0, arr[i].length);
+					arrParse="{"+arrSlice;
+					result=JSON.parse(arrParse);
+					
+				}
+				else{
+					arrParse="{"+arr[i]+"}";
+					result=JSON.parse(arrParse);
+					
+				}
+				
+				arrKey.push(result.menu_name);
+				arrValue.push(result.sale_count);
+				
+			}
+		}
+		
+		var totalArr=[['메뉴명', '판매량']];
+		for(var i=1;i<=arrKey.length;i++){
+			for(var k=0;k<2;k++){
+				totalArr[i]=[arrKey[i-1], arrValue[i-1]];
+			}
+		}
+		
+		var data=new google.visualization.arrayToDataTable(totalArr);
+		
+		var options={
+			title: "뇌질환 식단"	
+		};
+		
+		var chart=new google.visualization.ColumnChart(document.getElementById('saleHeadStat'));
 
 		chart.draw(data, options);
 
@@ -1592,10 +1739,6 @@
 			dataType:"json",
 			async:false
 		}).responseText;
-		
-		console.log(jsonData);
-		
-		console.log("diet type : " + typeof(jsonData));
 		
 		var obj = JSON.parse(jsonData, function (key, value) {
     	if (key == "go") {
@@ -1648,8 +1791,6 @@
 			async:false
 		}).responseText;
 		
-		console.log(jsonData);
-		
 		var obj = JSON.parse(jsonData, function (key, value) {
     	if (key == "money") {
         	return value;
@@ -1671,7 +1812,7 @@
 		var chart=new google.visualization.PieChart(document.getElementById('payTypeStat'));
 		
 		chart.draw(data, options);
-	} */
+	}
 
 	$(function(){
 		
@@ -2136,19 +2277,27 @@
 			<h2 style="margin-left:1%;">통계</h2>
 			<hr>
 			<div id="stat-1">
-				<h4 style="margin-left:5%;">메뉴 판매 통계</h4>
-				<button onclick="drawSales();">갱신</button>
+				<h4 style="margin-left:5%;">식단별 메뉴 판매량</h4>
 				<br>
+				<div id="refreshArea" onclick="drawGoSales();" align="right"><img src="/msmg/images/admin/refreshIcon.png"></div>
 				<div id="saleGoStat"></div>
+				<br>
+				<div id="refreshArea" onclick="drawDangSales();" align="right"><img src="/msmg/images/admin/refreshIcon.png"></div>
+				<div id="saleDangStat"></div>
+				<br>
+				<div id="refreshArea" onclick="drawHeadSales();" align="right"><img src="/msmg/images/admin/refreshIcon.png"></div>
+				<div id="saleHeadStat"></div>
 			</div>
 			<div id="stat-2">
-				<h4 style="margin-left:5%;">식단 통계</h4>
+				<h4 style="margin-left:5%;">식단</h4>
 				<br>
+				<div id="refreshArea" onclick="drawDietType();" align="right"><img src="/msmg/images/admin/refreshIcon.png"></div>
 				<div id="dietTypeStat"></div>
 			</div>
 			<div id="stat-3">
-				<h4 style="margin-left:5%;">결제수단 통계</h4>
+				<h4 style="margin-left:5%;">결제수단</h4>
 				<br>
+				<div id="refreshArea" onclick="drawPayType();" align="right"><img src="/msmg/images/admin/refreshIcon.png"></div>
 				<div id="payTypeStat"></div>
 			</div>
 		</div>

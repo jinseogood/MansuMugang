@@ -100,14 +100,35 @@ public class StatService {
 		return dietGDHCount;
 	}
 
-	public ArrayList<Stat> countMenu() {
+	public ArrayList<Stat> countGoMenu() {
 		Connection con=getConnection();
 		
-		ArrayList<Stat> mStatList=new StatDao().countMenu(con);
+		ArrayList<Stat> mStatList=new StatDao().countGoMenu(con);
 		
 		close(con);
 		
 		return mStatList;
 	}
+	
+	public ArrayList<Stat> countDangMenu() {
+		Connection con=getConnection();
+		
+		ArrayList<Stat> mStatList=new StatDao().countDangMenu(con);
+		
+		close(con);
+		
+		return mStatList;
+	}
+	
+	public ArrayList<Stat> countHeadMenu() {
+		Connection con=getConnection();
+		
+		ArrayList<Stat> mStatList=new StatDao().countHeadMenu(con);
+		
+		close(con);
+		
+		return mStatList;
+	}
+
 
 }
