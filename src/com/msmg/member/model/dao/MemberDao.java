@@ -546,9 +546,11 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
+				fi = new FindId();
+				
 				fi.setUserName(rset.getString("u_name"));
-				fi.setJoinQ(rset.getString("u_question"));
-				fi.setJoinA(rset.getString("u_answer"));
+				/*fi.setJoinQ(rset.getString("u_question"));
+				fi.setJoinA(rset.getString("u_answer"));*/
 				fi.setUserId(rset.getString("u_id"));
 				
 			}

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.msmg.member.model.vo.*" %>
 <% FindId fi = (FindId)request.getAttribute("fi");
-   System.out.println(fi); %>
+   System.out.println("jsp인클루드에서 " + fi); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,22 +89,19 @@
 		$(function(){
 			$("#findId").click(function(){
 				var userName = $("#userName").val();
-				var joinQ = $("#joinQ").val();
+				var joinQ = $(":selected").val();
 				var joinA = $("#joinA").val();
 				$.ajax({
 				url:"/msmg/selectId.me",
 				data:{userName:userName,joinQ:joinQ,joinA:joinA},
 				success:function(value){
 					
-					console.log(value)
-		   	   		<%-- if('<%= fi.getUserId() %>' != null){
-		   	   			alert(<%= fi.getUserName() %> + "님의 이메일은 " + <%= fi.getUserId() %> + "입니다.");
-		   	   		}/* else{
-		   	   			alert("일치하는 이메일이 없습니다.");
-		   	   		} */ --%>
+					console.log(value);
+		   	   		<%-- alert(<%= fi.getUserName() %> + "님의 아이디(이메일)는  " + <%= fi.getUserId() %> + "  입니다."); --%>
 				},
 				error:function(){
 					alert("일치하는 이메일이 없습니다.");
+					
 				}
 			});
 		
