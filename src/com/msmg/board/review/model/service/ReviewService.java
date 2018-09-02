@@ -131,14 +131,14 @@ public class ReviewService {
 		
 		int result2 = new ReviewDao().deleteBoardFile(con, b);
 		
-		if(result1 > 0) {
+		/*if(result1 > 0) {
 			int bid = new ReviewDao().selectCurrval2(con);
 			System.out.println("ReviewService : " + bid);
 			
 			for(int i = 0; i < fileList.size(); i++) {
 				fileList.get(i).setBoard_id(bid);
 			}
-		}
+		}*/
 		
 		System.out.println("update fileList : " + fileList);
 		int result3 = new ReviewDao().updateBoardFile(con, fileList);

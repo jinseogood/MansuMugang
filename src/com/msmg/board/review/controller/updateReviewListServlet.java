@@ -63,7 +63,6 @@ public class updateReviewListServlet extends HttpServlet {
 			String date = multiRequest.getParameter("date");
 			String boardId = multiRequest.getParameter("boardId");
 			String boardFile = multiRequest.getParameter("board_file");
-			String boardSort = multiRequest.getParameter("board_sort");
 			String fileType = multiRequest.getParameter("FileType");
 			
 			System.out.println("boardId : " + boardId);
@@ -71,8 +70,6 @@ public class updateReviewListServlet extends HttpServlet {
 			System.out.println("title : " + title);
 			System.out.println("content : " + content);
 			System.out.println("date : " + date);
-			System.out.println("boardSort : " + boardSort);
-			System.out.println("fileNo : " + fileNo);
 			
 			//다중 파일을 묶어서 업로드 하기 위해 컬렉션을 생성한다.
 			//저장한 파일의 이름을 저장할 arrayList를 생성한다.
@@ -118,7 +115,6 @@ public class updateReviewListServlet extends HttpServlet {
 			b.setContent(content);
 			b.setuCode(uCode);
 			b.setBoardId(Integer.parseInt(boardId));
-			b.setBoardSort(boardSort);
 			
 			
 			System.out.println("board b : " + b);

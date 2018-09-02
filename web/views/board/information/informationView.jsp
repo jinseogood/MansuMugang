@@ -330,15 +330,6 @@ input[type=text]{
 					
 					location.href="<%=request.getContextPath()%>/selectOne.bo?bid=" + bid + "&num=" + num;
 					
-					
-					/*$("#replyAddTable").html("");
-					for(var i = 0; i < data.length; i++){
-						$("#replyAddTable").append("<tr><td width='100px'>" + data[i].u_code + "<br>" + data[i].re_date +"</td><td width='600px'>" + data[i].re_content + "</td>"
-								+ "<td width='100px'><a>수정</a>" + " | " + "<a onclick='deleteReply();'>삭제</a></td></tr>")
-					} */
-					
-					
-					
 				},
 				error:function(data){
 					console.log("실패");

@@ -96,7 +96,6 @@ public class MypageDao {
 		Board board = null;
 		
 		String query = prop.getProperty("selectBoard");
-		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, b.getU_code());
@@ -115,7 +114,7 @@ public class MypageDao {
 				board.setContent(rset.getString("content"));
 				board.setBoard_date(rset.getDate("board_date"));
 				board.setU_code(rset.getString("u_code"));
-				board.setBuy_info_num(rset.getInt("buy_info_num"));
+				board.setBuy_info_num(rset.getInt("buy_info_no"));
 				board.setB_count(rset.getInt("b_count"));
 				board.setRef_bno(rset.getInt("ref_bno"));
 				board.setBoard_id(rset.getInt("board_id"));
@@ -125,6 +124,8 @@ public class MypageDao {
 				list.add(board);
 				
 			}
+			
+			System.out.println("mypageDao list : " + list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

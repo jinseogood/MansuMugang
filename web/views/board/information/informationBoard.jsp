@@ -173,14 +173,14 @@ div #offi {
 		</div>
 
 
-		<div id="search2" align="right" style="margin-right: 50px">
+		<!-- <div id="search2" align="right" style="margin-right: 50px">
 			<select name="searchArea" id="result"
 				style="width: 50px; height: 27px;">
 				<option value="이름">이름</option>
 				<option value="제목">제목</option>
 			</select> <input id="search" type="text" name="search"> <i id="fas"
 				class="fas fa-search fa-lg"></i>
-		</div>
+		</div> -->
 
 
 		<div id='wrap'>
@@ -224,9 +224,6 @@ div #offi {
 			<div id='btnlist' align="right" style="margin-top:10px;">
 				<button id="writeBtn"type="button" class="btn btn-success"
 					onclick='location.href = "<%=request.getContextPath()%>/selectWrite.bo"'>글작성</button>
-					
-				<!--백업 <button id="writeBtn"type="button" class="btn btn-success"
-					onclick='location.href = "/msmg/views/board/information/informationWrite.jsp"'>글작성</button> -->
 			</div>
 			<%} %>
 			
