@@ -119,6 +119,9 @@ div[id=date-writer-hit2] {
 	height:200px;
 	width:100%;
 }
+#attachArea {
+	border-bottom: 1px solid #ff6347;
+}
 </style>
 <script>
 	/* 글 삭제 시 호출 함수 */
@@ -150,16 +153,16 @@ div[id=date-writer-hit2] {
 				<!-- 글 내용 -->
 				<div id="article-content"><%= no.getContent() %></div>
 					<!-- 첨부파일 -->
-					<div id ='attachArea'>
 						<%if(list != null){ %>
+					<div id ='attachArea'>
 						<dl>
 							<dt>첨부파일</dt>
 								<%for(Attachment at : list){ %>
 								<dd><a href = "downloadFile.no?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
 								<%} %>
 						</dl>
-						<%} %>
 					</div>
+						<%} %>
 				</div>
 			</div>
 			<div id='whiptable'>

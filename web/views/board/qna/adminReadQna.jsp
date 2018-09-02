@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글읽기</title>
+<title>QnA :: <%= qna.getTitle() %> - 관리자</title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
 	rel="stylesheet">
 <script

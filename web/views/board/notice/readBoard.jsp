@@ -120,6 +120,10 @@ div[id=date-writer-hit2] {
 	height:200px;
 	width:100%;
 }
+
+#attachArea {
+	border-bottom: 1px solid #ff6347;
+}
 </style>
 
 </head>
@@ -145,16 +149,16 @@ div[id=date-writer-hit2] {
 					<span id="date-writer-hit"> <%= no.getBoard_date() %> &nbsp;&nbsp;&nbsp; <b>l</b>&nbsp;&nbsp;&nbsp; hit <%= no.getB_count() %></span>
 				</div>
 				<div id="article-content"><%= no.getContent() %></div>
-				<div id ='attachArea'>
 				<%if(list != null){ %>
+				<div id ='attachArea'>
 				<dl>
 					<dt>첨부파일</dt>
 					<%for(Attachment at : list){ %>
 						<dd><a href = "downloadFile.no?edit_name=<%=at.getChangeName() %>"><%= at.getOriginName() %></a></dd>
 					<%} %>
 				</dl>
-				<%} %>
 				</div>
+				<%} %>
 			</div>
 		</div>
 		<div id='whiptable'>

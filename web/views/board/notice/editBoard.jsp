@@ -193,7 +193,7 @@ margin-right : auto;
 					<tr class='title'>
 						<td width="30" align = 'center' id = 'tdbg'>제목</td>
 						<td width="300"><input type='text' class='form-control'
-							name="title" width="300" value = <%= no.getTitle() %>></td>
+							name="title" width="300" value = '<%= no.getTitle() %>'></td>
 						<td  width = '50' align = 'center' id = 'tdbg'>작성일</td>
 						<td width = "100" align = 'center'><%= df.format(new Date()) %></td>
 					</tr>

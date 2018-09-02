@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글읽기</title>
+<title>QnA :: <%= qna.getTitle() %></title>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
 	rel="stylesheet">
 <script
@@ -170,7 +170,7 @@ table{
 		<div class="btnlist">
 			<button class="btn btn-primary befo btn-sm"
 				onclick = 'history.go(-1)'>이전으로</button>
-			<% if(user.getU_code() == qna.getRef_ucode()){ %>
+			<% if(user.getU_code() == qna.getRef_ucode() && !qna.getU_name().equals("관리자") ){ %>
 			<button class="btn btn-primary befo btn-sm"
 				onclick = "location.href = '<%=request.getContextPath() %>/selectOneEdit.Qna?num=<%= qna.getBoard_id() %>'">수정하기</button>
 			<button class="btn btn-primary befo btn-sm"

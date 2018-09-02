@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset=UTF-8>
-<title>답글쓰기</title>
+<title>QnA :: 답글쓰기</title>
 	
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic"
 	rel="stylesheet">
