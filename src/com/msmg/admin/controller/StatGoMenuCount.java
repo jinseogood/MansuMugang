@@ -29,6 +29,8 @@ public class StatGoMenuCount extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
+		System.out.println("gmenu count servlet : " + mStatList);
+		
 		new Gson().toJson(mStatList, response.getWriter());
 		
 	}

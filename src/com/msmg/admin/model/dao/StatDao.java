@@ -230,8 +230,8 @@ public class StatDao {
 		
 		try {
 			pst=con.prepareStatement(query);
-			pst.setString(1, "당");
-			pst.setString(2, "뇌");
+			pst.setString(1, "뇌");
+			pst.setString(2, "당");
 			
 			rset=pst.executeQuery();
 			

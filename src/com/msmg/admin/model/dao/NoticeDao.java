@@ -109,10 +109,10 @@ public class NoticeDao {
 		String query="";
 		
 		if(type.equals("title")){
-			query=prop.getProperty("nTitleListCount");
+			query=prop.getProperty("nTitleCount");
 		}
 		else if(type.equals("u_name")){
-			query=prop.getProperty("nUNameListCount");
+			query=prop.getProperty("nUNameCount");
 		}
 		
 		try {
