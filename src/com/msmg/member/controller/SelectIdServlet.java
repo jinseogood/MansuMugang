@@ -34,6 +34,7 @@ public class SelectIdServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String joinQ = request.getParameter("joinQ");
 		String joinA = request.getParameter("joinA");
+		System.out.println("다오에서 유저네임 조인큐 조잉ㄴ에이 받아오니 ? " + userName + joinQ + joinA);
 		
 		System.out.println("오니?");
 		FindId f = new FindId();
@@ -46,12 +47,12 @@ public class SelectIdServlet extends HttpServlet {
 		String page = "";
 		
 		
-		/*page = "views/member/FindIdPassword.jsp";
+		page = "views/member/FindIdPassword.jsp";
 		request.setAttribute("fi", fi);
 		
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);*/
+		view.forward(request, response);
 		
 	}
 
