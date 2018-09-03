@@ -248,14 +248,15 @@ input[type=text]{
 				<td width="100px"><%= list2.get(i).getU_code() %>
 				                  <br><div id="date" ><%= list2.get(i).getRe_date() %></div></td>
 				<td width="600px" id="content11"><%= list2.get(i).getRe_content() %></td>
-				<td width="600px" id="content22" style="display:none;"><input type="text" style="padding-left:10px; width:600px; height:30px; color:blue;" value="<%= list2.get(i).getRe_content() %>"></td>
-				
+				<td width="600px" id="content22" style="display:none;">
+				<input type="text" style="padding-left:10px; width:600px; height:30px; color:blue;" value="<%= list2.get(i).getRe_content() %>"></td>
 				<%if(loginUser.getU_name().equals(list2.get(i).getU_code())) {%>
 					<td id="update" width="50px"><a>수정</a></td>
 					<td style="display:none;"id="update2" width='50px'><a>등록</a></td>
 					<td id="delete" width="50px"><a>삭제</a></td>
 				<%} else {%>
-					<td width="100"></td>
+					<td width="50px"></td>
+					<td width="50px"></td>
 				<%} %>
 				</tr>
 			<%} %>

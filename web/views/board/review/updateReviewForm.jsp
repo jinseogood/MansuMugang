@@ -168,8 +168,6 @@ div[id=date-writer-hit2] {
 	<%@ include file="../../common/menubar.jsp"%>
 </div>
 	<div class="outer">
-		<!-- <h2 align="left"><b>후기 게시판 글 작성</b></h2> -->
-		<%-- <%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm"); %> --%>
 		<br>
 		<div id="view">
 		<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd"); %>
@@ -192,13 +190,6 @@ div[id=date-writer-hit2] {
 						style="resize:none;" value="<%=b.getContent()%>"></input></td>
 					<td><input type="hidden" id="count" value="<%=b.getbCount()%>"></td>
 					<td><input type="hidden" id="boardId" value="<%=b.getBoardId()%>"></td>
-					<%-- 
-					<%for (int i = 0; i < bf.size(); i++) {%>
-					<td><input type="hidden" id="fileNo"value="<%=bf.get(i).getFile_no() %>"></td>
-					<td><input type="hidden" id="fileNo" name="BoardId" value="<%=bf.get(i).getBoard_id() %>"></td>
-					<td><input type="hidden" id="fileNo" name="FileType" value="<%=bf.get(i).getFile_type() %>"></td>
-					<td><input type="hidden" id="fileNo" name="BoardSort" value="<%=bf.get(i).getBoard_sort()%>"></td>
-					<%} %> --%>
 				</tr>
 				<tr>
 				<div>

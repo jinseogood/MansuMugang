@@ -151,7 +151,8 @@ hr {
 				<tr id="tableView2">
 					<td class="titleN" id="title">제목</td>
 					<td><input type="text" id="title2"
-						style="background-color: transparent; border: 0 solid black; text-align: left; width: 350px;" value="<%=b.getTitle()%>">
+						style="background-color: transparent; border: 0 solid black;
+						text-align: left; width: 350px;" value="<%=b.getTitle()%>">
 						</td>
 					<td class="titleN" id="date">작성일</td>
 					<td id="date2"><%=df.format(new Date()) %></td>
@@ -165,7 +166,7 @@ hr {
 			<br>
 			<div>
 				<form name="writeForm" action="./summernote_insert.jsp" method="post">
-      			<textarea id="summernote"><%=b.getContent() %></textarea>
+      			<textarea id="summernote" name="content"><%=b.getContent() %></textarea>
       			</form>
        <script>
              $(document).ready(function() {
@@ -177,7 +178,7 @@ hr {
                         // [groupName, [list of button]]
                         ['style', ['bold', 'italic', 'underline', 'clear']],
                         ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['fontsize', ['fontname', 'fontsize']],-
+                        ['fontsize', ['fontname', 'fontsize']],
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['height', ['height']],
@@ -220,7 +221,7 @@ hr {
 		<hr>
 		<br>
 		<div id="writeBtn">
-			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='informationBoard.jsp'">취소</button>
+			<button type="button" class="btn btn-primary" value="취소" OnClick="window.location='<%=request.getContextPath()%>/selectOne.bo?num=<%=b.getBoardNo()%>&bid=<%=b.getBoardId()%>'">취소</button>
 			&nbsp;
 			<button type="button" class="btn btn-primary" id="updateBtn">수정 완료</button>
 		</div>
