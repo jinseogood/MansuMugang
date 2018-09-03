@@ -29,6 +29,8 @@ public class StatDangMenuCount extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
+		System.out.println("dmenu count servlet : " + mStatList);
+		
 		new Gson().toJson(mStatList, response.getWriter());
 		
 	}
