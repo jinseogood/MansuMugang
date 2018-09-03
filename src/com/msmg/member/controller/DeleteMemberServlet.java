@@ -43,7 +43,7 @@ public class DeleteMemberServlet extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.jsp");
 		}else{
-			request.setAttribute("msg", "회원 탈퇴 실패!!");
+			request.setAttribute("msg", "회원 탈퇴 실패");
 			
 			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			view.forward(request, response);

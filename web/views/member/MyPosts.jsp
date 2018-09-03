@@ -147,7 +147,7 @@ div #offi {
   		  <li><a onclick="test();">장바구니</a></li>
   		  <li><a href="<%= request.getContextPath() %>/selectBuyAll.mp">주문내역</a></li>
   		  <li><a href="<%= request.getContextPath() %>/mypageQnaList.mp">1:1 문의내역</a></li>
-  		  <li><a href="<%= request.getContextPath() %>/selectBoard.mp">내가 쓴 글</a></li>
+  		  <%-- <li><a href="<%= request.getContextPath() %>/selectBoard.mp">내가 쓴 글</a></li> --%>
   		  <li><a href="/msmg/views/member/Withdrawal.jsp">회원 탈퇴</a></li>
       	</ul>
 	</div>
@@ -161,8 +161,7 @@ div #offi {
 			style="background: url('/msmg/images/board/table_mid2.png') /* #E8E8E8 */ repeat-x; height : 30px;">
 			<td width="5"><img src="/msmg/images/board/table_left1.png" width="5" style = "background : no-repeat;"
 				height="30" /></td>
-			<td width="150"><span>게시판구분</span></td>
-			<td width="73"><span>번호</span></td>
+			<td width="300"><span>번호</span></td>
 			<td width="630"><span>제목</span></td>
 			<td width="73"><span>작성자</span></td>
 			<td width="164"><span>작성일</span></td>
