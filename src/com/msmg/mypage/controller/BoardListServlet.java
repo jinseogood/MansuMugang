@@ -71,7 +71,7 @@ public class BoardListServlet extends HttpServlet {
 		
 		page = "views/member/MyPosts.jsp";
 		request.setAttribute("list", list);
-		request.setAttribute("pi", pi);
+		/*request.setAttribute("pi", pi);*/
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

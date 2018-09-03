@@ -142,7 +142,7 @@
 					});	
 				
 			</script>
-		<button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button>
+		<!-- <button onclick="location.href='/msmg/views/board/review/reviewThumbnailInsertForm.jsp'">작성하기</button> -->
 	</div>
 	<div id="mainBottom">
 	<%@include file="../../common/footer.jsp"%>

@@ -198,10 +198,7 @@ div #offi {
 					<td width="7"><img src="/msmg/images/board/table_right.png"
 						width="5" height="30" /></td>
 				</tr>
-
-				<% 
-				
-				for(Board b : list) {%>
+				<%for(Board b : list) {%>
 				<tr id="listArea">
 					<input type="hidden" value="<%=b.getBoardNo()%>">
 					<input type="hidden" id="bid" value="<%=b.getBoardId() %>">

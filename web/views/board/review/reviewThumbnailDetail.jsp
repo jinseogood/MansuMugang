@@ -282,7 +282,8 @@ a:hover {
 						<td style="display:none;"id="update2" width='50px'><a>등록</a></td>
 						<td id="delete" width="50"><a>삭제</a></td>
 					<%} else{%>
-						<td width="100"></td>
+						<td width="50px"></td>
+						<td width="50px"></td>
 					<%} %>
 					</tr>
 				<%} %>

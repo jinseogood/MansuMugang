@@ -155,7 +155,7 @@ div #offi {
 	<%if(loginUser != null){ %>
 	<div id = 'wrap'>
 	<table align='center' cellpadding="0" cellspacing="0" border="0">
-
+	
 		<!-- s : 게시판 타이틀 -->
 		<tr
 			style="background: url('/msmg/images/board/table_mid2.png') /* #E8E8E8 */ repeat-x; height : 30px;">
@@ -179,25 +179,26 @@ div #offi {
 		%>
 		<tr id='content'>
 			<td></td>
-			<% if(b.getRef_bno() == b.getBoard_id()){ %>
+			<% if(b.getBoard_sort().equals("1")) {%>
+				<td>정보게시판</td>
+			<%} %>
 			<td><%= b.getBoard_no() %></td>
+			<% if(b.getRef_bno() == b.getBoard_id()){ %>
 			<td style = "text-align : left;"><a href = "<%= request.getContextPath() %>/boardList.mp?board_id=<%=b.getBoard_id() %>"><%= b.getTitle()  %></a></td>
 			<%}else{ %>
-			<td></td>
-			<td style = "text-align : left;"><a href = "<%= request.getContextPath() %>/boardList.mp?board_id=<%=b.getBoard_id() %>">
-			<img src = '/msmg/images/board/enter.png'><%= b.getTitle() %></a></td>
+			<td style = "text-align : center;"><a href = "<%= request.getContextPath() %>/boardList.mp?board_id=<%=b.getBoard_id() %>">
+			<!-- <img src = '/msmg/images/board/enter.png'> --><%= b.getTitle() %></a></td>
 			<%} %>
 			<td><%= b.getU_code() %></td>
 			<td><%= b.getBoard_date() %></td>
 			<td><%= b.getB_count() %></td>
-			<td></td>
 		</tr>
 		<tr height='1' bgcolor="#D2D2D2">
-			<td colspan="6" width="752"></td>
+			<td colspan="7" width="780"></td>
 		</tr>
 		
 		<%}
-				}else{%>
+			}else{%>
 		<tr id='content'>
 			<td colspan='7'>등록된 글이 없습니다.</td>
 		</tr>
@@ -206,7 +207,7 @@ div #offi {
 
 		<!-- 게시판 끝 -->
 		<tr bgcolor="#ff6347" style="height: 1px;">
-			<td colspan="6"></td>
+			<td colspan="7"></td>
 		</tr>
 		<!-- 게시판 끝 -->
 	</table>

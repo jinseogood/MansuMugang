@@ -184,8 +184,8 @@ public class MypageDao {
 			System.out.println("endRow : " + endRow);
 			System.out.println("currentPage : " + currentPage);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			/*pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);*/
 			
 			rset = pstmt.executeQuery();
 			
