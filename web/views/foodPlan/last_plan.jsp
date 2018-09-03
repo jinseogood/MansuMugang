@@ -27,7 +27,7 @@
 		background-image:url("/msmg/images/common/menu3.png");
 	}
 	#main{
-		min-height:80%;
+		min-height:70%;
 		position:relative;
 	}
 	/*  .left{
@@ -91,6 +91,12 @@
 		width:100%;
 		height:100%;
 	}
+	.modal-header {
+   		padding: 2px 16px;
+   		background-color:tomato;
+   		color: white;
+}
+
 	.btns{
 		background:#FAFAFA;
 		align:center;
@@ -262,6 +268,7 @@
 				<img src = "/msmg/images/button/paybutton.png">
 			</a></div>
 	</div>
+	
 	<form>	
 <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
@@ -291,8 +298,8 @@
         </div>
         
         <div class="modal-footer">
-       	  <input type="button" class = "btn" id ="OK_btn" value="OK" >&nbsp;
-          <button type="button" class = "btn" data-dismiss="modal">Close</button>
+       	  <input type="button" class = "btn btn-danger waves-effect" id ="OK_btn" value="OK" >&nbsp;
+          <button type="button" class = "btn btn-danger waves-effect" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

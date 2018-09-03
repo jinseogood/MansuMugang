@@ -114,6 +114,39 @@ public class FoodService {
 		return result;
 	}
 
+	public ArrayList<MenuList> menuListGLike(int u_code) {
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> result = new SelectFoodDao().menuListGLike(con, u_code);
+		
+		close(con);
+		
+		
+		return result;
+	}
+
+	public ArrayList<MenuList> menuListDLike(int u_code) {
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> result = new SelectFoodDao().menuListDLike(con, u_code);
+		
+		close(con);
+		
+		
+		return result;
+	}
+
+	public ArrayList<MenuList> menuListHLike(int u_code) {
+		Connection con = getConnection();
+		
+		ArrayList<MenuList> result = new SelectFoodDao().menuListHLike(con, u_code);
+		
+		close(con);
+		
+		
+		return result;
+	}
+
 
 
 

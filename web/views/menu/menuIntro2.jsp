@@ -108,12 +108,18 @@ table td {
 	height:40px;
 }
 td .info {
-	height: 70px;
+	margin-top:10px;
+	height: 45px;
 }
 
 td .like {
 	text-align: right;
 	/* font-size:20px; */
+}
+
+td .n{
+	margin-top:5px;
+	font-weight:bold;
 }
 
 .like>a {
@@ -201,6 +207,7 @@ td .like {
 										<img
 											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
 									</div>
+									<div class="n"><%=list.get(i).getMenu_name()%></div>
 									<div class="info"><%=list.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
 										<input type = "hidden" value = "<%= list.get(i).getMenu_code() %>">			

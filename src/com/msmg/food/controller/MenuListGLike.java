@@ -24,21 +24,23 @@ public class MenuListGLike extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<MenuList> list = new ArrayList<MenuList>();
-		ArrayList<Like> MenuList = new ArrayList<Like>();
+		//ArrayList<Like> MenuList = new ArrayList<Like>();
+		ArrayList<MenuList> MenuList = new ArrayList<MenuList>();
 		list = new FoodService().menuListG();
 		int u_code = 0;
 		
 		if(request.getParameter("user") != null){
 			u_code = Integer.parseInt(request.getParameter("user"));
 		}
+		MenuList = new FoodService().menuListGLike(u_code);
 		String page = "";
-		if(list != null){
-			if(MenuList != null){
-				MenuList = new FoodService().likeCheck(u_code);
+		if(MenuList != null){
+			
+				MenuList = new FoodService().menuListGLike(u_code);
 				request.setAttribute("MenuList", MenuList);
-			}	
+				
 			page = "/views/menu/menuLikeIntro.jsp";
-			request.setAttribute("list", list);
+			//request.setAttribute("list", list);
 			request.setAttribute("msg", "메뉴 리스트");
 		}else{
 			page = "/views/common/errorPage.jsp";

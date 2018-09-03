@@ -396,6 +396,117 @@ public class SelectFoodDao {
 		
 	}
 
+	public ArrayList<MenuList> menuListGLike(Connection con, int u_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListGLike");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u_code);
+			
+			rset = pstmt.executeQuery();
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getInt("menu_code"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<MenuList> menuListDLike(Connection con, int u_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListDLike");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u_code);
+			
+			rset = pstmt.executeQuery();
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getInt("menu_code"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<MenuList> menuListHLike(Connection con, int u_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MenuList> list = null;
+		String query = prop.getProperty("menuListHLike");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, u_code);
+			
+			rset = pstmt.executeQuery();
+			if(rset != null){
+				list = new ArrayList<MenuList>();
+				
+				while(rset.next()){
+					MenuList ml = new MenuList();
+					
+					ml.setMenu_info(rset.getString("menu_info"));
+					ml.setImg_name(rset.getString("menu_img_ename"));
+					ml.setMenu_name(rset.getString("menu_name"));
+					ml.setMenu_code(rset.getInt("menu_code"));
+					
+					list.add(ml);
+				}
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
 
 }
 

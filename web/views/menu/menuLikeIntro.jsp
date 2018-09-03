@@ -3,7 +3,7 @@
 	import="java.util.*, com.msmg.food.model.vo.*, java.util.*"%>
 <%
 	ArrayList<MenuList> list = (ArrayList<MenuList>) request.getAttribute("list");
-	ArrayList<Like> MenuList = (ArrayList<Like>) request.getAttribute("MenuList");
+	ArrayList<MenuList> MenuList = (ArrayList<MenuList>) request.getAttribute("MenuList");
 	int count = 0;
 %>
 <!DOCTYPE>
@@ -113,6 +113,14 @@ table td {
 	width:80px;
 	height:40px;
 }
+td .in {
+	margin-top:10px;
+	height: 45px;
+}
+td .n{
+	margin-top:5px;
+	font-weight:bold;
+}
 
 .like>a {
 	text-decoration: none;
@@ -197,19 +205,16 @@ table td {
 
 				<table align="center" text-align="center">
 					<%
-						for (int j = 0; j <= list.size() / 3; j++) {
+						for (int j = 0; j <= MenuList.size() / 3; j++) {
 					%>
 
 					<tr>
 						<%
-							for (int i = count; i < list.size();) {
+							for (int i = count; i < MenuList.size();) {
 						%>
 
 						<%
-							if (loginUser != null) {
-										if (MenuList.size() != 0) {
-											for (int l = 0; l < MenuList.size(); l++) {
-												if (MenuList.get(l).getM_code() == list.get(i).getMenu_code()) {
+							if (loginUser != null) {																			
 						%>
 
 						<td align="center">
@@ -217,29 +222,28 @@ table td {
 								<div id="g1-img" class="topMenuImg">
 									<div>
 										<img
-											src="<%=request.getContextPath()%>/images/food/<%=list.get(i).getImg_name()%>">
+											src="<%=request.getContextPath()%>/images/food/<%=MenuList.get(i).getImg_name()%>">
 									</div>
-									<div class="in"><%=list.get(i).getMenu_info()%></div>
+									<div class="n"><%=MenuList.get(i).getMenu_name()%></div>
+									<div class="in"><%=MenuList.get(i).getMenu_info()%></div>
 									<div class="like" text-align="right">
-										<input type="hidden" value="<%=list.get(i).getMenu_code()%>">
+										<input type="hidden" value="<%=MenuList.get(i).getMenu_code()%>">
 									</div>
 								</div>
 							</div>
 						</td>
-						<%
-							break;
-												}
-											}
-										}
-									}
-									i++;
-									count = i;
+						<%							
+										
+							}
+						i++;
+						count = i;
 									if (count % 3 == 0) {
 										break;
 
 									}
 
-								}
+								
+							}
 						%>
 					</tr>
 					<%
