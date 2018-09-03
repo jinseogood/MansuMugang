@@ -136,7 +136,7 @@
 				<td><input type="text" name="phone"></td>
 			</tr>
 			<tr>
-				<td colspan="2"><button>비밀번호 찾기</button></td>
+				<td colspan="2"><button class="w3-button w3-ripple w3-yellow">비밀번호 찾기</button></td>
 			</tr>
 		</table>
 	</div>

@@ -192,7 +192,6 @@ function kakao(){
 				Kakao.API.request({
 					url : '/v1/user/me',
 					success : function(res) {
-						alert("테스트");
 						$("#id").val(res.id);
 						$("#nickname").val(res.properties.nickname);
 						$("#refreshToken").val(refreshToken);

@@ -491,10 +491,6 @@ div a {
 		if(trimmed_cerNum == trimmed_authenticationNum){
 			alert("이메일 인증이 완료되었습니다.");
 			$("#userId").attr("readonly", 'true');
-			/* $("#idCheck").attr("disabled", 'disabled');
-			$("#emailCheck").attr("disabled", 'disabled');
-			$("#cerNumBtn").attr("disabled", 'disabled'); */
-					
 			return true;
 		}else{
 			alert("이메일 인증에 실패하셨습니다. 인증번호를 확인해주세요."); return false;

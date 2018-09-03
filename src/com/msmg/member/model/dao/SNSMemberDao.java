@@ -60,7 +60,6 @@ public class SNSMemberDao {
 					break;
 				}
 			}
-			System.out.println("swswwswsw " + sw);
 			
 			String query="";
 			
@@ -76,9 +75,7 @@ public class SNSMemberDao {
 				if(result>0){
 					result=99;
 					pst2=con.prepareStatement(selectUCode);
-					
 					pst2.setString(1, member.getU_id());
-					
 					rset2=pst2.executeQuery();
 					
 					while(rset2.next()){
@@ -90,7 +87,6 @@ public class SNSMemberDao {
 				else{
 					result=0;
 				}
-				
 			}
 			else{
 				
@@ -102,18 +98,12 @@ public class SNSMemberDao {
 				pst.setString(3, member.getToken());
 				
 				result=pst.executeUpdate();
-				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!" + result);
 			}
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
-			close(st);
-			close(rset);
-			close(pst);
+			close(st); close(rset); close(pst);
 		}
-		
 		return member;
 	}
 }
