@@ -239,7 +239,7 @@ border : 1px solid tomato;
    				}
 			}});
 		
- 	  webSocket = new WebSocket('ws://localhost:8001'+ '<%=request.getContextPath()%>/unicast');
+ 	  webSocket = new WebSocket('ws://192.168.20.195:8001'+ '<%=request.getContextPath()%>/unicast');
 		
 		// 웹 소켓을 통해 연결이 이루어 질 때 동작할 메소드
 		webSocket.onopen = function(event){
